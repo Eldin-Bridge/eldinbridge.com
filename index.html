@@ -8,20 +8,19 @@
 
     <meta
         name="description"
-        content="Portafolio de aplicaciones, invitaciones digitales, traducciones y otros proyectos desarrollados por EldinBridge."
+        content="Portafolio de aplicaciones, invitaciones digitales, traducciones y proyectos desarrollados por EldinBridge."
     >
 
     <style>
         :root {
             --background: #070911;
-            --card: rgba(18, 22, 40, 0.76);
             --card-border: rgba(255, 255, 255, 0.10);
             --text: #f7f8ff;
             --text-secondary: #aeb5cd;
             --purple: #8b5cf6;
             --blue: #38bdf8;
             --pink: #ec4899;
-            --shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+            --shadow: 0 20px 55px rgba(0, 0, 0, 0.34);
         }
 
         * {
@@ -47,9 +46,21 @@
                 sans-serif;
             color: var(--text);
             background:
-                radial-gradient(circle at 8% 10%, rgba(139, 92, 246, 0.17), transparent 30%),
-                radial-gradient(circle at 92% 15%, rgba(56, 189, 248, 0.14), transparent 28%),
-                radial-gradient(circle at 55% 95%, rgba(236, 72, 153, 0.09), transparent 34%),
+                radial-gradient(
+                    circle at 8% 10%,
+                    rgba(139, 92, 246, 0.17),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 92% 15%,
+                    rgba(56, 189, 248, 0.14),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 55% 95%,
+                    rgba(236, 72, 153, 0.09),
+                    transparent 34%
+                ),
                 var(--background);
         }
 
@@ -60,8 +71,15 @@
             z-index: -2;
             opacity: 0.24;
             background-image:
-                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+                linear-gradient(
+                    rgba(255, 255, 255, 0.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.025) 1px,
+                    transparent 1px
+                );
             background-size: 46px 46px;
             mask-image: linear-gradient(to bottom, black, transparent 92%);
         }
@@ -69,10 +87,10 @@
         .glow {
             position: fixed;
             z-index: -1;
-            width: 400px;
-            height: 400px;
+            width: 380px;
+            height: 380px;
             border-radius: 50%;
-            filter: blur(105px);
+            filter: blur(100px);
             opacity: 0.13;
             pointer-events: none;
             animation: floatGlow 10s ease-in-out infinite alternate;
@@ -112,25 +130,26 @@
         }
 
         main {
-            padding: 58px 0 70px;
+            padding: 32px 0 28px;
         }
 
         .intro {
-            max-width: 760px;
-            margin-bottom: 34px;
+            max-width: 780px;
+            margin: 0 auto 24px;
+            text-align: center;
         }
 
         .eyebrow {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             padding: 7px 12px;
             border: 1px solid rgba(139, 92, 246, 0.28);
             border-radius: 999px;
             color: #d9ceff;
             background: rgba(139, 92, 246, 0.08);
-            font-size: 0.82rem;
+            font-size: 0.78rem;
             font-weight: 800;
             letter-spacing: 0.04em;
             text-transform: uppercase;
@@ -145,8 +164,8 @@
         }
 
         h1 {
-            margin-bottom: 14px;
-            font-size: clamp(2.5rem, 6vw, 4.7rem);
+            margin-bottom: 12px;
+            font-size: clamp(2.2rem, 5vw, 4rem);
             line-height: 1;
             letter-spacing: -0.055em;
         }
@@ -165,28 +184,31 @@
         }
 
         .intro p {
-            max-width: 680px;
+            max-width: 700px;
+            margin: 0 auto;
             color: var(--text-secondary);
-            font-size: 1.05rem;
-            line-height: 1.7;
+            font-size: 0.98rem;
+            line-height: 1.6;
         }
 
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            gap: 16px;
         }
 
         .project-card {
             position: relative;
             display: flex;
-            min-height: 310px;
+            min-height: 270px;
             overflow: hidden;
             flex-direction: column;
+            align-items: center;
             justify-content: space-between;
-            padding: 28px;
+            padding: 23px;
             border: 1px solid var(--card-border);
-            border-radius: 26px;
+            border-radius: 24px;
+            text-align: center;
             background:
                 linear-gradient(
                     160deg,
@@ -227,7 +249,7 @@
         }
 
         .project-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-7px);
             border-color: rgba(255, 255, 255, 0.22);
             background:
                 linear-gradient(
@@ -242,45 +264,62 @@
             opacity: 0.24;
         }
 
+        .project-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .project-icon {
             display: grid;
-            width: 58px;
-            height: 58px;
+            width: 54px;
+            height: 54px;
             place-items: center;
-            margin-bottom: 34px;
+            margin-bottom: 18px;
             border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 18px;
+            border-radius: 17px;
             background: rgba(255, 255, 255, 0.055);
-            font-size: 1.55rem;
+            font-size: 1.45rem;
+            transition: transform 0.28s ease;
+        }
+
+        .project-card:hover .project-icon {
+            transform: translateY(-4px) scale(1.05);
         }
 
         .project-label {
-            margin-bottom: 10px;
+            margin-bottom: 7px;
             color: #bbb8cb;
-            font-size: 0.76rem;
+            font-size: 0.72rem;
             font-weight: 800;
             letter-spacing: 0.12em;
             text-transform: uppercase;
         }
 
         .project-card h2 {
-            margin-bottom: 12px;
-            font-size: 1.55rem;
+            margin-bottom: 9px;
+            font-size: 1.45rem;
             letter-spacing: -0.035em;
         }
 
         .project-card p {
+            max-width: 310px;
             color: var(--text-secondary);
-            line-height: 1.62;
+            font-size: 0.91rem;
+            line-height: 1.52;
         }
 
         .card-link {
+            position: relative;
+            z-index: 1;
             display: inline-flex;
             align-items: center;
             gap: 7px;
-            margin-top: 24px;
+            margin-top: 18px;
             color: #e5e1ff;
-            font-size: 0.94rem;
+            font-size: 0.9rem;
             font-weight: 800;
         }
 
@@ -293,61 +332,46 @@
         }
 
         .site-menu {
-            margin-top: 34px;
-            padding: 24px;
+            margin-top: 18px;
+            padding: 18px;
             border: 1px solid var(--card-border);
-            border-radius: 24px;
+            border-radius: 22px;
+            text-align: center;
             background: rgba(255, 255, 255, 0.035);
             backdrop-filter: blur(16px);
         }
 
         .menu-header {
-            margin-bottom: 16px;
+            margin-bottom: 13px;
         }
 
         .menu-header h2 {
-            margin-bottom: 5px;
-            font-size: 1.2rem;
+            margin-bottom: 3px;
+            font-size: 1.1rem;
             letter-spacing: -0.025em;
         }
 
         .menu-header p {
             color: var(--text-secondary);
-            font-size: 0.92rem;
+            font-size: 0.86rem;
         }
 
         .menu-buttons {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 12px;
+            max-width: 720px;
+            margin: 0 auto;
         }
 
         .menu-button {
             display: flex;
-            min-height: 54px;
+            min-height: 50px;
             align-items: center;
             justify-content: center;
             gap: 9px;
             padding: 0 18px;
-            border: 1px solid var(--card-border);
             border-radius: 15px;
-            color: #dfe3f4;
-            background: rgba(255, 255, 255, 0.045);
-            font-weight: 800;
-            transition:
-                transform 0.25s ease,
-                border-color 0.25s ease,
-                background 0.25s ease;
-        }
-
-        .menu-button:hover {
-            transform: translateY(-3px);
-            border-color: rgba(255, 255, 255, 0.22);
-            background: rgba(255, 255, 255, 0.075);
-        }
-
-        .menu-button.primary {
-            border: none;
             color: white;
             background:
                 linear-gradient(
@@ -356,30 +380,40 @@
                     #6f76f6 52%,
                     var(--blue)
                 );
-            box-shadow: 0 14px 34px rgba(92, 91, 246, 0.24);
+            box-shadow: 0 12px 30px rgba(92, 91, 246, 0.22);
+            font-weight: 800;
+            transition:
+                transform 0.25s ease,
+                filter 0.25s ease;
+        }
+
+        .menu-button:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.1);
         }
 
         footer {
-            margin-top: 34px;
-            padding-top: 24px;
+            margin-top: 18px;
+            padding-top: 16px;
             border-top: 1px solid rgba(255, 255, 255, 0.07);
         }
 
         .footer-content {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             gap: 20px;
             color: #777e98;
-            font-size: 0.88rem;
+            font-size: 0.82rem;
+            text-align: center;
         }
 
         .reveal {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(18px);
             transition:
-                opacity 0.65s ease,
-                transform 0.65s ease;
+                opacity 0.6s ease,
+                transform 0.6s ease;
         }
 
         .reveal.visible {
@@ -389,50 +423,113 @@
 
         @media (max-width: 900px) {
             main {
-                padding-top: 42px;
+                padding-top: 26px;
             }
 
             .projects-grid {
                 grid-template-columns: 1fr;
+                max-width: 620px;
+                margin: 0 auto;
             }
 
             .project-card {
-                min-height: 260px;
-            }
-
-            .menu-buttons {
-                grid-template-columns: 1fr;
+                min-height: 230px;
             }
         }
 
         @media (max-width: 600px) {
             .container {
-                width: min(100% - 28px, 1160px);
+                width: min(100% - 24px, 1160px);
             }
 
             main {
-                padding: 34px 0 50px;
+                padding: 22px 0 30px;
+            }
+
+            .intro {
+                margin-bottom: 18px;
+            }
+
+            .eyebrow {
+                margin-bottom: 10px;
+                font-size: 0.7rem;
             }
 
             h1 {
-                font-size: clamp(2.7rem, 14vw, 4rem);
+                margin-bottom: 10px;
+                font-size: clamp(2.25rem, 12vw, 3.25rem);
             }
 
             .intro p {
-                font-size: 1rem;
+                font-size: 0.91rem;
+                line-height: 1.5;
+            }
+
+            .projects-grid {
+                gap: 12px;
             }
 
             .project-card {
-                padding: 24px;
+                min-height: auto;
+                padding: 20px 18px;
+                border-radius: 21px;
+            }
+
+            .project-icon {
+                width: 48px;
+                height: 48px;
+                margin-bottom: 13px;
+                font-size: 1.3rem;
+            }
+
+            .project-card h2 {
+                font-size: 1.3rem;
+            }
+
+            .project-card p {
+                font-size: 0.87rem;
+                line-height: 1.45;
+            }
+
+            .card-link {
+                margin-top: 14px;
             }
 
             .site-menu {
-                padding: 20px;
+                margin-top: 14px;
+                padding: 16px;
+            }
+
+            .menu-buttons {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .menu-button {
+                min-height: 48px;
+            }
+
+            footer {
+                margin-top: 15px;
             }
 
             .footer-content {
-                align-items: flex-start;
                 flex-direction: column;
+                gap: 4px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
             }
         }
     </style>
@@ -459,9 +556,8 @@
                 </h1>
 
                 <p>
-                    Un espacio para presentar aplicaciones, experiencias web,
-                    traducciones y otros proyectos desarrollados con atención
-                    al diseño, la funcionalidad y los detalles.
+                    Aplicaciones, experiencias web y traducciones desarrolladas
+                    con creatividad, funcionalidad y atención a los detalles.
                 </p>
 
             </section>
@@ -469,7 +565,8 @@
             <section class="projects-grid">
 
                 <a class="project-card reveal" href="aplicaciones/">
-                    <div>
+                    <div class="project-content">
+
                         <div class="project-icon">📱</div>
 
                         <div class="project-label">Desarrollo</div>
@@ -477,9 +574,10 @@
                         <h2>Aplicaciones</h2>
 
                         <p>
-                            Proyectos de software creados para resolver necesidades,
-                            organizar ideas y ofrecer experiencias útiles al usuario.
+                            Software creado para resolver necesidades y ofrecer
+                            experiencias útiles, sencillas y visualmente cuidadas.
                         </p>
+
                     </div>
 
                     <div class="card-link">
@@ -489,7 +587,8 @@
                 </a>
 
                 <a class="project-card reveal" href="invitaciones/">
-                    <div>
+                    <div class="project-content">
+
                         <div class="project-icon">✨</div>
 
                         <div class="project-label">Experiencias web</div>
@@ -497,9 +596,10 @@
                         <h2>Invitaciones digitales</h2>
 
                         <p>
-                            Invitaciones interactivas para eventos, diseñadas para
-                            verse modernas, funcionar en celular y compartirse fácilmente.
+                            Invitaciones interactivas, modernas, adaptadas al
+                            celular y fáciles de compartir con los invitados.
                         </p>
+
                     </div>
 
                     <div class="card-link">
@@ -509,7 +609,8 @@
                 </a>
 
                 <a class="project-card reveal" href="traducciones/">
-                    <div>
+                    <div class="project-content">
+
                         <div class="project-icon">🎮</div>
 
                         <div class="project-label">Videojuegos</div>
@@ -517,9 +618,10 @@
                         <h2>Traducciones</h2>
 
                         <p>
-                            Trabajos relacionados con traducción, adaptación y
-                            localización de videojuegos para jugadores de habla hispana.
+                            Traducción, adaptación y localización de videojuegos
+                            para acercarlos a jugadores de habla hispana.
                         </p>
+
                     </div>
 
                     <div class="card-link">
@@ -536,23 +638,18 @@
                     <h2>Explorar EldinBridge</h2>
 
                     <p>
-                        Accede a otras secciones del sitio.
+                        Conoce más sobre el proyecto y su desarrollador.
                     </p>
                 </div>
 
                 <div class="menu-buttons">
 
-                    <a class="menu-button primary" href="proyectos/">
-                        Ver más proyectos
-                        <span>→</span>
-                    </a>
-
                     <a class="menu-button" href="desarrollador/">
-                        Sobre el desarrollador
+                        👨‍💻 Sobre el desarrollador
                     </a>
 
                     <a class="menu-button" href="contacto/">
-                        Contacto
+                        ✉️ Contacto
                     </a>
 
                 </div>
@@ -570,7 +667,8 @@
     </main>
 
     <script>
-        document.getElementById("year").textContent = new Date().getFullYear();
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
 
         const elements = document.querySelectorAll(".reveal");
 
@@ -584,7 +682,7 @@
                 });
             },
             {
-                threshold: 0.1
+                threshold: 0.08
             }
         );
 
