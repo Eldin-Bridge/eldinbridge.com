@@ -1,16 +1,724 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitación Digital</title>
+
+    <title>EldinBridge | Proyectos digitales</title>
+
+    <meta
+        name="description"
+        content="EldinBridge es un espacio dedicado al desarrollo de aplicaciones, experiencias web e iniciativas relacionadas con videojuegos."
+    >
+
+    <style>
+        :root {
+            --background: #070911;
+            --background-secondary: #0d1020;
+            --card: rgba(20, 24, 43, 0.72);
+            --card-border: rgba(255, 255, 255, 0.10);
+            --text: #f6f7ff;
+            --text-secondary: #adb3ca;
+            --purple: #8b5cf6;
+            --blue: #38bdf8;
+            --pink: #ec4899;
+            --green: #34d399;
+            --shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family:
+                Inter,
+                ui-sans-serif,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 10% 10%, rgba(139, 92, 246, 0.18), transparent 32%),
+                radial-gradient(circle at 88% 18%, rgba(56, 189, 248, 0.15), transparent 30%),
+                radial-gradient(circle at 65% 85%, rgba(236, 72, 153, 0.10), transparent 35%),
+                var(--background);
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            opacity: 0.25;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 45px 45px;
+            mask-image: linear-gradient(to bottom, black, transparent 90%);
+        }
+
+        .glow {
+            position: fixed;
+            z-index: -1;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.14;
+            pointer-events: none;
+            animation: floatGlow 10s ease-in-out infinite alternate;
+        }
+
+        .glow-one {
+            top: -140px;
+            left: -100px;
+            background: var(--purple);
+        }
+
+        .glow-two {
+            right: -140px;
+            bottom: -180px;
+            background: var(--blue);
+            animation-delay: -4s;
+        }
+
+        @keyframes floatGlow {
+            from {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+
+            to {
+                transform: translate3d(30px, 40px, 0) scale(1.15);
+            }
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: min(1120px, calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        header {
+            padding: 24px 0;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        .brand-icon {
+            display: grid;
+            width: 42px;
+            height: 42px;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            border-radius: 13px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(139, 92, 246, 0.95),
+                    rgba(56, 189, 248, 0.9)
+                );
+            box-shadow: 0 12px 35px rgba(56, 189, 248, 0.18);
+        }
+
+        .brand-name {
+            font-size: 1.08rem;
+        }
+
+        .nav-link {
+            padding: 10px 16px;
+            border: 1px solid var(--card-border);
+            border-radius: 999px;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.03);
+            transition: 0.25s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text);
+            border-color: rgba(255, 255, 255, 0.22);
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            display: grid;
+            min-height: 640px;
+            align-items: center;
+            padding: 80px 0 90px;
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 22px;
+            padding: 8px 13px;
+            border: 1px solid rgba(139, 92, 246, 0.30);
+            border-radius: 999px;
+            color: #d9ceff;
+            background: rgba(139, 92, 246, 0.08);
+            font-size: 0.88rem;
+            font-weight: 700;
+        }
+
+        .eyebrow-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 15px var(--green);
+        }
+
+        h1 {
+            max-width: 900px;
+            font-size: clamp(3rem, 8vw, 6.3rem);
+            line-height: 0.98;
+            letter-spacing: -0.065em;
+        }
+
+        .gradient-text {
+            color: transparent;
+            background:
+                linear-gradient(
+                    90deg,
+                    #b79aff 0%,
+                    #72d4ff 45%,
+                    #ff8ac4 100%
+                );
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        .hero-description {
+            max-width: 720px;
+            margin-top: 28px;
+            color: var(--text-secondary);
+            font-size: clamp(1.05rem, 2vw, 1.25rem);
+            line-height: 1.75;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 34px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 50px;
+            padding: 0 22px;
+            border-radius: 14px;
+            font-weight: 800;
+            transition: 0.25s ease;
+        }
+
+        .button-primary {
+            color: white;
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--purple),
+                    #6d75f6 50%,
+                    var(--blue)
+                );
+            box-shadow: 0 15px 40px rgba(92, 91, 246, 0.28);
+        }
+
+        .button-secondary {
+            border: 1px solid var(--card-border);
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+        }
+
+        .button-secondary:hover {
+            color: white;
+            border-color: rgba(255, 255, 255, 0.22);
+        }
+
+        .projects-section {
+            padding: 40px 0 110px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 34px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(2rem, 5vw, 3.4rem);
+            letter-spacing: -0.05em;
+        }
+
+        .section-heading p {
+            max-width: 500px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .project-card {
+            position: relative;
+            min-height: 330px;
+            overflow: hidden;
+            padding: 28px;
+            border: 1px solid var(--card-border);
+            border-radius: 26px;
+            background:
+                linear-gradient(
+                    160deg,
+                    rgba(255, 255, 255, 0.075),
+                    rgba(255, 255, 255, 0.02)
+                );
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(18px);
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease,
+                background 0.3s ease;
+        }
+
+        .project-card::after {
+            content: "";
+            position: absolute;
+            right: -80px;
+            bottom: -100px;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            filter: blur(55px);
+            opacity: 0.17;
+            transition: 0.3s ease;
+        }
+
+        .project-card:nth-child(1)::after {
+            background: var(--purple);
+        }
+
+        .project-card:nth-child(2)::after {
+            background: var(--pink);
+        }
+
+        .project-card:nth-child(3)::after {
+            background: var(--blue);
+        }
+
+        .project-card:hover {
+            transform: translateY(-9px);
+            border-color: rgba(255, 255, 255, 0.22);
+            background:
+                linear-gradient(
+                    160deg,
+                    rgba(255, 255, 255, 0.10),
+                    rgba(255, 255, 255, 0.025)
+                );
+        }
+
+        .project-card:hover::after {
+            transform: scale(1.25);
+            opacity: 0.25;
+        }
+
+        .project-icon {
+            display: grid;
+            width: 58px;
+            height: 58px;
+            place-items: center;
+            margin-bottom: 44px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            font-size: 1.55rem;
+            background: rgba(255, 255, 255, 0.055);
+        }
+
+        .project-label {
+            margin-bottom: 10px;
+            color: #bdb9cf;
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .project-card h3 {
+            margin-bottom: 14px;
+            font-size: 1.55rem;
+            letter-spacing: -0.035em;
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            line-height: 1.65;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 22px;
+            color: #e2deff;
+            font-size: 0.94rem;
+            font-weight: 800;
+        }
+
+        .card-link span {
+            transition: 0.25s ease;
+        }
+
+        .project-card:hover .card-link span {
+            transform: translateX(5px);
+        }
+
+        .about {
+            margin-bottom: 100px;
+            padding: 38px;
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(139, 92, 246, 0.10),
+                    rgba(56, 189, 248, 0.055)
+                );
+        }
+
+        .about h2 {
+            margin-bottom: 14px;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            letter-spacing: -0.045em;
+        }
+
+        .about p {
+            max-width: 760px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        footer {
+            padding: 30px 0 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            color: #777e98;
+            font-size: 0.9rem;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition:
+                opacity 0.7s ease,
+                transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                min-height: auto;
+                padding: 80px 0 100px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card {
+                min-height: 280px;
+            }
+
+            .section-heading {
+                display: block;
+            }
+
+            .section-heading p {
+                margin-top: 15px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: min(100% - 28px, 1120px);
+            }
+
+            header {
+                padding-top: 16px;
+            }
+
+            .nav-link {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 65px;
+            }
+
+            h1 {
+                font-size: clamp(3rem, 16vw, 4.7rem);
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+            }
+
+            .project-card {
+                padding: 24px;
+            }
+
+            .about {
+                padding: 28px 22px;
+            }
+
+            .footer-content {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>¡Hola Mundo!</h1>
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a class="brand" href="#">
+                    <span class="brand-icon">E</span>
+                    <span class="brand-name">EldinBridge</span>
+                </a>
+
+                <a class="nav-link" href="#proyectos">
+                    Ver proyectos
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content reveal">
+
+                    <div class="eyebrow">
+                        <span class="eyebrow-dot"></span>
+                        Desarrollo, diseño y proyectos digitales
+                    </div>
+
+                    <h1>
+                        Ideas que cruzan el puente hacia
+                        <span class="gradient-text">experiencias reales.</span>
+                    </h1>
+
+                    <p class="hero-description">
+                        EldinBridge es un espacio dedicado a transformar ideas en
+                        proyectos funcionales, creativos y con identidad propia.
+                        Aquí conviven aplicaciones, experiencias web y trabajos
+                        relacionados con videojuegos.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="#proyectos">
+                            Explorar proyectos
+                            <span>↓</span>
+                        </a>
+
+                        <a class="button button-secondary" href="#acerca">
+                            Conocer EldinBridge
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="projects-section" id="proyectos">
+            <div class="container">
+
+                <div class="section-heading reveal">
+                    <div>
+                        <div class="project-label">Áreas de trabajo</div>
+                        <h2>Proyectos destacados</h2>
+                    </div>
+
+                    <p>
+                        Diferentes ideas y disciplinas reunidas en un mismo lugar,
+                        desde software hasta experiencias digitales y proyectos
+                        creados para la comunidad de videojuegos.
+                    </p>
+                </div>
+
+                <div class="projects-grid">
+
+                    <article class="project-card reveal">
+                        <div class="project-icon">📱</div>
+
+                        <div class="project-label">Desarrollo</div>
+
+                        <h3>Aplicaciones</h3>
+
+                        <p>
+                            Aplicaciones desarrolladas con enfoque en utilidad,
+                            identidad visual y una experiencia sencilla para el usuario.
+                        </p>
+
+                        <div class="card-link">
+                            Próximamente
+                            <span>→</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card reveal">
+                        <div class="project-icon">✨</div>
+
+                        <div class="project-label">Experiencias web</div>
+
+                        <h3>Invitaciones digitales</h3>
+
+                        <p>
+                            Invitaciones interactivas para eventos, diseñadas como
+                            experiencias web modernas, visuales y fáciles de compartir.
+                        </p>
+
+                        <div class="card-link">
+                            Próximamente
+                            <span>→</span>
+                        </div>
+                    </article>
+
+                    <article class="project-card reveal">
+                        <div class="project-icon">🎮</div>
+
+                        <div class="project-label">Videojuegos</div>
+
+                        <h3>Traducciones</h3>
+
+                        <p>
+                            Proyectos relacionados con localización, adaptación y
+                            traducción de videojuegos para acercarlos a más jugadores.
+                        </p>
+
+                        <div class="card-link">
+                            Próximamente
+                            <span>→</span>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="container" id="acerca">
+            <div class="about reveal">
+                <div class="project-label">Sobre el proyecto</div>
+
+                <h2>Un espacio para crear, experimentar y seguir creciendo.</h2>
+
+                <p>
+                    EldinBridge reúne proyectos personales y profesionales que
+                    combinan tecnología, creatividad y atención al detalle.
+                    Algunas experiencias estarán alojadas directamente aquí y otras
+                    conectarán con plataformas externas, manteniendo todo organizado
+                    bajo una misma identidad.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <span>© <span id="year"></span> EldinBridge</span>
+            <span>Diseñado y desarrollado con dedicación.</span>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        const elements = document.querySelectorAll(".reveal");
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            {
+                threshold: 0.12
+            }
+        );
+
+        elements.forEach((element) => observer.observe(element));
+    </script>
 
 </body>
-
 </html>
