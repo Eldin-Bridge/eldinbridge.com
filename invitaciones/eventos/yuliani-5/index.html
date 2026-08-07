@@ -272,13 +272,32 @@
         }
 
         .estrella {
+
             position: absolute;
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: white;
-            box-shadow: 0 0 14px white;
-            animation: parpadear 2.2s ease-in-out infinite;
+
+            width: 18px;
+
+            height: 18px;
+
+            color: #ffe45e;
+
+            font-size: 18px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            text-shadow:
+                0 0 6px #fff4a8,
+                0 0 14px #ffd700,
+                0 0 24px #ffb300;
+
+            animation:
+                brillar 2.8s ease-in-out infinite,
+                flotarEstrella 8s ease-in-out infinite;
+
         }
 
         .estrella:nth-child(1) {
@@ -310,18 +329,54 @@
             animation-delay: -0.8s;
         }
 
-        @keyframes parpadear {
+        @keyframes brillar {
 
             0%,
             100% {
-                opacity: 0.25;
-                transform: scale(0.7);
+
+                opacity: .35;
+
+                transform: scale(.8);
+
             }
 
             50% {
+
                 opacity: 1;
-                transform: scale(1.5);
+
+                transform: scale(1.35);
+
             }
+
+        }
+
+        @keyframes flotarEstrella {
+
+            0%,
+            100% {
+
+                translate: 0 0;
+
+            }
+
+            25% {
+
+                translate: 4px -5px;
+
+            }
+
+            50% {
+
+                translate: -4px 4px;
+
+            }
+
+            75% {
+
+                translate: 3px 6px;
+
+            }
+
         }
 
         .titulo-seccion {
@@ -678,6 +733,8 @@
 
         .intro-pulse {
 
+            position: relative;
+
             width: 70px;
 
             height: 70px;
@@ -689,6 +746,28 @@
             background: #ff4fb8;
 
             animation: pulse 1.4s infinite;
+
+        }
+
+        .microfono-centro {
+
+            position: absolute;
+
+            top: 50%;
+
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+
+            font-size: 34px;
+
+            z-index: 5;
+
+            pointer-events: none;
+
+            text-shadow:
+                0 0 10px white,
+                0 0 20px #ff4fb8;
 
         }
 
@@ -719,7 +798,83 @@
             }
 
         }
-    </style>
+
+        #confeti{
+
+    position:fixed;
+
+    inset:0;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+    z-index:-1;
+
+}
+
+.confeti{
+
+    position:absolute;
+
+    top:-30px;
+
+    animation:caerConfeti linear forwards;
+
+}
+
+.confeti.tira{
+
+    width:6px;
+
+    height:18px;
+
+    border-radius:3px;
+
+    background:linear-gradient(
+        #fff8b5,
+        #ffd54f,
+        #ffb300
+    );
+
+}
+
+.confeti.circulo{
+
+    width:9px;
+
+    height:9px;
+
+    border-radius:50%;
+
+    background:#ffd54f;
+
+    box-shadow:
+        0 0 8px #ffd54f;
+
+}
+
+@keyframes caerConfeti{
+
+    from{
+
+        transform:
+            translateY(-40px)
+            rotate(0deg);
+
+    }
+
+    to{
+
+        transform:
+            translateY(110vh)
+            rotate(720deg)
+            translateX(60px);
+
+    }
+
+}
+    </style>F
 </head>
 
 <body>
@@ -733,6 +888,8 @@
         🎵
     </button>
 
+    <div id="confeti"></div>
+
     <div id="intro">
 
         <div class="intro-box">
@@ -744,10 +901,12 @@
             </p>
 
             <p>
-                Toca cualquier parte de la pantalla para comenzar la aventura.
+                Toca el microfóno para comenzar la aventura.
             </p>
 
-            <div class="intro-pulse"></div>
+            <div class="intro-pulse">
+                <span class="microfono-centro">🎤</span>
+            </div>
 
         </div>
 
@@ -756,11 +915,11 @@
     <section class="pantalla" id="inicio">
 
         <div class="estrellas">
-            <span class="estrella"></span>
-            <span class="estrella"></span>
-            <span class="estrella"></span>
-            <span class="estrella"></span>
-            <span class="estrella"></span>
+            <span class="estrella">✦</span>
+            <span class="estrella">✦</span>
+            <span class="estrella">✦</span>
+            <span class="estrella">✦</span>
+            <span class="estrella">✦</span>
         </div>
 
         <div class="hero-image revelar">
@@ -1116,13 +1275,13 @@
                     musicaActiva = false;
                     botonMusica.textContent = "🎵";
                     botonMusica.classList.remove("reproduciendo");
-                
+
                 } else {
                     await musica.play();
                     musicaActiva = true;
                     botonMusica.textContent = "⏸";
                     botonMusica.classList.add("reproduciendo");
-                
+
                 }
             } catch (error) {
                 alert(
@@ -1152,7 +1311,50 @@
         elementos.forEach((elemento) => {
             observador.observe(elemento);
         });
-    </script>
+
+        const contenedorConfeti =
+    document.getElementById("confeti");
+
+function crearConfeti(){
+
+    const pieza=document.createElement("div");
+
+    pieza.className="confeti";
+
+    if(Math.random()<0.5){
+
+        pieza.classList.add("tira");
+
+    }else{
+
+        pieza.classList.add("circulo");
+
+    }
+
+    pieza.style.left=
+        Math.random()*100+"vw";
+
+    pieza.style.animationDuration=
+        (6+Math.random()*5)+"s";
+
+    pieza.style.opacity=
+        .45+Math.random()*.55;
+
+    pieza.style.scale=
+        .6+Math.random()*.8;
+
+    contenedorConfeti.appendChild(pieza);
+
+    setTimeout(()=>{
+
+        pieza.remove();
+
+    },12000);
+
+}
+
+setInterval(crearConfeti,180);
+    </script>F
 
 </body>
 
