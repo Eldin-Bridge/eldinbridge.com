@@ -265,9 +265,9 @@
         }
 
         .estrellas {
-            position: absolute;
+            position: fixed;
             inset: 0;
-            z-index: -1;
+            z-index: 4;
             pointer-events: none;
         }
 
@@ -506,6 +506,70 @@
             letter-spacing: -0.06em;
         }
 
+        .alberca-iconos {
+            position: relative;
+            display: flex;
+            height: 120px;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 18px;
+            font-size: 3.2rem;
+        }
+
+        .icono-flotante {
+            display: inline-block;
+            filter: drop-shadow(0 0 12px rgba(86, 216, 255, .7));
+        }
+
+        .pelota {
+            animation: pelotaAlberca 2.2s ease-in-out infinite;
+        }
+
+        .nadador {
+            animation: nadarAlberca 2.8s ease-in-out infinite;
+        }
+
+        .salvavidas {
+            animation: salvavidasAlberca 3s ease-in-out infinite;
+        }
+
+        @keyframes pelotaAlberca {
+
+            0%,
+            100% {
+                transform: translateY(4px) rotate(-12deg);
+            }
+
+            50% {
+                transform: translateY(-18px) rotate(15deg);
+            }
+        }
+
+        @keyframes nadarAlberca {
+
+            0%,
+            100% {
+                transform: translateX(-5px);
+            }
+
+            50% {
+                transform: translateX(8px) translateY(-5px);
+            }
+        }
+
+        @keyframes salvavidasAlberca {
+
+            0%,
+            100% {
+                transform: rotate(-8deg) translateY(2px);
+            }
+
+            50% {
+                transform: rotate(10deg) translateY(-10px);
+            }
+        }
+
         .regalo {
             font-size: 3rem;
             animation: flotar 2.5s ease-in-out infinite;
@@ -719,21 +783,40 @@
         }
 
         .intro-pulse {
-
             position: relative;
-
             width: 70px;
-
             height: 70px;
-
             border-radius: 50%;
-
             margin: 35px auto 0;
-
             background: #ff4fb8;
 
-            animation: pulse 1.4s infinite;
+            box-shadow:
+                0 0 12px rgba(255, 255, 255, .7),
+                0 0 25px rgba(255, 79, 184, .9),
+                0 0 50px rgba(255, 79, 184, .65),
+                0 0 75px rgba(141, 85, 255, .4);
 
+            animation: resplandorCirculo 1.8s ease-in-out infinite;
+        }
+
+        @keyframes resplandorCirculo {
+
+            0%,
+            100% {
+                box-shadow:
+                    0 0 10px rgba(255, 255, 255, .6),
+                    0 0 22px rgba(255, 79, 184, .75),
+                    0 0 42px rgba(255, 79, 184, .5),
+                    0 0 65px rgba(141, 85, 255, .3);
+            }
+
+            50% {
+                box-shadow:
+                    0 0 18px rgba(255, 255, 255, 1),
+                    0 0 35px rgba(255, 79, 184, 1),
+                    0 0 65px rgba(255, 79, 184, .85),
+                    0 0 95px rgba(141, 85, 255, .65);
+            }
         }
 
         .microfono-centro {
@@ -753,38 +836,28 @@
             pointer-events: none;
 
             text-shadow:
-                0 0 10px white,
-                0 0 20px #ff4fb8;
+                0 0 6px white,
+                0 0 12px #ffffff,
+                0 0 22px #ffe45e,
+                0 0 35px #ff4fb8;
+
+            animation: resplandorMicro 1.8s ease-in-out infinite;
 
         }
 
-        @keyframes pulse {
+        @keyframes resplandorMicro {
 
-            0% {
-
-                transform: scale(.8);
-
-                opacity: .6;
-
-            }
-
-            70% {
-
-                transform: scale(1.2);
-
-                opacity: 0;
-
-            }
-
+            0%,
             100% {
-
-                transform: scale(.8);
-
-                opacity: 0;
-
+                filter: brightness(1);
             }
 
+            50% {
+                filter: brightness(1.5) drop-shadow(0 0 10px #ffe45e);
+            }
         }
+
+
 
         #intro {
             z-index: 9999;
@@ -883,6 +956,14 @@
 
     <div id="confeti"></div>
 
+    <div class="estrellas">
+        <span class="estrella">✦</span>
+        <span class="estrella">✦</span>
+        <span class="estrella">✦</span>
+        <span class="estrella">✦</span>
+        <span class="estrella">✦</span>
+    </div>
+
     <div id="intro">
 
         <div class="intro-box">
@@ -907,13 +988,7 @@
 
     <section class="pantalla" id="inicio">
 
-        <div class="estrellas">
-            <span class="estrella">✦</span>
-            <span class="estrella">✦</span>
-            <span class="estrella">✦</span>
-            <span class="estrella">✦</span>
-            <span class="estrella">✦</span>
-        </div>
+
 
         <div class="hero-image revelar">
             <img src="assets/images/kpop-guerreras.png" alt="Siluetas de tres guerreras K-Pop">
@@ -938,9 +1013,8 @@
 
             <div class="botones">
                 <a class="boton" href="#cuenta">
-                    ✨ Ver invitación
+                    ✨ Comenzar
                 </a>
-
             </div>
 
         </div>
@@ -993,8 +1067,8 @@
             </div>
 
             <div class="botones">
-                <a class="boton" href="#detalles">
-                    Ver detalles
+                <a class="boton" href="#show">
+                    Continuar
                     <span>↓</span>
                 </a>
             </div>
@@ -1032,7 +1106,7 @@
                     </p>
 
                     <div class="botones">
-                        <a class="boton" href="#regalo">
+                        <a class="boton" href="#alberca">
                             Continuar
                             <span>↓</span>
                         </a>
@@ -1040,6 +1114,41 @@
 
                 </div>
 
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="pantalla" id="alberca">
+
+        <div class="contenido cristal revelar">
+
+            <div class="etiqueta">
+                <span class="punto"></span>
+                Diversión acuática
+            </div>
+
+            <div class="alberca-iconos">
+                <span class="icono-flotante pelota">🏐</span>
+                <span class="icono-flotante nadador">🏊‍♀️</span>
+                <span class="icono-flotante salvavidas">🛟</span>
+            </div>
+
+            <h2 class="titulo-seccion">
+                ¡Prepárate para la alberca!
+            </h2>
+
+            <p class="subtitulo">
+                No olvides llevar tu traje de baño porque habrá alberca.
+                ¡Ven preparado para refrescarte y divertirte!
+            </p>
+
+            <div class="botones">
+                <a class="boton" href="#regalo">
+                    Continuar
+                    <span>↓</span>
+                </a>
             </div>
 
         </div>
@@ -1069,8 +1178,74 @@
             </p>
 
             <div class="botones">
+                <a class="boton" href="#detalles">
+                    Continuar
+                    <span>↓</span>
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="pantalla" id="detalles">
+
+        <div class="contenido cristal revelar">
+
+            <div class="etiqueta">
+                <span class="punto"></span>
+                Información del evento
+            </div>
+
+            <h2 class="titulo-seccion">
+                Datos
+            </h2>
+
+            <p class="subtitulo">
+                Aquí tienes la info para acompañar a Yuliani.
+            </p>
+
+            <div class="datos">
+
+                <div class="dato">
+                    <span class="dato-icono">📅</span>
+                    <span class="dato-titulo">Fecha</span>
+                    <span class="dato-texto">
+                        Domingo<br>
+                        16 de agosto de 2026
+                    </span>
+                </div>
+
+                <div class="dato">
+                    <span class="dato-icono">🕐</span>
+                    <span class="dato-titulo">Hora</span>
+                    <span class="dato-texto">
+                        Desde la 1:00 p. m.
+                    </span>
+                </div>
+
+                <div class="dato">
+                    <span class="dato-icono">🎉</span>
+                    <span class="dato-titulo">Lugar</span>
+                    <span class="dato-texto">
+                        Quinta Los Laureles
+                    </span>
+                </div>
+
+                <div class="dato">
+                    <span class="dato-icono">📍</span>
+                    <span class="dato-titulo">Dirección</span>
+                    <span class="dato-texto">
+                        Calle Francisco Zarco #809<br>
+                        Col. Lázaro Cárdenas, 2.º Sector
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="botones">
                 <a class="boton" href="#final">
-                    Llegar al final
+                    Continuar
                     <span>↓</span>
                 </a>
             </div>
@@ -1116,71 +1291,7 @@
 
     </section>
 
-    <section class="pantalla" id="detalles">
 
-        <div class="contenido cristal revelar">
-
-            <div class="etiqueta">
-                <span class="punto"></span>
-                Información del evento
-            </div>
-
-            <h2 class="titulo-seccion">
-                Guarda la fecha
-            </h2>
-
-            <p class="subtitulo">
-                Aquí tienes todos los datos para acompañar a Yuliani.
-            </p>
-
-            <div class="datos">
-
-                <div class="dato">
-                    <span class="dato-icono">📅</span>
-                    <span class="dato-titulo">Fecha</span>
-                    <span class="dato-texto">
-                        Domingo<br>
-                        16 de agosto de 2026
-                    </span>
-                </div>
-
-                <div class="dato">
-                    <span class="dato-icono">🕐</span>
-                    <span class="dato-titulo">Hora</span>
-                    <span class="dato-texto">
-                        Desde la 1:00 p. m.
-                    </span>
-                </div>
-
-                <div class="dato">
-                    <span class="dato-icono">🎉</span>
-                    <span class="dato-titulo">Lugar</span>
-                    <span class="dato-texto">
-                        Quinta Los Laureles
-                    </span>
-                </div>
-
-                <div class="dato">
-                    <span class="dato-icono">📍</span>
-                    <span class="dato-titulo">Dirección</span>
-                    <span class="dato-texto">
-                        Calle Francisco Zarco #809<br>
-                        Col. Lázaro Cárdenas, 2.º Sector
-                    </span>
-                </div>
-
-            </div>
-
-            <div class="botones">
-                <a class="boton" href="https://maps.app.goo.gl/YCQnm8qAvHr8mu9t9" target="_blank"
-                    rel="noopener noreferrer">
-                    📍 Abrir ubicación
-                </a>
-            </div>
-
-        </div>
-
-    </section>
 
     <script>
 
