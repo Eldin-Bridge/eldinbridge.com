@@ -104,6 +104,33 @@
                     transparent);
         }
 
+        .pantalla.con-personaje {
+            flex-direction: column;
+        }
+
+        .personaje-slot {
+            position: relative;
+            z-index: 6;
+            width: min(90vw, 620px);
+            height: clamp(180px, 32svh, 310px);
+            margin-bottom: -38px;
+            pointer-events: none;
+        }
+
+        .personaje-slot img {
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center bottom;
+            transform: translateX(-50%);
+            filter:
+                drop-shadow(0 0 18px rgba(255, 79, 184, .40)) drop-shadow(0 0 30px rgba(86, 216, 255, .25));
+        }
+
         .contenido {
             width: min(100%, 760px);
             text-align: center;
@@ -1025,7 +1052,11 @@
 
     </section>
 
-    <section class="pantalla" id="cuenta">
+    <section class="pantalla con-personaje" id="cuenta">
+
+        <div class="personaje-slot">
+            <img src="assets/images/personajes01.png" alt="" onerror="this.style.display='none'">
+        </div>
 
         <div class="contenido cristal revelar">
 
@@ -1079,7 +1110,11 @@
 
 
 
-    <section class="pantalla" id="show">
+    <section class="pantalla con-personaje" id="show">
+
+        <div class="personaje-slot">
+            <img src="assets/images/personajes02.png" alt="" onerror="this.style.display='none'">
+        </div>
 
         <div class="contenido revelar">
 
@@ -1120,7 +1155,11 @@
 
     </section>
 
-    <section class="pantalla" id="alberca">
+    <section class="pantalla con-personaje" id="alberca">
+
+        <div class="personaje-slot">
+            <img src="assets/images/personajes03.png" alt="" onerror="this.style.display='none'">
+        </div>
 
         <div class="contenido cristal revelar">
 
@@ -1155,7 +1194,11 @@
 
     </section>
 
-    <section class="pantalla" id="regalo">
+    <section class="pantalla con-personaje" id="regalo">
+
+        <div class="personaje-slot">
+            <img src="assets/images/personajes04.png" alt="" onerror="this.style.display='none'">
+        </div>
 
         <div class="contenido cristal revelar">
 
@@ -1188,7 +1231,11 @@
 
     </section>
 
-    <section class="pantalla" id="detalles">
+    <section class="pantalla con-personaje" id="detalles">
+
+        <div class="personaje-slot">
+            <img src="assets/images/personajes05.png" alt="" onerror="this.style.display='none'">
+        </div>
 
         <div class="contenido cristal revelar">
 
@@ -1200,10 +1247,6 @@
             <h2 class="titulo-seccion">
                 Datos
             </h2>
-
-            <p class="subtitulo">
-                Aquí tienes la info para acompañar a Yuliani.
-            </p>
 
             <div class="datos">
 
@@ -1254,7 +1297,11 @@
 
     </section>
 
-    <section class="pantalla" id="final">
+    <section class="pantalla con-personaje" id="final">
+
+        <div class="personaje-slot">
+            <img src="assets/images/personajes06.png" alt="" onerror="this.style.display='none'">
+        </div>
 
         <div class="contenido cristal revelar">
 
