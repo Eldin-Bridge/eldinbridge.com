@@ -50,6 +50,65 @@
             scroll-snap-type: y mandatory;
         }
 
+        #evento-finalizado {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            text-align: center;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(255, 55, 190, .35), transparent 35%),
+                radial-gradient(circle at 80% 70%, rgba(105, 70, 255, .35), transparent 40%),
+                linear-gradient(160deg, #17051f, #090314 65%, #190629);
+        }
+
+        #evento-finalizado.activo {
+            display: flex;
+        }
+
+        .evento-finalizado-contenido {
+            width: min(90vw, 600px);
+            padding: 45px 25px;
+            border: 1px solid rgba(255, 255, 255, .18);
+            border-radius: 28px;
+            background: rgba(255, 255, 255, .08);
+            backdrop-filter: blur(14px);
+            box-shadow:
+                0 0 35px rgba(255, 54, 190, .20),
+                inset 0 0 25px rgba(255, 255, 255, .04);
+        }
+
+        .evento-finalizado-estrellas {
+            font-size: 1.8rem;
+            margin-bottom: 18px;
+        }
+
+        .evento-finalizado-contenido h1 {
+            margin: 0 0 12px;
+            font-size: clamp(2.2rem, 8vw, 4rem);
+            color: #ff69cf;
+            text-shadow: 0 0 20px rgba(255, 105, 207, .55);
+        }
+
+        .evento-finalizado-contenido h2 {
+            margin: 0 0 20px;
+            color: #ffe45e;
+            font-size: clamp(1.2rem, 5vw, 1.8rem);
+        }
+
+        .evento-finalizado-contenido p {
+            line-height: 1.7;
+            color: rgba(255, 255, 255, .88);
+        }
+
+        .evento-finalizado-corazon {
+            margin-top: 25px;
+            font-size: 2.5rem;
+        }
+
         body {
             overflow-x: hidden;
             font-family:
@@ -1034,6 +1093,23 @@
 
 <body>
 
+    <div id="evento-finalizado">
+        <div class="evento-finalizado-contenido">
+            <div class="evento-finalizado-estrellas">✨ ⭐ ✨</div>
+
+            <h1>¡Misión cumplida!</h1>
+
+            <h2>Gracias por acompañar a Yuliani 💜</h2>
+
+            <p>
+                Esta gran aventura llegó a su final.<br>
+                ¡Gracias por ser parte de este día tan especial!
+            </p>
+
+            <div class="evento-finalizado-corazon">💜</div>
+        </div>
+    </div>
+
     <audio id="musica" loop preload="auto">
         <source src="assets/audio/dorada-huntrix.mp3" type="audio/mpeg">
     </audio>
@@ -1409,9 +1485,29 @@
 
     <script>
 
+        const fechaCierre = new Date("2026-08-17T00:00:00-06:00");
+
+        const eventoExpirado = new Date() >= fechaCierre;
+
+        const pantallaEventoFinalizado =
+            document.getElementById("evento-finalizado");
+
+        if (eventoExpirado) {
+
+            pantallaEventoFinalizado?.classList.add("activo");
+
+            document.getElementById("intro")?.remove();
+
+            document.getElementById("botonMusica")?.remove();
+
+            document.body.style.overflow = "hidden";
+        }
+
         const intro = document.getElementById("intro");
 
         document.addEventListener("click", async () => {
+
+            if (eventoExpirado) return;
 
             if (intro) {
 
@@ -1509,6 +1605,44 @@
         }
 
         botonMusica.addEventListener("click", alternarMusica);
+
+        let musicaPausadaPorSalir = false;
+
+        document.addEventListener("visibilitychange", async () => {
+
+            if (document.hidden) {
+
+                if (!musica.paused) {
+                    musicaPausadaPorSalir = true;
+                    musica.pause();
+                }
+
+            } else {
+
+                if (musicaPausadaPorSalir && !eventoExpirado) {
+
+                    try {
+
+                        await musica.play();
+                        musicaActiva = true;
+                        musicaPausadaPorSalir = false;
+
+                    } catch (e) {
+                        // Algunos navegadores pueden bloquear
+                        // la reanudación automática.
+                    }
+
+                }
+
+            }
+
+        });
+
+        window.addEventListener("pagehide", () => {
+
+            musica.pause();
+
+        });
 
 
         const elementos = document.querySelectorAll(".revelar");
