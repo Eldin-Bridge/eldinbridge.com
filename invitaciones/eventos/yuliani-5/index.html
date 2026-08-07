@@ -663,19 +663,6 @@
             }
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            html {
-                scroll-behavior: auto;
-            }
-
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
 
         #intro {
 
@@ -799,82 +786,88 @@
 
         }
 
-        #confeti{
+        #intro {
+            z-index: 9999;
+        }
 
-    position:fixed;
+        .pantalla>.contenido,
+        .pantalla>.hero-image,
+        .pantalla>.indicador {
+            position: relative;
+            z-index: 10;
+        }
 
-    inset:0;
+        #confeti {
 
-    overflow:hidden;
+            position: fixed;
 
-    pointer-events:none;
+            inset: 0;
 
-    z-index:-1;
+            overflow: hidden;
 
-}
+            pointer-events: none;
 
-.confeti{
+            z-index: 5;
 
-    position:absolute;
+        }
 
-    top:-30px;
+        .confeti {
 
-    animation:caerConfeti linear forwards;
+            position: absolute;
 
-}
+            top: -30px;
 
-.confeti.tira{
+            animation: caerConfeti linear forwards;
 
-    width:6px;
+        }
 
-    height:18px;
+        .confeti.tira {
 
-    border-radius:3px;
+            width: 6px;
 
-    background:linear-gradient(
-        #fff8b5,
-        #ffd54f,
-        #ffb300
-    );
+            height: 18px;
 
-}
+            border-radius: 3px;
 
-.confeti.circulo{
+            background: linear-gradient(#fff8b5,
+                    #ffd54f,
+                    #ffb300);
 
-    width:9px;
+        }
 
-    height:9px;
+        .confeti.circulo {
 
-    border-radius:50%;
+            width: 9px;
 
-    background:#ffd54f;
+            height: 9px;
 
-    box-shadow:
-        0 0 8px #ffd54f;
+            border-radius: 50%;
 
-}
+            background: #ffd54f;
 
-@keyframes caerConfeti{
+            box-shadow:
+                0 0 8px #ffd54f;
 
-    from{
+        }
 
-        transform:
-            translateY(-40px)
-            rotate(0deg);
+        @keyframes caerConfeti {
 
-    }
+            from {
 
-    to{
+                transform:
+                    translateY(-40px) rotate(0deg);
 
-        transform:
-            translateY(110vh)
-            rotate(720deg)
-            translateX(60px);
+            }
 
-    }
+            to {
 
-}
-    </style>F
+                transform:
+                    translateY(110vh) rotate(720deg) translateX(60px);
+
+            }
+
+        }
+    </style>
 </head>
 
 <body>
@@ -1313,48 +1306,48 @@
         });
 
         const contenedorConfeti =
-    document.getElementById("confeti");
+            document.getElementById("confeti");
 
-function crearConfeti(){
+        function crearConfeti() {
 
-    const pieza=document.createElement("div");
+            const pieza = document.createElement("div");
 
-    pieza.className="confeti";
+            pieza.className = "confeti";
 
-    if(Math.random()<0.5){
+            if (Math.random() < 0.5) {
 
-        pieza.classList.add("tira");
+                pieza.classList.add("tira");
 
-    }else{
+            } else {
 
-        pieza.classList.add("circulo");
+                pieza.classList.add("circulo");
 
-    }
+            }
 
-    pieza.style.left=
-        Math.random()*100+"vw";
+            pieza.style.left =
+                Math.random() * 100 + "vw";
 
-    pieza.style.animationDuration=
-        (6+Math.random()*5)+"s";
+            pieza.style.animationDuration =
+                (6 + Math.random() * 5) + "s";
 
-    pieza.style.opacity=
-        .45+Math.random()*.55;
+            pieza.style.opacity =
+                .45 + Math.random() * .55;
 
-    pieza.style.scale=
-        .6+Math.random()*.8;
+            pieza.style.scale =
+                .6 + Math.random() * .8;
 
-    contenedorConfeti.appendChild(pieza);
+            contenedorConfeti.appendChild(pieza);
 
-    setTimeout(()=>{
+            setTimeout(() => {
 
-        pieza.remove();
+                pieza.remove();
 
-    },12000);
+            }, 12000);
 
-}
+        }
 
-setInterval(crearConfeti,180);
-    </script>F
+        setInterval(crearConfeti, 180);
+    </script>
 
 </body>
 
