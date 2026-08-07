@@ -737,12 +737,27 @@
             }
 
             .datos {
-                grid-template-columns: 1fr;
-                gap: 10px;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 8px;
             }
 
             .dato {
-                padding: 16px 13px;
+                min-width: 0;
+                padding: 14px 8px;
+            }
+
+            .dato-icono {
+                font-size: 1.45rem;
+            }
+
+            .dato-titulo {
+                font-size: 0.62rem;
+            }
+
+            .dato-texto {
+                font-size: 0.82rem;
+                line-height: 1.35;
+                overflow-wrap: anywhere;
             }
 
             .botones {
@@ -799,6 +814,36 @@
 
             margin-bottom: 20px;
 
+        }
+
+        .titulo-mision {
+            position: relative;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.05;
+            padding: 0 45px;
+        }
+
+        .linea-mision,
+        .linea-especial {
+            display: block;
+        }
+
+        .estrella-mision {
+            position: absolute;
+            top: 50%;
+            font-size: 1.25rem;
+            transform: translateY(-50%);
+            filter: drop-shadow(0 0 8px #ffe45e);
+        }
+
+        .estrella-mision.izquierda {
+            left: 5px;
+        }
+
+        .estrella-mision.derecha {
+            right: 5px;
         }
 
         .intro-box p {
@@ -995,10 +1040,15 @@
 
         <div class="intro-box">
 
-            <h1>✨ MISIÓN ESPECIAL ✨</h1>
+            <h1 class="titulo-mision">
+                <span class="linea-mision">MISIÓN</span>
+                <span class="estrella-mision izquierda">✨</span>
+                <span class="estrella-mision derecha">✨</span>
+                <span class="linea-especial">ESPECIAL</span>
+            </h1>
 
             <p>
-                Las Guerreras K-Pop necesitan una nueva integrante...
+                Las Guerreras K-Pop necesitan un nuevo integrante...
             </p>
 
             <p>
@@ -1203,7 +1253,7 @@
         <div class="contenido cristal revelar">
 
             <div class="regalo">
-                🎁
+                🎁 &nbsp; ✉️
             </div>
 
             <div class="etiqueta">
