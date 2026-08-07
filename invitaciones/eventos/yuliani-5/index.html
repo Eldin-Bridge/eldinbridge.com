@@ -1,14 +1,1159 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yuliani | 5 años</title>
+
+    <title>Yuliani cumple 5 años</title>
+
+    <meta name="description" content="Invitación al cumpleaños número 5 de Yuliani, el 16 de agosto de 2026.">
+
+    <style>
+        :root {
+            --rosa: #ff4fb8;
+            --rosa-claro: #ff9cda;
+            --morado: #8d55ff;
+            --morado-oscuro: #341061;
+            --azul: #56d8ff;
+            --amarillo: #ffe45e;
+            --blanco: #ffffff;
+            --fondo: #080510;
+            --texto-suave: #d9cfe5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+
+        body {
+            overflow-x: hidden;
+            font-family:
+                "Segoe UI",
+                Arial,
+                sans-serif;
+            color: var(--blanco);
+            background: var(--fondo);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .pantalla {
+            position: relative;
+            display: flex;
+            min-height: 100svh;
+            overflow: hidden;
+            align-items: center;
+            justify-content: center;
+            padding: 36px 18px;
+            scroll-snap-align: start;
+            isolation: isolate;
+        }
+
+        .pantalla::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -3;
+            background:
+                radial-gradient(circle at 15% 20%,
+                    rgba(255, 79, 184, 0.30),
+                    transparent 30%),
+                radial-gradient(circle at 85% 25%,
+                    rgba(86, 216, 255, 0.22),
+                    transparent 28%),
+                radial-gradient(circle at 55% 85%,
+                    rgba(141, 85, 255, 0.28),
+                    transparent 34%),
+                linear-gradient(160deg,
+                    #080510 0%,
+                    #180925 48%,
+                    #090713 100%);
+        }
+
+        .pantalla::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            opacity: 0.25;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.04) 1px,
+                    transparent 1px),
+                linear-gradient(90deg,
+                    rgba(255, 255, 255, 0.04) 1px,
+                    transparent 1px);
+            background-size: 42px 42px;
+            mask-image:
+                linear-gradient(to bottom,
+                    black,
+                    transparent);
+        }
+
+        .contenido {
+            width: min(100%, 760px);
+            text-align: center;
+        }
+
+        .cristal {
+            padding: 24px 22px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 28px;
+            background:
+                linear-gradient(145deg,
+                    rgba(255, 255, 255, 0.11),
+                    rgba(255, 255, 255, 0.035));
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(18px);
+        }
+
+        .etiqueta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 18px;
+            padding: 8px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.17);
+            border-radius: 999px;
+            color: #f8e9ff;
+            background: rgba(255, 255, 255, 0.06);
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .punto {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--rosa);
+            box-shadow:
+                0 0 10px var(--rosa),
+                0 0 22px var(--rosa);
+        }
+
+        h1,
+        h2,
+        h3 {
+            text-wrap: balance;
+        }
+
+        .titulo-principal {
+            font-size: clamp(3.3rem, 15vw, 7rem);
+            line-height: 0.88;
+            letter-spacing: -0.07em;
+            text-shadow:
+                0 0 25px rgba(255, 79, 184, 0.28);
+        }
+
+        .nombre {
+            display: block;
+            color: transparent;
+            background:
+                linear-gradient(90deg,
+                    #ffffff 0%,
+                    #ff9cda 35%,
+                    #9b7cff 68%,
+                    #69e1ff 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        .edad {
+            display: block;
+            margin-top: 10px;
+            font-size: clamp(2rem, 9vw, 4.3rem);
+            color: var(--amarillo);
+            letter-spacing: -0.04em;
+            text-shadow:
+                0 0 18px rgba(255, 228, 94, 0.35);
+        }
+
+        .frase {
+            max-width: 560px;
+            margin: 22px auto 0;
+            color: var(--texto-suave);
+            font-size: clamp(1.05rem, 4vw, 1.35rem);
+            line-height: 1.6;
+        }
+
+        .botones {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 26px;
+        }
+
+        .boton {
+            display: inline-flex;
+            min-height: 52px;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 0 22px;
+            border: 0;
+            border-radius: 15px;
+            color: white;
+            background:
+                linear-gradient(135deg,
+                    var(--rosa),
+                    var(--morado));
+            box-shadow:
+                0 14px 36px rgba(141, 85, 255, 0.30);
+            font-weight: 800;
+            cursor: pointer;
+            transition:
+                transform 0.25s ease,
+                filter 0.25s ease;
+        }
+
+        .boton:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.1);
+        }
+
+        .boton-secundario {
+            border: 1px solid rgba(255, 255, 255, 0.17);
+            background: rgba(255, 255, 255, 0.07);
+            box-shadow: none;
+        }
+
+        .indicador {
+            position: absolute;
+            bottom: 22px;
+            left: 50%;
+            display: grid;
+            width: 42px;
+            height: 42px;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            color: white;
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateX(-50%);
+            animation: bajar 1.4s ease-in-out infinite;
+        }
+
+        @keyframes bajar {
+
+            0%,
+            100% {
+                transform: translate(-50%, 0);
+            }
+
+            50% {
+                transform: translate(-50%, 8px);
+            }
+        }
+
+        .estrellas {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .estrella {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 0 14px white;
+            animation: parpadear 2.2s ease-in-out infinite;
+        }
+
+        .estrella:nth-child(1) {
+            top: 12%;
+            left: 10%;
+        }
+
+        .estrella:nth-child(2) {
+            top: 18%;
+            right: 13%;
+            animation-delay: -0.5s;
+        }
+
+        .estrella:nth-child(3) {
+            top: 67%;
+            left: 16%;
+            animation-delay: -1s;
+        }
+
+        .estrella:nth-child(4) {
+            right: 9%;
+            bottom: 17%;
+            animation-delay: -1.4s;
+        }
+
+        .estrella:nth-child(5) {
+            top: 43%;
+            right: 25%;
+            animation-delay: -0.8s;
+        }
+
+        @keyframes parpadear {
+
+            0%,
+            100% {
+                opacity: 0.25;
+                transform: scale(0.7);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+        .titulo-seccion {
+            margin-bottom: 12px;
+            font-size: clamp(2.2rem, 9vw, 4.2rem);
+            line-height: 1;
+            letter-spacing: -0.055em;
+        }
+
+        .subtitulo {
+            max-width: 590px;
+            margin: 0 auto 26px;
+            color: var(--texto-suave);
+            font-size: 1rem;
+            line-height: 1.65;
+        }
+
+        .contador {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .tiempo {
+            padding: 18px 8px;
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.055);
+        }
+
+        .numero {
+            display: block;
+            color: var(--rosa-claro);
+            font-size: clamp(1.8rem, 7vw, 3.4rem);
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .unidad {
+            display: block;
+            margin-top: 8px;
+            color: var(--texto-suave);
+            font-size: 0.67rem;
+            font-weight: 800;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+        }
+
+        .datos {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 13px;
+        }
+
+        .dato {
+            padding: 19px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .dato-icono {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.65rem;
+        }
+
+        .dato-titulo {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--rosa-claro);
+            font-size: 0.72rem;
+            font-weight: 900;
+            letter-spacing: 0.10em;
+            text-transform: uppercase;
+        }
+
+        .dato-texto {
+            display: block;
+            color: white;
+            font-size: 1rem;
+            font-weight: 750;
+            line-height: 1.45;
+        }
+
+        .show {
+            position: relative;
+            overflow: hidden;
+            padding: 28px 20px;
+            border: 1px solid rgba(255, 228, 94, 0.25);
+            border-radius: 24px;
+            background:
+                linear-gradient(135deg,
+                    rgba(255, 228, 94, 0.10),
+                    rgba(255, 79, 184, 0.10),
+                    rgba(141, 85, 255, 0.14));
+        }
+
+        .show::before {
+            content: "";
+            position: absolute;
+            inset: -70%;
+            opacity: 0.18;
+            background:
+                conic-gradient(transparent,
+                    white,
+                    transparent 20%);
+            animation: girar 7s linear infinite;
+        }
+
+        @keyframes girar {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .show-contenido {
+            position: relative;
+        }
+
+        .show-hora {
+            display: block;
+            margin: 10px 0;
+            color: var(--amarillo);
+            font-size: clamp(2.5rem, 12vw, 5rem);
+            font-weight: 950;
+            letter-spacing: -0.06em;
+        }
+
+        .regalo {
+            font-size: 3rem;
+            animation: flotar 2.5s ease-in-out infinite;
+        }
+
+        @keyframes flotar {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-2deg);
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(2deg);
+            }
+        }
+
+        .nota {
+            max-width: 540px;
+            margin: 14px auto 0;
+            color: var(--texto-suave);
+            line-height: 1.6;
+        }
+
+        .final {
+            font-size: clamp(2.5rem, 11vw, 5.4rem);
+            line-height: 0.95;
+            letter-spacing: -0.06em;
+        }
+
+        .firma {
+            margin-top: 20px;
+            color: var(--rosa-claro);
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+
+        .control-musica {
+            position: fixed;
+            right: 16px;
+            bottom: 16px;
+            z-index: 20;
+            display: grid;
+            width: 52px;
+            height: 52px;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 50%;
+            color: white;
+            background:
+                linear-gradient(135deg,
+                    var(--rosa),
+                    var(--morado));
+            box-shadow:
+                0 12px 32px rgba(0, 0, 0, 0.45);
+            cursor: pointer;
+        }
+
+        .control-musica.reproduciendo {
+            animation: pulso 1.4s ease-in-out infinite;
+        }
+
+        @keyframes pulso {
+
+            0%,
+            100% {
+                box-shadow:
+                    0 0 0 0 rgba(255, 79, 184, 0.35),
+                    0 12px 32px rgba(0, 0, 0, 0.45);
+            }
+
+            50% {
+                box-shadow:
+                    0 0 0 12px rgba(255, 79, 184, 0),
+                    0 12px 32px rgba(0, 0, 0, 0.45);
+            }
+        }
+
+        .revelar {
+            opacity: 0;
+            transform: translateY(25px);
+            transition:
+                opacity 0.7s ease,
+                transform 0.7s ease;
+        }
+
+        .revelar.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #inicio {
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        #inicio .contenido {
+            width: min(92vw, 720px);
+        }
+
+        .hero-image {
+            width: min(82vw, 560px);
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero-image img {
+            display: block;
+            width: 100%;
+            max-height: 42svh;
+            object-fit: contain;
+            mix-blend-mode: screen;
+            filter:
+                brightness(1.45) contrast(1.15) drop-shadow(0 0 18px rgba(255, 79, 184, 0.45)) drop-shadow(0 0 35px rgba(86, 216, 255, 0.25));
+        }
+
+        @media (max-width: 540px) {
+            .pantalla {
+                padding: 28px 14px;
+            }
+
+            .cristal {
+                padding: 26px 17px;
+                border-radius: 24px;
+            }
+
+            .contador {
+                gap: 7px;
+            }
+
+            .tiempo {
+                padding: 15px 4px;
+                border-radius: 15px;
+            }
+
+            .unidad {
+                font-size: 0.56rem;
+            }
+
+            .datos {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .dato {
+                padding: 16px 13px;
+            }
+
+            .botones {
+                flex-direction: column;
+            }
+
+            .boton {
+                width: 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        #intro {
+
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(5, 5, 12, .94);
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            z-index: 9999;
+
+            transition: .8s;
+
+        }
+
+        .intro-box {
+
+            width: min(90%, 500px);
+
+            text-align: center;
+
+            background: rgba(255, 255, 255, .08);
+
+            backdrop-filter: blur(18px);
+
+            border-radius: 30px;
+
+            padding: 40px;
+
+            border: 1px solid rgba(255, 255, 255, .15);
+
+        }
+
+        .intro-box h1 {
+
+            color: #ff69cf;
+
+            margin-bottom: 20px;
+
+        }
+
+        .intro-box p {
+
+            margin: 15px 0;
+
+            line-height: 1.7;
+
+        }
+
+        .intro-pulse {
+
+            width: 70px;
+
+            height: 70px;
+
+            border-radius: 50%;
+
+            margin: 35px auto 0;
+
+            background: #ff4fb8;
+
+            animation: pulse 1.4s infinite;
+
+        }
+
+        @keyframes pulse {
+
+            0% {
+
+                transform: scale(.8);
+
+                opacity: .6;
+
+            }
+
+            70% {
+
+                transform: scale(1.2);
+
+                opacity: 0;
+
+            }
+
+            100% {
+
+                transform: scale(.8);
+
+                opacity: 0;
+
+            }
+
+        }
+    </style>
 </head>
+
 <body>
 
-    <h1>Yuliani</h1>
-    <h2>¡Cumple 5 años!</h2>
+    <audio id="musica" loop preload="auto">
+        <source src="assets/audio/dorada-huntrix.mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="control-musica" id="botonMusica" type="button" aria-label="Reproducir o pausar música"
+        title="Música">
+        🎵
+    </button>
+
+    <div id="intro">
+
+        <div class="intro-box">
+
+            <h1>✨ MISIÓN ESPECIAL ✨</h1>
+
+            <p>
+                Las Guerreras K-Pop necesitan una nueva integrante...
+            </p>
+
+            <p>
+                Toca cualquier parte de la pantalla para comenzar la aventura.
+            </p>
+
+            <div class="intro-pulse"></div>
+
+        </div>
+
+    </div>
+
+    <section class="pantalla" id="inicio">
+
+        <div class="estrellas">
+            <span class="estrella"></span>
+            <span class="estrella"></span>
+            <span class="estrella"></span>
+            <span class="estrella"></span>
+            <span class="estrella"></span>
+        </div>
+
+        <div class="hero-image revelar">
+            <img src="assets/images/kpop-guerreras.png" alt="Siluetas de tres guerreras K-Pop">
+        </div>
+
+        <div class="contenido cristal revelar">
+
+            <div class="etiqueta">
+                <span class="punto"></span>
+                Misión: celebrar
+            </div>
+
+            <h1 class="titulo-principal">
+                <span class="nombre">Yuliani</span>
+                <span class="edad">cumple 5 años</span>
+            </h1>
+
+            <p class="frase">
+                Ven a celebrar conmigo una aventura llena de música,
+                magia, luces y mucha diversión.
+            </p>
+
+            <div class="botones">
+                <a class="boton" href="#cuenta">
+                    ✨ Ver invitación
+                </a>
+
+            </div>
+
+        </div>
+
+        <a class="indicador" href="#cuenta" aria-label="Continuar">
+            ↓
+        </a>
+
+    </section>
+
+    <section class="pantalla" id="cuenta">
+
+        <div class="contenido cristal revelar">
+
+            <div class="etiqueta">
+                <span class="punto"></span>
+                Cuenta regresiva
+            </div>
+
+            <h2 class="titulo-seccion">
+                La gran celebración está por comenzar
+            </h2>
+
+            <p class="subtitulo">
+                Cada día falta menos para compartir esta aventura contigo.
+            </p>
+
+            <div class="contador">
+
+                <div class="tiempo">
+                    <span class="numero" id="dias">00</span>
+                    <span class="unidad">Días</span>
+                </div>
+
+                <div class="tiempo">
+                    <span class="numero" id="horas">00</span>
+                    <span class="unidad">Horas</span>
+                </div>
+
+                <div class="tiempo">
+                    <span class="numero" id="minutos">00</span>
+                    <span class="unidad">Minutos</span>
+                </div>
+
+                <div class="tiempo">
+                    <span class="numero" id="segundos">00</span>
+                    <span class="unidad">Segundos</span>
+                </div>
+
+            </div>
+
+            <div class="botones">
+                <a class="boton" href="#detalles">
+                    Ver detalles
+                    <span>↓</span>
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="pantalla" id="show">
+
+        <div class="contenido revelar">
+
+            <div class="show">
+
+                <div class="show-contenido">
+
+                    <div class="etiqueta">
+                        <span class="punto"></span>
+                        Momento especial
+                    </div>
+
+                    <h2 class="titulo-seccion">
+                        ¡Habrá show!
+                    </h2>
+
+                    <span class="show-hora">
+                        5:00 p. m.
+                    </span>
+
+                    <p class="subtitulo">
+                        Prepárate para cantar, bailar y disfrutar
+                        de una presentación muy especial.
+                    </p>
+
+                    <div class="botones">
+                        <a class="boton" href="#regalo">
+                            Continuar
+                            <span>↓</span>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="pantalla" id="regalo">
+
+        <div class="contenido cristal revelar">
+
+            <div class="regalo">
+                🎁
+            </div>
+
+            <div class="etiqueta">
+                <span class="punto"></span>
+                Regalos
+            </div>
+
+            <h2 class="titulo-seccion">
+                Tu presencia es lo más importante
+            </h2>
+
+            <p class="nota">
+                Si deseas llevar un detalle para Yuliani,
+                el regalo es libre y será recibido con mucho cariño.
+            </p>
+
+            <div class="botones">
+                <a class="boton" href="#final">
+                    Llegar al final
+                    <span>↓</span>
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="pantalla" id="final">
+
+        <div class="contenido cristal revelar">
+
+            <div class="etiqueta">
+                <span class="punto"></span>
+                Nos vemos pronto
+            </div>
+
+            <h2 class="final">
+                ¡No faltes a esta gran aventura!
+            </h2>
+
+            <p class="frase">
+                Ven a celebrar conmigo y hagamos de este día
+                un recuerdo lleno de alegría.
+            </p>
+
+            <div class="firma">
+                Con cariño, Yuliani 💜
+            </div>
+
+            <div class="botones">
+                <a class="boton" href="#inicio">
+                    ↑ Volver al inicio
+                </a>
+
+                <a class="boton boton-secundario" href="https://maps.app.goo.gl/YCQnm8qAvHr8mu9t9" target="_blank"
+                    rel="noopener noreferrer">
+                    📍 Ver ubicación
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="pantalla" id="detalles">
+
+        <div class="contenido cristal revelar">
+
+            <div class="etiqueta">
+                <span class="punto"></span>
+                Información del evento
+            </div>
+
+            <h2 class="titulo-seccion">
+                Guarda la fecha
+            </h2>
+
+            <p class="subtitulo">
+                Aquí tienes todos los datos para acompañar a Yuliani.
+            </p>
+
+            <div class="datos">
+
+                <div class="dato">
+                    <span class="dato-icono">📅</span>
+                    <span class="dato-titulo">Fecha</span>
+                    <span class="dato-texto">
+                        Domingo<br>
+                        16 de agosto de 2026
+                    </span>
+                </div>
+
+                <div class="dato">
+                    <span class="dato-icono">🕐</span>
+                    <span class="dato-titulo">Hora</span>
+                    <span class="dato-texto">
+                        Desde la 1:00 p. m.
+                    </span>
+                </div>
+
+                <div class="dato">
+                    <span class="dato-icono">🎉</span>
+                    <span class="dato-titulo">Lugar</span>
+                    <span class="dato-texto">
+                        Quinta Los Laureles
+                    </span>
+                </div>
+
+                <div class="dato">
+                    <span class="dato-icono">📍</span>
+                    <span class="dato-titulo">Dirección</span>
+                    <span class="dato-texto">
+                        Calle Francisco Zarco #809<br>
+                        Col. Lázaro Cárdenas, 2.º Sector
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="botones">
+                <a class="boton" href="https://maps.app.goo.gl/YCQnm8qAvHr8mu9t9" target="_blank"
+                    rel="noopener noreferrer">
+                    📍 Abrir ubicación
+                </a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <script>
+
+        const intro = document.getElementById("intro");
+
+        document.addEventListener("click", async () => {
+
+            if (intro) {
+
+                intro.style.opacity = "0";
+
+                setTimeout(() => intro.remove(), 800);
+
+            }
+
+            try {
+
+                await musica.play();
+
+                musicaActiva = true;
+
+                botonMusica.style.display = "none";
+
+            } catch (e) { }
+
+        }, { once: true });
+        const fechaEvento = new Date("2026-08-16T13:00:00");
+
+        const dias = document.getElementById("dias");
+        const horas = document.getElementById("horas");
+        const minutos = document.getElementById("minutos");
+        const segundos = document.getElementById("segundos");
+
+        function actualizarContador() {
+            const ahora = new Date();
+            const diferencia = fechaEvento - ahora;
+
+            if (diferencia <= 0) {
+                dias.textContent = "00";
+                horas.textContent = "00";
+                minutos.textContent = "00";
+                segundos.textContent = "00";
+                return;
+            }
+
+            const totalSegundos = Math.floor(diferencia / 1000);
+
+            const diasRestantes =
+                Math.floor(totalSegundos / 86400);
+
+            const horasRestantes =
+                Math.floor((totalSegundos % 86400) / 3600);
+
+            const minutosRestantes =
+                Math.floor((totalSegundos % 3600) / 60);
+
+            const segundosRestantes =
+                totalSegundos % 60;
+
+            dias.textContent =
+                String(diasRestantes).padStart(2, "0");
+
+            horas.textContent =
+                String(horasRestantes).padStart(2, "0");
+
+            minutos.textContent =
+                String(minutosRestantes).padStart(2, "0");
+
+            segundos.textContent =
+                String(segundosRestantes).padStart(2, "0");
+        }
+
+        actualizarContador();
+        setInterval(actualizarContador, 1000);
+
+        const musica = document.getElementById("musica");
+        const botonMusica = document.getElementById("botonMusica");
+
+        let musicaActiva = false;
+
+        async function alternarMusica() {
+            try {
+                if (musicaActiva) {
+                    musica.pause();
+                    musicaActiva = false;
+                    botonMusica.textContent = "🎵";
+                    botonMusica.classList.remove("reproduciendo");
+                
+                } else {
+                    await musica.play();
+                    musicaActiva = true;
+                    botonMusica.textContent = "⏸";
+                    botonMusica.classList.add("reproduciendo");
+                
+                }
+            } catch (error) {
+                alert(
+                    "Todavía falta agregar el archivo musica-kpop.mp3."
+                );
+            }
+        }
+
+        botonMusica.addEventListener("click", alternarMusica);
+
+
+        const elementos = document.querySelectorAll(".revelar");
+
+        const observador = new IntersectionObserver(
+            (entradas) => {
+                entradas.forEach((entrada) => {
+                    if (entrada.isIntersecting) {
+                        entrada.target.classList.add("visible");
+                    }
+                });
+            },
+            {
+                threshold: 0.18
+            }
+        );
+
+        elementos.forEach((elemento) => {
+            observador.observe(elemento);
+        });
+    </script>
 
 </body>
+
 </html>
