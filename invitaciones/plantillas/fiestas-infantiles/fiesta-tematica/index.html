@@ -100,7 +100,7 @@
             transform-origin: center;
             pointer-events: none;
             user-select: none;
-            filter: drop-shadow(0 12px 24px rgba(0, 0, 0, .3));
+            filter: drop-shadow(0 7px 10px rgba(0, 0, 0, .28));
         }
 
         .editor-activo .elemento {
@@ -129,6 +129,13 @@
             animation: deriva 5s ease-in-out infinite;
         }
 
+        /* Las animaciones fuera de la pantalla visible se mantienen pausadas. */
+        .escena:not(.escena-activa) .elemento,
+        .escena:not(.escena-activa) .iconos-magicos span,
+        .escena:not(.escena-activa) .indicador {
+            animation-play-state: paused;
+        }
+
         @keyframes flotar {
             50% {
                 translate: 0 -14px;
@@ -138,8 +145,7 @@
         @keyframes pulso {
             50% {
                 scale: 1.08;
-                filter:
-                    drop-shadow(0 0 25px rgba(255, 213, 106, .8));
+                opacity: .94;
             }
         }
 
@@ -397,39 +403,37 @@
 
         .particula-magica {
             position: absolute;
-            top: -40px;
+            top: -30px;
             color: var(--color-particula);
             font-size: var(--tamano-particula);
             line-height: 1;
             opacity: 0;
-            filter:
-                drop-shadow(0 0 5px currentColor) drop-shadow(0 0 12px currentColor);
-            animation:
-                cascada-magica var(--duracion-particula) linear forwards;
-            will-change: transform, opacity;
+            text-shadow: 0 0 5px currentColor;
+            animation: cascada-magica var(--duracion-particula) linear forwards;
+            pointer-events: none;
         }
 
         @keyframes cascada-magica {
             0% {
                 opacity: 0;
                 transform:
-                    translate3d(0, -30px, 0) rotate(0deg) scale(.5);
+                    translate3d(0, -25px, 0) rotate(0deg);
             }
 
             10% {
-                opacity: 1;
+                opacity: .9;
             }
 
             85% {
-                opacity: .9;
+                opacity: .8;
             }
 
             100% {
                 opacity: 0;
                 transform:
                     translate3d(var(--desvio-particula),
-                        110svh,
-                        0) rotate(540deg) scale(1.15);
+                        105svh,
+                        0) rotate(360deg);
             }
         }
 
@@ -782,7 +786,8 @@
 
     <main id="invitacion">
         <section class="escena" id="inicio" data-escena="inicio">
-            <img class="fondo-escena" src="assets/fondos/fondo01.png" alt="Reino fantástico entre las estrellas">
+            <img class="fondo-escena" src="assets/fondos/fondo01.webp" alt="Reino fantástico entre las estrellas"
+                decoding="async" fetchpriority="high">
 
             <div class="velo"></div>
             <div class="capa-elementos"></div>
@@ -815,7 +820,7 @@
         </section>
 
         <section class="escena" id="cuenta" data-escena="cuenta">
-            <img class="fondo-escena" src="assets/fondos/fondo08.png" alt="">
+            <img class="fondo-escena" src="assets/fondos/fondo08.webp" alt="" loading="lazy" decoding="async">
 
             <div class="velo"></div>
             <div class="capa-elementos"></div>
@@ -862,7 +867,7 @@
         </section>
 
         <section class="escena" id="mision" data-escena="mision">
-            <img class="fondo-escena" src="assets/fondos/fondo04.png" alt="">
+            <img class="fondo-escena" src="assets/fondos/fondo04.webp" alt="" loading="lazy" decoding="async">
 
             <div class="velo"></div>
             <div class="capa-elementos"></div>
@@ -894,7 +899,7 @@
         </section>
 
         <section class="escena" id="atuendo" data-escena="atuendo">
-            <img class="fondo-escena" src="assets/fondos/fondo06.png" alt="">
+            <img class="fondo-escena" src="assets/fondos/fondo06.webp" alt="" loading="lazy" decoding="async">
 
             <div class="velo"></div>
             <div class="capa-elementos"></div>
@@ -926,7 +931,7 @@
         </section>
 
         <section class="escena" id="regalo" data-escena="regalo">
-            <img class="fondo-escena" src="assets/fondos/fondo05.png" alt="">
+            <img class="fondo-escena" src="assets/fondos/fondo05.webp" alt="" loading="lazy" decoding="async">
 
             <div class="velo"></div>
             <div class="capa-elementos"></div>
@@ -958,7 +963,7 @@
         </section>
 
         <section class="escena" id="detalles" data-escena="detalles">
-            <img class="fondo-escena" src="assets/fondos/fondo03.png" alt="">
+            <img class="fondo-escena" src="assets/fondos/fondo03.webp" alt="" loading="lazy" decoding="async">
 
             <div class="velo"></div>
             <div class="capa-elementos"></div>
@@ -1015,7 +1020,7 @@
         </section>
 
         <section class="escena" id="final" data-escena="final">
-            <img class="fondo-escena" src="assets/fondos/fondo07.png" alt="">
+            <img class="fondo-escena" src="assets/fondos/fondo07.webp" alt="" loading="lazy" decoding="async">
 
             <div class="velo"></div>
             <div class="capa-elementos"></div>
@@ -1174,7 +1179,7 @@
                 {
                     id: "personaje-inicio",
                     escena: "inicio",
-                    archivo: "assets/personajes/personaje01.png",
+                    archivo: "assets/personajes/personaje01.webp",
                     x: 82,
                     y: 70,
                     tamano: 35,
@@ -1185,7 +1190,7 @@
                 {
                     id: "estrella-inicio",
                     escena: "inicio",
-                    archivo: "assets/elementos/elemento01.png",
+                    archivo: "assets/elementos/elemento01.webp",
                     x: 17,
                     y: 23,
                     tamano: 16,
@@ -1196,7 +1201,7 @@
                 {
                     id: "numero-inicio",
                     escena: "inicio",
-                    archivo: "assets/elementos/elemento11.png",
+                    archivo: "assets/elementos/elemento11.webp",
                     x: 16,
                     y: 72,
                     tamano: 14,
@@ -1207,7 +1212,7 @@
                 {
                     id: "personaje-cuenta",
                     escena: "cuenta",
-                    archivo: "assets/personajes/personaje02.png",
+                    archivo: "assets/personajes/personaje02.webp",
                     x: 82,
                     y: 73,
                     tamano: 31,
@@ -1218,7 +1223,7 @@
                 {
                     id: "estela-cuenta",
                     escena: "cuenta",
-                    archivo: "assets/elementos/elemento04.png",
+                    archivo: "assets/elementos/elemento04.webp",
                     x: 24,
                     y: 19,
                     tamano: 28,
@@ -1229,7 +1234,7 @@
                 {
                     id: "personaje-mision",
                     escena: "mision",
-                    archivo: "assets/personajes/personaje03.png",
+                    archivo: "assets/personajes/personaje03.webp",
                     x: 17,
                     y: 72,
                     tamano: 31,
@@ -1240,7 +1245,7 @@
                 {
                     id: "luna-mision",
                     escena: "mision",
-                    archivo: "assets/elementos/elemento03.png",
+                    archivo: "assets/elementos/elemento03.webp",
                     x: 83,
                     y: 19,
                     tamano: 13,
@@ -1251,7 +1256,7 @@
                 {
                     id: "personaje-atuendo",
                     escena: "atuendo",
-                    archivo: "assets/personajes/personaje07.png",
+                    archivo: "assets/personajes/personaje07.webp",
                     x: 82,
                     y: 72,
                     tamano: 31,
@@ -1262,7 +1267,7 @@
                 {
                     id: "tiara-atuendo",
                     escena: "atuendo",
-                    archivo: "assets/elementos/elemento10.png",
+                    archivo: "assets/elementos/elemento10.webp",
                     x: 18,
                     y: 22,
                     tamano: 19,
@@ -1273,7 +1278,7 @@
                 {
                     id: "personaje-regalo",
                     escena: "regalo",
-                    archivo: "assets/personajes/personaje06.png",
+                    archivo: "assets/personajes/personaje06.webp",
                     x: 18,
                     y: 72,
                     tamano: 31,
@@ -1284,7 +1289,7 @@
                 {
                     id: "regalos",
                     escena: "regalo",
-                    archivo: "assets/elementos/elemento09.png",
+                    archivo: "assets/elementos/elemento09.webp",
                     x: 84,
                     y: 76,
                     tamano: 21,
@@ -1295,7 +1300,7 @@
                 {
                     id: "personaje-detalles",
                     escena: "detalles",
-                    archivo: "assets/personajes/personaje10.png",
+                    archivo: "assets/personajes/personaje10.webp",
                     x: 84,
                     y: 73,
                     tamano: 29,
@@ -1306,7 +1311,7 @@
                 {
                     id: "globos-detalles",
                     escena: "detalles",
-                    archivo: "assets/elementos/elemento08.png",
+                    archivo: "assets/elementos/elemento08.webp",
                     x: 15,
                     y: 24,
                     tamano: 18,
@@ -1317,7 +1322,7 @@
                 {
                     id: "personaje-final",
                     escena: "final",
-                    archivo: "assets/personajes/personaje05.png",
+                    archivo: "assets/personajes/personaje05.webp",
                     x: 82,
                     y: 68,
                     tamano: 33,
@@ -1328,7 +1333,7 @@
                 {
                     id: "pastel-final",
                     escena: "final",
-                    archivo: "assets/elementos/elemento06.png",
+                    archivo: "assets/elementos/elemento06.webp",
                     x: 17,
                     y: 72,
                     tamano: 20,
@@ -1339,7 +1344,7 @@
                 {
                     id: "velas-final",
                     escena: "final",
-                    archivo: "assets/elementos/elemento07.png",
+                    archivo: "assets/elementos/elemento07.webp",
                     x: 14,
                     y: 44,
                     tamano: 11,
@@ -1375,6 +1380,13 @@
 
             imagen.src = datos.archivo;
             imagen.alt = "";
+            imagen.loading = "lazy";
+            imagen.decoding = "async";
+
+            imagen.addEventListener("error", () => {
+                imagen.remove();
+            });
+
             imagen.dataset.id = datos.id;
 
             imagen.className = `
@@ -1466,6 +1478,7 @@
         let invitacionAbierta = false;
         let intervaloCascada = null;
         let ultimaEscenaVisible = "";
+        let ultimaCascada = 0;
 
         $("#abrir-invitacion").addEventListener(
             "click",
@@ -1479,13 +1492,11 @@
 
                 musica.play().catch(() => { });
 
-                /*
-                 * Repite la cascada cada siete segundos.
-                 */
+                /* Repite la cascada sin saturar el dispositivo. */
                 if (!intervaloCascada) {
                     intervaloCascada = setInterval(
                         lanzarCascadaMagica,
-                        7000
+                        9000
                     );
                 }
             }
@@ -1540,7 +1551,7 @@
                 "#ff8dc7"
             ];
 
-            for (let indice = 0; indice < 70; indice++) {
+            for (let indice = 0; indice < 40; indice++) {
                 const pieza = document.createElement("span");
 
                 pieza.className = "confeti";
@@ -1570,6 +1581,15 @@
                 return;
             }
 
+            const momentoActual = Date.now();
+
+            /* Evita que el intervalo y el cambio de pantalla se superpongan. */
+            if (momentoActual - ultimaCascada < 4200) {
+                return;
+            }
+
+            ultimaCascada = momentoActual;
+
             const contenedor = $("#confeti");
 
             const colores = [
@@ -1588,11 +1608,7 @@
                 "•"
             ];
 
-            /*
-             * Se mantienen pocas partículas para evitar
-             * problemas de rendimiento en iPhone.
-             */
-            for (let indice = 0; indice < 28; indice++) {
+            for (let indice = 0; indice < 16; indice++) {
                 const particula =
                     document.createElement("span");
 
@@ -1620,27 +1636,27 @@
 
                 particula.style.setProperty(
                     "--tamano-particula",
-                    8 + Math.random() * 13 + "px"
+                    7 + Math.random() * 9 + "px"
                 );
 
                 particula.style.setProperty(
                     "--duracion-particula",
-                    4 + Math.random() * 2.5 + "s"
+                    5 + Math.random() * 1.7 + "s"
                 );
 
                 particula.style.setProperty(
                     "--desvio-particula",
-                    -35 + Math.random() * 70 + "px"
+                    -25 + Math.random() * 50 + "px"
                 );
 
                 particula.style.animationDelay =
-                    Math.random() * 1.6 + "s";
+                    Math.random() * .8 + "s";
 
                 contenedor.appendChild(particula);
 
                 setTimeout(
                     () => particula.remove(),
-                    8500
+                    7800
                 );
             }
         }
@@ -1649,6 +1665,11 @@
             new IntersectionObserver(
                 entradas => {
                     entradas.forEach(entrada => {
+                        entrada.target.classList.toggle(
+                            "escena-activa",
+                            entrada.isIntersecting
+                        );
+
                         if (
                             entrada.isIntersecting &&
                             invitacionAbierta &&
