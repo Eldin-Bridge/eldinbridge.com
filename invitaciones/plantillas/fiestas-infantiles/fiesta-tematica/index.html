@@ -75,12 +75,10 @@
             inset: 0;
             z-index: -4;
             background:
-                linear-gradient(
-                    180deg,
+                linear-gradient(180deg,
                     rgba(2, 7, 23, .12),
                     rgba(3, 8, 24, .48) 55%,
-                    rgba(2, 6, 18, .82)
-                );
+                    rgba(2, 6, 18, .82));
         }
 
         .capa-elementos {
@@ -98,8 +96,7 @@
             width: calc(var(--tamano) * 1%);
             max-width: none;
             transform:
-                translate(-50%, -50%)
-                scaleX(var(--voltear, 1));
+                translate(-50%, -50%) scaleX(var(--voltear, 1));
             transform-origin: center;
             pointer-events: none;
             user-select: none;
@@ -168,11 +165,9 @@
             border-radius: 28px;
             text-align: center;
             background:
-                linear-gradient(
-                    145deg,
+                linear-gradient(145deg,
                     rgba(8, 24, 54, .78),
-                    rgba(55, 28, 102, .42)
-                );
+                    rgba(55, 28, 102, .42));
             box-shadow:
                 0 24px 80px rgba(0, 0, 0, .42),
                 inset 0 1px rgba(255, 255, 255, .18);
@@ -431,11 +426,9 @@
             place-items: center;
             padding: 24px;
             background:
-                radial-gradient(
-                    circle at 50% 25%,
+                radial-gradient(circle at 50% 25%,
                     rgba(109, 69, 198, .45),
-                    transparent 35%
-                ),
+                    transparent 35%),
                 #030817;
         }
 
@@ -564,6 +557,91 @@
         }
 
         @media (max-width: 560px) {
+            .escena {
+                align-items: flex-start;
+                padding-top: 7svh;
+                padding-bottom: 32svh;
+            }
+
+            /*
+     * Coloca personajes y adornos delante
+     * de la tarjeta solamente     */
+            .capa-elementos {
+                z-index: 11;
+            }
+
+            /*
+     * La tarjeta conserva el texto encima,
+     * pero deja libre parte del costado.
+     */
+            .contenido {
+                z-index: 10;
+                width: 76vw;
+                max-width: 310px;
+                padding: 22px 17px;
+            }
+
+            /*
+     * Escenas con personaje a la derecha:
+     * el texto se acomoda hacia la izquierda.
+     */
+            #inicio,
+            #cuenta,
+            #atuendo,
+            #detalles,
+            #final {
+                justify-content: flex-start;
+            }
+
+            /*
+     * Escenas con personaje a la izquierda:
+     * el texto se acomoda hacia la derecha.
+     */
+            #mision,
+            #regalo {
+                justify-content: flex-end;
+            }
+
+            /*
+     * Los personajes quedan en la parte inferior
+     * y delante del contenido.
+     */
+            .elemento.personaje {
+                top: auto !important;
+                bottom: -2%;
+                width: calc(var(--tamano) * 1.05%);
+                z-index: 14 !important;
+            }
+
+            /*
+     * Empuja un poco más hacia la derecha
+     * los personajes de estas escenas.
+     */
+            #inicio .elemento.personaje,
+            #cuenta .elemento.personaje,
+            #atuendo .elemento.personaje,
+            #detalles .elemento.personaje,
+            #final .elemento.personaje {
+                left: 88%;
+            }
+
+            /*
+     * Empuja hacia la izquierda los personajes
+     * de estas escenas.
+     */
+            #mision .elemento.personaje,
+            #regalo .elemento.personaje {
+                left: 12%;
+            }
+
+            /*
+     * Los adornos siguen visibles, pero debajo
+     * de los personajes.
+     */
+            .elemento:not(.personaje) {
+                z-index: 12 !important;
+            }
+
             .contador {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -572,8 +650,17 @@
                 grid-template-columns: 1fr;
             }
 
-            .elemento.personaje {
-                width: calc(var(--tamano) * 1.18%);
+            h1 {
+                font-size: clamp(2.5rem, 13vw, 4rem);
+            }
+
+            h2 {
+                font-size: clamp(2rem, 9vw, 3.5rem);
+            }
+
+            .texto {
+                font-size: .95rem;
+                line-height: 1.48;
             }
         }
 
@@ -595,14 +682,8 @@
 <body>
     <audio id="musica" loop preload="none"></audio>
 
-    <button
-        class="control-musica"
-        id="boton-musica"
-        type="button"
-        aria-label="Reproducir o pausar música"
-        title="Agrega una canción desde el editor"
-        disabled
-    >
+    <button class="control-musica" id="boton-musica" type="button" aria-label="Reproducir o pausar música"
+        title="Agrega una canción desde el editor" disabled>
         🎵
     </button>
 
@@ -618,11 +699,7 @@
             </p>
 
             <div class="botones">
-                <button
-                    class="boton"
-                    id="abrir-invitacion"
-                    type="button"
-                >
+                <button class="boton" id="abrir-invitacion" type="button">
                     ⭐ Entrar al reino
                 </button>
             </div>
@@ -630,16 +707,8 @@
     </div>
 
     <main id="invitacion">
-        <section
-            class="escena"
-            id="inicio"
-            data-escena="inicio"
-        >
-            <img
-                class="fondo-escena"
-                src="assets/fondos/fondo01.png"
-                alt="Reino fantástico entre las estrellas"
-            >
+        <section class="escena" id="inicio" data-escena="inicio">
+            <img class="fondo-escena" src="assets/fondos/fondo01.png" alt="Reino fantástico entre las estrellas">
 
             <div class="velo"></div>
             <div class="capa-elementos"></div>
@@ -666,25 +735,13 @@
                 </div>
             </div>
 
-            <a
-                class="indicador"
-                href="#cuenta"
-                aria-label="Continuar"
-            >
+            <a class="indicador" href="#cuenta" aria-label="Continuar">
                 ↓
             </a>
         </section>
 
-        <section
-            class="escena"
-            id="cuenta"
-            data-escena="cuenta"
-        >
-            <img
-                class="fondo-escena"
-                src="assets/fondos/fondo08.png"
-                alt=""
-            >
+        <section class="escena" id="cuenta" data-escena="cuenta">
+            <img class="fondo-escena" src="assets/fondos/fondo08.png" alt="">
 
             <div class="velo"></div>
             <div class="capa-elementos"></div>
@@ -730,16 +787,8 @@
             </div>
         </section>
 
-        <section
-            class="escena"
-            id="mision"
-            data-escena="mision"
-        >
-            <img
-                class="fondo-escena"
-                src="assets/fondos/fondo04.png"
-                alt=""
-            >
+        <section class="escena" id="mision" data-escena="mision">
+            <img class="fondo-escena" src="assets/fondos/fondo04.png" alt="">
 
             <div class="velo"></div>
             <div class="capa-elementos"></div>
@@ -770,16 +819,8 @@
             </div>
         </section>
 
-        <section
-            class="escena"
-            id="atuendo"
-            data-escena="atuendo"
-        >
-            <img
-                class="fondo-escena"
-                src="assets/fondos/fondo06.png"
-                alt=""
-            >
+        <section class="escena" id="atuendo" data-escena="atuendo">
+            <img class="fondo-escena" src="assets/fondos/fondo06.png" alt="">
 
             <div class="velo"></div>
             <div class="capa-elementos"></div>
@@ -810,16 +851,8 @@
             </div>
         </section>
 
-        <section
-            class="escena"
-            id="regalo"
-            data-escena="regalo"
-        >
-            <img
-                class="fondo-escena"
-                src="assets/fondos/fondo05.png"
-                alt=""
-            >
+        <section class="escena" id="regalo" data-escena="regalo">
+            <img class="fondo-escena" src="assets/fondos/fondo05.png" alt="">
 
             <div class="velo"></div>
             <div class="capa-elementos"></div>
@@ -850,16 +883,8 @@
             </div>
         </section>
 
-        <section
-            class="escena"
-            id="detalles"
-            data-escena="detalles"
-        >
-            <img
-                class="fondo-escena"
-                src="assets/fondos/fondo03.png"
-                alt=""
-            >
+        <section class="escena" id="detalles" data-escena="detalles">
+            <img class="fondo-escena" src="assets/fondos/fondo03.png" alt="">
 
             <div class="velo"></div>
             <div class="capa-elementos"></div>
@@ -915,16 +940,8 @@
             </div>
         </section>
 
-        <section
-            class="escena"
-            id="final"
-            data-escena="final"
-        >
-            <img
-                class="fondo-escena"
-                src="assets/fondos/fondo07.png"
-                alt=""
-            >
+        <section class="escena" id="final" data-escena="final">
+            <img class="fondo-escena" src="assets/fondos/fondo07.png" alt="">
 
             <div class="velo"></div>
             <div class="capa-elementos"></div>
@@ -950,10 +967,7 @@
                         ↑ Volver al inicio
                     </a>
 
-                    <button
-                        class="boton boton-secundario"
-                        type="button"
-                    >
+                    <button class="boton boton-secundario" type="button">
                         📍 Ver ubicación
                     </button>
                 </div>
@@ -961,11 +975,7 @@
         </section>
     </main>
 
-    <aside
-        class="editor"
-        id="editor"
-        aria-label="Editor de la plantilla"
-    >
+    <aside class="editor" id="editor" aria-label="Editor de la plantilla">
         <h2>Editor temático</h2>
 
         <p class="editor-aviso">
@@ -993,11 +1003,7 @@
                 Cargar fondo
             </label>
 
-            <input
-                id="cargar-fondo"
-                type="file"
-                accept="image/png,image/jpeg,image/webp"
-            >
+            <input id="cargar-fondo" type="file" accept="image/png,image/jpeg,image/webp">
         </div>
 
         <div class="campo">
@@ -1005,11 +1011,7 @@
                 Agregar personaje o elemento transparente
             </label>
 
-            <input
-                id="cargar-elemento"
-                type="file"
-                accept="image/png,image/webp"
-            >
+            <input id="cargar-elemento" type="file" accept="image/png,image/webp">
         </div>
 
         <div class="campo">
@@ -1028,25 +1030,13 @@
             <div class="campo">
                 <label for="pos-x">Posición X</label>
 
-                <input
-                    id="pos-x"
-                    type="range"
-                    min="0"
-                    max="100"
-                    value="50"
-                >
+                <input id="pos-x" type="range" min="0" max="100" value="50">
             </div>
 
             <div class="campo">
                 <label for="pos-y">Posición Y</label>
 
-                <input
-                    id="pos-y"
-                    type="range"
-                    min="0"
-                    max="100"
-                    value="50"
-                >
+                <input id="pos-y" type="range" min="0" max="100" value="50">
             </div>
         </div>
 
@@ -1054,25 +1044,13 @@
             <div class="campo">
                 <label for="tamano">Tamaño</label>
 
-                <input
-                    id="tamano"
-                    type="range"
-                    min="5"
-                    max="120"
-                    value="35"
-                >
+                <input id="tamano" type="range" min="5" max="120" value="35">
             </div>
 
             <div class="campo">
                 <label for="capa">Capa</label>
 
-                <input
-                    id="capa"
-                    type="number"
-                    min="1"
-                    max="20"
-                    value="3"
-                >
+                <input id="capa" type="number" min="1" max="20" value="3">
             </div>
         </div>
 
@@ -1095,11 +1073,7 @@
             </label>
         </div>
 
-        <button
-            class="editor-boton peligro"
-            id="eliminar-elemento"
-            type="button"
-        >
+        <button class="editor-boton peligro" id="eliminar-elemento" type="button">
             Eliminar elemento
         </button>
 
@@ -1110,18 +1084,10 @@
                 Cargar música para la prueba
             </label>
 
-            <input
-                id="cargar-audio"
-                type="file"
-                accept="audio/*"
-            >
+            <input id="cargar-audio" type="file" accept="audio/*">
         </div>
 
-        <button
-            class="editor-boton primario"
-            id="exportar"
-            type="button"
-        >
+        <button class="editor-boton primario" id="exportar" type="button">
             Exportar configuración
         </button>
     </aside>
@@ -1429,7 +1395,7 @@
                 $("#intro").classList.add("oculto");
                 lanzarConfeti();
 
-                musica.play().catch(() => {});
+                musica.play().catch(() => { });
             }
         );
 
@@ -1468,7 +1434,7 @@
                     !document.hidden &&
                     musica.dataset.reanudar === "1"
                 ) {
-                    musica.play().catch(() => {});
+                    musica.play().catch(() => { });
                     delete musica.dataset.reanudar;
                 }
             }
