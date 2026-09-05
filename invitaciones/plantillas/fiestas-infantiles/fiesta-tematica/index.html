@@ -557,6 +557,15 @@
         }
 
         @media (max-width: 560px) {
+
+            /*
+     * Safari en iPhone puede presentar problemas al combinar
+     * enlaces internos con desplazamiento suave y scroll-snap.
+     */
+            html {
+                scroll-snap-type: none;
+            }
+
             /*
      * No modificamos .escena ni .fondo-escena.
      * El fondo y la posición general permanecen iguales.
@@ -592,6 +601,7 @@
                     0 24px 80px rgba(0, 0, 0, .42),
                     inset 0 1px rgba(255, 255, 255, .18);
                 backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
                 pointer-events: none;
             }
 
