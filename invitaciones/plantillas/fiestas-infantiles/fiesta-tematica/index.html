@@ -395,6 +395,44 @@
             }
         }
 
+        .particula-magica {
+            position: absolute;
+            top: -40px;
+            color: var(--color-particula);
+            font-size: var(--tamano-particula);
+            line-height: 1;
+            opacity: 0;
+            filter:
+                drop-shadow(0 0 5px currentColor) drop-shadow(0 0 12px currentColor);
+            animation:
+                cascada-magica var(--duracion-particula) linear forwards;
+            will-change: transform, opacity;
+        }
+
+        @keyframes cascada-magica {
+            0% {
+                opacity: 0;
+                transform:
+                    translate3d(0, -30px, 0) rotate(0deg) scale(.5);
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            85% {
+                opacity: .9;
+            }
+
+            100% {
+                opacity: 0;
+                transform:
+                    translate3d(var(--desvio-particula),
+                        110svh,
+                        0) rotate(540deg) scale(1.15);
+            }
+        }
+
         .control-musica {
             position: fixed;
             right: 15px;
@@ -716,10 +754,10 @@
 </head>
 
 <body>
-    <audio id="musica" loop preload="none"></audio>
+    <audio id="musica" src="assets/audio/audio01.mp3" loop preload="auto"></audio>
 
     <button class="control-musica" id="boton-musica" type="button" aria-label="Reproducir o pausar música"
-        title="Agrega una canción desde el editor" disabled>
+        title="Reproducir o pausar música">
         🎵
     </button>
 
@@ -1425,13 +1463,31 @@
         const musica = $("#musica");
         const botonMusica = $("#boton-musica");
 
+        let invitacionAbierta = false;
+        let intervaloCascada = null;
+        let ultimaEscenaVisible = "";
+
         $("#abrir-invitacion").addEventListener(
             "click",
             () => {
                 $("#intro").classList.add("oculto");
+
+                invitacionAbierta = true;
+
                 lanzarConfeti();
+                lanzarCascadaMagica();
 
                 musica.play().catch(() => { });
+
+                /*
+                 * Repite la cascada cada siete segundos.
+                 */
+                if (!intervaloCascada) {
+                    intervaloCascada = setInterval(
+                        lanzarCascadaMagica,
+                        7000
+                    );
+                }
             }
         );
 
@@ -1508,6 +1564,111 @@
                 );
             }
         }
+
+        function lanzarCascadaMagica() {
+            if (!invitacionAbierta || document.hidden) {
+                return;
+            }
+
+            const contenedor = $("#confeti");
+
+            const colores = [
+                "#ffd56a",
+                "#fff1b4",
+                "#70dcff",
+                "#bca6ff",
+                "#ff8dc7"
+            ];
+
+            const simbolos = [
+                "✦",
+                "✧",
+                "★",
+                "✶",
+                "•"
+            ];
+
+            /*
+             * Se mantienen pocas partículas para evitar
+             * problemas de rendimiento en iPhone.
+             */
+            for (let indice = 0; indice < 28; indice++) {
+                const particula =
+                    document.createElement("span");
+
+                particula.className =
+                    "particula-magica";
+
+                particula.textContent =
+                    simbolos[
+                    Math.floor(
+                        Math.random() * simbolos.length
+                    )
+                    ];
+
+                particula.style.left =
+                    Math.random() * 100 + "%";
+
+                particula.style.setProperty(
+                    "--color-particula",
+                    colores[
+                    Math.floor(
+                        Math.random() * colores.length
+                    )
+                    ]
+                );
+
+                particula.style.setProperty(
+                    "--tamano-particula",
+                    8 + Math.random() * 13 + "px"
+                );
+
+                particula.style.setProperty(
+                    "--duracion-particula",
+                    4 + Math.random() * 2.5 + "s"
+                );
+
+                particula.style.setProperty(
+                    "--desvio-particula",
+                    -35 + Math.random() * 70 + "px"
+                );
+
+                particula.style.animationDelay =
+                    Math.random() * 1.6 + "s";
+
+                contenedor.appendChild(particula);
+
+                setTimeout(
+                    () => particula.remove(),
+                    8500
+                );
+            }
+        }
+
+        const observadorDeEscenas =
+            new IntersectionObserver(
+                entradas => {
+                    entradas.forEach(entrada => {
+                        if (
+                            entrada.isIntersecting &&
+                            invitacionAbierta &&
+                            entrada.target.id !== ultimaEscenaVisible
+                        ) {
+                            ultimaEscenaVisible =
+                                entrada.target.id;
+
+                            lanzarCascadaMagica();
+                        }
+                    });
+                },
+                {
+                    threshold: .65
+                }
+            );
+
+        escenas.forEach(escena => {
+            observadorDeEscenas.observe(escena);
+        });
 
         if (editorActivo) {
             iniciarEditor();
