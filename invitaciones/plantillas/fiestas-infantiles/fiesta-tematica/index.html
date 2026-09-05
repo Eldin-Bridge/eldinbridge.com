@@ -1,0 +1,1872 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Demostración de invitación infantil temática de EldinBridge.">
+    <title>El Reino de las Estrellas | Fiesta Temática</title>
+
+    <style>
+        :root {
+            --azul: #081836;
+            --violeta: #6d45c6;
+            --lila: #bca6ff;
+            --oro: #ffd56a;
+            --cian: #70dcff;
+            --blanco: #ffffff;
+            --suave: #e9e3ff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+
+        body {
+            overflow-x: hidden;
+            color: var(--blanco);
+            background: #030817;
+            font-family: Inter, "Segoe UI", Arial, sans-serif;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .escena {
+            position: relative;
+            display: flex;
+            min-height: 100svh;
+            overflow: hidden;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 18px;
+            scroll-snap-align: start;
+            isolation: isolate;
+        }
+
+        .fondo-escena {
+            position: absolute;
+            inset: 0;
+            z-index: -5;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: saturate(.95) brightness(.68);
+        }
+
+        .velo {
+            position: absolute;
+            inset: 0;
+            z-index: -4;
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(2, 7, 23, .12),
+                    rgba(3, 8, 24, .48) 55%,
+                    rgba(2, 6, 18, .82)
+                );
+        }
+
+        .capa-elementos {
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .elemento {
+            position: absolute;
+            left: calc(var(--x) * 1%);
+            top: calc(var(--y) * 1%);
+            z-index: var(--z);
+            width: calc(var(--tamano) * 1%);
+            max-width: none;
+            transform:
+                translate(-50%, -50%)
+                scaleX(var(--voltear, 1));
+            transform-origin: center;
+            pointer-events: none;
+            user-select: none;
+            filter: drop-shadow(0 12px 24px rgba(0, 0, 0, .3));
+        }
+
+        .editor-activo .elemento {
+            pointer-events: auto;
+            cursor: grab;
+            outline: 1px dashed rgba(255, 213, 106, .7);
+        }
+
+        .editor-activo .elemento.seleccionado {
+            outline: 3px solid var(--oro);
+        }
+
+        .anim-flotar {
+            animation: flotar 3.4s ease-in-out infinite;
+        }
+
+        .anim-pulso {
+            animation: pulso 2.2s ease-in-out infinite;
+        }
+
+        .anim-girar {
+            animation: girar 12s linear infinite;
+        }
+
+        .anim-deriva {
+            animation: deriva 5s ease-in-out infinite;
+        }
+
+        @keyframes flotar {
+            50% {
+                translate: 0 -14px;
+            }
+        }
+
+        @keyframes pulso {
+            50% {
+                scale: 1.08;
+                filter:
+                    drop-shadow(0 0 25px rgba(255, 213, 106, .8));
+            }
+        }
+
+        @keyframes girar {
+            to {
+                rotate: 360deg;
+            }
+        }
+
+        @keyframes deriva {
+            50% {
+                translate: 18px -8px;
+                rotate: 5deg;
+            }
+        }
+
+        .contenido {
+            position: relative;
+            z-index: 10;
+            width: min(92vw, 720px);
+            padding: 27px 23px;
+            border: 1px solid rgba(255, 255, 255, .19);
+            border-radius: 28px;
+            text-align: center;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(8, 24, 54, .78),
+                    rgba(55, 28, 102, .42)
+                );
+            box-shadow:
+                0 24px 80px rgba(0, 0, 0, .42),
+                inset 0 1px rgba(255, 255, 255, .18);
+            backdrop-filter: blur(15px);
+        }
+
+        .etiqueta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 17px;
+            padding: 8px 14px;
+            border: 1px solid rgba(255, 213, 106, .35);
+            border-radius: 999px;
+            color: #fff3c7;
+            background: rgba(255, 213, 106, .09);
+            font-size: .76rem;
+            font-weight: 850;
+            letter-spacing: .11em;
+            text-transform: uppercase;
+        }
+
+        .etiqueta::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--oro);
+            box-shadow: 0 0 15px var(--oro);
+        }
+
+        h1,
+        h2 {
+            text-wrap: balance;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 14vw, 6.8rem);
+            line-height: .88;
+            letter-spacing: -.065em;
+        }
+
+        h1 span {
+            display: block;
+            margin-top: 10px;
+            color: var(--oro);
+            font-size: clamp(1.8rem, 8vw, 3.8rem);
+        }
+
+        h2 {
+            font-size: clamp(2.25rem, 10vw, 5rem);
+            line-height: .95;
+            letter-spacing: -.05em;
+        }
+
+        .texto {
+            max-width: 570px;
+            margin: 20px auto 0;
+            color: var(--suave);
+            font-size: clamp(1rem, 3.7vw, 1.25rem);
+            line-height: 1.58;
+        }
+
+        .botones {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 11px;
+            margin-top: 24px;
+        }
+
+        .boton {
+            display: inline-flex;
+            min-height: 50px;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0 21px;
+            border: 0;
+            border-radius: 15px;
+            color: #07132d;
+            background:
+                linear-gradient(135deg, var(--oro), #fff1b4);
+            box-shadow: 0 14px 35px rgba(255, 213, 106, .22);
+            font-weight: 850;
+            cursor: pointer;
+        }
+
+        .boton-secundario {
+            border: 1px solid rgba(255, 255, 255, .2);
+            color: white;
+            background: rgba(255, 255, 255, .08);
+            box-shadow: none;
+        }
+
+        .contador {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 9px;
+            margin-top: 23px;
+        }
+
+        .tiempo,
+        .dato {
+            padding: 16px 9px;
+            border: 1px solid rgba(255, 255, 255, .14);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, .07);
+        }
+
+        .numero {
+            display: block;
+            color: var(--oro);
+            font-size: clamp(1.5rem, 7vw, 3rem);
+            font-weight: 950;
+        }
+
+        .unidad,
+        .dato-titulo {
+            display: block;
+            margin-top: 4px;
+            color: var(--lila);
+            font-size: .67rem;
+            font-weight: 850;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .datos {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 11px;
+            margin-top: 22px;
+        }
+
+        .dato-icono {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 1.55rem;
+        }
+
+        .dato-texto {
+            display: block;
+            margin-top: 6px;
+            font-weight: 700;
+            line-height: 1.42;
+        }
+
+        .iconos-magicos {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin: 3px 0 14px;
+            font-size: 2.7rem;
+        }
+
+        .iconos-magicos span:nth-child(1) {
+            animation: flotar 2.6s ease-in-out infinite;
+        }
+
+        .iconos-magicos span:nth-child(2) {
+            animation: pulso 2.1s ease-in-out infinite;
+        }
+
+        .iconos-magicos span:nth-child(3) {
+            animation: deriva 3.5s ease-in-out infinite;
+        }
+
+        .firma {
+            margin-top: 19px;
+            color: var(--oro);
+            font-weight: 850;
+        }
+
+        .indicador {
+            position: absolute;
+            bottom: 17px;
+            left: 50%;
+            z-index: 12;
+            display: grid;
+            width: 44px;
+            height: 44px;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: 50%;
+            background: rgba(4, 10, 29, .5);
+            transform: translateX(-50%);
+            animation: flotar 1.7s ease-in-out infinite;
+            backdrop-filter: blur(8px);
+        }
+
+        .revelar {
+            opacity: 0;
+            transform: translateY(22px);
+            transition:
+                opacity .65s ease,
+                transform .65s ease;
+        }
+
+        .revelar.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        #confeti {
+            position: fixed;
+            inset: 0;
+            z-index: 30;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .confeti {
+            position: absolute;
+            top: -20px;
+            width: 9px;
+            height: 15px;
+            border-radius: 3px;
+            animation: caer linear forwards;
+        }
+
+        @keyframes caer {
+            to {
+                transform: translateY(110vh) rotate(720deg);
+            }
+        }
+
+        .control-musica {
+            position: fixed;
+            right: 15px;
+            bottom: 15px;
+            z-index: 40;
+            display: grid;
+            width: 52px;
+            height: 52px;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, .22);
+            border-radius: 50%;
+            color: white;
+            background:
+                linear-gradient(135deg, var(--violeta), #265fa8);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, .4);
+            cursor: pointer;
+        }
+
+        .control-musica:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+        }
+
+        #intro {
+            position: fixed;
+            inset: 0;
+            z-index: 80;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            background:
+                radial-gradient(
+                    circle at 50% 25%,
+                    rgba(109, 69, 198, .45),
+                    transparent 35%
+                ),
+                #030817;
+        }
+
+        #intro.oculto {
+            display: none;
+        }
+
+        .intro-caja {
+            width: min(92vw, 580px);
+            padding: 36px 25px;
+            border: 1px solid rgba(255, 255, 255, .18);
+            border-radius: 30px;
+            text-align: center;
+            background: rgba(255, 255, 255, .07);
+            backdrop-filter: blur(16px);
+        }
+
+        .intro-caja h1 {
+            color: var(--oro);
+            font-size: clamp(2.4rem, 10vw, 5rem);
+        }
+
+        .intro-caja p {
+            margin: 16px auto 0;
+            color: var(--suave);
+            line-height: 1.55;
+        }
+
+        .editor {
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 100;
+            display: none;
+            width: min(390px, 100vw);
+            height: 100svh;
+            overflow: auto;
+            padding: 18px;
+            color: #eef2ff;
+            background: #0a1020;
+            box-shadow: -15px 0 45px rgba(0, 0, 0, .5);
+        }
+
+        .editor.visible {
+            display: block;
+        }
+
+        .editor h2 {
+            font-size: 1.35rem;
+            letter-spacing: -.02em;
+        }
+
+        .editor-aviso {
+            margin: 9px 0 17px;
+            color: #aeb8cf;
+            font-size: .83rem;
+            line-height: 1.45;
+        }
+
+        .campo {
+            display: grid;
+            gap: 6px;
+            margin-bottom: 13px;
+        }
+
+        .campo label {
+            color: #c8d1e6;
+            font-size: .78rem;
+            font-weight: 750;
+        }
+
+        .campo input,
+        .campo select {
+            width: 100%;
+            min-height: 40px;
+            padding: 7px 9px;
+            border: 1px solid #303b55;
+            border-radius: 9px;
+            color: white;
+            background: #111a2d;
+        }
+
+        .campo input[type="range"] {
+            padding: 0;
+        }
+
+        .fila {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .editor-boton {
+            width: 100%;
+            min-height: 42px;
+            margin-top: 7px;
+            border: 1px solid #52617f;
+            border-radius: 10px;
+            color: white;
+            background: #17233b;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .editor-boton.primario {
+            border-color: #8b75e8;
+            background: #654bc1;
+        }
+
+        .editor-boton.peligro {
+            border-color: #7d3344;
+            color: #ffbdca;
+            background: #351722;
+        }
+
+        .editor-separador {
+            margin: 17px 0;
+            border: 0;
+            border-top: 1px solid #29344c;
+        }
+
+        @media (min-width: 850px) {
+            .editor-activo .escena {
+                padding-right: 408px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .contador {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .datos {
+                grid-template-columns: 1fr;
+            }
+
+            .elemento.personaje {
+                width: calc(var(--tamano) * 1.18%);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <audio id="musica" loop preload="none"></audio>
+
+    <button
+        class="control-musica"
+        id="boton-musica"
+        type="button"
+        aria-label="Reproducir o pausar música"
+        title="Agrega una canción desde el editor"
+        disabled
+    >
+        🎵
+    </button>
+
+    <div id="confeti"></div>
+
+    <div id="intro">
+        <div class="intro-caja">
+            <h1>El Reino de las Estrellas</h1>
+
+            <p>
+                Una celebración mágica está a punto de comenzar.
+                Toca la estrella para abrir la invitación.
+            </p>
+
+            <div class="botones">
+                <button
+                    class="boton"
+                    id="abrir-invitacion"
+                    type="button"
+                >
+                    ⭐ Entrar al reino
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <main id="invitacion">
+        <section
+            class="escena"
+            id="inicio"
+            data-escena="inicio"
+        >
+            <img
+                class="fondo-escena"
+                src="assets/fondos/fondo01.png"
+                alt="Reino fantástico entre las estrellas"
+            >
+
+            <div class="velo"></div>
+            <div class="capa-elementos"></div>
+
+            <div class="contenido revelar">
+                <div class="etiqueta">
+                    Una aventura celestial
+                </div>
+
+                <h1>
+                    Luna
+                    <span>cumple 7 años</span>
+                </h1>
+
+                <p class="texto">
+                    Acompáñame a celebrar un día lleno de estrellas,
+                    magia y nuevas aventuras.
+                </p>
+
+                <div class="botones">
+                    <a class="boton" href="#cuenta">
+                        Comenzar ↓
+                    </a>
+                </div>
+            </div>
+
+            <a
+                class="indicador"
+                href="#cuenta"
+                aria-label="Continuar"
+            >
+                ↓
+            </a>
+        </section>
+
+        <section
+            class="escena"
+            id="cuenta"
+            data-escena="cuenta"
+        >
+            <img
+                class="fondo-escena"
+                src="assets/fondos/fondo08.png"
+                alt=""
+            >
+
+            <div class="velo"></div>
+            <div class="capa-elementos"></div>
+
+            <div class="contenido revelar">
+                <div class="etiqueta">
+                    Cuenta regresiva
+                </div>
+
+                <h2>El portal está por abrirse</h2>
+
+                <p class="texto">
+                    Cada día falta menos para compartir esta aventura contigo.
+                </p>
+
+                <div class="contador">
+                    <div class="tiempo">
+                        <span class="numero" id="dias">00</span>
+                        <span class="unidad">Días</span>
+                    </div>
+
+                    <div class="tiempo">
+                        <span class="numero" id="horas">00</span>
+                        <span class="unidad">Horas</span>
+                    </div>
+
+                    <div class="tiempo">
+                        <span class="numero" id="minutos">00</span>
+                        <span class="unidad">Minutos</span>
+                    </div>
+
+                    <div class="tiempo">
+                        <span class="numero" id="segundos">00</span>
+                        <span class="unidad">Segundos</span>
+                    </div>
+                </div>
+
+                <div class="botones">
+                    <a class="boton" href="#mision">
+                        Continuar ↓
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section
+            class="escena"
+            id="mision"
+            data-escena="mision"
+        >
+            <img
+                class="fondo-escena"
+                src="assets/fondos/fondo04.png"
+                alt=""
+            >
+
+            <div class="velo"></div>
+            <div class="capa-elementos"></div>
+
+            <div class="contenido revelar">
+                <div class="etiqueta">
+                    Misión especial
+                </div>
+
+                <div class="iconos-magicos">
+                    <span>✨</span>
+                    <span>⭐</span>
+                    <span>🌙</span>
+                </div>
+
+                <h2>Enciende tu propia estrella</h2>
+
+                <p class="texto">
+                    Ven preparado para jugar, descubrir secretos del reino
+                    y crear recuerdos que brillarán para siempre.
+                </p>
+
+                <div class="botones">
+                    <a class="boton" href="#atuendo">
+                        Continuar ↓
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section
+            class="escena"
+            id="atuendo"
+            data-escena="atuendo"
+        >
+            <img
+                class="fondo-escena"
+                src="assets/fondos/fondo06.png"
+                alt=""
+            >
+
+            <div class="velo"></div>
+            <div class="capa-elementos"></div>
+
+            <div class="contenido revelar">
+                <div class="etiqueta">
+                    Detalle temático
+                </div>
+
+                <div class="iconos-magicos">
+                    <span>💜</span>
+                    <span>⭐</span>
+                    <span>💙</span>
+                </div>
+
+                <h2>Trae un toque de magia</h2>
+
+                <p class="texto">
+                    Si quieres, acompaña tu atuendo con algún detalle azul,
+                    violeta, dorado o brillante.
+                </p>
+
+                <div class="botones">
+                    <a class="boton" href="#regalo">
+                        Continuar ↓
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section
+            class="escena"
+            id="regalo"
+            data-escena="regalo"
+        >
+            <img
+                class="fondo-escena"
+                src="assets/fondos/fondo05.png"
+                alt=""
+            >
+
+            <div class="velo"></div>
+            <div class="capa-elementos"></div>
+
+            <div class="contenido revelar">
+                <div class="etiqueta">
+                    Regalos
+                </div>
+
+                <div class="iconos-magicos">
+                    <span>🎁</span>
+                    <span>💫</span>
+                    <span>✉️</span>
+                </div>
+
+                <h2>Tu presencia es el mejor regalo</h2>
+
+                <p class="texto">
+                    Si deseas llevar un detalle para Luna,
+                    será recibido con muchísimo cariño.
+                </p>
+
+                <div class="botones">
+                    <a class="boton" href="#detalles">
+                        Continuar ↓
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section
+            class="escena"
+            id="detalles"
+            data-escena="detalles"
+        >
+            <img
+                class="fondo-escena"
+                src="assets/fondos/fondo03.png"
+                alt=""
+            >
+
+            <div class="velo"></div>
+            <div class="capa-elementos"></div>
+
+            <div class="contenido revelar">
+                <div class="etiqueta">
+                    Información del evento
+                </div>
+
+                <h2>La celebración</h2>
+
+                <div class="datos">
+                    <div class="dato">
+                        <span class="dato-icono">📅</span>
+                        <span class="dato-titulo">Fecha</span>
+                        <span class="dato-texto">
+                            Sábado<br>
+                            24 de julio de 2027
+                        </span>
+                    </div>
+
+                    <div class="dato">
+                        <span class="dato-icono">🕓</span>
+                        <span class="dato-titulo">Hora</span>
+                        <span class="dato-texto">
+                            Desde las 4:00 p. m.
+                        </span>
+                    </div>
+
+                    <div class="dato">
+                        <span class="dato-icono">🏰</span>
+                        <span class="dato-titulo">Lugar</span>
+                        <span class="dato-texto">
+                            Jardín Reino Celestial
+                        </span>
+                    </div>
+
+                    <div class="dato">
+                        <span class="dato-icono">📍</span>
+                        <span class="dato-titulo">Dirección</span>
+                        <span class="dato-texto">
+                            Ubicación ficticia<br>
+                            Monterrey, N.L.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="botones">
+                    <a class="boton" href="#final">
+                        Continuar ↓
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section
+            class="escena"
+            id="final"
+            data-escena="final"
+        >
+            <img
+                class="fondo-escena"
+                src="assets/fondos/fondo07.png"
+                alt=""
+            >
+
+            <div class="velo"></div>
+            <div class="capa-elementos"></div>
+
+            <div class="contenido revelar">
+                <div class="etiqueta">
+                    Nos vemos pronto
+                </div>
+
+                <h2>¡Tu estrella ya forma parte del reino!</h2>
+
+                <p class="texto">
+                    Ven a celebrar conmigo y hagamos de este día
+                    un recuerdo inolvidable.
+                </p>
+
+                <div class="firma">
+                    Con cariño, Luna ⭐
+                </div>
+
+                <div class="botones">
+                    <a class="boton" href="#inicio">
+                        ↑ Volver al inicio
+                    </a>
+
+                    <button
+                        class="boton boton-secundario"
+                        type="button"
+                    >
+                        📍 Ver ubicación
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <aside
+        class="editor"
+        id="editor"
+        aria-label="Editor de la plantilla"
+    >
+        <h2>Editor temático</h2>
+
+        <p class="editor-aviso">
+            Los archivos seleccionados sirven para previsualizar.
+            Exporta la configuración y copia después los recursos
+            a su carpeta.
+        </p>
+
+        <div class="campo">
+            <label for="editor-escena">Pantalla</label>
+
+            <select id="editor-escena">
+                <option value="inicio">Inicio</option>
+                <option value="cuenta">Cuenta regresiva</option>
+                <option value="mision">Misión</option>
+                <option value="atuendo">Atuendo</option>
+                <option value="regalo">Regalo</option>
+                <option value="detalles">Detalles</option>
+                <option value="final">Final</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label for="cargar-fondo">
+                Cargar fondo
+            </label>
+
+            <input
+                id="cargar-fondo"
+                type="file"
+                accept="image/png,image/jpeg,image/webp"
+            >
+        </div>
+
+        <div class="campo">
+            <label for="cargar-elemento">
+                Agregar personaje o elemento transparente
+            </label>
+
+            <input
+                id="cargar-elemento"
+                type="file"
+                accept="image/png,image/webp"
+            >
+        </div>
+
+        <div class="campo">
+            <label for="selector-elemento">
+                Elemento seleccionado
+            </label>
+
+            <select id="selector-elemento">
+                <option value="">Ninguno</option>
+            </select>
+        </div>
+
+        <hr class="editor-separador">
+
+        <div class="fila">
+            <div class="campo">
+                <label for="pos-x">Posición X</label>
+
+                <input
+                    id="pos-x"
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="50"
+                >
+            </div>
+
+            <div class="campo">
+                <label for="pos-y">Posición Y</label>
+
+                <input
+                    id="pos-y"
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="50"
+                >
+            </div>
+        </div>
+
+        <div class="fila">
+            <div class="campo">
+                <label for="tamano">Tamaño</label>
+
+                <input
+                    id="tamano"
+                    type="range"
+                    min="5"
+                    max="120"
+                    value="35"
+                >
+            </div>
+
+            <div class="campo">
+                <label for="capa">Capa</label>
+
+                <input
+                    id="capa"
+                    type="number"
+                    min="1"
+                    max="20"
+                    value="3"
+                >
+            </div>
+        </div>
+
+        <div class="campo">
+            <label for="animacion">Animación</label>
+
+            <select id="animacion">
+                <option value="ninguna">Ninguna</option>
+                <option value="flotar">Flotar</option>
+                <option value="pulso">Pulso</option>
+                <option value="girar">Girar</option>
+                <option value="deriva">Deriva</option>
+            </select>
+        </div>
+
+        <div class="campo">
+            <label>
+                <input id="voltear" type="checkbox">
+                Voltear horizontalmente
+            </label>
+        </div>
+
+        <button
+            class="editor-boton peligro"
+            id="eliminar-elemento"
+            type="button"
+        >
+            Eliminar elemento
+        </button>
+
+        <hr class="editor-separador">
+
+        <div class="campo">
+            <label for="cargar-audio">
+                Cargar música para la prueba
+            </label>
+
+            <input
+                id="cargar-audio"
+                type="file"
+                accept="audio/*"
+            >
+        </div>
+
+        <button
+            class="editor-boton primario"
+            id="exportar"
+            type="button"
+        >
+            Exportar configuración
+        </button>
+    </aside>
+
+    <script>
+        const configuracion = {
+            fondos: {},
+
+            elementos: [
+                {
+                    id: "personaje-inicio",
+                    escena: "inicio",
+                    archivo: "assets/personajes/personaje01.png",
+                    x: 82,
+                    y: 70,
+                    tamano: 35,
+                    z: 4,
+                    animacion: "flotar",
+                    voltear: false
+                },
+                {
+                    id: "estrella-inicio",
+                    escena: "inicio",
+                    archivo: "assets/elementos/elemento01.png",
+                    x: 17,
+                    y: 23,
+                    tamano: 16,
+                    z: 3,
+                    animacion: "deriva",
+                    voltear: false
+                },
+                {
+                    id: "numero-inicio",
+                    escena: "inicio",
+                    archivo: "assets/elementos/elemento11.png",
+                    x: 16,
+                    y: 72,
+                    tamano: 14,
+                    z: 3,
+                    animacion: "pulso",
+                    voltear: false
+                },
+                {
+                    id: "personaje-cuenta",
+                    escena: "cuenta",
+                    archivo: "assets/personajes/personaje02.png",
+                    x: 82,
+                    y: 73,
+                    tamano: 31,
+                    z: 4,
+                    animacion: "flotar",
+                    voltear: false
+                },
+                {
+                    id: "estela-cuenta",
+                    escena: "cuenta",
+                    archivo: "assets/elementos/elemento04.png",
+                    x: 24,
+                    y: 19,
+                    tamano: 28,
+                    z: 2,
+                    animacion: "deriva",
+                    voltear: false
+                },
+                {
+                    id: "personaje-mision",
+                    escena: "mision",
+                    archivo: "assets/personajes/personaje03.png",
+                    x: 17,
+                    y: 72,
+                    tamano: 31,
+                    z: 4,
+                    animacion: "flotar",
+                    voltear: true
+                },
+                {
+                    id: "luna-mision",
+                    escena: "mision",
+                    archivo: "assets/elementos/elemento03.png",
+                    x: 83,
+                    y: 19,
+                    tamano: 13,
+                    z: 3,
+                    animacion: "girar",
+                    voltear: false
+                },
+                {
+                    id: "personaje-atuendo",
+                    escena: "atuendo",
+                    archivo: "assets/personajes/personaje07.png",
+                    x: 82,
+                    y: 72,
+                    tamano: 31,
+                    z: 4,
+                    animacion: "flotar",
+                    voltear: false
+                },
+                {
+                    id: "tiara-atuendo",
+                    escena: "atuendo",
+                    archivo: "assets/elementos/elemento10.png",
+                    x: 18,
+                    y: 22,
+                    tamano: 19,
+                    z: 3,
+                    animacion: "pulso",
+                    voltear: false
+                },
+                {
+                    id: "personaje-regalo",
+                    escena: "regalo",
+                    archivo: "assets/personajes/personaje06.png",
+                    x: 18,
+                    y: 72,
+                    tamano: 31,
+                    z: 4,
+                    animacion: "flotar",
+                    voltear: false
+                },
+                {
+                    id: "regalos",
+                    escena: "regalo",
+                    archivo: "assets/elementos/elemento09.png",
+                    x: 84,
+                    y: 76,
+                    tamano: 21,
+                    z: 3,
+                    animacion: "deriva",
+                    voltear: false
+                },
+                {
+                    id: "personaje-detalles",
+                    escena: "detalles",
+                    archivo: "assets/personajes/personaje10.png",
+                    x: 84,
+                    y: 73,
+                    tamano: 29,
+                    z: 4,
+                    animacion: "flotar",
+                    voltear: false
+                },
+                {
+                    id: "globos-detalles",
+                    escena: "detalles",
+                    archivo: "assets/elementos/elemento08.png",
+                    x: 15,
+                    y: 24,
+                    tamano: 18,
+                    z: 3,
+                    animacion: "deriva",
+                    voltear: false
+                },
+                {
+                    id: "personaje-final",
+                    escena: "final",
+                    archivo: "assets/personajes/personaje05.png",
+                    x: 82,
+                    y: 68,
+                    tamano: 33,
+                    z: 4,
+                    animacion: "flotar",
+                    voltear: false
+                },
+                {
+                    id: "pastel-final",
+                    escena: "final",
+                    archivo: "assets/elementos/elemento06.png",
+                    x: 17,
+                    y: 72,
+                    tamano: 20,
+                    z: 3,
+                    animacion: "pulso",
+                    voltear: false
+                },
+                {
+                    id: "velas-final",
+                    escena: "final",
+                    archivo: "assets/elementos/elemento07.png",
+                    x: 17,
+                    y: 49,
+                    tamano: 11,
+                    z: 4,
+                    animacion: "deriva",
+                    voltear: false
+                }
+            ]
+        };
+
+        const $ = selector => document.querySelector(selector);
+
+        const escenas = [
+            ...document.querySelectorAll(".escena")
+        ];
+
+        const editorActivo =
+            new URLSearchParams(location.search).get("editor") === "1";
+
+        let seleccionado = null;
+        let contadorElementos = 0;
+
+        function crearElemento(datos) {
+            const escena = document.querySelector(
+                `[data-escena="${datos.escena}"] .capa-elementos`
+            );
+
+            if (!escena) {
+                return;
+            }
+
+            const imagen = document.createElement("img");
+
+            imagen.src = datos.archivo;
+            imagen.alt = "";
+            imagen.dataset.id = datos.id;
+
+            imagen.className = `
+                elemento
+                ${datos.archivo.includes("personajes/")
+                    ? "personaje"
+                    : ""}
+                ${datos.animacion !== "ninguna"
+                    ? `anim-${datos.animacion}`
+                    : ""}
+            `;
+
+            aplicarEstilos(imagen, datos);
+            escena.appendChild(imagen);
+
+            if (editorActivo) {
+                imagen.addEventListener(
+                    "pointerdown",
+                    iniciarArrastre
+                );
+            }
+        }
+
+        function aplicarEstilos(imagen, datos) {
+            imagen.style.setProperty("--x", datos.x);
+            imagen.style.setProperty("--y", datos.y);
+            imagen.style.setProperty("--tamano", datos.tamano);
+            imagen.style.setProperty("--z", datos.z);
+
+            imagen.style.setProperty(
+                "--voltear",
+                datos.voltear ? -1 : 1
+            );
+        }
+
+        configuracion.elementos.forEach(crearElemento);
+
+        const observador = new IntersectionObserver(
+            entradas => {
+                entradas.forEach(entrada => {
+                    if (entrada.isIntersecting) {
+                        entrada.target.classList.add("visible");
+                    }
+                });
+            },
+            {
+                threshold: .2
+            }
+        );
+
+        document
+            .querySelectorAll(".revelar")
+            .forEach(elemento => observador.observe(elemento));
+
+        const fechaEvento =
+            new Date("2027-07-24T16:00:00-06:00");
+
+        function actualizarContador() {
+            const diferencia =
+                Math.max(0, fechaEvento - new Date());
+
+            const valores = {
+                dias: Math.floor(diferencia / 86400000),
+
+                horas:
+                    Math.floor(diferencia / 3600000) % 24,
+
+                minutos:
+                    Math.floor(diferencia / 60000) % 60,
+
+                segundos:
+                    Math.floor(diferencia / 1000) % 60
+            };
+
+            Object.entries(valores).forEach(
+                ([id, valor]) => {
+                    document.getElementById(id).textContent =
+                        String(valor).padStart(2, "0");
+                }
+            );
+        }
+
+        actualizarContador();
+        setInterval(actualizarContador, 1000);
+
+        const musica = $("#musica");
+        const botonMusica = $("#boton-musica");
+
+        $("#abrir-invitacion").addEventListener(
+            "click",
+            () => {
+                $("#intro").classList.add("oculto");
+                lanzarConfeti();
+
+                musica.play().catch(() => {});
+            }
+        );
+
+        botonMusica.addEventListener(
+            "click",
+            () => {
+                if (musica.paused) {
+                    musica.play();
+                } else {
+                    musica.pause();
+                }
+            }
+        );
+
+        musica.addEventListener(
+            "play",
+            () => {
+                botonMusica.textContent = "⏸";
+            }
+        );
+
+        musica.addEventListener(
+            "pause",
+            () => {
+                botonMusica.textContent = "🎵";
+            }
+        );
+
+        document.addEventListener(
+            "visibilitychange",
+            () => {
+                if (document.hidden && !musica.paused) {
+                    musica.dataset.reanudar = "1";
+                    musica.pause();
+                } else if (
+                    !document.hidden &&
+                    musica.dataset.reanudar === "1"
+                ) {
+                    musica.play().catch(() => {});
+                    delete musica.dataset.reanudar;
+                }
+            }
+        );
+
+        function lanzarConfeti() {
+            const colores = [
+                "#ffd56a",
+                "#70dcff",
+                "#bca6ff",
+                "#ff8dc7"
+            ];
+
+            for (let indice = 0; indice < 70; indice++) {
+                const pieza = document.createElement("span");
+
+                pieza.className = "confeti";
+                pieza.style.left =
+                    Math.random() * 100 + "%";
+
+                pieza.style.background =
+                    colores[indice % colores.length];
+
+                pieza.style.animationDuration =
+                    2.5 + Math.random() * 2.5 + "s";
+
+                pieza.style.animationDelay =
+                    Math.random() * .7 + "s";
+
+                $("#confeti").appendChild(pieza);
+
+                setTimeout(
+                    () => pieza.remove(),
+                    6000
+                );
+            }
+        }
+
+        if (editorActivo) {
+            iniciarEditor();
+        }
+
+        function iniciarEditor() {
+            document.body.classList.add("editor-activo");
+            $("#editor").classList.add("visible");
+            $("#intro").classList.add("oculto");
+
+            actualizarSelector();
+
+            $("#editor-escena").addEventListener(
+                "change",
+                evento => {
+                    document
+                        .getElementById(evento.target.value)
+                        .scrollIntoView();
+                }
+            );
+
+            $("#cargar-fondo").addEventListener(
+                "change",
+                cargarFondo
+            );
+
+            $("#cargar-elemento").addEventListener(
+                "change",
+                cargarElemento
+            );
+
+            $("#selector-elemento").addEventListener(
+                "change",
+                evento => {
+                    seleccionar(evento.target.value);
+                }
+            );
+
+            [
+                "pos-x",
+                "pos-y",
+                "tamano",
+                "capa",
+                "animacion",
+                "voltear"
+            ].forEach(id => {
+                $("#" + id).addEventListener(
+                    "input",
+                    aplicarControles
+                );
+            });
+
+            $("#eliminar-elemento").addEventListener(
+                "click",
+                eliminarSeleccionado
+            );
+
+            $("#exportar").addEventListener(
+                "click",
+                exportarConfiguracion
+            );
+
+            $("#cargar-audio").addEventListener(
+                "change",
+                cargarAudio
+            );
+        }
+
+        function cargarFondo(evento) {
+            const archivo = evento.target.files[0];
+
+            if (!archivo) {
+                return;
+            }
+
+            const escena = $("#editor-escena").value;
+
+            const imagen = document.querySelector(
+                `[data-escena="${escena}"] .fondo-escena`
+            );
+
+            imagen.src = URL.createObjectURL(archivo);
+            configuracion.fondos[escena] = archivo.name;
+        }
+
+        function cargarElemento(evento) {
+            const archivo = evento.target.files[0];
+
+            if (!archivo) {
+                return;
+            }
+
+            const datos = {
+                id:
+                    `elemento-${Date.now()}-${contadorElementos++}`,
+
+                escena: $("#editor-escena").value,
+                archivo: URL.createObjectURL(archivo),
+                nombreArchivo: archivo.name,
+                x: 50,
+                y: 50,
+                tamano: 30,
+                z: 3,
+                animacion: "flotar",
+                voltear: false
+            };
+
+            configuracion.elementos.push(datos);
+
+            crearElemento(datos);
+            actualizarSelector();
+            seleccionar(datos.id);
+        }
+
+        function actualizarSelector() {
+            const selector = $("#selector-elemento");
+
+            selector.innerHTML =
+                '<option value="">Ninguno</option>' +
+                configuracion.elementos
+                    .map(elemento => {
+                        const nombre =
+                            elemento.nombreArchivo ||
+                            elemento.archivo.split("/").pop();
+
+                        return `
+                            <option value="${elemento.id}">
+                                ${elemento.escena} · ${nombre}
+                            </option>
+                        `;
+                    })
+                    .join("");
+        }
+
+        function seleccionar(id) {
+            document
+                .querySelectorAll(".elemento.seleccionado")
+                .forEach(elemento => {
+                    elemento.classList.remove("seleccionado");
+                });
+
+            seleccionado =
+                configuracion.elementos.find(
+                    elemento => elemento.id === id
+                ) || null;
+
+            if (!seleccionado) {
+                return;
+            }
+
+            const imagen = document.querySelector(
+                `[data-id="${id}"]`
+            );
+
+            imagen?.classList.add("seleccionado");
+
+            $("#selector-elemento").value = id;
+            $("#pos-x").value = seleccionado.x;
+            $("#pos-y").value = seleccionado.y;
+            $("#tamano").value = seleccionado.tamano;
+            $("#capa").value = seleccionado.z;
+            $("#animacion").value = seleccionado.animacion;
+            $("#voltear").checked = seleccionado.voltear;
+        }
+
+        function aplicarControles() {
+            if (!seleccionado) {
+                return;
+            }
+
+            seleccionado.x = +$("#pos-x").value;
+            seleccionado.y = +$("#pos-y").value;
+            seleccionado.tamano = +$("#tamano").value;
+            seleccionado.z = +$("#capa").value;
+            seleccionado.voltear = $("#voltear").checked;
+            seleccionado.animacion = $("#animacion").value;
+
+            const imagen = document.querySelector(
+                `[data-id="${seleccionado.id}"]`
+            );
+
+            imagen.className = `
+                elemento
+                ${seleccionado.archivo.includes("personajes/")
+                    ? "personaje"
+                    : ""}
+                ${seleccionado.animacion !== "ninguna"
+                    ? `anim-${seleccionado.animacion}`
+                    : ""}
+                seleccionado
+            `;
+
+            aplicarEstilos(imagen, seleccionado);
+        }
+
+        function iniciarArrastre(evento) {
+            evento.preventDefault();
+
+            seleccionar(evento.currentTarget.dataset.id);
+
+            const escena =
+                evento.currentTarget.closest(".escena");
+
+            const mover = movimiento => {
+                const limites =
+                    escena.getBoundingClientRect();
+
+                seleccionado.x = Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        (
+                            (movimiento.clientX - limites.left) /
+                            limites.width
+                        ) * 100
+                    )
+                );
+
+                seleccionado.y = Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        (
+                            (movimiento.clientY - limites.top) /
+                            limites.height
+                        ) * 100
+                    )
+                );
+
+                $("#pos-x").value = seleccionado.x;
+                $("#pos-y").value = seleccionado.y;
+
+                aplicarEstilos(
+                    evento.currentTarget,
+                    seleccionado
+                );
+            };
+
+            const soltar = () => {
+                window.removeEventListener(
+                    "pointermove",
+                    mover
+                );
+
+                window.removeEventListener(
+                    "pointerup",
+                    soltar
+                );
+            };
+
+            window.addEventListener(
+                "pointermove",
+                mover
+            );
+
+            window.addEventListener(
+                "pointerup",
+                soltar
+            );
+        }
+
+        function eliminarSeleccionado() {
+            if (!seleccionado) {
+                return;
+            }
+
+            document
+                .querySelector(
+                    `[data-id="${seleccionado.id}"]`
+                )
+                ?.remove();
+
+            configuracion.elementos =
+                configuracion.elementos.filter(
+                    elemento =>
+                        elemento.id !== seleccionado.id
+                );
+
+            seleccionado = null;
+            actualizarSelector();
+        }
+
+        function cargarAudio(evento) {
+            const archivo = evento.target.files[0];
+
+            if (!archivo) {
+                return;
+            }
+
+            musica.src = URL.createObjectURL(archivo);
+            musica.dataset.archivo = archivo.name;
+
+            botonMusica.disabled = false;
+            botonMusica.title =
+                "Reproducir o pausar música";
+        }
+
+        function exportarConfiguracion() {
+            const configuracionLimpia = {
+                fondos: configuracion.fondos,
+
+                audio:
+                    musica.dataset.archivo || "",
+
+                elementos:
+                    configuracion.elementos.map(
+                        ({
+                            id,
+                            escena,
+                            archivo,
+                            nombreArchivo,
+                            x,
+                            y,
+                            tamano,
+                            z,
+                            animacion,
+                            voltear
+                        }) => ({
+                            id,
+                            escena,
+
+                            archivo:
+                                nombreArchivo || archivo,
+
+                            x: +x.toFixed(2),
+                            y: +y.toFixed(2),
+                            tamano: +tamano,
+                            z: +z,
+                            animacion,
+                            voltear
+                        })
+                    )
+            };
+
+            const archivo = new Blob(
+                [
+                    JSON.stringify(
+                        configuracionLimpia,
+                        null,
+                        2
+                    )
+                ],
+                {
+                    type: "application/json"
+                }
+            );
+
+            const enlace =
+                document.createElement("a");
+
+            enlace.href =
+                URL.createObjectURL(archivo);
+
+            enlace.download =
+                "configuracion-fiesta-tematica.json";
+
+            enlace.click();
+
+            URL.revokeObjectURL(enlace.href);
+        }
+    </script>
+</body>
+
+</html>

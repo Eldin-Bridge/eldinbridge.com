@@ -354,6 +354,231 @@
             --acento: #fb7185;
         }
 
+        .vista-oculta {
+            display: none;
+        }
+
+        .catalogo-infantil.activo {
+            display: block;
+        }
+
+        .catalogo-infantil .presentacion {
+            margin-bottom: 0;
+        }
+
+        .modelos-infantiles {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 42px;
+        }
+
+        .modelo-infantil {
+            --acento-modelo: #f472b6;
+            padding: 16px;
+            border: 1px solid var(--borde);
+            border-radius: 24px;
+            background: rgba(17, 21, 34, .86);
+            box-shadow: 0 22px 60px rgba(0, 0, 0, .3);
+            transition: transform 220ms ease, border-color 220ms ease;
+        }
+
+        .modelo-infantil:hover {
+            transform: translateY(-5px);
+            border-color: var(--acento-modelo);
+        }
+
+        .modelo-infantil:nth-child(2) {
+            --acento-modelo: #fb923c;
+        }
+
+        .modelo-infantil:nth-child(3) {
+            --acento-modelo: #a78bfa;
+        }
+
+        .modelo-infantil:nth-child(4) {
+            --acento-modelo: #38bdf8;
+        }
+
+        .modelo-infantil:nth-child(5) {
+            --acento-modelo: #facc15;
+        }
+
+        .telefono {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 9 / 18.5;
+            overflow: hidden;
+            padding: 9px;
+            border: 3px solid #343947;
+            border-radius: 32px;
+            background: #05070c;
+            box-shadow:
+                inset 0 0 0 1px rgba(255, 255, 255, .08),
+                0 18px 35px rgba(0, 0, 0, .35);
+        }
+
+        .telefono::before {
+            content: "";
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            z-index: 3;
+            width: 34%;
+            height: 15px;
+            border-radius: 0 0 11px 11px;
+            background: #05070c;
+            transform: translateX(-50%);
+        }
+
+        .pantalla-telefono {
+            position: relative;
+            display: flex;
+            height: 100%;
+            overflow: hidden;
+            align-items: end;
+            padding: 22px 15px;
+            border-radius: 23px;
+            background:
+                linear-gradient(to top, rgba(5, 7, 16, .97), rgba(5, 7, 16, .05) 68%),
+                radial-gradient(circle at 28% 22%, var(--acento-modelo), transparent 25%),
+                linear-gradient(145deg, #292347, #111525 56%, #090b13);
+        }
+
+        .pantalla-telefono::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            opacity: .2;
+            background-image:
+                radial-gradient(circle, white 1px, transparent 1.5px);
+            background-size: 23px 23px;
+            mask-image: linear-gradient(to bottom, black, transparent 78%);
+        }
+
+        .mini-contenido {
+            position: relative;
+            z-index: 2;
+        }
+
+        .mini-numero {
+            color: var(--acento-modelo);
+            font-size: .66rem;
+            font-weight: 900;
+            letter-spacing: .14em;
+        }
+
+        .mini-titulo {
+            margin-top: 8px;
+            font-size: clamp(.95rem, 1.35vw, 1.25rem);
+            line-height: 1.03;
+        }
+
+        .mini-texto {
+            margin-top: 7px;
+            color: rgba(255, 255, 255, .68);
+            font-size: .66rem;
+            line-height: 1.4;
+        }
+
+        .modelo-infantil h3 {
+            margin-top: 17px;
+            font-size: 1.05rem;
+            line-height: 1.2;
+        }
+
+        .modelo-descripcion {
+            min-height: 42px;
+            margin-top: 6px;
+            color: var(--secundario);
+            font-size: .82rem;
+            line-height: 1.45;
+        }
+
+        .modelo-estado {
+            display: flex;
+            width: 100%;
+            min-height: 42px;
+            margin-top: 15px;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--acento-modelo);
+            border-radius: 12px;
+            color: var(--texto);
+            background: rgba(255, 255, 255, .035);
+            font-size: .82rem;
+            font-weight: 800;
+            opacity: .82;
+        }
+
+        .regresar-categorias {
+            display: inline-flex;
+            margin-bottom: 30px;
+            padding: 10px 14px;
+            border: 1px solid var(--borde);
+            border-radius: 999px;
+            color: var(--secundario);
+            background: rgba(255, 255, 255, .035);
+            font: inherit;
+            font-size: .88rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        button.categoria {
+            width: 100%;
+            color: inherit;
+            font: inherit;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        button.categoria:focus-visible {
+            outline: 3px solid var(--acento);
+            outline-offset: 4px;
+        }
+
+        @media (max-width: 860px) {
+            .modelos-infantiles {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 700px) {
+            .modelos-infantiles {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 580px) {
+            .modelos-infantiles {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .modelo-infantil {
+                width: min(100%, 340px);
+                margin-inline: auto;
+                padding: 18px;
+            }
+
+            .telefono {
+                max-height: 560px;
+            }
+
+            .mini-titulo {
+                font-size: 1.35rem;
+            }
+
+            .mini-texto {
+                font-size: .76rem;
+            }
+
+            .modelo-descripcion {
+                min-height: auto;
+            }
+        }
+
         .nota {
             margin-top: 22px;
             padding: 22px 24px;
@@ -458,6 +683,32 @@
                 transition: none !important;
             }
         }
+
+        .enlace-invitacion {
+            position: relative;
+            z-index: 5;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: fit-content;
+            margin-top: 14px;
+            padding: 9px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 999px;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.12);
+            font-weight: 800;
+            text-decoration: none;
+            cursor: pointer;
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .enlace-invitacion:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.2);
+        }
     </style>
 </head>
 
@@ -489,14 +740,24 @@
             </div>
 
             <div class="categorias">
-                <article class="categoria infantiles">
+                <button class="categoria infantiles" type="button" id="abrir-infantiles"
+                    aria-label="Ver diseños de Fiestas Infantiles">
+
                     <img class="categoria-imagen" src="assets/categorias/fiestas-infantiles.webp"
                         alt="Celebración de cumpleaños infantil" loading="lazy">
-                    <div class="categoria-superior"><span class="numero">01</span><span class="cantidad">5
-                            diseños</span></div>
+
+                    <div class="categoria-superior">
+                        <span class="numero">01</span>
+                        <span class="cantidad">5 diseños</span>
+                    </div>
+
                     <h3>Fiestas Infantiles</h3>
-                    <div class="categoria-pie"><span>Próximamente</span><span class="linea"></span></div>
-                </article>
+
+                    <div class="categoria-pie">
+                        <span>Ver diseños →</span>
+                        <span class="linea"></span>
+                    </div>
+                </button>
 
                 <article class="categoria fiestas-reuniones">
                     <img class="categoria-imagen" src="assets/categorias/fiestas-reuniones.webp"
@@ -554,6 +815,139 @@
                 Añadiremos cinco invitaciones de muestra dentro de cada categoría.
             </div>
         </section>
+        <section id="catalogo-infantil" class="catalogo-infantil vista-oculta" aria-labelledby="titulo-infantiles">
+
+            <button class="regresar-categorias" type="button" id="regresar-categorias">
+                ← Todas las categorías
+            </button>
+
+            <div class="presentacion">
+                <span class="etiqueta">Fiestas infantiles</span>
+
+                <h1 id="titulo-infantiles">
+                    Cinco maneras de hacer su día
+                    <span class="degradado">inolvidable.</span>
+                </h1>
+
+                <p>
+                    Explora nuestros estilos. Cada invitación tendrá animaciones,
+                    música y una personalidad propia, y podrá adaptarse a los
+                    detalles de tu celebración.
+                </p>
+            </div>
+
+            <div class="modelos-infantiles">
+
+                <article class="modelo-infantil">
+                    <div class="telefono" aria-hidden="true">
+                        <div class="pantalla-telefono">
+                            <div class="mini-contenido">
+                                <span class="mini-numero">01</span>
+                                <h2 class="mini-titulo">Fiesta Temática</h2>
+                                <p class="mini-texto">
+                                    Un mundo creado alrededor de su tema favorito.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Fiesta Temática</h3>
+                    <p class="modelo-descripcion">
+                        Personajes, fantasía y conceptos personalizados.
+                    </p>
+                    <a class="mini-estado enlace-invitacion" href="plantillas/fiestas-infantiles/fiesta-tematica/">
+                        Ver invitación
+                    </a>
+                </article>
+
+                <article class="modelo-infantil">
+                    <div class="telefono" aria-hidden="true">
+                        <div class="pantalla-telefono">
+                            <div class="mini-contenido">
+                                <span class="mini-numero">02</span>
+                                <h2 class="mini-titulo">Fiesta de Aventura</h2>
+                                <p class="mini-texto">
+                                    Retos, movimiento y diversión sin pausa.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Fiesta de Aventura</h3>
+                    <p class="modelo-descripcion">
+                        Trampolines, escalada y centros de actividades.
+                    </p>
+                    <span class="modelo-estado">En preparación</span>
+                </article>
+
+                <article class="modelo-infantil">
+                    <div class="telefono" aria-hidden="true">
+                        <div class="pantalla-telefono">
+                            <div class="mini-contenido">
+                                <span class="mini-numero">03</span>
+                                <h2 class="mini-titulo">Fiesta Interactiva</h2>
+                                <p class="mini-texto">
+                                    Imaginar, experimentar y crear juntos.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Fiesta Interactiva</h3>
+                    <p class="modelo-descripcion">
+                        Arte, cocina, slime y pequeños experimentos.
+                    </p>
+                    <span class="modelo-estado">En preparación</span>
+                </article>
+
+                <article class="modelo-infantil">
+                    <div class="telefono" aria-hidden="true">
+                        <div class="pantalla-telefono">
+                            <div class="mini-contenido">
+                                <span class="mini-numero">04</span>
+                                <h2 class="mini-titulo">Fiesta Acuática</h2>
+                                <p class="mini-texto">
+                                    Una celebración fresca bajo el sol.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Fiesta Acuática</h3>
+                    <p class="modelo-descripcion">
+                        Alberca, juegos con agua y diversión de verano.
+                    </p>
+                    <span class="modelo-estado">En preparación</span>
+                </article>
+
+                <article class="modelo-infantil">
+                    <div class="telefono" aria-hidden="true">
+                        <div class="pantalla-telefono">
+                            <div class="mini-contenido">
+                                <span class="mini-numero">05</span>
+                                <h2 class="mini-titulo">Pijamada</h2>
+                                <p class="mini-texto">
+                                    Historias, películas y una noche entre amigos.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Pijamada</h3>
+                    <p class="modelo-descripcion">
+                        Tipis, cine, juegos y una noche muy especial.
+                    </p>
+                    <span class="modelo-estado">En preparación</span>
+                </article>
+
+            </div>
+
+            <div class="nota">
+                <strong>Estamos construyendo las demostraciones.</strong>
+                Cada teléfono mostrará una vista real del diseño y tendrá
+                su botón para abrir la invitación completa.
+            </div>
+        </section>
     </main>
 
     <footer>
@@ -562,6 +956,58 @@
 
     <script>
         document.getElementById("anio").textContent = new Date().getFullYear();
+        const vistaCategorias = document.querySelector(
+            "main > section[aria-labelledby='titulo-categorias']"
+        );
+
+        const presentacionPrincipal = document.querySelector(
+            "main > .presentacion"
+        );
+
+        const catalogoInfantil = document.getElementById("catalogo-infantil");
+        const abrirInfantiles = document.getElementById("abrir-infantiles");
+        const regresarCategorias = document.getElementById("regresar-categorias");
+
+        function mostrarInfantiles() {
+            presentacionPrincipal.classList.add("vista-oculta");
+            vistaCategorias.classList.add("vista-oculta");
+            catalogoInfantil.classList.add("activo");
+
+            history.replaceState(
+                null,
+                "",
+                window.location.pathname + "#fiestas-infantiles"
+            );
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+
+        function mostrarCategorias() {
+            catalogoInfantil.classList.remove("activo");
+            presentacionPrincipal.classList.remove("vista-oculta");
+            vistaCategorias.classList.remove("vista-oculta");
+
+            history.replaceState(
+                null,
+                "",
+                window.location.pathname
+            );
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+
+        abrirInfantiles.addEventListener("click", mostrarInfantiles);
+        regresarCategorias.addEventListener("click", mostrarCategorias);
+
+        if (window.location.hash === "#fiestas-infantiles") {
+            mostrarInfantiles();
+        }
     </script>
 </body>
 
