@@ -557,65 +557,67 @@
         }
 
         @media (max-width: 560px) {
-            .escena {
-                align-items: flex-start;
-                padding-top: 7svh;
-                padding-bottom: 32svh;
+            /*
+     * No modificamos .escena ni .fondo-escena.
+     * El fondo y la posición general permanecen iguales.
+     */
+
+            /*
+     * La tarjeta se divide en tres niveles:
+     *
+     *  9 = cristal de la tarjeta
+     * 11 = personajes y adornos
+     * 12 = textos, contador y botones
+     */
+            .contenido {
+                z-index: auto;
+                background: transparent;
+                border: 0;
+                box-shadow: none;
+                backdrop-filter: none;
+            }
+
+            .contenido::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                z-index: 9;
+                border: 1px solid rgba(255, 255, 255, .19);
+                border-radius: 28px;
+                background:
+                    linear-gradient(145deg,
+                        rgba(8, 24, 54, .78),
+                        rgba(55, 28, 102, .42));
+                box-shadow:
+                    0 24px 80px rgba(0, 0, 0, .42),
+                    inset 0 1px rgba(255, 255, 255, .18);
+                backdrop-filter: blur(15px);
+                pointer-events: none;
             }
 
             /*
-     * Coloca personajes y adornos delante
-     * de la tarjeta solamente     */
+     * Todo el contenido escrito queda arriba
+     * de los personajes.
+     */
+            .contenido>* {
+                position: relative;
+                z-index: 12;
+            }
+
+            /*
+     * Personajes y decoraciones quedan encima
+     * del cristal, pero debajo del texto.
+     */
             .capa-elementos {
                 z-index: 11;
             }
 
-            /*
-     * La tarjeta conserva el texto encima,
-     * pero deja libre parte del costado.
-     */
-            .contenido {
-                z-index: 10;
-                width: 76vw;
-                max-width: 310px;
-                padding: 22px 17px;
-            }
-
-            /*
-     * Escenas con personaje a la derecha:
-     * el texto se acomoda hacia la izquierda.
-     */
-            #inicio,
-            #cuenta,
-            #atuendo,
-            #detalles,
-            #final {
-                justify-content: flex-start;
-            }
-
-            /*
-     * Escenas con personaje a la izquierda:
-     * el texto se acomoda hacia la derecha.
-     */
-            #mision,
-            #regalo {
-                justify-content: flex-end;
-            }
-
-            /*
-     * Los personajes quedan en la parte inferior
-     * y delante del contenido.
-     */
             .elemento.personaje {
-                top: auto !important;
-                bottom: -2%;
-                width: calc(var(--tamano) * 1.05%);
-                z-index: 14 !important;
+                width: calc(var(--tamano) * .84%);
             }
 
             /*
-     * Empuja un poco más hacia la derecha
-     * los personajes de estas escenas.
+     * Personajes del lado derecho.
      */
             #inicio .elemento.personaje,
             #cuenta .elemento.personaje,
@@ -626,8 +628,7 @@
             }
 
             /*
-     * Empuja hacia la izquierda los personajes
-     * de estas escenas.
+     * Personajes del lado izquierdo.
      */
             #mision .elemento.personaje,
             #regalo .elemento.personaje {
@@ -635,32 +636,57 @@
             }
 
             /*
-     * Los adornos siguen visibles, pero debajo
-     * de los personajes.
+     * El contador permanece en una sola fila:
+     * días, horas, minutos y segundos.
      */
-            .elemento:not(.personaje) {
-                z-index: 12 !important;
-            }
-
             .contador {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: 5px;
             }
 
+            .tiempo {
+                min-width: 0;
+                padding: 11px 3px;
+                border-radius: 13px;
+            }
+
+            .contador .numero {
+                font-size: clamp(1.2rem, 6vw, 1.7rem);
+            }
+
+            .contador .unidad {
+                overflow: hidden;
+                font-size: .52rem;
+                letter-spacing: .025em;
+                text-overflow: ellipsis;
+            }
+
+            /*
+     * Datos del evento en cuadrícula 2 × 2.
+     */
             .datos {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 7px;
             }
 
-            h1 {
-                font-size: clamp(2.5rem, 13vw, 4rem);
+            .dato {
+                min-width: 0;
+                padding: 12px 6px;
+                border-radius: 14px;
             }
 
-            h2 {
-                font-size: clamp(2rem, 9vw, 3.5rem);
+            .dato-icono {
+                margin-bottom: 3px;
+                font-size: 1.3rem;
             }
 
-            .texto {
-                font-size: .95rem;
-                line-height: 1.48;
+            .dato-titulo {
+                font-size: .58rem;
+            }
+
+            .dato-texto {
+                font-size: .78rem;
+                line-height: 1.32;
             }
         }
 
