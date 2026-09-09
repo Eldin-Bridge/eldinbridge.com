@@ -312,7 +312,8 @@
         }
 
         .site-menu {
-            margin-top: 18px;
+            width: min(100%, 456px);
+            margin: 18px auto 0;
             padding: 18px;
             border: 1px solid var(--card-border);
             border-radius: 22px;
@@ -321,26 +322,10 @@
             backdrop-filter: blur(16px);
         }
 
-        .menu-header {
-            margin-bottom: 13px;
-        }
-
-        .menu-header h2 {
-            margin-bottom: 3px;
-            font-size: 1.1rem;
-            letter-spacing: -0.025em;
-        }
-
-        .menu-header p {
-            color: var(--text-secondary);
-            font-size: 0.86rem;
-        }
-
         .menu-buttons {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 12px;
-            max-width: 720px;
+            grid-template-columns: 1fr;
+            width: min(100%, 420px);
             margin: 0 auto;
         }
 
@@ -485,8 +470,10 @@
             }
 
             .site-menu {
-                margin-top: 14px;
-                padding: 16px;
+                width: min(92%, 360px);
+                margin: 14px auto 0;
+                padding: 12px;
+                border-radius: 19px;
             }
 
             .menu-buttons {
@@ -496,6 +483,7 @@
 
             .menu-button {
                 min-height: 48px;
+                padding-inline: 14px;
             }
 
             footer {
@@ -640,24 +628,12 @@
 
             </section>
 
-            <nav class="site-menu reveal" aria-label="Menú principal">
-
-                <div class="menu-header">
-                    <h2>Explorar</h2>
-                </div>
-
+            <nav class="site-menu reveal" aria-label="Contacto">
                 <div class="menu-buttons">
-
-                    <a class="menu-button" href="desarrollador/">
-                        👨‍💻 Sobre el desarrollador
-                    </a>
-
                     <a class="menu-button" href="contacto/">
                         ✉️ Contacto
                     </a>
-
                 </div>
-
             </nav>
 
             <footer>
