@@ -285,17 +285,31 @@
         }
 
         .numero {
-            display: block;
-            color: var(--acento);
-            font-size: .78rem;
+            display: flex;
+            width: 38px;
+            height: 38px;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, .38);
+            border-radius: 50%;
+            color: #ffffff;
+            background:
+                linear-gradient(135deg,
+                    color-mix(in srgb, var(--acento) 70%, #ffffff),
+                    var(--acento) 55%,
+                    color-mix(in srgb, var(--acento) 75%, #000000));
+            font-size: .85rem;
             font-weight: 900;
             line-height: 1;
-            letter-spacing: .13em;
-
-            /* Contorno blanco sólido y limpio */
-            -webkit-text-stroke: .7px #ffffff;
-            paint-order: stroke fill;
-            text-shadow: none;
+            letter-spacing: 0;
+            text-shadow:
+                .3px 0 #ffffff,
+                -.3px 0 #ffffff,
+                0 .3px #ffffff,
+                0 -.3px #ffffff;
+            box-shadow:
+                0 4px 14px rgba(0, 0, 0, .38),
+                0 0 18px color-mix(in srgb, var(--acento) 55%, transparent);
         }
 
         .categoria h3 {
@@ -782,7 +796,9 @@
             }
 
             .numero {
-                font-size: .65rem;
+                width: 32px;
+                height: 32px;
+                font-size: .72rem;
             }
 
             .categoria h3 {
