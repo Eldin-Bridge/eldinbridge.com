@@ -107,23 +107,15 @@
             align-items: center;
             justify-content: center;
             width: fit-content;
-            margin: 0 auto 24px;
+            margin: 0 auto 22px;
         }
 
         .play-logo {
-            position: relative;
-            width: 44px;
-            height: 48px;
-            flex: 0 0 auto;
-            overflow: hidden;
-            clip-path: polygon(0 0, 100% 50%, 0 100%);
-            background:
-                linear-gradient(145deg,
-                    #34d399 0 34%,
-                    #38bdf8 34% 52%,
-                    #facc15 52% 70%,
-                    #fb7185 70% 100%);
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.32));
+            display: block;
+            width: 76px;
+            height: 76px;
+            border-radius: 19px;
+            filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.32));
         }
 
         h1 {
@@ -196,7 +188,7 @@
 
         .aplicacion:only-child {
             grid-column: 1 / -1;
-            width: min(100%, 520px);
+            width: min(100%, 330px);
             justify-self: center;
         }
 
@@ -310,40 +302,50 @@
             }
 
             .aplicacion {
-                min-height: 290px;
-                border-radius: 22px;
+                min-height: 245px;
+                border-radius: 20px;
             }
 
             .aplicacion:only-child {
                 grid-column: 1 / -1;
-                width: min(100%, 330px);
+                width: min(48%, 190px);
+                justify-self: center;
             }
 
             .app-contenido {
                 flex-direction: column;
                 justify-content: center;
-                gap: 16px;
-                padding: 22px 14px;
+                gap: 11px;
+                padding: 17px 10px;
                 text-align: center;
             }
 
             .app-icono {
-                width: 94px;
-                border-radius: 22px;
-                font-size: 2.3rem;
+                width: 72px;
+                border-radius: 18px;
+                font-size: 1.9rem;
+            }
+
+            .disponible {
+                margin-bottom: 5px;
+                font-size: 0.58rem;
             }
 
             .app-informacion h2 {
-                font-size: 1.35rem;
+                margin-bottom: 6px;
+                font-size: 1.05rem;
+                line-height: 1.1;
             }
 
             .app-informacion p {
-                font-size: 0.82rem;
+                font-size: 0.7rem;
+                line-height: 1.35;
             }
 
             .enlace-play {
                 justify-content: center;
-                font-size: 0.84rem;
+                margin-top: 11px;
+                font-size: 0.72rem;
             }
         }
 
@@ -372,7 +374,19 @@
 
         <section class="presentacion">
             <div class="google-play" aria-label="Google Play">
-                <span class="play-logo" aria-hidden="true"></span>
+                <svg class="play-logo" viewBox="0 0 100 100" role="img" aria-label="Logo de Google Play">
+                    <rect width="100" height="100" rx="24" fill="#ffffff" />
+
+                    <g transform="translate(24 20)">
+                        <path d="M0 3L31 31L0 59Z" fill="#4285F4" />
+
+                        <path d="M0 3L39 25L31 31Z" fill="#34A853" />
+
+                        <path d="M31 31L39 25L55 34L39 43Z" fill="#FBBC04" />
+
+                        <path d="M0 59L31 31L39 43Z" fill="#EA4335" />
+                    </g>
+                </svg>
             </div>
 
             <h1>
