@@ -368,7 +368,7 @@
 
         .modelos-infantiles {
             display: grid;
-            grid-template-columns: repeat(5, minmax(0, 1fr));
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 18px;
             margin-top: 42px;
         }
@@ -439,21 +439,32 @@
             align-items: end;
             padding: 22px 15px;
             border-radius: 23px;
-            background:
-                linear-gradient(to top, rgba(5, 7, 16, .97), rgba(5, 7, 16, .05) 68%),
-                radial-gradient(circle at 28% 22%, var(--acento-modelo), transparent 25%),
-                linear-gradient(145deg, #292347, #111525 56%, #090b13);
+            background: #090b13;
+            isolation: isolate;
         }
 
-        .pantalla-telefono::after {
+        .vista-previa {
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+        }
+
+        .pantalla-telefono::before {
             content: "";
             position: absolute;
             inset: 0;
-            opacity: .2;
-            background-image:
-                radial-gradient(circle, white 1px, transparent 1.5px);
-            background-size: 23px 23px;
-            mask-image: linear-gradient(to bottom, black, transparent 78%);
+            z-index: -1;
+            background:
+                linear-gradient(to top,
+                    rgba(5, 7, 16, .98) 0%,
+                    rgba(5, 7, 16, .7) 24%,
+                    rgba(5, 7, 16, .08) 62%,
+                    rgba(5, 7, 16, .12) 100%);
+            pointer-events: none;
         }
 
         .mini-contenido {
@@ -1003,9 +1014,17 @@
                 <article class="modelo-infantil">
                     <div class="telefono" aria-hidden="true">
                         <div class="pantalla-telefono">
+
+                            <img class="vista-previa" src="assets/vistas-previas/fiesta-tematica.webp" alt=""
+                                loading="lazy" decoding="async">
+
                             <div class="mini-contenido">
                                 <span class="mini-numero">01</span>
-                                <h2 class="mini-titulo">Fiesta Temática</h2>
+
+                                <h2 class="mini-titulo">
+                                    Fiesta Temática
+                                </h2>
+
                                 <p class="mini-texto">
                                     Un mundo creado alrededor de su tema favorito.
                                 </p>
@@ -1078,26 +1097,6 @@
                     <h3>Fiesta Acuática</h3>
                     <p class="modelo-descripcion">
                         Alberca, juegos con agua y diversión de verano.
-                    </p>
-                    <span class="modelo-estado">En preparación</span>
-                </article>
-
-                <article class="modelo-infantil">
-                    <div class="telefono" aria-hidden="true">
-                        <div class="pantalla-telefono">
-                            <div class="mini-contenido">
-                                <span class="mini-numero">05</span>
-                                <h2 class="mini-titulo">Pijamada</h2>
-                                <p class="mini-texto">
-                                    Historias, películas y una noche entre amigos.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h3>Pijamada</h3>
-                    <p class="modelo-descripcion">
-                        Tipis, cine, juegos y una noche muy especial.
                     </p>
                     <span class="modelo-estado">En preparación</span>
                 </article>
