@@ -459,17 +459,41 @@
             inset: 0;
             z-index: -1;
             background:
-                linear-gradient(to top,
-                    rgba(5, 7, 16, .98) 0%,
-                    rgba(5, 7, 16, .7) 24%,
-                    rgba(5, 7, 16, .08) 62%,
-                    rgba(5, 7, 16, .12) 100%);
+                linear-gradient(to bottom,
+                    rgba(5, 7, 16, .03),
+                    rgba(5, 7, 16, .14));
             pointer-events: none;
         }
 
         .mini-contenido {
             position: relative;
-            z-index: 2;
+            margin-top: 14px;
+            padding-inline: 5px;
+            text-align: center;
+        }
+
+        .mini-numero {
+            display: block;
+            color: var(--acento-modelo);
+            font-size: .66rem;
+            font-weight: 900;
+            letter-spacing: .14em;
+        }
+
+        .mini-titulo {
+            margin-top: 6px;
+            font-size: 1.05rem;
+            line-height: 1.15;
+            text-align: center;
+        }
+
+        .mini-texto {
+            min-height: 38px;
+            margin-top: 6px;
+            color: var(--secundario);
+            font-size: .76rem;
+            line-height: 1.4;
+            text-align: center;
         }
 
         .mini-numero {
@@ -909,7 +933,7 @@
         <section aria-labelledby="titulo-categorias">
             <div class="encabezado">
                 <h2 id="titulo-categorias">Elige una categoría</h2>
-                <p>Próximamente: 5 diseños por categoría</p>
+                <p>Explora nuestros diseños por categoría</p>
             </div>
 
             <div class="categorias">
@@ -921,7 +945,7 @@
 
                     <div class="categoria-superior">
                         <span class="numero">01</span>
-                        <span class="cantidad">5 diseños</span>
+                        <span class="cantidad">4 diseños</span>
                     </div>
 
                     <h3>Fiestas Infantiles</h3>
@@ -937,7 +961,7 @@
                         alt="Fiestas &amp; Reuniones en una quinta con alberca y carne asada" loading="lazy">
                     <div class="categoria-superior">
                         <span class="numero">02</span>
-                        <span class="cantidad">5 diseños</span>
+                        <span class="cantidad">4 diseños</span>
                     </div>
                     <h3>Fiestas &amp; Reuniones</h3>
                     <div class="categoria-pie">
@@ -985,7 +1009,7 @@
 
             <div class="nota">
                 <strong>El catálogo está en preparación.</strong>
-                Añadiremos cinco invitaciones de muestra dentro de cada categoría.
+                Añadiremos invitaciones de muestra dentro de cada categoría.
             </div>
         </section>
         <section id="catalogo-infantil" class="catalogo-infantil vista-oculta" aria-labelledby="titulo-infantiles">
@@ -998,7 +1022,7 @@
                 <span class="etiqueta">Fiestas infantiles</span>
 
                 <h1 id="titulo-infantiles">
-                    Cinco maneras de hacer su día
+                    Diseños para hacer su día
                     <span class="degradado">inolvidable.</span>
                 </h1>
 
@@ -1011,94 +1035,112 @@
 
             <div class="modelos-infantiles">
 
+                <!-- Fiesta Temática -->
                 <article class="modelo-infantil">
+
                     <div class="telefono" aria-hidden="true">
                         <div class="pantalla-telefono">
-
                             <img class="vista-previa" src="assets/vistas-previas/fiesta-tematica.webp" alt=""
                                 loading="lazy" decoding="async">
-
-                            <div class="mini-contenido">
-                                <span class="mini-numero">01</span>
-
-                                <h2 class="mini-titulo">
-                                    Fiesta Temática
-                                </h2>
-
-                                <p class="mini-texto">
-                                    Un mundo creado alrededor de su tema favorito.
-                                </p>
-                            </div>
                         </div>
                     </div>
 
-                    <h3>Fiesta Temática</h3>
-                    <p class="modelo-descripcion">
-                        Personajes, fantasía y conceptos personalizados.
-                    </p>
+                    <div class="mini-contenido">
+                        <span class="mini-numero">01</span>
+
+                        <h2 class="mini-titulo">
+                            Fiesta Temática
+                        </h2>
+
+                        <p class="mini-texto">
+                            Un mundo creado alrededor de su tema favorito.
+                        </p>
+                    </div>
+
                     <a class="mini-estado enlace-invitacion" href="plantillas/fiestas-infantiles/fiesta-tematica/">
                         Ver invitación
                     </a>
                 </article>
 
+                <!-- Fiesta de Aventura -->
                 <article class="modelo-infantil">
+
                     <div class="telefono" aria-hidden="true">
                         <div class="pantalla-telefono">
-                            <div class="mini-contenido">
-                                <span class="mini-numero">02</span>
-                                <h2 class="mini-titulo">Fiesta de Aventura</h2>
-                                <p class="mini-texto">
-                                    Retos, movimiento y diversión sin pausa.
-                                </p>
-                            </div>
+                            <img class="vista-previa" src="assets/vistas-previas/fiesta-aventura.webp" alt=""
+                                loading="lazy" decoding="async">
                         </div>
                     </div>
 
-                    <h3>Fiesta de Aventura</h3>
-                    <p class="modelo-descripcion">
-                        Trampolines, escalada y centros de actividades.
-                    </p>
-                    <span class="modelo-estado">En preparación</span>
+                    <div class="mini-contenido">
+                        <span class="mini-numero">02</span>
+
+                        <h2 class="mini-titulo">
+                            Fiesta de Aventura
+                        </h2>
+
+                        <p class="mini-texto">
+                            Retos, movimiento y diversión sin pausa.
+                        </p>
+                    </div>
+
+                    <span class="modelo-estado">
+                        En preparación
+                    </span>
                 </article>
 
+                <!-- Fiesta Interactiva -->
                 <article class="modelo-infantil">
+
                     <div class="telefono" aria-hidden="true">
                         <div class="pantalla-telefono">
-                            <div class="mini-contenido">
-                                <span class="mini-numero">03</span>
-                                <h2 class="mini-titulo">Fiesta Interactiva</h2>
-                                <p class="mini-texto">
-                                    Imaginar, experimentar y crear juntos.
-                                </p>
-                            </div>
+                            <img class="vista-previa" src="assets/vistas-previas/fiesta-interactiva.webp" alt=""
+                                loading="lazy" decoding="async">
                         </div>
                     </div>
 
-                    <h3>Fiesta Interactiva</h3>
-                    <p class="modelo-descripcion">
-                        Arte, cocina, slime y pequeños experimentos.
-                    </p>
-                    <span class="modelo-estado">En preparación</span>
+                    <div class="mini-contenido">
+                        <span class="mini-numero">03</span>
+
+                        <h2 class="mini-titulo">
+                            Fiesta Interactiva
+                        </h2>
+
+                        <p class="mini-texto">
+                            Imaginar, experimentar y crear juntos.
+                        </p>
+                    </div>
+
+                    <span class="modelo-estado">
+                        En preparación
+                    </span>
                 </article>
 
+                <!-- Fiesta Acuática -->
                 <article class="modelo-infantil">
+
                     <div class="telefono" aria-hidden="true">
                         <div class="pantalla-telefono">
-                            <div class="mini-contenido">
-                                <span class="mini-numero">04</span>
-                                <h2 class="mini-titulo">Fiesta Acuática</h2>
-                                <p class="mini-texto">
-                                    Una celebración fresca bajo el sol.
-                                </p>
-                            </div>
+                            <img class="vista-previa" src="assets/vistas-previas/fiesta-acuatica.webp" alt=""
+                                loading="lazy" decoding="async">
                         </div>
                     </div>
 
-                    <h3>Fiesta Acuática</h3>
-                    <p class="modelo-descripcion">
-                        Alberca, juegos con agua y diversión de verano.
-                    </p>
-                    <span class="modelo-estado">En preparación</span>
+                    <div class="mini-contenido">
+                        <span class="mini-numero">04</span>
+
+                        <h2 class="mini-titulo">
+                            Fiesta Acuática
+                        </h2>
+
+                        <p class="mini-texto">
+                            Una celebración fresca bajo el sol.
+                        </p>
+                    </div>
+
+                    <span class="modelo-estado">
+                        En preparación
+                    </span>
                 </article>
 
             </div>
