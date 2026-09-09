@@ -153,9 +153,13 @@
 
         .degradado {
             color: transparent;
+            padding-inline: .035em;
+            margin-inline: -.035em;
             background: linear-gradient(90deg, #b99cff, #76d4ff 49%, #ff8dc7);
             background-clip: text;
             -webkit-background-clip: text;
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
         }
 
         .presentacion p {
@@ -288,17 +292,10 @@
             line-height: 1;
             letter-spacing: .13em;
 
-            /* Contorno blanco */
-            -webkit-text-stroke: .55px rgba(255, 255, 255, .95);
+            /* Contorno blanco sólido y limpio */
+            -webkit-text-stroke: .7px #ffffff;
             paint-order: stroke fill;
-
-            /* Resplandor y respaldo para otros navegadores */
-            text-shadow:
-                -1px -1px 0 rgba(255, 255, 255, .45),
-                1px -1px 0 rgba(255, 255, 255, .45),
-                -1px 1px 0 rgba(255, 255, 255, .45),
-                1px 1px 0 rgba(255, 255, 255, .45),
-                0 2px 8px rgba(0, 0, 0, .9);
+            text-shadow: none;
         }
 
         .categoria h3 {
@@ -755,6 +752,13 @@
    CATÁLOGO COMPACTO PARA TELÉFONOS
    ================================================== */
         @media (max-width: 580px) {
+
+            h1 {
+                font-size: clamp(2.35rem, 12vw, 3.25rem);
+                line-height: 1.04;
+                letter-spacing: -.035em;
+                overflow: visible;
+            }
 
             /*
      * Categorías en dos columnas.
