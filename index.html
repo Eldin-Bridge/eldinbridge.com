@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>EldinBridge | Proyectos digitales</title>
 
-    <meta
-        name="description"
-        content="Portafolio de aplicaciones, invitaciones digitales, traducciones y proyectos desarrollados por EldinBridge."
-    >
+    <meta name="description"
+        content="Portafolio de aplicaciones, invitaciones digitales, traducciones y proyectos desarrollados por EldinBridge.">
 
     <style>
         :root {
@@ -46,21 +45,15 @@
                 sans-serif;
             color: var(--text);
             background:
-                radial-gradient(
-                    circle at 8% 10%,
+                radial-gradient(circle at 8% 10%,
                     rgba(139, 92, 246, 0.17),
-                    transparent 30%
-                ),
-                radial-gradient(
-                    circle at 92% 15%,
+                    transparent 30%),
+                radial-gradient(circle at 92% 15%,
                     rgba(56, 189, 248, 0.14),
-                    transparent 28%
-                ),
-                radial-gradient(
-                    circle at 55% 95%,
+                    transparent 28%),
+                radial-gradient(circle at 55% 95%,
                     rgba(236, 72, 153, 0.09),
-                    transparent 34%
-                ),
+                    transparent 34%),
                 var(--background);
         }
 
@@ -71,15 +64,11 @@
             z-index: -2;
             opacity: 0.24;
             background-image:
-                linear-gradient(
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px,
+                    transparent 1px),
+                linear-gradient(90deg,
                     rgba(255, 255, 255, 0.025) 1px,
-                    transparent 1px
-                ),
-                linear-gradient(
-                    90deg,
-                    rgba(255, 255, 255, 0.025) 1px,
-                    transparent 1px
-                );
+                    transparent 1px);
             background-size: 46px 46px;
             mask-image: linear-gradient(to bottom, black, transparent 92%);
         }
@@ -173,12 +162,10 @@
         .gradient-text {
             color: transparent;
             background:
-                linear-gradient(
-                    90deg,
+                linear-gradient(90deg,
                     #b99cff 0%,
                     #76d4ff 48%,
-                    #ff8dc7 100%
-                );
+                    #ff8dc7 100%);
             background-clip: text;
             -webkit-background-clip: text;
         }
@@ -193,7 +180,7 @@
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 16px;
         }
 
@@ -210,11 +197,9 @@
             border-radius: 24px;
             text-align: center;
             background:
-                linear-gradient(
-                    160deg,
+                linear-gradient(160deg,
                     rgba(255, 255, 255, 0.08),
-                    rgba(255, 255, 255, 0.02)
-                );
+                    rgba(255, 255, 255, 0.02));
             box-shadow: var(--shadow);
             backdrop-filter: blur(18px);
             transition:
@@ -248,15 +233,17 @@
             background: var(--blue);
         }
 
+        .project-card:nth-child(4)::after {
+            background: var(--purple);
+        }
+
         .project-card:hover {
             transform: translateY(-7px);
             border-color: rgba(255, 255, 255, 0.22);
             background:
-                linear-gradient(
-                    160deg,
+                linear-gradient(160deg,
                     rgba(255, 255, 255, 0.11),
-                    rgba(255, 255, 255, 0.025)
-                );
+                    rgba(255, 255, 255, 0.025));
         }
 
         .project-card:hover::after {
@@ -374,12 +361,10 @@
             border-radius: 15px;
             color: white;
             background:
-                linear-gradient(
-                    135deg,
+                linear-gradient(135deg,
                     var(--purple),
                     #6f76f6 52%,
-                    var(--blue)
-                );
+                    var(--blue));
             box-shadow: 0 12px 30px rgba(92, 91, 246, 0.22);
             font-weight: 800;
             transition:
@@ -427,8 +412,8 @@
             }
 
             .projects-grid {
-                grid-template-columns: 1fr;
-                max-width: 620px;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                max-width: 720px;
                 margin: 0 auto;
             }
 
@@ -466,33 +451,48 @@
             }
 
             .projects-grid {
-                gap: 12px;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+                width: 100%;
+                max-width: none;
             }
 
             .project-card {
-                min-height: auto;
-                padding: 20px 18px;
-                border-radius: 21px;
+                min-width: 0;
+                min-height: 178px;
+                padding: 14px 8px;
+                border-radius: 18px;
             }
 
             .project-icon {
-                width: 48px;
-                height: 48px;
-                margin-bottom: 13px;
-                font-size: 1.3rem;
+                width: 42px;
+                height: 42px;
+                margin-bottom: 9px;
+                border-radius: 13px;
+                font-size: 1.15rem;
             }
 
             .project-card h2 {
-                font-size: 1.3rem;
+                margin-bottom: 0;
+                font-size: clamp(.92rem, 4.2vw, 1.08rem);
+                line-height: 1.12;
             }
 
             .project-card p {
-                font-size: 0.87rem;
-                line-height: 1.45;
+                display: none;
+            }
+
+            .project-label {
+                margin-bottom: 5px;
+                font-size: .55rem;
+                letter-spacing: .08em;
             }
 
             .card-link {
-                margin-top: 14px;
+                gap: 4px;
+                margin-top: 12px;
+                font-size: .72rem;
+                line-height: 1.2;
             }
 
             .site-menu {
@@ -556,7 +556,7 @@
                 </h1>
 
                 <p>
-                    Aplicaciones, experiencias web y traducciones desarrolladas
+                    Aplicaciones, experiencias web, traducciones y software desarrollados
                     con creatividad, funcionalidad y atención a los detalles.
                 </p>
 
@@ -630,6 +630,30 @@
                     </div>
                 </a>
 
+                <a class="project-card reveal" href="software/">
+                    <div class="project-content">
+
+                        <div class="project-icon">💻</div>
+
+                        <div class="project-label">
+                            Soluciones a medida
+                        </div>
+
+                        <h2>Desarrollo software</h2>
+
+                        <p>
+                            Programas personalizados para negocios, procesos,
+                            herramientas y necesidades específicas.
+                        </p>
+
+                    </div>
+
+                    <div class="card-link">
+                        Ver desarrollo
+                        <span>→</span>
+                    </div>
+                </a>
+
             </section>
 
             <nav class="site-menu reveal" aria-label="Menú principal">
@@ -690,4 +714,5 @@
     </script>
 
 </body>
+
 </html>
