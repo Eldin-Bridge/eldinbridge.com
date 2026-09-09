@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Aplicaciones desarrolladas por EldinBridge disponibles en Google Play."
+    >
+
+    <title>Aplicaciones | EldinBridge</title>
+
+    <style>
+        :root {
+            --fondo: #070911;
+            --texto: #f7f8ff;
+            --secundario: #aeb5cd;
+            --morado: #8b5cf6;
+            --azul: #38bdf8;
+            --rosa: #ec4899;
+            --verde: #34d399;
+            --borde: rgba(255, 255, 255, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100svh;
+            overflow-x: hidden;
+            color: var(--texto);
+            background:
+                radial-gradient(
+                    circle at 12% 10%,
+                    rgba(139, 92, 246, 0.2),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 30%,
+                    rgba(56, 189, 248, 0.15),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 50% 100%,
+                    rgba(236, 72, 153, 0.11),
+                    transparent 35%
+                ),
+                var(--fondo);
+            font-family:
+                Inter,
+                ui-sans-serif,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .contenedor {
+            width: min(100% - 32px, 1080px);
+            margin-inline: auto;
+            padding: 28px 0 60px;
+        }
+
+        .barra-superior {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 48px;
+        }
+
+        .marca {
+            color: var(--texto);
+            font-size: 1rem;
+            font-weight: 850;
+            letter-spacing: -0.02em;
+            text-decoration: none;
+        }
+
+        .volver {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 9px 15px;
+            border: 1px solid var(--borde);
+            border-radius: 999px;
+            color: var(--texto);
+            background: rgba(255, 255, 255, 0.055);
+            font-size: 0.86rem;
+            font-weight: 750;
+            text-decoration: none;
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .volver:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .presentacion {
+            max-width: 740px;
+            margin: 0 auto 46px;
+            text-align: center;
+        }
+
+        .google-play {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 22px;
+            padding: 10px 18px;
+            border: 1px solid rgba(52, 211, 153, 0.26);
+            border-radius: 999px;
+            color: #d9fff1;
+            background: rgba(52, 211, 153, 0.08);
+            font-size: 0.8rem;
+            font-weight: 850;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .play-logo {
+            position: relative;
+            width: 25px;
+            height: 27px;
+            flex: 0 0 auto;
+            overflow: hidden;
+            clip-path: polygon(0 0, 100% 50%, 0 100%);
+            background:
+                linear-gradient(
+                    145deg,
+                    #34d399 0 34%,
+                    #38bdf8 34% 52%,
+                    #facc15 52% 70%,
+                    #fb7185 70% 100%
+                );
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.32));
+        }
+
+        h1 {
+            font-size: clamp(2.4rem, 7vw, 5.4rem);
+            line-height: 0.98;
+            letter-spacing: -0.06em;
+        }
+
+        .degradado {
+            color: transparent;
+            background:
+                linear-gradient(
+                    90deg,
+                    #b99cff,
+                    #76d4ff 52%,
+                    #ff8dc7
+                );
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        .presentacion p {
+            max-width: 590px;
+            margin: 20px auto 0;
+            color: var(--secundario);
+            font-size: clamp(0.95rem, 2vw, 1.08rem);
+            line-height: 1.65;
+        }
+
+        .titulo-catalogo {
+            margin-bottom: 22px;
+            font-size: clamp(1.35rem, 3vw, 1.8rem);
+            letter-spacing: -0.035em;
+        }
+
+        .aplicaciones {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .aplicacion {
+            position: relative;
+            display: flex;
+            min-width: 0;
+            min-height: 230px;
+            overflow: hidden;
+            border: 1px solid var(--borde);
+            border-radius: 28px;
+            color: var(--texto);
+            background:
+                radial-gradient(
+                    circle at 85% 15%,
+                    rgba(56, 189, 248, 0.2),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.08),
+                    rgba(255, 255, 255, 0.025)
+                );
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
+            text-decoration: none;
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .aplicacion:hover {
+            border-color: rgba(118, 212, 255, 0.45);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.42);
+            transform: translateY(-5px);
+        }
+
+        .aplicacion:only-child {
+            grid-column: 1 / -1;
+            width: min(100%, 520px);
+            justify-self: center;
+        }
+
+        .app-contenido {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            gap: 22px;
+            min-width: 0;
+            padding: 28px;
+        }
+
+        .app-icono {
+            display: grid;
+            width: 112px;
+            aspect-ratio: 1;
+            flex: 0 0 auto;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 25px;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(139, 92, 246, 0.92),
+                    rgba(56, 189, 248, 0.82)
+                );
+            box-shadow:
+                0 18px 40px rgba(0, 0, 0, 0.32),
+                inset 0 1px rgba(255, 255, 255, 0.25);
+            font-size: 2.8rem;
+        }
+
+        .app-informacion {
+            min-width: 0;
+        }
+
+        .disponible {
+            display: inline-block;
+            margin-bottom: 8px;
+            color: #80e9c2;
+            font-size: 0.7rem;
+            font-weight: 850;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .app-informacion h2 {
+            margin-bottom: 9px;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            letter-spacing: -0.04em;
+        }
+
+        .app-informacion p {
+            color: var(--secundario);
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
+        .enlace-play {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 17px;
+            font-size: 0.9rem;
+            font-weight: 800;
+        }
+
+        .enlace-play span {
+            transition: transform 0.2s ease;
+        }
+
+        .aplicacion:hover .enlace-play span {
+            transform: translateX(4px);
+        }
+
+        .nota {
+            margin-top: 24px;
+            padding: 18px 20px;
+            border: 1px solid var(--borde);
+            border-radius: 18px;
+            color: var(--secundario);
+            background: rgba(255, 255, 255, 0.035);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .nota strong {
+            color: var(--texto);
+        }
+
+        @media (max-width: 600px) {
+            .contenedor {
+                width: min(100% - 24px, 1080px);
+                padding-top: 18px;
+            }
+
+            .barra-superior {
+                margin-bottom: 36px;
+            }
+
+            .presentacion {
+                margin-bottom: 36px;
+            }
+
+            h1 {
+                font-size: clamp(2.25rem, 12vw, 3.5rem);
+            }
+
+            .aplicaciones {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+            }
+
+            .aplicacion {
+                min-height: 290px;
+                border-radius: 22px;
+            }
+
+            .aplicacion:only-child {
+                grid-column: 1 / -1;
+                width: min(100%, 330px);
+            }
+
+            .app-contenido {
+                flex-direction: column;
+                justify-content: center;
+                gap: 16px;
+                padding: 22px 14px;
+                text-align: center;
+            }
+
+            .app-icono {
+                width: 94px;
+                border-radius: 22px;
+                font-size: 2.3rem;
+            }
+
+            .app-informacion h2 {
+                font-size: 1.35rem;
+            }
+
+            .app-informacion p {
+                font-size: 0.82rem;
+            }
+
+            .enlace-play {
+                justify-content: center;
+                font-size: 0.84rem;
+            }
+        }
+
+        @media (max-width: 370px) {
+            .marca {
+                font-size: 0.9rem;
+            }
+
+            .volver {
+                padding: 8px 11px;
+                font-size: 0.76rem;
+            }
+
+            .google-play {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="contenedor">
+
+        <header class="barra-superior">
+            <a class="marca" href="../">
+                EldinBridge
+            </a>
+
+            <a class="volver" href="../">
+                ← Volver
+            </a>
+        </header>
+
+        <section class="presentacion">
+            <div class="google-play">
+                <span class="play-logo" aria-hidden="true"></span>
+                Google Play
+            </div>
+
+            <h1>
+                Aplicaciones creadas para
+                <span class="degradado">acompañarte.</span>
+            </h1>
+
+            <p>
+                Explora las aplicaciones desarrolladas por EldinBridge
+                y descárgalas directamente desde Google Play.
+            </p>
+        </section>
+
+        <section aria-labelledby="titulo-aplicaciones">
+            <h2 class="titulo-catalogo" id="titulo-aplicaciones">
+                Aplicaciones disponibles
+            </h2>
+
+            <div class="aplicaciones">
+
+                <a
+                    class="aplicacion"
+                    href="https://play.google.com/store/apps/details?hl=es&id=com.eldinbridge.fantasynotebook"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Ver Fantasy Notebook en Google Play"
+                >
+                    <div class="app-contenido">
+                        <div class="app-icono" aria-hidden="true">
+                            📔
+                        </div>
+
+                        <div class="app-informacion">
+                            <span class="disponible">
+                                Disponible ahora
+                            </span>
+
+                            <h2>Fantasy Notebook</h2>
+
+                            <p>
+                                Tu cuaderno digital para organizar ideas,
+                                personajes, historias y mundos de fantasía.
+                            </p>
+
+                            <div class="enlace-play">
+                                Ver en Google Play
+                                <span aria-hidden="true">→</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+
+            <div class="nota">
+                <strong>Más aplicaciones próximamente.</strong>
+                Este catálogo crecerá conforme publiquemos nuevos proyectos.
+            </div>
+        </section>
+
+    </main>
+</body>
+
+</html>
