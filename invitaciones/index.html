@@ -285,16 +285,6 @@
             letter-spacing: .13em;
         }
 
-        .cantidad {
-            padding: 6px 10px;
-            border: 1px solid rgba(255, 255, 255, .1);
-            border-radius: 999px;
-            color: var(--secundario);
-            background: rgba(255, 255, 255, .045);
-            font-size: .75rem;
-            font-weight: 750;
-        }
-
         .categoria h3 {
             max-width: 250px;
             font-size: clamp(1.45rem, 3vw, 1.85rem);
@@ -722,11 +712,11 @@
         .enlace-invitacion {
             position: relative;
             z-index: 5;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
             width: fit-content;
-            margin-top: 14px;
+            margin: 14px auto 0;
             padding: 9px 16px;
             border: 1px solid rgba(255, 255, 255, 0.22);
             border-radius: 999px;
@@ -771,12 +761,6 @@
 
             .numero {
                 font-size: .65rem;
-            }
-
-            .cantidad {
-                padding: 5px 7px;
-                font-size: .62rem;
-                white-space: nowrap;
             }
 
             .categoria h3 {
@@ -945,7 +929,6 @@
 
                     <div class="categoria-superior">
                         <span class="numero">01</span>
-                        <span class="cantidad">4 diseños</span>
                     </div>
 
                     <h3>Fiestas Infantiles</h3>
@@ -961,7 +944,6 @@
                         alt="Fiestas &amp; Reuniones en una quinta con alberca y carne asada" loading="lazy">
                     <div class="categoria-superior">
                         <span class="numero">02</span>
-                        <span class="cantidad">4 diseños</span>
                     </div>
                     <h3>Fiestas &amp; Reuniones</h3>
                     <div class="categoria-pie">
