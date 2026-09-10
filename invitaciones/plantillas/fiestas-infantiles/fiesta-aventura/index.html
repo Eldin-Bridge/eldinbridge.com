@@ -550,7 +550,22 @@
         .entrada-icono {
             width: 92px;
             margin-bottom: 12px;
+            transform-origin: center;
             filter: drop-shadow(0 8px 12px rgba(70, 43, 21, .2));
+            animation: mover-brujula 3.2s ease-in-out infinite;
+            will-change: transform;
+        }
+
+        @keyframes mover-brujula {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-5deg);
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(7deg);
+            }
         }
 
         .entrada h2 {
@@ -740,7 +755,7 @@
             }
 
             #inicio .asset.personaje {
-                top: 88% !important;
+                top: 82% !important;
             }
 
             #mision .lista-aventura,
@@ -765,13 +780,13 @@
                 text-align: center !important;
             }
 
-  
+
             #mision .lista-aventura li+li,
             #atuendo .lista-aventura li+li {
                 margin-top: 8px !important;
             }
 
-  
+
             #mision .lista-aventura li::before,
             #atuendo .lista-aventura li::before {
                 position: absolute !important;
@@ -829,8 +844,6 @@
             <div class="capa-assets">
                 <img class="asset personaje personaje-derecha" src="assets/personajes/personaje01.png" alt=""
                     style="--x:82%;--y:84%;--tamano:27vw;--z:6">
-                <img class="asset adorno girar" src="assets/elementos/elemento01.png" alt=""
-                    style="--x:13%;--y:20%;--tamano:10vw;--z:2">
             </div>
             <div class="tarjeta-mapa">
                 <span class="pista">Punto de partida</span>
