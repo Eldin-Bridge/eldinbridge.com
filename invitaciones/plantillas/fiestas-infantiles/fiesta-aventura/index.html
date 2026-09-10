@@ -317,6 +317,11 @@
             transition: transform .2s ease, filter .2s ease;
         }
 
+        .boton-mapa[aria-disabled="true"] {
+            cursor: default;
+            pointer-events: none;
+        }
+
         .boton-pista:hover,
         .boton-mapa:hover {
             filter: brightness(1.08);
@@ -1027,7 +1032,6 @@
             $$('[data-hora]').forEach(el => el.textContent = CONFIG.horaTexto);
             $$('[data-lugar]').forEach(el => el.textContent = CONFIG.lugar);
             $$('[data-ciudad]').forEach(el => el.textContent = CONFIG.ciudad);
-            $$('[data-maps]').forEach(el => el.href = CONFIG.maps);
             document.title = `${CONFIG.nombre} | Fiesta Aventura`;
         }
 
