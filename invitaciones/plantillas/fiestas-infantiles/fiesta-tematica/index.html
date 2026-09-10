@@ -523,6 +523,29 @@
             backdrop-filter: blur(16px);
         }
 
+        .intro-icono {
+            display: block;
+            width: 92px;
+            height: auto;
+            margin: 0 auto 14px;
+            transform-origin: center;
+            filter: drop-shadow(0 8px 14px rgba(255, 213, 106, .35));
+            animation: mover-intro-icono 3.2s ease-in-out infinite;
+            will-change: transform;
+        }
+
+        @keyframes mover-intro-icono {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-5deg);
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(7deg);
+            }
+        }
+
         .intro-caja h1 {
             color: var(--oro);
             font-size: clamp(2.4rem, 10vw, 5rem);
@@ -790,7 +813,6 @@
                 line-height: 1.32;
             }
         }
-
     </style>
 </head>
 
@@ -810,6 +832,8 @@
 
     <div id="intro">
         <div class="intro-caja">
+            <img class="intro-icono" src="assets/elementos/elemento01.webp" alt="">
+
             <h1>El Reino de las Estrellas</h1>
 
             <p>
@@ -1225,28 +1249,6 @@
                     voltear: false
                 },
                 {
-                    id: "estrella-inicio",
-                    escena: "inicio",
-                    archivo: "assets/elementos/elemento01.webp",
-                    x: 17,
-                    y: 23,
-                    tamano: 16,
-                    z: 3,
-                    animacion: "deriva",
-                    voltear: false
-                },
-                {
-                    id: "numero-inicio",
-                    escena: "inicio",
-                    archivo: "assets/elementos/elemento11.webp",
-                    x: 16,
-                    y: 72,
-                    tamano: 14,
-                    z: 3,
-                    animacion: "pulso",
-                    voltear: false
-                },
-                {
                     id: "personaje-cuenta",
                     escena: "cuenta",
                     archivo: "assets/personajes/personaje02.webp",
@@ -1260,7 +1262,7 @@
                 {
                     id: "estela-cuenta",
                     escena: "cuenta",
-                    archivo: "assets/elementos/elemento04.webp",
+                    archivo: "assets/elementos/elemento02.webp",
                     x: 24,
                     y: 19,
                     tamano: 28,
@@ -1304,7 +1306,7 @@
                 {
                     id: "tiara-atuendo",
                     escena: "atuendo",
-                    archivo: "assets/elementos/elemento10.webp",
+                    archivo: "assets/elementos/elemento04.webp",
                     x: 18,
                     y: 22,
                     tamano: 19,
@@ -1326,7 +1328,7 @@
                 {
                     id: "regalos",
                     escena: "regalo",
-                    archivo: "assets/elementos/elemento09.webp",
+                    archivo: "assets/elementos/elemento05.webp",
                     x: 84,
                     y: 76,
                     tamano: 21,
@@ -1348,7 +1350,7 @@
                 {
                     id: "globos-detalles",
                     escena: "detalles",
-                    archivo: "assets/elementos/elemento08.webp",
+                    archivo: "assets/elementos/elemento06.webp",
                     x: 15,
                     y: 24,
                     tamano: 18,
@@ -1370,7 +1372,7 @@
                 {
                     id: "pastel-final",
                     escena: "final",
-                    archivo: "assets/elementos/elemento06.webp",
+                    archivo: "assets/elementos/elemento07.webp",
                     x: 17,
                     y: 72,
                     tamano: 20,
