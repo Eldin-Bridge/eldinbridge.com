@@ -184,13 +184,11 @@
             text-align: center;
             background:
                 linear-gradient(145deg,
-                    rgba(8, 24, 54, .46),
-                    rgba(55, 28, 102, .30));
+                    rgba(8, 24, 54, .30),
+                    rgba(55, 28, 102, .20));
             box-shadow:
                 0 24px 80px rgba(0, 0, 0, .42),
                 inset 0 1px rgba(255, 255, 255, .18);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
         }
 
         .etiqueta {
@@ -362,11 +360,9 @@
         }
 
         .revelar {
-            opacity: 0;
+            opacity: 1;
             transform: translateY(22px);
-            transition:
-                opacity .65s ease,
-                transform .65s ease;
+            transition: transform .65s ease;
         }
 
         .revelar.visible {
@@ -707,29 +703,20 @@
                 border-radius: 28px;
                 background:
                     linear-gradient(145deg,
-                        rgba(8, 24, 54, .46),
-                        rgba(55, 28, 102, .30));
+                        rgba(8, 24, 54, .30),
+                        rgba(55, 28, 102, .20));
                 box-shadow:
                     0 24px 80px rgba(0, 0, 0, .42),
                     inset 0 1px rgba(255, 255, 255, .18);
-                backdrop-filter: blur(8px);
-                -webkit-backdrop-filter: blur(8px);
                 pointer-events: none;
             }
 
-            /*
-     * Todo el contenido escrito queda arriba
-     * de los personajes.
-     */
+
             .contenido>* {
                 position: relative;
                 z-index: 12;
             }
 
-            /*
-     * Personajes y decoraciones quedan encima
-     * del cristal, pero debajo del texto.
-     */
             .capa-elementos {
                 z-index: 11;
             }
@@ -738,9 +725,7 @@
                 width: calc(var(--tamano) * .84%);
             }
 
-            /*
-     * Personajes del lado derecho.
-     */
+
             #inicio .elemento.personaje,
             #cuenta .elemento.personaje,
             #atuendo .elemento.personaje,
@@ -749,18 +734,13 @@
                 left: 88%;
             }
 
-            /*
-     * Personajes del lado izquierdo.
-     */
+
             #mision .elemento.personaje,
             #regalo .elemento.personaje {
                 left: 12%;
             }
 
-            /*
-     * El contador permanece en una sola fila:
-     * días, horas, minutos y segundos.
-     */
+
             .contador {
                 grid-template-columns: repeat(4, minmax(0, 1fr));
                 gap: 5px;
@@ -783,9 +763,6 @@
                 text-overflow: ellipsis;
             }
 
-            /*
-     * Datos del evento en cuadrícula 2 × 2.
-     */
             .datos {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 7px;
