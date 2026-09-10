@@ -425,6 +425,72 @@
             font-weight: 950;
         }
 
+        /*
+ * TARJETA 2
+ * Reducimos las separaciones verticales para
+ * que la tarjeta del contador sea más compacta.
+ */
+        #cuenta .tarjeta-mapa {
+            padding-top: 22px;
+            padding-bottom: 22px;
+        }
+
+        #cuenta .pista {
+            margin-bottom: 9px;
+        }
+
+        #cuenta .texto {
+            margin-top: 10px;
+        }
+
+        #cuenta .contador {
+            margin-top: 13px;
+        }
+
+        #cuenta .boton-pista {
+            margin-top: 13px;
+        }
+
+        /*
+ * TARJETAS CON PALOMITAS
+ * Centramos los rectángulos y hacemos que cada
+ * uno mida únicamente lo necesario.
+ */
+        #mision .lista-aventura,
+        #atuendo .lista-aventura {
+            display: flex;
+            width: 100%;
+            max-width: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 9px;
+        }
+
+        #mision .lista-aventura li,
+        #atuendo .lista-aventura li {
+            display: inline-flex;
+            width: fit-content;
+            max-width: 100%;
+            min-height: 42px;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 16px 10px 38px;
+            text-align: center;
+        }
+
+        /*
+ * La palomita permanece a la izquierda,
+ * pero centrada verticalmente.
+ */
+        #mision .lista-aventura li::before,
+        #atuendo .lista-aventura li::before {
+            top: 50%;
+            left: 14px;
+            transform: translateY(-50%);
+        }
+
+
+
         .barra-ruta {
             position: fixed;
             top: max(14px, env(safe-area-inset-top));
@@ -798,7 +864,7 @@
             <div class="velo"></div>
             <div class="capa-assets">
                 <img class="asset personaje personaje-derecha" src="assets/personajes/personaje01.png" alt=""
-                    style="--x:82%;--y:71%;--tamano:27vw;--z:6">
+                    style="--x:82%;--y:77%;--tamano:27vw;--z:6">
                 <img class="asset adorno girar" src="assets/elementos/elemento01.png" alt=""
                     style="--x:13%;--y:20%;--tamano:10vw;--z:2">
             </div>
