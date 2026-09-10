@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -33,9 +34,16 @@
             background: #071c18;
         }
 
+        html,
+        body,
+        main {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: clip;
+        }
+
         body {
             min-width: 320px;
-            overflow-x: hidden;
             color: var(--blanco);
             background: #071c18;
             font-family: Inter, "Segoe UI", Arial, sans-serif;
@@ -64,10 +72,7 @@
             overflow: hidden;
             place-items: center;
             padding:
-                max(74px, env(safe-area-inset-top))
-                max(18px, env(safe-area-inset-right))
-                max(26px, env(safe-area-inset-bottom))
-                max(18px, env(safe-area-inset-left));
+                max(74px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(26px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
             scroll-snap-align: start;
             scroll-snap-stop: always;
             isolation: isolate;
@@ -127,20 +132,27 @@
         }
 
         .escena:not(.activa) .asset,
-        .escena:not(.activa) .luciernaga {
+        .escena:not(.activa) .hoja-cayendo {
             animation-play-state: paused;
         }
 
         @keyframes respirar {
-            50% { translate: 0 -8px; }
+            50% {
+                translate: 0 -8px;
+            }
         }
 
         @keyframes flotar {
-            50% { translate: 0 -13px; rotate: 3deg; }
+            50% {
+                translate: 0 -13px;
+                rotate: 3deg;
+            }
         }
 
         @keyframes girar {
-            to { rotate: 360deg; }
+            to {
+                rotate: 360deg;
+            }
         }
 
         .tarjeta-mapa {
@@ -522,16 +534,61 @@
             pointer-events: none;
         }
 
-        .luciernaga {
+        .hoja-cayendo {
             position: absolute;
-            top: -20px;
-            width: var(--s);
-            height: var(--s);
-            border-radius: 55% 15% 55% 15%;
-            background: var(--c);
-            box-shadow: 0 0 9px var(--c);
-            opacity: .8;
-            animation: caer var(--d) linear forwards;
+            top: -35px;
+            width: var(--ancho);
+            height: var(--alto);
+            border-radius: 85% 8% 85% 8%;
+            background:
+                linear-gradient(135deg,
+                    var(--color-claro),
+                    var(--color-oscuro));
+            box-shadow:
+                0 3px 7px rgba(0, 0, 0, .18);
+            opacity: .88;
+            transform-origin: center;
+            animation: caer-hoja var(--duracion) linear forwards;
+        }
+
+        .hoja-cayendo::after {
+            content: "";
+            position: absolute;
+            top: 8%;
+            left: 48%;
+            width: 1px;
+            height: 84%;
+            background: rgba(255, 245, 205, .45);
+            transform: rotate(-34deg);
+            transform-origin: center;
+        }
+
+        @keyframes caer-hoja {
+            0% {
+                translate: 0 -30px;
+                rotate: 0deg;
+            }
+
+            25% {
+                translate: 24px 25vh;
+                rotate: 105deg;
+            }
+
+            50% {
+                translate: -18px 50vh;
+                rotate: 210deg;
+            }
+
+            75% {
+                translate: 28px 75vh;
+                rotate: 315deg;
+            }
+
+            100% {
+                translate: var(--desvio) calc(var(--alto-pantalla) + 60px);
+                rotate: 430deg;
+                opacity: .15;
+            }
         }
 
         @keyframes caer {
@@ -547,10 +604,88 @@
                 padding-inline: 14px;
             }
 
+            /*
+     * En móvil, la tarjeta se divide en capas:
+     *
+     *  9 = fondo de pergamino
+     * 11 = personajes y adornos
+     * 12 = textos y botones
+     */
             .tarjeta-mapa {
+                z-index: auto;
                 width: 100%;
                 padding: 24px 16px;
+                overflow: visible;
+                border: 0;
                 border-radius: 25px 12px 24px 15px;
+                background: transparent;
+                box-shadow: none;
+            }
+
+            /*
+     * Este pseudo-elemento se convierte en el
+     * fondo de pergamino de la tarjeta.
+     */
+            .tarjeta-mapa::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                z-index: 9;
+                width: auto;
+                height: auto;
+                border: 2px solid rgba(255, 229, 168, .76);
+                border-radius: 25px 12px 24px 15px;
+                background:
+                    linear-gradient(rgba(255, 244, 210, .94),
+                        rgba(239, 215, 163, .94)),
+                    repeating-linear-gradient(12deg,
+                        transparent 0 12px,
+                        rgba(91, 55, 29, .04) 13px 14px);
+                box-shadow:
+                    0 25px 70px rgba(0, 0, 0, .42),
+                    inset 0 0 38px rgba(100, 59, 27, .15);
+                pointer-events: none;
+            }
+
+            /*
+     * Quitamos el círculo decorativo inferior
+     * porque necesitamos ::before para el pergamino.
+     */
+            .tarjeta-mapa::after {
+                display: none;
+            }
+
+            /*
+     * Todo el texto y los botones quedan arriba
+     * de los personajes.
+     */
+            .tarjeta-mapa>* {
+                position: relative;
+                z-index: 12;
+            }
+
+            /*
+     * Personajes arriba del pergamino,
+     * pero debajo del contenido escrito.
+     */
+            .capa-assets {
+                z-index: 11;
+            }
+
+            .asset.personaje {
+                width: min(var(--tamano), 43vw);
+            }
+
+            .asset.adorno {
+                width: min(var(--tamano), 23vw);
+            }
+
+            .personaje-derecha {
+                left: 88% !important;
+            }
+
+            .personaje-izquierda {
+                left: 12% !important;
             }
 
             .barra-ruta {
@@ -583,22 +718,6 @@
                 font-size: .5rem;
                 letter-spacing: .02em;
             }
-
-            .asset.personaje {
-                width: min(var(--tamano), 44vw);
-            }
-
-            .asset.adorno {
-                width: min(var(--tamano), 25vw);
-            }
-
-            .personaje-derecha {
-                left: 88% !important;
-            }
-
-            .personaje-izquierda {
-                left: 12% !important;
-            }
         }
 
         @media (max-width: 380px) {
@@ -617,7 +736,9 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            html { scroll-behavior: auto; }
+            html {
+                scroll-behavior: auto;
+            }
 
             *,
             *::before,
@@ -636,7 +757,6 @@
     <div class="entrada" id="entrada">
         <div class="entrada-contenido">
             <img class="entrada-icono" src="assets/elementos/elemento01.png" alt="">
-            <span class="pista">Invitación de aventura</span>
             <h2>Una expedición está por comenzar</h2>
             <p>Prepara tu espíritu explorador y descubre todos los detalles de esta celebración.</p>
             <button class="boton-pista" id="entrar" type="button">Entrar a la expedición →</button>
@@ -658,14 +778,17 @@
             <img class="fondo" src="assets/fondos/fondo01.png" alt="">
             <div class="velo"></div>
             <div class="capa-assets">
-                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje01.png" alt="" style="--x:82%;--y:71%;--tamano:27vw;--z:6">
-                <img class="asset adorno girar" src="assets/elementos/elemento01.png" alt="" style="--x:13%;--y:20%;--tamano:10vw;--z:2">
+                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje01.png" alt=""
+                    style="--x:82%;--y:71%;--tamano:27vw;--z:6">
+                <img class="asset adorno girar" src="assets/elementos/elemento01.png" alt=""
+                    style="--x:13%;--y:20%;--tamano:10vw;--z:2">
             </div>
             <div class="tarjeta-mapa">
                 <span class="pista">Punto de partida</span>
                 <h1>Expedición a la <span class="resaltado">Isla Esmeralda</span></h1>
                 <p class="nombre">Acompaña a <span data-nombre>Mateo</span></p>
-                <p class="texto">Hay una ruta por descubrir, retos por superar y una gran celebración esperando al final.</p>
+                <p class="texto">Hay una ruta por descubrir, retos por superar y una gran celebración esperando al
+                    final.</p>
                 <div class="separador-ruta">✦</div>
                 <p class="edad">Cumple <span data-edad>8</span> años</p>
                 <button class="boton-pista siguiente" type="button">Siguiente pista →</button>
@@ -676,8 +799,10 @@
             <img class="fondo" src="assets/fondos/fondo02.png" alt="">
             <div class="velo"></div>
             <div class="capa-assets">
-                <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje02.png" alt="" style="--x:18%;--y:73%;--tamano:25vw;--z:6;--voltear:-1">
-                <img class="asset adorno" src="assets/elementos/elemento05.png" alt="" style="--x:88%;--y:19%;--tamano:11vw;--z:2">
+                <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje02.png" alt=""
+                    style="--x:18%;--y:73%;--tamano:25vw;--z:6;--voltear:-1">
+                <img class="asset adorno" src="assets/elementos/elemento05.png" alt=""
+                    style="--x:88%;--y:19%;--tamano:11vw;--z:2">
             </div>
             <div class="tarjeta-mapa">
                 <span class="pista">Pista 01 · La fecha</span>
@@ -686,8 +811,10 @@
                 <div class="contador" aria-label="Cuenta regresiva">
                     <div class="tiempo"><span class="numero" id="dias">00</span><span class="unidad">Días</span></div>
                     <div class="tiempo"><span class="numero" id="horas">00</span><span class="unidad">Horas</span></div>
-                    <div class="tiempo"><span class="numero" id="minutos">00</span><span class="unidad">Minutos</span></div>
-                    <div class="tiempo"><span class="numero" id="segundos">00</span><span class="unidad">Segundos</span></div>
+                    <div class="tiempo"><span class="numero" id="minutos">00</span><span class="unidad">Minutos</span>
+                    </div>
+                    <div class="tiempo"><span class="numero" id="segundos">00</span><span class="unidad">Segundos</span>
+                    </div>
                 </div>
                 <button class="boton-pista siguiente" type="button">Siguiente pista →</button>
             </div>
@@ -697,17 +824,23 @@
             <img class="fondo" src="assets/fondos/fondo03.png" alt="">
             <div class="velo"></div>
             <div class="capa-assets">
-                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje03.png" alt="" style="--x:83%;--y:72%;--tamano:25vw;--z:6">
-                <img class="asset adorno" src="assets/elementos/elemento02.png" alt="" style="--x:13%;--y:22%;--tamano:11vw;--z:2">
+                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje03.png" alt=""
+                    style="--x:83%;--y:72%;--tamano:25vw;--z:6">
+                <img class="asset adorno" src="assets/elementos/elemento02.png" alt=""
+                    style="--x:13%;--y:22%;--tamano:11vw;--z:2">
             </div>
             <div class="tarjeta-mapa">
                 <span class="pista">Pista 02 · Coordenadas</span>
                 <h2>Encuentra el campamento</h2>
                 <div class="datos">
-                    <div class="dato"><span class="dato-icono">📅</span><strong>Fecha</strong><span data-fecha>Sábado 24 de octubre</span></div>
-                    <div class="dato"><span class="dato-icono">🕓</span><strong>Hora</strong><span data-hora>4:00 p. m.</span></div>
-                    <div class="dato"><span class="dato-icono">📍</span><strong>Lugar</strong><span data-lugar>Jardín La Arboleda</span></div>
-                    <div class="dato"><span class="dato-icono">🧭</span><strong>Zona</strong><span data-ciudad>Cadereyta, Nuevo León</span></div>
+                    <div class="dato"><span class="dato-icono">📅</span><strong>Fecha</strong><span data-fecha>Sábado 24
+                            de octubre</span></div>
+                    <div class="dato"><span class="dato-icono">🕓</span><strong>Hora</strong><span data-hora>4:00 p.
+                            m.</span></div>
+                    <div class="dato"><span class="dato-icono">📍</span><strong>Lugar</strong><span data-lugar>Jardín La
+                            Arboleda</span></div>
+                    <div class="dato"><span class="dato-icono">🧭</span><strong>Zona</strong><span
+                            data-ciudad>Cadereyta, Nuevo León</span></div>
                 </div>
                 <button class="boton-pista siguiente" type="button">Cruzar el puente →</button>
             </div>
@@ -717,13 +850,16 @@
             <img class="fondo" src="assets/fondos/fondo04.png" alt="">
             <div class="velo"></div>
             <div class="capa-assets">
-                <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje04.png" alt="" style="--x:18%;--y:72%;--tamano:25vw;--z:6">
-                <img class="asset adorno" src="assets/elementos/elemento03.png" alt="" style="--x:87%;--y:21%;--tamano:11vw;--z:2">
+                <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje04.png" alt=""
+                    style="--x:18%;--y:72%;--tamano:25vw;--z:6">
+                <img class="asset adorno" src="assets/elementos/elemento03.png" alt=""
+                    style="--x:87%;--y:21%;--tamano:11vw;--z:2">
             </div>
             <div class="tarjeta-mapa">
                 <span class="pista">Pista 03 · La misión</span>
                 <h2>Todo explorador tiene una misión</h2>
-                <p class="texto">Ven con ganas de jugar, descubrir secretos y ayudar a <span data-nombre>Mateo</span> a completar la expedición.</p>
+                <p class="texto">Ven con ganas de jugar, descubrir secretos y ayudar a <span data-nombre>Mateo</span> a
+                    completar la expedición.</p>
                 <ul class="lista-aventura">
                     <li>Superar divertidos retos</li>
                     <li>Encontrar las pistas escondidas</li>
@@ -737,8 +873,10 @@
             <img class="fondo" src="assets/fondos/fondo05.png" alt="">
             <div class="velo"></div>
             <div class="capa-assets">
-                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje05.png" alt="" style="--x:82%;--y:72%;--tamano:25vw;--z:6">
-                <img class="asset adorno" src="assets/elementos/elemento06.png" alt="" style="--x:13%;--y:22%;--tamano:10vw;--z:2">
+                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje05.png" alt=""
+                    style="--x:82%;--y:72%;--tamano:25vw;--z:6">
+                <img class="asset adorno" src="assets/elementos/elemento06.png" alt=""
+                    style="--x:13%;--y:22%;--tamano:10vw;--z:2">
             </div>
             <div class="tarjeta-mapa">
                 <span class="pista">Pista 04 · Equipo</span>
@@ -757,13 +895,16 @@
             <img class="fondo" src="assets/fondos/fondo06.png" alt="">
             <div class="velo"></div>
             <div class="capa-assets">
-                <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje06.png" alt="" style="--x:18%;--y:72%;--tamano:25vw;--z:6;--voltear:-1">
-                <img class="asset adorno" src="assets/elementos/elemento04.png" alt="" style="--x:87%;--y:19%;--tamano:13vw;--z:2">
+                <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje06.png" alt=""
+                    style="--x:18%;--y:72%;--tamano:25vw;--z:6;--voltear:-1">
+                <img class="asset adorno" src="assets/elementos/elemento04.png" alt=""
+                    style="--x:87%;--y:19%;--tamano:13vw;--z:2">
             </div>
             <div class="tarjeta-mapa">
                 <span class="pista">Pista 05 · El tesoro</span>
                 <h2>Tu compañía es el mejor tesoro</h2>
-                <p class="texto">Lo más importante será compartir esta aventura contigo. Si deseas llevar un obsequio, será recibido con mucho cariño.</p>
+                <p class="texto">Lo más importante será compartir esta aventura contigo. Si deseas llevar un obsequio,
+                    será recibido con mucho cariño.</p>
                 <div class="separador-ruta">♥</div>
                 <p class="nombre">¡Ya casi llegamos!</p>
                 <button class="boton-pista siguiente" type="button">Descubrir la meta →</button>
@@ -774,13 +915,16 @@
             <img class="fondo" src="assets/fondos/fondo07.png" alt="">
             <div class="velo"></div>
             <div class="capa-assets">
-                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje07.png" alt="" style="--x:82%;--y:72%;--tamano:26vw;--z:6">
-                <img class="asset adorno" src="assets/elementos/elemento07.png" alt="" style="--x:14%;--y:73%;--tamano:13vw;--z:5">
+                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje07.png" alt=""
+                    style="--x:82%;--y:72%;--tamano:26vw;--z:6">
+                <img class="asset adorno" src="assets/elementos/elemento07.png" alt=""
+                    style="--x:14%;--y:73%;--tamano:13vw;--z:5">
             </div>
             <div class="tarjeta-mapa">
                 <span class="pista">Expedición completada</span>
                 <h2>¡Te esperamos en la Isla Esmeralda!</h2>
-                <p class="texto">Ven a celebrar los <span data-edad>8</span> años de <span data-nombre>Mateo</span> y hagamos de este día una aventura inolvidable.</p>
+                <p class="texto">Ven a celebrar los <span data-edad>8</span> años de <span data-nombre>Mateo</span> y
+                    hagamos de este día una aventura inolvidable.</p>
                 <p class="nombre">Con cariño, <span data-nombre>Mateo</span> 🌿</p>
                 <a class="boton-mapa" data-maps href="#" target="_blank" rel="noopener noreferrer">Ver ubicación →</a>
                 <br>
@@ -831,8 +975,18 @@
         }
 
         function irA(indice, suave = true) {
-            const destino = escenas[Math.max(0, Math.min(indice, escenas.length - 1))];
-            destino.scrollIntoView({ behavior: suave ? "smooth" : "auto", block: "start" });
+            const posicion = Math.max(
+                0,
+                Math.min(indice, escenas.length - 1)
+            );
+
+            const destino = escenas[posicion];
+
+            window.scrollTo({
+                top: destino.offsetTop,
+                left: 0,
+                behavior: suave ? "smooth" : "auto"
+            });
         }
 
         function actualizarRuta(indice) {
@@ -911,17 +1065,61 @@
         }
 
         function crearParticula() {
-            if (document.hidden || $("#particulas").childElementCount >= 14) return;
+            const contenedor = $("#particulas");
+
+            if (
+                document.hidden ||
+                contenedor.childElementCount >= 12
+            ) {
+                return;
+            }
 
             const hoja = document.createElement("span");
-            hoja.className = "luciernaga";
+
+            const colores = [
+                ["#62a744", "#245f32"],
+                ["#7daf4c", "#3d6f2f"],
+                ["#a77942", "#5c351f"],
+                ["#c08a4b", "#704326"]
+            ];
+
+            const color = colores[
+                Math.floor(Math.random() * colores.length)
+            ];
+
+            hoja.className = "hoja-cayendo";
             hoja.style.left = `${Math.random() * 100}%`;
-            hoja.style.setProperty("--s", `${5 + Math.random() * 7}px`);
-            hoja.style.setProperty("--d", `${5.5 + Math.random() * 3}s`);
-            hoja.style.setProperty("--desvio", `${-45 + Math.random() * 90}px`);
-            hoja.style.setProperty("--c", Math.random() > .5 ? "#ffd66b" : "#55e5c6");
-            $("#particulas").appendChild(hoja);
-            hoja.addEventListener("animationend", () => hoja.remove(), { once: true });
+
+            hoja.style.setProperty(
+                "--ancho",
+                `${9 + Math.random() * 7}px`
+            );
+
+            hoja.style.setProperty(
+                "--alto",
+                `${16 + Math.random() * 11}px`
+            );
+
+            hoja.style.setProperty(
+                "--duracion",
+                `${6.5 + Math.random() * 3.5}s`
+            );
+
+            hoja.style.setProperty(
+                "--desvio",
+                `${-45 + Math.random() * 90}px`
+            );
+
+            hoja.style.setProperty("--color-claro", color[0]);
+            hoja.style.setProperty("--color-oscuro", color[1]);
+
+            contenedor.appendChild(hoja);
+
+            hoja.addEventListener(
+                "animationend",
+                () => hoja.remove(),
+                { once: true }
+            );
         }
 
         function ajustarEscenaCercana() {
@@ -955,4 +1153,5 @@
         window.addEventListener("pageshow", actualizarAltoPantalla);
     </script>
 </body>
+
 </html>
