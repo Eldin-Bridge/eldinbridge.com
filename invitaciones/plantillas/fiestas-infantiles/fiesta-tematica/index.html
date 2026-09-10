@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preload" as="image" href="assets/fondos/fondo01.webp">
     <meta name="description" content="Demostración de invitación infantil temática de EldinBridge.">
     <title>El Reino de las Estrellas | Fiesta Temática</title>
 
@@ -485,10 +486,9 @@
             place-items: center;
             padding: 24px;
             background:
-                radial-gradient(circle at 50% 25%,
-                    rgba(109, 69, 198, .45),
-                    transparent 35%),
-                #030817;
+                linear-gradient(rgba(3, 8, 23, .32),
+                    rgba(3, 8, 23, .76)),
+                url("assets/fondos/fondo01.webp") center / cover no-repeat;
         }
 
         #intro.oculto {
