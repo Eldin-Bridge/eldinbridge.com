@@ -29,24 +29,41 @@
         }
 
         html {
-            scroll-behavior: smooth;
-            scroll-snap-type: y mandatory;
-            background: #071c18;
-        }
-
-        html,
-        body,
-        main {
             width: 100%;
-            max-width: 100%;
-            overflow-x: clip;
+            height: 100%;
+            overflow: hidden;
+            background: #071c18;
         }
 
         body {
+            width: 100%;
             min-width: 320px;
+            height: 100%;
+            overflow: hidden;
             color: var(--blanco);
             background: #071c18;
             font-family: Inter, "Segoe UI", Arial, sans-serif;
+        }
+
+        /*
+ * Las pantallas se colocan horizontalmente.
+ */
+        main {
+            display: flex;
+            width: 100%;
+            height: var(--alto-pantalla);
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            overscroll-behavior-x: contain;
+            touch-action: pan-x;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        main::-webkit-scrollbar {
+            display: none;
         }
 
         button,
@@ -66,9 +83,11 @@
         .escena {
             position: relative;
             display: grid;
+            flex: 0 0 100%;
             width: 100%;
-            min-height: var(--alto-pantalla);
+            min-width: 100%;
             height: var(--alto-pantalla);
+            min-height: var(--alto-pantalla);
             overflow: hidden;
             place-items: center;
             padding:
@@ -800,7 +819,7 @@
             <div class="velo"></div>
             <div class="capa-assets">
                 <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje02.png" alt=""
-                    style="--x:18%;--y:73%;--tamano:25vw;--z:6;--voltear:-1">
+                    style="--x:18%;--y:78%;--tamano:25vw;--z:6;--voltear:-1">
                 <img class="asset adorno" src="assets/elementos/elemento05.png" alt=""
                     style="--x:88%;--y:19%;--tamano:11vw;--z:2">
             </div>
@@ -825,7 +844,7 @@
             <div class="velo"></div>
             <div class="capa-assets">
                 <img class="asset personaje personaje-derecha" src="assets/personajes/personaje03.png" alt=""
-                    style="--x:83%;--y:72%;--tamano:25vw;--z:6">
+                    style="--x:83%;--y:78%;--tamano:25vw;--z:6">
                 <img class="asset adorno" src="assets/elementos/elemento02.png" alt=""
                     style="--x:13%;--y:22%;--tamano:11vw;--z:2">
             </div>
@@ -851,7 +870,7 @@
             <div class="velo"></div>
             <div class="capa-assets">
                 <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje04.png" alt=""
-                    style="--x:18%;--y:72%;--tamano:25vw;--z:6">
+                    style="--x:18%;--y:78%;--tamano:25vw;--z:6">
                 <img class="asset adorno" src="assets/elementos/elemento03.png" alt=""
                     style="--x:87%;--y:21%;--tamano:11vw;--z:2">
             </div>
@@ -874,7 +893,7 @@
             <div class="velo"></div>
             <div class="capa-assets">
                 <img class="asset personaje personaje-derecha" src="assets/personajes/personaje05.png" alt=""
-                    style="--x:82%;--y:72%;--tamano:25vw;--z:6">
+                    style="--x:82%;--y:78%;--tamano:25vw;--z:6">
                 <img class="asset adorno" src="assets/elementos/elemento06.png" alt=""
                     style="--x:13%;--y:22%;--tamano:10vw;--z:2">
             </div>
@@ -928,7 +947,7 @@
                 <p class="nombre">Con cariño, <span data-nombre>Mateo</span> 🌿</p>
                 <a class="boton-mapa" data-maps href="#" target="_blank" rel="noopener noreferrer">Ver ubicación →</a>
                 <br>
-                <button class="boton-pista" id="volver-inicio" type="button">↑ Volver al inicio</button>
+                <button class="boton-pista" id="volver-inicio" type="button">← Volver al inicio</button>
             </div>
         </section>
     </main>
@@ -952,6 +971,7 @@
         const $ = (selector, contexto = document) => contexto.querySelector(selector);
         const $$ = (selector, contexto = document) => [...contexto.querySelectorAll(selector)];
         const escenas = $$(".escena");
+        const carrusel = $("main");
         const audio = $("#audio");
         const botonMusica = $("#musica");
         let indiceActivo = 0;
@@ -980,11 +1000,9 @@
                 Math.min(indice, escenas.length - 1)
             );
 
-            const destino = escenas[posicion];
-
-            window.scrollTo({
-                top: destino.offsetTop,
-                left: 0,
+            carrusel.scrollTo({
+                left: posicion * carrusel.clientWidth,
+                top: 0,
                 behavior: suave ? "smooth" : "auto"
             });
         }
@@ -1002,7 +1020,10 @@
                 .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
             if (visible) actualizarRuta(escenas.indexOf(visible.target));
-        }, { threshold: [.55, .72] });
+        }, {
+            root: carrusel,
+            threshold: [.55, .72]
+        });
 
         escenas.forEach(escena => observador.observe(escena));
 
@@ -1124,13 +1145,33 @@
 
         function ajustarEscenaCercana() {
             clearTimeout(temporizadorAjuste);
+
             temporizadorAjuste = setTimeout(() => {
-                const alto = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--alto-pantalla"));
-                if (!alto) return;
-                const indice = Math.round(window.scrollY / alto);
+                const ancho = carrusel.clientWidth;
+
+                if (!ancho) return;
+
+                const indice = Math.round(
+                    carrusel.scrollLeft / ancho
+                );
+
                 irA(indice, false);
             }, 150);
         }
+
+        carrusel.addEventListener("wheel", evento => {
+            if (Math.abs(evento.deltaY) <= Math.abs(evento.deltaX)) {
+                return;
+            }
+
+            evento.preventDefault();
+
+            carrusel.scrollBy({
+                left: evento.deltaY,
+                top: 0,
+                behavior: "auto"
+            });
+        }, { passive: false });
 
         aplicarDatos();
         actualizarAltoPantalla();
