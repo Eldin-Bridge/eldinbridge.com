@@ -644,18 +644,21 @@
                 scroll-padding-top: 0;
             }
 
-            /*
-     * No modificamos .escena ni .fondo-escena.
-     * El fondo y la posición general permanecen iguales.
-     */
+            body {
+                overscroll-behavior-y: none;
+            }
 
-            /*
-     * La tarjeta se divide en tres niveles:
-     *
-     *  9 = cristal de la tarjeta
-     * 11 = personajes y adornos
-     * 12 = textos, contador y botones
-     */
+            .escena {
+                height: 100svh;
+                height: 100dvh;
+                min-height: 100svh;
+                min-height: 100dvh;
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
+            }
+
+
+
 
             .boton-salir {
                 top: max(11px, env(safe-area-inset-top));
