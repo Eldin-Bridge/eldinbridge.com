@@ -364,6 +364,8 @@
             transform: translateX(-50%);
             animation: flotar 1.7s ease-in-out infinite;
             backdrop-filter: blur(8px);
+            pointer-events: none;
+            user-select: none;
         }
 
         .revelar {
@@ -879,9 +881,9 @@
                 </div>
             </div>
 
-            <a class="indicador" href="#cuenta" aria-label="Continuar">
+            <div class="indicador" aria-hidden="true">
                 ↓
-            </a>
+            </div>
         </section>
 
         <section class="escena" id="cuenta" data-escena="cuenta">
@@ -2143,7 +2145,7 @@
 
         document
             .querySelectorAll(
-                '.boton[href^="#"], .indicador[href^="#"]'
+                '.boton[href^="#"]'
             )
             .forEach(enlace => {
                 enlace.addEventListener("click", evento => {
