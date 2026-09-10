@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#15392f">
+    <meta name="description" content="Invitación digital infantil con temática de aventura.">
+    <title>Expedición a la Isla Esmeralda | Fiesta Aventura</title>
+
+    <style>
+        :root {
+            --verde: #0f4c3a;
+            --verde-claro: #2f8f67;
+            --turquesa: #38d6c1;
+            --arena: #f3ddb0;
+            --pergamino: #fff2ce;
+            --cafe: #57351f;
+            --ambar: #ffb43b;
+            --tinta: #25392f;
+            --blanco: #fffdf6;
+            --alto-pantalla: 100svh;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+            background: #071c18;
+        }
+
+        body {
+            min-width: 320px;
+            overflow-x: hidden;
+            color: var(--blanco);
+            background: #071c18;
+            font-family: Inter, "Segoe UI", Arial, sans-serif;
+        }
+
+        button,
+        a {
+            color: inherit;
+            font: inherit;
+        }
+
+        button {
+            border: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .escena {
+            position: relative;
+            display: grid;
+            width: 100%;
+            min-height: var(--alto-pantalla);
+            height: var(--alto-pantalla);
+            overflow: hidden;
+            place-items: center;
+            padding:
+                max(74px, env(safe-area-inset-top))
+                max(18px, env(safe-area-inset-right))
+                max(26px, env(safe-area-inset-bottom))
+                max(18px, env(safe-area-inset-left));
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            isolation: isolate;
+        }
+
+        .fondo {
+            position: absolute;
+            inset: 0;
+            z-index: -5;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: saturate(.96) brightness(.72);
+            transform: scale(1.015);
+        }
+
+        .velo {
+            position: absolute;
+            inset: 0;
+            z-index: -4;
+            background:
+                linear-gradient(180deg, rgba(5, 24, 19, .12), rgba(5, 20, 17, .38) 48%, rgba(4, 16, 14, .78)),
+                radial-gradient(circle at center, transparent 20%, rgba(2, 18, 15, .22));
+        }
+
+        .capa-assets {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .asset {
+            position: absolute;
+            left: var(--x);
+            top: var(--y);
+            z-index: var(--z, 1);
+            width: var(--tamano);
+            max-width: none;
+            transform: translate(-50%, -50%) scaleX(var(--voltear, 1));
+            transform-origin: center;
+            user-select: none;
+            filter: drop-shadow(0 12px 14px rgba(0, 0, 0, .34));
+        }
+
+        .personaje {
+            animation: respirar 4.4s ease-in-out infinite;
+        }
+
+        .adorno {
+            animation: flotar 4s ease-in-out infinite;
+        }
+
+        .girar {
+            animation: girar 18s linear infinite;
+        }
+
+        .escena:not(.activa) .asset,
+        .escena:not(.activa) .luciernaga {
+            animation-play-state: paused;
+        }
+
+        @keyframes respirar {
+            50% { translate: 0 -8px; }
+        }
+
+        @keyframes flotar {
+            50% { translate: 0 -13px; rotate: 3deg; }
+        }
+
+        @keyframes girar {
+            to { rotate: 360deg; }
+        }
+
+        .tarjeta-mapa {
+            position: relative;
+            z-index: 5;
+            width: min(91vw, 650px);
+            padding: clamp(25px, 5vw, 42px);
+            overflow: hidden;
+            border: 2px solid rgba(255, 229, 168, .76);
+            border-radius: 32px 14px 30px 18px;
+            color: var(--tinta);
+            text-align: center;
+            background:
+                linear-gradient(rgba(255, 244, 210, .94), rgba(239, 215, 163, .94)),
+                repeating-linear-gradient(12deg, transparent 0 12px, rgba(91, 55, 29, .04) 13px 14px);
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, .42),
+                inset 0 0 38px rgba(100, 59, 27, .15);
+        }
+
+        .tarjeta-mapa::before,
+        .tarjeta-mapa::after {
+            content: "";
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            border: 2px dashed rgba(77, 104, 65, .22);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .tarjeta-mapa::before {
+            top: -49px;
+            left: -44px;
+        }
+
+        .tarjeta-mapa::after {
+            right: -46px;
+            bottom: -52px;
+        }
+
+        .pista {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+            padding: 7px 13px;
+            border: 1px solid rgba(15, 76, 58, .22);
+            border-radius: 999px;
+            color: var(--verde);
+            background: rgba(47, 143, 103, .1);
+            font-size: .72rem;
+            font-weight: 900;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        .pista::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--ambar);
+            box-shadow: 0 0 10px rgba(255, 180, 59, .8);
+        }
+
+        h1,
+        h2 {
+            color: #183e31;
+            font-family: Georgia, "Times New Roman", serif;
+            text-wrap: balance;
+        }
+
+        h1 {
+            font-size: clamp(2.8rem, 10vw, 6rem);
+            line-height: .91;
+            letter-spacing: -.055em;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 7vw, 4rem);
+            line-height: .98;
+            letter-spacing: -.04em;
+        }
+
+        .resaltado {
+            display: block;
+            color: #b76a13;
+            font-style: italic;
+        }
+
+        .texto {
+            max-width: 510px;
+            margin: 17px auto 0;
+            color: #40584c;
+            font-size: clamp(.96rem, 2.7vw, 1.08rem);
+            line-height: 1.58;
+        }
+
+        .nombre {
+            margin-top: 11px;
+            color: var(--verde);
+            font-size: clamp(1.4rem, 5vw, 2.1rem);
+            font-weight: 900;
+        }
+
+        .edad {
+            color: #a35d15;
+            font-weight: 850;
+        }
+
+        .separador-ruta {
+            display: flex;
+            width: min(250px, 75%);
+            align-items: center;
+            gap: 9px;
+            margin: 19px auto;
+            color: var(--verde-claro);
+        }
+
+        .separador-ruta::before,
+        .separador-ruta::after {
+            content: "";
+            flex: 1;
+            border-top: 2px dashed rgba(15, 76, 58, .38);
+        }
+
+        .boton-pista,
+        .boton-mapa {
+            position: relative;
+            z-index: 12;
+            display: inline-flex;
+            min-height: 48px;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 12px 20px;
+            border-radius: 999px;
+            color: #fffbed;
+            background: linear-gradient(135deg, #17684e, #2d9b70);
+            box-shadow: 0 10px 24px rgba(15, 76, 58, .25);
+            font-weight: 900;
+            cursor: pointer;
+            transition: transform .2s ease, filter .2s ease;
+        }
+
+        .boton-pista:hover,
+        .boton-mapa:hover {
+            filter: brightness(1.08);
+            transform: translateY(-2px);
+        }
+
+        .contador {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 9px;
+            margin-top: 21px;
+        }
+
+        .tiempo {
+            min-width: 0;
+            padding: 13px 5px;
+            border: 1px solid rgba(15, 76, 58, .18);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, .42);
+        }
+
+        .numero {
+            display: block;
+            color: var(--verde);
+            font-size: clamp(1.25rem, 4.5vw, 2rem);
+            font-weight: 950;
+        }
+
+        .unidad {
+            display: block;
+            margin-top: 2px;
+            overflow: hidden;
+            color: #6a756d;
+            font-size: .59rem;
+            font-weight: 850;
+            letter-spacing: .06em;
+            text-overflow: ellipsis;
+            text-transform: uppercase;
+        }
+
+        .datos {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 9px;
+            margin-top: 20px;
+        }
+
+        .dato {
+            min-width: 0;
+            padding: 14px 9px;
+            border: 1px solid rgba(15, 76, 58, .16);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, .4);
+        }
+
+        .dato-icono {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 1.35rem;
+        }
+
+        .dato strong,
+        .dato span {
+            display: block;
+        }
+
+        .dato strong {
+            color: var(--verde);
+            font-size: .7rem;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+        }
+
+        .dato span:last-child {
+            margin-top: 4px;
+            color: #465b50;
+            font-size: .86rem;
+            line-height: 1.3;
+        }
+
+        .lista-aventura {
+            display: grid;
+            gap: 9px;
+            max-width: 480px;
+            margin: 20px auto 0;
+            list-style: none;
+            text-align: left;
+        }
+
+        .lista-aventura li {
+            position: relative;
+            padding: 11px 13px 11px 39px;
+            border: 1px solid rgba(15, 76, 58, .14);
+            border-radius: 14px;
+            color: #40584c;
+            background: rgba(255, 255, 255, .38);
+        }
+
+        .lista-aventura li::before {
+            content: "✓";
+            position: absolute;
+            left: 14px;
+            color: var(--verde-claro);
+            font-weight: 950;
+        }
+
+        .barra-ruta {
+            position: fixed;
+            top: max(14px, env(safe-area-inset-top));
+            left: 50%;
+            z-index: 30;
+            display: flex;
+            width: min(44vw, 360px);
+            align-items: center;
+            gap: 9px;
+            padding: 9px 13px;
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: 999px;
+            background: rgba(7, 35, 28, .72);
+            box-shadow: 0 9px 28px rgba(0, 0, 0, .25);
+            backdrop-filter: blur(12px);
+            transform: translateX(-50%);
+        }
+
+        .ruta-linea {
+            position: relative;
+            flex: 1;
+            height: 5px;
+            overflow: hidden;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .16);
+        }
+
+        .ruta-avance {
+            display: block;
+            width: 0;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, var(--ambar), var(--turquesa));
+            transition: width .35s ease;
+        }
+
+        .ruta-numero {
+            min-width: 35px;
+            font-size: .7rem;
+            font-weight: 900;
+        }
+
+        .salir,
+        .musica {
+            position: fixed;
+            z-index: 35;
+            display: inline-flex;
+            min-width: 48px;
+            min-height: 48px;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, .22);
+            border-radius: 999px;
+            color: white;
+            background: rgba(7, 35, 28, .78);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, .24);
+            backdrop-filter: blur(12px);
+        }
+
+        .salir {
+            top: max(14px, env(safe-area-inset-top));
+            right: max(14px, env(safe-area-inset-right));
+            padding: 0 17px;
+            font-weight: 850;
+        }
+
+        .musica {
+            right: max(17px, env(safe-area-inset-right));
+            bottom: max(17px, env(safe-area-inset-bottom));
+            width: 52px;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .entrada {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: grid;
+            place-items: center;
+            padding: 20px;
+            background:
+                linear-gradient(rgba(5, 30, 24, .38), rgba(4, 20, 16, .76)),
+                url("assets/fondos/fondo01.png") center/cover no-repeat;
+            transition: opacity .55s ease, visibility .55s ease;
+        }
+
+        .entrada.oculta {
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .entrada-contenido {
+            width: min(90vw, 520px);
+            padding: 33px 25px;
+            border: 1px solid rgba(255, 234, 186, .55);
+            border-radius: 30px 15px 28px 18px;
+            color: var(--tinta);
+            text-align: center;
+            background: rgba(255, 240, 202, .94);
+            box-shadow: 0 28px 80px rgba(0, 0, 0, .42);
+        }
+
+        .entrada-icono {
+            width: 92px;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 8px 12px rgba(70, 43, 21, .2));
+        }
+
+        .entrada h2 {
+            font-size: clamp(2.2rem, 8vw, 4rem);
+        }
+
+        .entrada p {
+            margin-top: 12px;
+            color: #526459;
+            line-height: 1.5;
+        }
+
+        .particulas {
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .luciernaga {
+            position: absolute;
+            top: -20px;
+            width: var(--s);
+            height: var(--s);
+            border-radius: 55% 15% 55% 15%;
+            background: var(--c);
+            box-shadow: 0 0 9px var(--c);
+            opacity: .8;
+            animation: caer var(--d) linear forwards;
+        }
+
+        @keyframes caer {
+            to {
+                translate: var(--desvio) calc(var(--alto-pantalla) + 50px);
+                rotate: 420deg;
+                opacity: .1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .escena {
+                padding-inline: 14px;
+            }
+
+            .tarjeta-mapa {
+                width: 100%;
+                padding: 24px 16px;
+                border-radius: 25px 12px 24px 15px;
+            }
+
+            .barra-ruta {
+                left: 14px;
+                width: 148px;
+                transform: none;
+            }
+
+            h1 {
+                font-size: clamp(2.7rem, 14vw, 4.3rem);
+            }
+
+            h2 {
+                font-size: clamp(2rem, 10vw, 3.2rem);
+            }
+
+            .texto {
+                font-size: .94rem;
+            }
+
+            .contador {
+                gap: 5px;
+            }
+
+            .tiempo {
+                padding: 11px 2px;
+            }
+
+            .unidad {
+                font-size: .5rem;
+                letter-spacing: .02em;
+            }
+
+            .asset.personaje {
+                width: min(var(--tamano), 44vw);
+            }
+
+            .asset.adorno {
+                width: min(var(--tamano), 25vw);
+            }
+
+            .personaje-derecha {
+                left: 88% !important;
+            }
+
+            .personaje-izquierda {
+                left: 12% !important;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .barra-ruta {
+                width: 132px;
+                padding-inline: 10px;
+            }
+
+            .salir {
+                padding-inline: 14px;
+            }
+
+            .dato span:last-child {
+                font-size: .77rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <audio id="audio" src="assets/audio/audio01.mp3" loop preload="metadata"></audio>
+
+    <div class="entrada" id="entrada">
+        <div class="entrada-contenido">
+            <img class="entrada-icono" src="assets/elementos/elemento01.png" alt="">
+            <span class="pista">Invitación de aventura</span>
+            <h2>Una expedición está por comenzar</h2>
+            <p>Prepara tu espíritu explorador y descubre todos los detalles de esta celebración.</p>
+            <button class="boton-pista" id="entrar" type="button">Entrar a la expedición →</button>
+        </div>
+    </div>
+
+    <a class="salir" href="../../../#fiestas-infantiles" aria-label="Salir de la invitación">Salir</a>
+
+    <div class="barra-ruta" aria-label="Progreso de la invitación">
+        <div class="ruta-linea"><span class="ruta-avance" id="ruta-avance"></span></div>
+        <span class="ruta-numero" id="ruta-numero">1 / 7</span>
+    </div>
+
+    <button class="musica" id="musica" type="button" aria-label="Pausar música" aria-pressed="true">Ⅱ</button>
+    <div class="particulas" id="particulas" aria-hidden="true"></div>
+
+    <main>
+        <section class="escena activa" id="inicio">
+            <img class="fondo" src="assets/fondos/fondo01.png" alt="">
+            <div class="velo"></div>
+            <div class="capa-assets">
+                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje01.png" alt="" style="--x:82%;--y:71%;--tamano:27vw;--z:6">
+                <img class="asset adorno girar" src="assets/elementos/elemento01.png" alt="" style="--x:13%;--y:20%;--tamano:10vw;--z:2">
+            </div>
+            <div class="tarjeta-mapa">
+                <span class="pista">Punto de partida</span>
+                <h1>Expedición a la <span class="resaltado">Isla Esmeralda</span></h1>
+                <p class="nombre">Acompaña a <span data-nombre>Mateo</span></p>
+                <p class="texto">Hay una ruta por descubrir, retos por superar y una gran celebración esperando al final.</p>
+                <div class="separador-ruta">✦</div>
+                <p class="edad">Cumple <span data-edad>8</span> años</p>
+                <button class="boton-pista siguiente" type="button">Siguiente pista →</button>
+            </div>
+        </section>
+
+        <section class="escena" id="cuenta">
+            <img class="fondo" src="assets/fondos/fondo02.png" alt="">
+            <div class="velo"></div>
+            <div class="capa-assets">
+                <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje02.png" alt="" style="--x:18%;--y:73%;--tamano:25vw;--z:6;--voltear:-1">
+                <img class="asset adorno" src="assets/elementos/elemento05.png" alt="" style="--x:88%;--y:19%;--tamano:11vw;--z:2">
+            </div>
+            <div class="tarjeta-mapa">
+                <span class="pista">Pista 01 · La fecha</span>
+                <h2>La aventura comienza en…</h2>
+                <p class="texto">Marca el día en tu calendario. La cuenta regresiva ya está en marcha.</p>
+                <div class="contador" aria-label="Cuenta regresiva">
+                    <div class="tiempo"><span class="numero" id="dias">00</span><span class="unidad">Días</span></div>
+                    <div class="tiempo"><span class="numero" id="horas">00</span><span class="unidad">Horas</span></div>
+                    <div class="tiempo"><span class="numero" id="minutos">00</span><span class="unidad">Minutos</span></div>
+                    <div class="tiempo"><span class="numero" id="segundos">00</span><span class="unidad">Segundos</span></div>
+                </div>
+                <button class="boton-pista siguiente" type="button">Siguiente pista →</button>
+            </div>
+        </section>
+
+        <section class="escena" id="ubicacion">
+            <img class="fondo" src="assets/fondos/fondo03.png" alt="">
+            <div class="velo"></div>
+            <div class="capa-assets">
+                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje03.png" alt="" style="--x:83%;--y:72%;--tamano:25vw;--z:6">
+                <img class="asset adorno" src="assets/elementos/elemento02.png" alt="" style="--x:13%;--y:22%;--tamano:11vw;--z:2">
+            </div>
+            <div class="tarjeta-mapa">
+                <span class="pista">Pista 02 · Coordenadas</span>
+                <h2>Encuentra el campamento</h2>
+                <div class="datos">
+                    <div class="dato"><span class="dato-icono">📅</span><strong>Fecha</strong><span data-fecha>Sábado 24 de octubre</span></div>
+                    <div class="dato"><span class="dato-icono">🕓</span><strong>Hora</strong><span data-hora>4:00 p. m.</span></div>
+                    <div class="dato"><span class="dato-icono">📍</span><strong>Lugar</strong><span data-lugar>Jardín La Arboleda</span></div>
+                    <div class="dato"><span class="dato-icono">🧭</span><strong>Zona</strong><span data-ciudad>Cadereyta, Nuevo León</span></div>
+                </div>
+                <button class="boton-pista siguiente" type="button">Cruzar el puente →</button>
+            </div>
+        </section>
+
+        <section class="escena" id="mision">
+            <img class="fondo" src="assets/fondos/fondo04.png" alt="">
+            <div class="velo"></div>
+            <div class="capa-assets">
+                <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje04.png" alt="" style="--x:18%;--y:72%;--tamano:25vw;--z:6">
+                <img class="asset adorno" src="assets/elementos/elemento03.png" alt="" style="--x:87%;--y:21%;--tamano:11vw;--z:2">
+            </div>
+            <div class="tarjeta-mapa">
+                <span class="pista">Pista 03 · La misión</span>
+                <h2>Todo explorador tiene una misión</h2>
+                <p class="texto">Ven con ganas de jugar, descubrir secretos y ayudar a <span data-nombre>Mateo</span> a completar la expedición.</p>
+                <ul class="lista-aventura">
+                    <li>Superar divertidos retos</li>
+                    <li>Encontrar las pistas escondidas</li>
+                    <li>Celebrar juntos al llegar a la meta</li>
+                </ul>
+                <button class="boton-pista siguiente" type="button">Seguir explorando →</button>
+            </div>
+        </section>
+
+        <section class="escena" id="atuendo">
+            <img class="fondo" src="assets/fondos/fondo05.png" alt="">
+            <div class="velo"></div>
+            <div class="capa-assets">
+                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje05.png" alt="" style="--x:82%;--y:72%;--tamano:25vw;--z:6">
+                <img class="asset adorno" src="assets/elementos/elemento06.png" alt="" style="--x:13%;--y:22%;--tamano:10vw;--z:2">
+            </div>
+            <div class="tarjeta-mapa">
+                <span class="pista">Pista 04 · Equipo</span>
+                <h2>Prepárate para explorar</h2>
+                <p class="texto">Usa ropa cómoda y calzado que te permita moverte, jugar y completar cada desafío.</p>
+                <ul class="lista-aventura">
+                    <li>Ropa fresca y cómoda</li>
+                    <li>Tenis o calzado cerrado</li>
+                    <li>Tu mejor actitud aventurera</li>
+                </ul>
+                <button class="boton-pista siguiente" type="button">Llegar al campamento →</button>
+            </div>
+        </section>
+
+        <section class="escena" id="regalo">
+            <img class="fondo" src="assets/fondos/fondo06.png" alt="">
+            <div class="velo"></div>
+            <div class="capa-assets">
+                <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje06.png" alt="" style="--x:18%;--y:72%;--tamano:25vw;--z:6;--voltear:-1">
+                <img class="asset adorno" src="assets/elementos/elemento04.png" alt="" style="--x:87%;--y:19%;--tamano:13vw;--z:2">
+            </div>
+            <div class="tarjeta-mapa">
+                <span class="pista">Pista 05 · El tesoro</span>
+                <h2>Tu compañía es el mejor tesoro</h2>
+                <p class="texto">Lo más importante será compartir esta aventura contigo. Si deseas llevar un obsequio, será recibido con mucho cariño.</p>
+                <div class="separador-ruta">♥</div>
+                <p class="nombre">¡Ya casi llegamos!</p>
+                <button class="boton-pista siguiente" type="button">Descubrir la meta →</button>
+            </div>
+        </section>
+
+        <section class="escena" id="final">
+            <img class="fondo" src="assets/fondos/fondo07.png" alt="">
+            <div class="velo"></div>
+            <div class="capa-assets">
+                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje07.png" alt="" style="--x:82%;--y:72%;--tamano:26vw;--z:6">
+                <img class="asset adorno" src="assets/elementos/elemento07.png" alt="" style="--x:14%;--y:73%;--tamano:13vw;--z:5">
+            </div>
+            <div class="tarjeta-mapa">
+                <span class="pista">Expedición completada</span>
+                <h2>¡Te esperamos en la Isla Esmeralda!</h2>
+                <p class="texto">Ven a celebrar los <span data-edad>8</span> años de <span data-nombre>Mateo</span> y hagamos de este día una aventura inolvidable.</p>
+                <p class="nombre">Con cariño, <span data-nombre>Mateo</span> 🌿</p>
+                <a class="boton-mapa" data-maps href="#" target="_blank" rel="noopener noreferrer">Ver ubicación →</a>
+                <br>
+                <button class="boton-pista" id="volver-inicio" type="button">↑ Volver al inicio</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        /* ================================================================
+           DATOS EDITABLES DE LA INVITACIÓN
+           Cambia únicamente este bloque para cada cliente.
+        ================================================================= */
+        const CONFIG = {
+            nombre: "Mateo",
+            edad: "8",
+            fechaTexto: "Sábado 24 de octubre",
+            horaTexto: "4:00 p. m.",
+            lugar: "Jardín La Arboleda",
+            ciudad: "Cadereyta, Nuevo León",
+            fechaEvento: "2026-10-24T16:00:00-06:00",
+            maps: "https://maps.google.com/"
+        };
+
+        const $ = (selector, contexto = document) => contexto.querySelector(selector);
+        const $$ = (selector, contexto = document) => [...contexto.querySelectorAll(selector)];
+        const escenas = $$(".escena");
+        const audio = $("#audio");
+        const botonMusica = $("#musica");
+        let indiceActivo = 0;
+        let temporizadorAjuste;
+        let musicaActiva = false;
+
+        function aplicarDatos() {
+            $$('[data-nombre]').forEach(el => el.textContent = CONFIG.nombre);
+            $$('[data-edad]').forEach(el => el.textContent = CONFIG.edad);
+            $$('[data-fecha]').forEach(el => el.textContent = CONFIG.fechaTexto);
+            $$('[data-hora]').forEach(el => el.textContent = CONFIG.horaTexto);
+            $$('[data-lugar]').forEach(el => el.textContent = CONFIG.lugar);
+            $$('[data-ciudad]').forEach(el => el.textContent = CONFIG.ciudad);
+            $$('[data-maps]').forEach(el => el.href = CONFIG.maps);
+            document.title = `${CONFIG.nombre} | Fiesta Aventura`;
+        }
+
+        function actualizarAltoPantalla() {
+            const alto = window.visualViewport?.height || window.innerHeight;
+            document.documentElement.style.setProperty("--alto-pantalla", `${Math.round(alto)}px`);
+        }
+
+        function irA(indice, suave = true) {
+            const destino = escenas[Math.max(0, Math.min(indice, escenas.length - 1))];
+            destino.scrollIntoView({ behavior: suave ? "smooth" : "auto", block: "start" });
+        }
+
+        function actualizarRuta(indice) {
+            indiceActivo = indice;
+            escenas.forEach((escena, i) => escena.classList.toggle("activa", i === indice));
+            $("#ruta-numero").textContent = `${indice + 1} / ${escenas.length}`;
+            $("#ruta-avance").style.width = `${((indice + 1) / escenas.length) * 100}%`;
+        }
+
+        const observador = new IntersectionObserver((entradas) => {
+            const visible = entradas
+                .filter(entrada => entrada.isIntersecting)
+                .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+            if (visible) actualizarRuta(escenas.indexOf(visible.target));
+        }, { threshold: [.55, .72] });
+
+        escenas.forEach(escena => observador.observe(escena));
+
+        $$(".siguiente").forEach((boton, indice) => {
+            boton.addEventListener("click", () => irA(indice + 1));
+        });
+
+        $("#volver-inicio").addEventListener("click", () => irA(0));
+
+        $("#entrar").addEventListener("click", async () => {
+            $("#entrada").classList.add("oculta");
+            document.body.style.overflow = "";
+
+            try {
+                await audio.play();
+                musicaActiva = true;
+                botonMusica.textContent = "Ⅱ";
+                botonMusica.setAttribute("aria-label", "Pausar música");
+                botonMusica.setAttribute("aria-pressed", "true");
+            } catch {
+                musicaActiva = false;
+                botonMusica.textContent = "▶";
+                botonMusica.setAttribute("aria-label", "Reproducir música");
+                botonMusica.setAttribute("aria-pressed", "false");
+            }
+        });
+
+        botonMusica.addEventListener("click", async () => {
+            if (audio.paused) {
+                try {
+                    await audio.play();
+                    musicaActiva = true;
+                    botonMusica.textContent = "Ⅱ";
+                    botonMusica.setAttribute("aria-label", "Pausar música");
+                } catch {
+                    musicaActiva = false;
+                }
+            } else {
+                audio.pause();
+                musicaActiva = false;
+                botonMusica.textContent = "▶";
+                botonMusica.setAttribute("aria-label", "Reproducir música");
+            }
+
+            botonMusica.setAttribute("aria-pressed", String(musicaActiva));
+        });
+
+        function actualizarCuenta() {
+            const diferencia = new Date(CONFIG.fechaEvento).getTime() - Date.now();
+            const restante = Math.max(0, diferencia);
+            const dias = Math.floor(restante / 86400000);
+            const horas = Math.floor((restante % 86400000) / 3600000);
+            const minutos = Math.floor((restante % 3600000) / 60000);
+            const segundos = Math.floor((restante % 60000) / 1000);
+
+            $("#dias").textContent = String(dias).padStart(2, "0");
+            $("#horas").textContent = String(horas).padStart(2, "0");
+            $("#minutos").textContent = String(minutos).padStart(2, "0");
+            $("#segundos").textContent = String(segundos).padStart(2, "0");
+        }
+
+        function crearParticula() {
+            if (document.hidden || $("#particulas").childElementCount >= 14) return;
+
+            const hoja = document.createElement("span");
+            hoja.className = "luciernaga";
+            hoja.style.left = `${Math.random() * 100}%`;
+            hoja.style.setProperty("--s", `${5 + Math.random() * 7}px`);
+            hoja.style.setProperty("--d", `${5.5 + Math.random() * 3}s`);
+            hoja.style.setProperty("--desvio", `${-45 + Math.random() * 90}px`);
+            hoja.style.setProperty("--c", Math.random() > .5 ? "#ffd66b" : "#55e5c6");
+            $("#particulas").appendChild(hoja);
+            hoja.addEventListener("animationend", () => hoja.remove(), { once: true });
+        }
+
+        function ajustarEscenaCercana() {
+            clearTimeout(temporizadorAjuste);
+            temporizadorAjuste = setTimeout(() => {
+                const alto = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--alto-pantalla"));
+                if (!alto) return;
+                const indice = Math.round(window.scrollY / alto);
+                irA(indice, false);
+            }, 150);
+        }
+
+        aplicarDatos();
+        actualizarAltoPantalla();
+        actualizarCuenta();
+        actualizarRuta(0);
+        document.body.style.overflow = "hidden";
+
+        setInterval(actualizarCuenta, 1000);
+        setInterval(crearParticula, 620);
+
+        window.addEventListener("resize", () => {
+            actualizarAltoPantalla();
+            ajustarEscenaCercana();
+        }, { passive: true });
+
+        window.visualViewport?.addEventListener("resize", () => {
+            actualizarAltoPantalla();
+        }, { passive: true });
+
+        window.addEventListener("pageshow", actualizarAltoPantalla);
+    </script>
+</body>
+</html>
