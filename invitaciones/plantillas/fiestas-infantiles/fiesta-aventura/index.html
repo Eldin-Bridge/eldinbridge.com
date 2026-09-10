@@ -525,7 +525,6 @@
             background:
                 linear-gradient(rgba(5, 30, 24, .38), rgba(4, 20, 16, .76)),
                 url("assets/fondos/fondo01.png") center/cover no-repeat;
-            transition: opacity .55s ease, visibility .55s ease;
         }
 
         body:not(.invitacion-abierta) main {
@@ -533,9 +532,7 @@
         }
 
         .entrada.oculta {
-            visibility: hidden;
-            opacity: 0;
-            pointer-events: none;
+            display: none;
         }
 
         .entrada-contenido {
