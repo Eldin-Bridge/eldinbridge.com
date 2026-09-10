@@ -72,21 +72,27 @@
         }
 
         .volver {
-            padding: 10px 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 9px 15px;
             border: 1px solid var(--borde);
             border-radius: 999px;
-            color: var(--secundario);
-            background: rgba(255, 255, 255, .035);
-            font-size: .88rem;
-            font-weight: 700;
-            transition: 180ms ease;
+            color: var(--texto);
+            background: rgba(255, 255, 255, .055);
+            font-size: .86rem;
+            font-weight: 750;
+            text-decoration: none;
+            transition:
+                transform .2s ease,
+                background .2s ease;
         }
 
         .volver:hover,
         .volver:focus-visible {
-            color: var(--texto);
-            border-color: rgba(255, 255, 255, .23);
-            transform: translateY(-1px);
+            background: rgba(255, 255, 255, .1);
+            transform: translateY(-2px);
         }
 
         main {
@@ -507,20 +513,6 @@
             opacity: .82;
         }
 
-        .regresar-categorias {
-            display: inline-flex;
-            margin-bottom: 30px;
-            padding: 10px 14px;
-            border: 1px solid var(--borde);
-            border-radius: 999px;
-            color: var(--secundario);
-            background: rgba(255, 255, 255, .035);
-            font: inherit;
-            font-size: .88rem;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
         button.categoria {
             width: 100%;
             color: inherit;
@@ -631,7 +623,7 @@
 
             .volver {
                 padding: 8px 11px;
-                font-size: .78rem;
+                font-size: .76rem;
             }
 
             main {
@@ -873,11 +865,11 @@
 
 <body>
     <header class="contenedor barra">
-        <span class="etiqueta etiqueta-barra">
+        <span class="etiqueta etiqueta-barra" id="etiqueta-barra">
             Invitaciones digitales
         </span>
 
-        <a class="volver" href="../">
+        <a class="volver" id="boton-volver" href="../">
             ← Volver
         </a>
     </header>
@@ -963,12 +955,7 @@
         </section>
         <section id="catalogo-infantil" class="catalogo-infantil vista-oculta" aria-labelledby="titulo-infantiles">
 
-            <button class="regresar-categorias" type="button" id="regresar-categorias">
-                ← Todas las categorías
-            </button>
-
             <div class="presentacion">
-                <span class="etiqueta">Fiestas infantiles</span>
 
                 <h1 id="titulo-infantiles">
                     Diseños para hacer su día
@@ -976,8 +963,7 @@
                 </h1>
 
                 <p>
-                    Explora nuestros estilos. Cada invitación tendrá animaciones,
-                    música y una personalidad propia, y podrá adaptarse a los
+                    Cada invitación tiene animaciones, música y una personalidad propia, la cuál se adaptará a los
                     detalles de tu celebración.
                 </p>
             </div>
@@ -1107,7 +1093,9 @@
     </footer>
 
     <script>
-        document.getElementById("anio").textContent = new Date().getFullYear();
+        document.getElementById("anio").textContent =
+            new Date().getFullYear();
+
         const vistaCategorias = document.querySelector(
             "main > section[aria-labelledby='titulo-categorias']"
         );
@@ -1116,14 +1104,24 @@
             "main > .presentacion"
         );
 
-        const catalogoInfantil = document.getElementById("catalogo-infantil");
-        const abrirInfantiles = document.getElementById("abrir-infantiles");
-        const regresarCategorias = document.getElementById("regresar-categorias");
+        const catalogoInfantil =
+            document.getElementById("catalogo-infantil");
+
+        const abrirInfantiles =
+            document.getElementById("abrir-infantiles");
+
+        const etiquetaBarra =
+            document.getElementById("etiqueta-barra");
+
+        const botonVolver =
+            document.getElementById("boton-volver");
 
         function mostrarInfantiles() {
             presentacionPrincipal.classList.add("vista-oculta");
             vistaCategorias.classList.add("vista-oculta");
             catalogoInfantil.classList.add("activo");
+
+            etiquetaBarra.textContent = "Fiestas infantiles";
 
             history.replaceState(
                 null,
@@ -1142,6 +1140,8 @@
             presentacionPrincipal.classList.remove("vista-oculta");
             vistaCategorias.classList.remove("vista-oculta");
 
+            etiquetaBarra.textContent = "Invitaciones digitales";
+
             history.replaceState(
                 null,
                 "",
@@ -1154,8 +1154,17 @@
             });
         }
 
-        abrirInfantiles.addEventListener("click", mostrarInfantiles);
-        regresarCategorias.addEventListener("click", mostrarCategorias);
+        abrirInfantiles.addEventListener(
+            "click",
+            mostrarInfantiles
+        );
+
+        botonVolver.addEventListener("click", function (evento) {
+            if (catalogoInfantil.classList.contains("activo")) {
+                evento.preventDefault();
+                mostrarCategorias();
+            }
+        });
 
         if (window.location.hash === "#fiestas-infantiles") {
             mostrarInfantiles();
