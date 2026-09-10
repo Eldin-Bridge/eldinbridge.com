@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="preload" as="image" href="assets/fondos/fondo01.png">
     <meta name="theme-color" content="#15392f">
     <meta name="description" content="Invitación digital infantil con temática de aventura.">
     <title>Expedición a la Isla Esmeralda | Fiesta Aventura</title>
@@ -45,9 +46,6 @@
             font-family: Inter, "Segoe UI", Arial, sans-serif;
         }
 
-        /*
- * Las pantallas se colocan horizontalmente.
- */
         main {
             display: flex;
             width: 100%;
@@ -530,6 +528,10 @@
             transition: opacity .55s ease, visibility .55s ease;
         }
 
+        body:not(.invitacion-abierta) main {
+            visibility: hidden;
+        }
+
         .entrada.oculta {
             visibility: hidden;
             opacity: 0;
@@ -807,7 +809,6 @@
                 font-size: .77rem;
             }
         }
-
     </style>
 </head>
 
@@ -1069,6 +1070,10 @@
         $("#volver-inicio").addEventListener("click", () => irA(0));
 
         $("#entrar").addEventListener("click", async () => {
+            document.body.classList.add("invitacion-abierta");
+            irA(0, false);
+            actualizarRuta(0);
+
             $("#entrada").classList.add("oculta");
             document.body.style.overflow = "";
 
