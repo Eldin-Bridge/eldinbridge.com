@@ -71,27 +71,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, .07);
         }
 
-        .marca {
-            display: inline-flex;
-            align-items: center;
-            gap: 11px;
-            font-size: 1.05rem;
-            font-weight: 850;
-            letter-spacing: -.025em;
-        }
-
-        .marca-simbolo {
-            display: grid;
-            width: 35px;
-            height: 35px;
-            place-items: center;
-            border: 1px solid rgba(255, 255, 255, .18);
-            border-radius: 11px;
-            background: linear-gradient(135deg, var(--morado), var(--azul));
-            box-shadow: 0 8px 24px rgba(93, 91, 246, .28);
-            font-size: .76rem;
-        }
-
         .volver {
             padding: 10px 14px;
             border: 1px solid var(--borde);
@@ -142,6 +121,11 @@
             border-radius: 50%;
             background: #f472b6;
             box-shadow: 0 0 14px #f472b6;
+        }
+
+        .etiqueta-barra {
+            margin-bottom: 0;
+            white-space: nowrap;
         }
 
         h1 {
@@ -633,8 +617,21 @@
                 min-height: 68px;
             }
 
-            .marca-texto {
-                display: none;
+            .etiqueta-barra {
+                gap: 6px;
+                padding: 6px 9px;
+                font-size: .63rem;
+                letter-spacing: .035em;
+            }
+
+            .etiqueta-barra::before {
+                width: 6px;
+                height: 6px;
+            }
+
+            .volver {
+                padding: 8px 11px;
+                font-size: .78rem;
             }
 
             main {
@@ -876,22 +873,23 @@
 
 <body>
     <header class="contenedor barra">
-        <a class="marca" href="../" aria-label="Ir a la página principal de EldinBridge">
-            <span class="marca-simbolo">EB</span>
-            <span class="marca-texto">EldinBridge</span>
+        <span class="etiqueta etiqueta-barra">
+            Invitaciones digitales
+        </span>
+
+        <a class="volver" href="../">
+            ← Volver
         </a>
-        <a class="volver" href="../">← Página principal</a>
     </header>
 
     <main class="contenedor">
         <section class="presentacion" aria-labelledby="titulo-principal">
-            <span class="etiqueta">Invitaciones digitales</span>
             <h1 id="titulo-principal">
                 Una invitación para cada <span class="degradado">momento especial.</span>
             </h1>
             <p>
-                Explora nuestras categorías y encuentra el estilo ideal para tu celebración.
-                Cada diseño podrá personalizarse con la información, colores y detalles de tu evento.
+                Encuentra el estilo ideal para tu celebración. Cada diseño podrá personalizarse con la información,
+                colores y detalles de tu evento.
             </p>
         </section>
 
@@ -918,7 +916,7 @@
                 <article class="categoria fiestas-reuniones">
                     <img class="categoria-imagen" src="assets/categorias/fiestas-reuniones.webp"
                         alt="Fiestas &amp; Reuniones en una quinta con alberca y carne asada" loading="lazy">
-                    
+
                     <h3>Fiestas &amp; Reuniones</h3>
                     <div class="categoria-pie">
                         <span>Próximamente</span>
@@ -929,7 +927,7 @@
                 <article class="categoria quinceaneras">
                     <img class="categoria-imagen" src="assets/categorias/quinceaneras.webp"
                         alt="Celebración elegante de quinceañera" loading="lazy">
-                    
+
                     <h3>Quinceañeras</h3>
                     <div class="categoria-pie"><span>Próximamente</span><span class="linea"></span></div>
                 </article>
@@ -937,7 +935,7 @@
                 <article class="categoria bodas">
                     <img class="categoria-imagen" src="assets/categorias/bodas.webp" alt="Pareja celebrando su boda"
                         loading="lazy">
-                    
+
                     <h3>Bodas</h3>
                     <div class="categoria-pie"><span>Próximamente</span><span class="linea"></span></div>
                 </article>
@@ -945,7 +943,7 @@
                 <article class="categoria baby-showers">
                     <img class="categoria-imagen" src="assets/categorias/baby-showers.webp"
                         alt="Familia celebrando un baby shower" loading="lazy">
-                    
+
                     <h3>Baby Showers</h3>
                     <div class="categoria-pie"><span>Próximamente</span><span class="linea"></span></div>
                 </article>
@@ -953,7 +951,7 @@
                 <article class="categoria posadas">
                     <img class="categoria-imagen" src="assets/categorias/posadas.webp"
                         alt="Familia reunida en una posada mexicana" loading="lazy">
-                    
+
                     <h3>Posadas</h3>
                     <div class="categoria-pie"><span>Próximamente</span><span class="linea"></span></div>
                 </article>
