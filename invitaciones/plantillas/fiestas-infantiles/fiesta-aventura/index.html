@@ -986,7 +986,9 @@
                 <p class="texto">Ven a celebrar los <span data-edad>8</span> años de <span data-nombre>Mateo</span> y
                     hagamos de este día una aventura inolvidable.</p>
                 <p class="nombre">Con cariño, <span data-nombre>Mateo</span> 🌿</p>
-                <a class="boton-mapa" data-maps href="#" target="_blank" rel="noopener noreferrer">Ver ubicación →</a>
+                <span class="boton-mapa" aria-disabled="true">
+                    Ver ubicación →
+                </span>
                 <br>
                 <button class="boton-pista" id="volver-inicio" type="button">← Volver al inicio</button>
             </div>
@@ -1005,8 +1007,7 @@
             horaTexto: "4:00 p. m.",
             lugar: "Jardín La Arboleda",
             ciudad: "Cadereyta, Nuevo León",
-            fechaEvento: "2026-10-24T16:00:00-06:00",
-            maps: "https://maps.google.com/"
+            fechaEvento: "2027-10-24T16:00:00-06:00",
         };
 
         const $ = (selector, contexto = document) => contexto.querySelector(selector);
