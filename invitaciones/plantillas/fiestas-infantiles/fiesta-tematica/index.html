@@ -132,8 +132,7 @@
 
         /* Las animaciones fuera de la pantalla visible se mantienen pausadas. */
         .escena:not(.escena-activa) .elemento,
-        .escena:not(.escena-activa) .iconos-magicos span,
-        .escena:not(.escena-activa) .indicador {
+        .escena:not(.escena-activa) .iconos-magicos span {
             animation-play-state: paused;
         }
 
@@ -347,25 +346,6 @@
             margin-top: 19px;
             color: var(--oro);
             font-weight: 850;
-        }
-
-        .indicador {
-            position: absolute;
-            bottom: 17px;
-            left: 50%;
-            z-index: 12;
-            display: grid;
-            width: 44px;
-            height: 44px;
-            place-items: center;
-            border: 1px solid rgba(255, 255, 255, .2);
-            border-radius: 50%;
-            background: rgba(4, 10, 29, .5);
-            transform: translateX(-50%);
-            animation: flotar 1.7s ease-in-out infinite;
-            backdrop-filter: blur(8px);
-            pointer-events: none;
-            user-select: none;
         }
 
         .revelar {
@@ -881,9 +861,6 @@
                 </div>
             </div>
 
-            <div class="indicador" aria-hidden="true">
-                ↓
-            </div>
         </section>
 
         <section class="escena" id="cuenta" data-escena="cuenta">
