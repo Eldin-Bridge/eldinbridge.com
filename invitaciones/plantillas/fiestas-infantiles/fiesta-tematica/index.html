@@ -37,6 +37,17 @@
             font-family: Inter, "Segoe UI", Arial, sans-serif;
         }
 
+        body:not(.invitacion-abierta):not(.editor-activo) {
+            height: 100svh;
+            overflow: hidden;
+        }
+
+        body:not(.invitacion-abierta):not(.editor-activo) #invitacion {
+            visibility: hidden;
+            pointer-events: none;
+            touch-action: none;
+        }
+
         button,
         input,
         select {
@@ -485,6 +496,8 @@
             display: grid;
             place-items: center;
             padding: 24px;
+            touch-action: none;
+            overscroll-behavior: none;
             background:
                 linear-gradient(rgba(3, 8, 23, .32),
                     rgba(3, 8, 23, .76)),
@@ -1552,6 +1565,16 @@
         $("#abrir-invitacion").addEventListener(
             "click",
             () => {
+                window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: "auto"
+                });
+
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+
+                document.body.classList.add("invitacion-abierta");
                 $("#intro").classList.add("oculto");
 
                 invitacionAbierta = true;

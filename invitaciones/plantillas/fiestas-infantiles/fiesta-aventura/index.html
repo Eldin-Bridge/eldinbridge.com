@@ -522,6 +522,8 @@
             display: grid;
             place-items: center;
             padding: 20px;
+            touch-action: none;
+            overscroll-behavior: none;
             background:
                 linear-gradient(rgba(5, 30, 24, .38), rgba(4, 20, 16, .76)),
                 url("assets/fondos/fondo01.png") center/cover no-repeat;
@@ -529,6 +531,9 @@
 
         body:not(.invitacion-abierta) main {
             visibility: hidden;
+            overflow: hidden;
+            pointer-events: none;
+            touch-action: none;
         }
 
         .entrada.oculta {
