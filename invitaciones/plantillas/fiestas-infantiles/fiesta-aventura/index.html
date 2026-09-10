@@ -811,6 +811,68 @@
                 font-size: .5rem;
                 letter-spacing: .02em;
             }
+
+            /*
+ * AJUSTES EXCLUSIVOS PARA TELÉFONOS
+ */
+
+            /*
+ * Bajamos más el personaje de la primera pantalla.
+ */
+            #inicio .asset.personaje {
+                top: 91% !important;
+            }
+
+            /*
+ * Centramos las listas de las pantallas
+ * Misión y Equipo.
+ */
+            #mision .lista-aventura,
+            #atuendo .lista-aventura {
+                display: block !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 18px auto 0 !important;
+                text-align: center !important;
+            }
+
+            /*
+ * Cada rectángulo mide solamente lo necesario
+ * para contener su texto.
+ */
+            #mision .lista-aventura li,
+            #atuendo .lista-aventura li {
+                position: relative;
+                display: table !important;
+                width: auto !important;
+                max-width: calc(100% - 20px) !important;
+                min-height: 40px;
+                margin-right: auto !important;
+                margin-left: auto !important;
+                padding: 9px 35px !important;
+                text-align: center !important;
+            }
+
+            /*
+ * Espacio vertical entre los rectángulos.
+ */
+            #mision .lista-aventura li+li,
+            #atuendo .lista-aventura li+li {
+                margin-top: 8px !important;
+            }
+
+            /*
+ * La palomita queda dentro del rectángulo,
+ * sin mover el texto fuera del centro.
+ */
+            #mision .lista-aventura li::before,
+            #atuendo .lista-aventura li::before {
+                position: absolute !important;
+                top: 50% !important;
+                left: 13px !important;
+                display: block;
+                transform: translateY(-50%) !important;
+            }
         }
 
         @media (max-width: 380px) {
