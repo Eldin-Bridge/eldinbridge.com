@@ -494,8 +494,13 @@
             inset: 0;
             z-index: 80;
             display: grid;
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
             place-items: center;
-            padding: 24px;
+            padding-block: 24px;
+            padding-inline:
+                max(18px, env(safe-area-inset-left)) max(18px, env(safe-area-inset-right));
             touch-action: none;
             overscroll-behavior: none;
             background:
@@ -509,305 +514,308 @@
         }
 
         .intro-caja {
-            width: min(92vw, 580px);
-            padding: 36px 25px;
-            border: 1px solid rgba(255, 255, 255, .18);
-            border-radius: 30px;
-            text-align: center;
-            background: rgba(255, 255, 255, .07);
-            backdrop-filter: blur(16px);
-        }
-
-        .intro-icono {
-            display: block;
-            width: 92px;
-            height: auto;
-            margin: 0 auto 14px;
-            transform-origin: center;
-            filter: drop-shadow(0 8px 14px rgba(255, 213, 106, .35));
-            animation: mover-intro-icono 3.2s ease-in-out infinite;
-            will-change: transform;
-        }
-
-        @keyframes mover-intro-icono {
-
-            0%,
-            100% {
-                transform: translateY(0) rotate(-5deg);
+            .intro-caja {
+                width: 100%;
+                max-width: 580px;
+                margin-inline: auto;
+                padding: 36px 25px;
+                border: 1px solid rgba(255, 255, 255, .18);
+                border-radius: 30px;
+                text-align: center;
+                background: rgba(255, 255, 255, .07);
+                backdrop-filter: blur(16px);
             }
 
-            50% {
-                transform: translateY(-10px) rotate(7deg);
+            .intro-icono {
+                display: block;
+                width: 92px;
+                height: auto;
+                margin: 0 auto 14px;
+                transform-origin: center;
+                filter: drop-shadow(0 8px 14px rgba(255, 213, 106, .35));
+                animation: mover-intro-icono 3.2s ease-in-out infinite;
+                will-change: transform;
             }
-        }
 
-        .intro-caja h1 {
-            color: var(--oro);
-            font-size: clamp(2.4rem, 10vw, 5rem);
-        }
+            @keyframes mover-intro-icono {
 
-        .intro-caja p {
-            margin: 16px auto 0;
-            color: var(--suave);
-            line-height: 1.55;
-        }
+                0%,
+                100% {
+                    transform: translateY(0) rotate(-5deg);
+                }
 
-        .editor {
-            position: fixed;
-            top: 0;
-            right: 0;
-            z-index: 100;
-            display: none;
-            width: min(390px, 100vw);
-            height: 100svh;
-            overflow: auto;
-            padding: 18px;
-            color: #eef2ff;
-            background: #0a1020;
-            box-shadow: -15px 0 45px rgba(0, 0, 0, .5);
-        }
-
-        .editor.visible {
-            display: block;
-        }
-
-        .editor h2 {
-            font-size: 1.35rem;
-            letter-spacing: -.02em;
-        }
-
-        .editor-aviso {
-            margin: 9px 0 17px;
-            color: #aeb8cf;
-            font-size: .83rem;
-            line-height: 1.45;
-        }
-
-        .campo {
-            display: grid;
-            gap: 6px;
-            margin-bottom: 13px;
-        }
-
-        .campo label {
-            color: #c8d1e6;
-            font-size: .78rem;
-            font-weight: 750;
-        }
-
-        .campo input,
-        .campo select {
-            width: 100%;
-            min-height: 40px;
-            padding: 7px 9px;
-            border: 1px solid #303b55;
-            border-radius: 9px;
-            color: white;
-            background: #111a2d;
-        }
-
-        .campo input[type="range"] {
-            padding: 0;
-        }
-
-        .fila {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .editor-boton {
-            width: 100%;
-            min-height: 42px;
-            margin-top: 7px;
-            border: 1px solid #52617f;
-            border-radius: 10px;
-            color: white;
-            background: #17233b;
-            font-weight: 800;
-            cursor: pointer;
-        }
-
-        .editor-boton.primario {
-            border-color: #8b75e8;
-            background: #654bc1;
-        }
-
-        .editor-boton.peligro {
-            border-color: #7d3344;
-            color: #ffbdca;
-            background: #351722;
-        }
-
-        .editor-separador {
-            margin: 17px 0;
-            border: 0;
-            border-top: 1px solid #29344c;
-        }
-
-        @media (min-width: 850px) {
-            .editor-activo .escena {
-                padding-right: 408px;
+                50% {
+                    transform: translateY(-10px) rotate(7deg);
+                }
             }
-        }
 
-        @media (max-width: 560px) {
+            .intro-caja h1 {
+                color: var(--oro);
+                font-size: clamp(2.4rem, 10vw, 5rem);
+            }
 
-            /*
+            .intro-caja p {
+                margin: 16px auto 0;
+                color: var(--suave);
+                line-height: 1.55;
+            }
+
+            .editor {
+                position: fixed;
+                top: 0;
+                right: 0;
+                z-index: 100;
+                display: none;
+                width: min(390px, 100vw);
+                height: 100svh;
+                overflow: auto;
+                padding: 18px;
+                color: #eef2ff;
+                background: #0a1020;
+                box-shadow: -15px 0 45px rgba(0, 0, 0, .5);
+            }
+
+            .editor.visible {
+                display: block;
+            }
+
+            .editor h2 {
+                font-size: 1.35rem;
+                letter-spacing: -.02em;
+            }
+
+            .editor-aviso {
+                margin: 9px 0 17px;
+                color: #aeb8cf;
+                font-size: .83rem;
+                line-height: 1.45;
+            }
+
+            .campo {
+                display: grid;
+                gap: 6px;
+                margin-bottom: 13px;
+            }
+
+            .campo label {
+                color: #c8d1e6;
+                font-size: .78rem;
+                font-weight: 750;
+            }
+
+            .campo input,
+            .campo select {
+                width: 100%;
+                min-height: 40px;
+                padding: 7px 9px;
+                border: 1px solid #303b55;
+                border-radius: 9px;
+                color: white;
+                background: #111a2d;
+            }
+
+            .campo input[type="range"] {
+                padding: 0;
+            }
+
+            .fila {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .editor-boton {
+                width: 100%;
+                min-height: 42px;
+                margin-top: 7px;
+                border: 1px solid #52617f;
+                border-radius: 10px;
+                color: white;
+                background: #17233b;
+                font-weight: 800;
+                cursor: pointer;
+            }
+
+            .editor-boton.primario {
+                border-color: #8b75e8;
+                background: #654bc1;
+            }
+
+            .editor-boton.peligro {
+                border-color: #7d3344;
+                color: #ffbdca;
+                background: #351722;
+            }
+
+            .editor-separador {
+                margin: 17px 0;
+                border: 0;
+                border-top: 1px solid #29344c;
+            }
+
+            @media (min-width: 850px) {
+                .editor-activo .escena {
+                    padding-right: 408px;
+                }
+            }
+
+            @media (max-width: 560px) {
+
+                /*
      * Safari en iPhone puede presentar problemas al combinar
      * enlaces internos con desplazamiento suave y scroll-snap.
      */
-            html {
-                scroll-snap-type: y mandatory;
-                scroll-padding-top: 0;
-            }
+                html {
+                    scroll-snap-type: y mandatory;
+                    scroll-padding-top: 0;
+                }
 
-            body {
-                overscroll-behavior-y: none;
-            }
+                body {
+                    overscroll-behavior-y: none;
+                }
 
-            .escena {
-                height: 100svh;
-                height: 100dvh;
-                min-height: 100svh;
-                min-height: 100dvh;
-                scroll-snap-align: start;
-                scroll-snap-stop: always;
-            }
-
-
+                .escena {
+                    height: 100svh;
+                    height: 100dvh;
+                    min-height: 100svh;
+                    min-height: 100dvh;
+                    scroll-snap-align: start;
+                    scroll-snap-stop: always;
+                }
 
 
-            .boton-salir {
-                top: max(11px, env(safe-area-inset-top));
-                right: max(11px, env(safe-area-inset-right));
-                min-height: 38px;
-                padding: 8px 13px;
-                font-size: .76rem;
-            }
 
 
-            .contenido {
-                z-index: auto;
-                background: transparent;
-                border: 0;
-                box-shadow: none;
-                backdrop-filter: none;
-            }
+                .boton-salir {
+                    top: max(11px, env(safe-area-inset-top));
+                    right: max(11px, env(safe-area-inset-right));
+                    min-height: 38px;
+                    padding: 8px 13px;
+                    font-size: .76rem;
+                }
 
-            .contenido::before {
-                content: "";
-                position: absolute;
-                inset: 0;
-                z-index: 9;
-                border: 1px solid rgba(255, 255, 255, .19);
-                border-radius: 28px;
-                background:
-                    linear-gradient(145deg,
-                        rgba(8, 24, 54, .78),
-                        rgba(55, 28, 102, .42));
-                box-shadow:
-                    0 24px 80px rgba(0, 0, 0, .42),
-                    inset 0 1px rgba(255, 255, 255, .18);
-                backdrop-filter: blur(15px);
-                -webkit-backdrop-filter: blur(15px);
-                pointer-events: none;
-            }
 
-            /*
+                .contenido {
+                    z-index: auto;
+                    background: transparent;
+                    border: 0;
+                    box-shadow: none;
+                    backdrop-filter: none;
+                }
+
+                .contenido::before {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    z-index: 9;
+                    border: 1px solid rgba(255, 255, 255, .19);
+                    border-radius: 28px;
+                    background:
+                        linear-gradient(145deg,
+                            rgba(8, 24, 54, .78),
+                            rgba(55, 28, 102, .42));
+                    box-shadow:
+                        0 24px 80px rgba(0, 0, 0, .42),
+                        inset 0 1px rgba(255, 255, 255, .18);
+                    backdrop-filter: blur(15px);
+                    -webkit-backdrop-filter: blur(15px);
+                    pointer-events: none;
+                }
+
+                /*
      * Todo el contenido escrito queda arriba
      * de los personajes.
      */
-            .contenido>* {
-                position: relative;
-                z-index: 12;
-            }
+                .contenido>* {
+                    position: relative;
+                    z-index: 12;
+                }
 
-            /*
+                /*
      * Personajes y decoraciones quedan encima
      * del cristal, pero debajo del texto.
      */
-            .capa-elementos {
-                z-index: 11;
-            }
+                .capa-elementos {
+                    z-index: 11;
+                }
 
-            .elemento.personaje {
-                width: calc(var(--tamano) * .84%);
-            }
+                .elemento.personaje {
+                    width: calc(var(--tamano) * .84%);
+                }
 
-            /*
+                /*
      * Personajes del lado derecho.
      */
-            #inicio .elemento.personaje,
-            #cuenta .elemento.personaje,
-            #atuendo .elemento.personaje,
-            #detalles .elemento.personaje,
-            #final .elemento.personaje {
-                left: 88%;
-            }
+                #inicio .elemento.personaje,
+                #cuenta .elemento.personaje,
+                #atuendo .elemento.personaje,
+                #detalles .elemento.personaje,
+                #final .elemento.personaje {
+                    left: 88%;
+                }
 
-            /*
+                /*
      * Personajes del lado izquierdo.
      */
-            #mision .elemento.personaje,
-            #regalo .elemento.personaje {
-                left: 12%;
-            }
+                #mision .elemento.personaje,
+                #regalo .elemento.personaje {
+                    left: 12%;
+                }
 
-            /*
+                /*
      * El contador permanece en una sola fila:
      * días, horas, minutos y segundos.
      */
-            .contador {
-                grid-template-columns: repeat(4, minmax(0, 1fr));
-                gap: 5px;
-            }
+                .contador {
+                    grid-template-columns: repeat(4, minmax(0, 1fr));
+                    gap: 5px;
+                }
 
-            .tiempo {
-                min-width: 0;
-                padding: 11px 3px;
-                border-radius: 13px;
-            }
+                .tiempo {
+                    min-width: 0;
+                    padding: 11px 3px;
+                    border-radius: 13px;
+                }
 
-            .contador .numero {
-                font-size: clamp(1.2rem, 6vw, 1.7rem);
-            }
+                .contador .numero {
+                    font-size: clamp(1.2rem, 6vw, 1.7rem);
+                }
 
-            .contador .unidad {
-                overflow: hidden;
-                font-size: .52rem;
-                letter-spacing: .025em;
-                text-overflow: ellipsis;
-            }
+                .contador .unidad {
+                    overflow: hidden;
+                    font-size: .52rem;
+                    letter-spacing: .025em;
+                    text-overflow: ellipsis;
+                }
 
-            /*
+                /*
      * Datos del evento en cuadrícula 2 × 2.
      */
-            .datos {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 7px;
-            }
+                .datos {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                    gap: 7px;
+                }
 
-            .dato {
-                min-width: 0;
-                padding: 12px 6px;
-                border-radius: 14px;
-            }
+                .dato {
+                    min-width: 0;
+                    padding: 12px 6px;
+                    border-radius: 14px;
+                }
 
-            .dato-icono {
-                margin-bottom: 3px;
-                font-size: 1.3rem;
-            }
+                .dato-icono {
+                    margin-bottom: 3px;
+                    font-size: 1.3rem;
+                }
 
-            .dato-titulo {
-                font-size: .58rem;
-            }
+                .dato-titulo {
+                    font-size: .58rem;
+                }
 
-            .dato-texto {
-                font-size: .78rem;
-                line-height: 1.32;
+                .dato-texto {
+                    font-size: .78rem;
+                    line-height: 1.32;
+                }
             }
-        }
     </style>
 </head>
 
