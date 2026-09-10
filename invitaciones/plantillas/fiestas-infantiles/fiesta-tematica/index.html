@@ -56,6 +56,7 @@
             justify-content: center;
             padding: 32px 18px;
             scroll-snap-align: start;
+            scroll-snap-stop: always;
             isolation: isolate;
         }
 
@@ -639,7 +640,8 @@
      * enlaces internos con desplazamiento suave y scroll-snap.
      */
             html {
-                scroll-snap-type: none;
+                scroll-snap-type: y mandatory;
+                scroll-padding-top: 0;
             }
 
             /*
@@ -2097,6 +2099,46 @@
 
             URL.revokeObjectURL(enlace.href);
         }
+
+        document
+            .querySelectorAll(
+                '.boton[href^="#"], .indicador[href^="#"]'
+            )
+            .forEach(enlace => {
+                enlace.addEventListener("click", evento => {
+                    const destinoId =
+                        enlace.getAttribute("href");
+
+                    if (
+                        !destinoId ||
+                        destinoId === "#"
+                    ) {
+                        return;
+                    }
+
+                    const destino =
+                        document.querySelector(destinoId);
+
+                    if (!destino) {
+                        return;
+                    }
+
+                    evento.preventDefault();
+
+                    destino.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                    history.replaceState(
+                        null,
+                        "",
+                        destinoId
+                    );
+                });
+            });
+
+
     </script>
 </body>
 
