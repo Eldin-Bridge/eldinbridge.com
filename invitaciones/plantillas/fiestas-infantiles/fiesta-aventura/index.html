@@ -452,41 +452,49 @@
         }
 
         /*
- * TARJETAS CON PALOMITAS
- * Centramos los rectángulos y hacemos que cada
- * uno mida únicamente lo necesario.
+ * Listas compactas de las tarjetas de misión y equipo.
  */
         #mision .lista-aventura,
         #atuendo .lista-aventura {
             display: flex;
             width: 100%;
-            max-width: none;
+            max-width: 100%;
             flex-direction: column;
             align-items: center;
             gap: 9px;
+            margin: 20px auto 0;
         }
 
+        /*
+ * Cada rectángulo ocupa únicamente el ancho
+ * necesario para su palomita y su texto.
+ */
         #mision .lista-aventura li,
         #atuendo .lista-aventura li {
-            display: inline-flex;
-            width: fit-content;
+            display: grid;
+            grid-template-columns: auto auto;
+            width: max-content !important;
             max-width: 100%;
             min-height: 42px;
             align-items: center;
             justify-content: center;
-            padding: 10px 16px 10px 38px;
+            align-self: center;
+            gap: 10px;
+            padding: 10px 16px !important;
             text-align: center;
         }
 
         /*
- * La palomita permanece a la izquierda,
- * pero centrada verticalmente.
+ * La palomita forma parte del contenido centrado.
+ * Ya no queda colocada de forma absoluta.
  */
         #mision .lista-aventura li::before,
         #atuendo .lista-aventura li::before {
-            top: 50%;
-            left: 14px;
-            transform: translateY(-50%);
+            position: static;
+            display: block;
+            transform: none;
+            color: var(--verde-claro);
+            font-weight: 950;
         }
 
 
@@ -864,7 +872,7 @@
             <div class="velo"></div>
             <div class="capa-assets">
                 <img class="asset personaje personaje-derecha" src="assets/personajes/personaje01.png" alt=""
-                    style="--x:82%;--y:77%;--tamano:27vw;--z:6">
+                    style="--x:82%;--y:84%;--tamano:27vw;--z:6">
                 <img class="asset adorno girar" src="assets/elementos/elemento01.png" alt=""
                     style="--x:13%;--y:20%;--tamano:10vw;--z:2">
             </div>
