@@ -455,6 +455,40 @@
             cursor: pointer;
         }
 
+        .boton-salir {
+            position: fixed;
+            top: max(15px, env(safe-area-inset-top));
+            right: max(15px, env(safe-area-inset-right));
+            z-index: 100;
+            display: inline-flex;
+            min-height: 42px;
+            align-items: center;
+            justify-content: center;
+            padding: 9px 16px;
+            border: 1px solid rgba(255, 255, 255, .22);
+            border-radius: 999px;
+            color: var(--blanco);
+            background: rgba(5, 12, 31, .7);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, .3);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            font-size: .84rem;
+            font-weight: 800;
+            text-decoration: none;
+            cursor: pointer;
+            transition:
+                transform .2s ease,
+                background .2s ease;
+        }
+
+        .boton-salir:hover,
+        .boton-salir:focus-visible {
+            background: rgba(30, 38, 70, .88);
+            transform: translateY(-2px);
+        }
+
+
+
         .control-musica:disabled {
             opacity: .45;
             cursor: not-allowed;
@@ -620,6 +654,16 @@
      * 11 = personajes y adornos
      * 12 = textos, contador y botones
      */
+
+            .boton-salir {
+                top: max(11px, env(safe-area-inset-top));
+                right: max(11px, env(safe-area-inset-right));
+                min-height: 38px;
+                padding: 8px 13px;
+                font-size: .76rem;
+            }
+
+
             .contenido {
                 z-index: auto;
                 background: transparent;
@@ -759,6 +803,10 @@
 
 <body>
     <audio id="musica" src="assets/audio/audio01.mp3" loop preload="auto"></audio>
+
+    <a class="boton-salir" id="boton-salir" href="../../../#fiestas-infantiles">
+        Salir
+    </a>
 
     <button class="control-musica" id="boton-musica" type="button" aria-label="Reproducir o pausar música"
         title="Reproducir o pausar música">
@@ -1464,6 +1512,20 @@
         let intervaloCascada = null;
         let ultimaEscenaVisible = "";
         let ultimaCascada = 0;
+
+        $("#boton-salir").addEventListener("click", () => {
+            invitacionAbierta = false;
+
+            musica.pause();
+            musica.currentTime = 0;
+
+            if (intervaloCascada) {
+                clearInterval(intervaloCascada);
+                intervaloCascada = null;
+            }
+
+            $("#confeti").replaceChildren();
+        });
 
         $("#abrir-invitacion").addEventListener(
             "click",
