@@ -325,15 +325,18 @@
             display: none;
         }
 
-        .catalogo-infantil.activo {
+        .catalogo-infantil.activo,
+        .catalogo-reuniones.activo {
             display: block;
         }
 
-        .catalogo-infantil .presentacion {
+        .catalogo-infantil .presentacion,
+        .catalogo-reuniones .presentacion {
             margin-bottom: 0;
         }
 
-        .modelos-infantiles {
+        .modelos-infantiles,
+        .modelos-reuniones {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 18px;
@@ -527,19 +530,25 @@
         }
 
         @media (max-width: 860px) {
-            .modelos-infantiles {
+
+            .modelos-infantiles,
+            .modelos-reuniones {
                 grid-template-columns: repeat(3, minmax(0, 1fr));
             }
         }
 
         @media (max-width: 700px) {
-            .modelos-infantiles {
+
+            .modelos-infantiles,
+            .modelos-reuniones {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
 
         @media (max-width: 580px) {
-            .modelos-infantiles {
+
+            .modelos-infantiles,
+            .modelos-reuniones {
                 grid-template-columns: 1fr;
                 gap: 24px;
             }
@@ -757,7 +766,8 @@
             /*
      * Teléfonos en dos columnas.
      */
-            .modelos-infantiles {
+            .modelos-infantiles,
+            .modelos-reuniones {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 12px;
                 margin-top: 30px;
@@ -848,7 +858,8 @@
         @media (max-width: 350px) {
 
             .categorias,
-            .modelos-infantiles {
+            .modelos-infantiles,
+            .modelos-reuniones {
                 gap: 8px;
             }
 
@@ -904,16 +915,19 @@
                     </div>
                 </button>
 
-                <article class="categoria fiestas-reuniones">
+                <button class="categoria fiestas-reuniones" type="button" id="abrir-reuniones"
+                    aria-label="Ver diseños de Fiestas y Reuniones">
+
                     <img class="categoria-imagen" src="assets/categorias/fiestas-reuniones.webp"
                         alt="Fiestas &amp; Reuniones en una quinta con alberca y carne asada" loading="lazy">
 
                     <h3>Fiestas &amp; Reuniones</h3>
+
                     <div class="categoria-pie">
-                        <span>Próximamente</span>
+                        <span>Ver diseños →</span>
                         <span class="linea"></span>
                     </div>
-                </article>
+                </button>
 
                 <article class="categoria quinceaneras">
                     <img class="categoria-imagen" src="assets/categorias/quinceaneras.webp"
@@ -1086,6 +1100,138 @@
                 su botón para abrir la invitación completa.
             </div>
         </section>
+
+        <section id="catalogo-reuniones" class="catalogo-reuniones vista-oculta" aria-labelledby="titulo-reuniones">
+
+            <div class="presentacion">
+                <h1 id="titulo-reuniones">
+                    Momentos para compartir y
+                    <span class="degradado">celebrar juntos.</span>
+                </h1>
+
+                <p>
+                    Diseños pensados para reuniones entre amigos y familiares,
+                    desde una tarde casual hasta una cena elegante.
+                </p>
+            </div>
+
+            <div class="modelos-infantiles modelos-reuniones">
+
+                <!-- Quinta -->
+                <article class="modelo-reunion">
+
+                    <div class="telefono" aria-hidden="true">
+                        <div class="pantalla-telefono">
+                            <img class="vista-previa" src="assets/vistas-previas/quinta.webp" alt="" loading="lazy"
+                                decoding="async">
+                        </div>
+                    </div>
+
+                    <div class="mini-contenido">
+                        <span class="mini-numero">01</span>
+
+                        <h2 class="mini-titulo">
+                            Quinta
+                        </h2>
+
+                        <p class="mini-texto">
+                            Bebidas, alberca y una buena carnita asada.
+                        </p>
+                    </div>
+
+                    <a class="mini-estado enlace-invitacion" href="plantillas/fiestas-reuniones/quinta/">
+                        Ver invitación
+                    </a>
+                </article>
+
+                <!-- Terraza -->
+                <article class="modelo-reunion">
+
+                    <div class="telefono" aria-hidden="true">
+                        <div class="pantalla-telefono">
+                            <img class="vista-previa" src="assets/vistas-previas/terraza.webp" alt="" loading="lazy"
+                                decoding="async">
+                        </div>
+                    </div>
+
+                    <div class="mini-contenido">
+                        <span class="mini-numero">02</span>
+
+                        <h2 class="mini-titulo">
+                            Terraza
+                        </h2>
+
+                        <p class="mini-texto">
+                            Una reunión cálida entre amigos y familiares.
+                        </p>
+                    </div>
+
+                    <a class="mini-estado enlace-invitacion" href="plantillas/fiestas-reuniones/terraza/">
+                        Ver invitación
+                    </a>
+                </article>
+
+                <!-- Bar -->
+                <article class="modelo-reunion">
+
+                    <div class="telefono" aria-hidden="true">
+                        <div class="pantalla-telefono">
+                            <img class="vista-previa" src="assets/vistas-previas/bar.webp" alt="" loading="lazy"
+                                decoding="async">
+                        </div>
+                    </div>
+
+                    <div class="mini-contenido">
+                        <span class="mini-numero">03</span>
+
+                        <h2 class="mini-titulo">
+                            Bar
+                        </h2>
+
+                        <p class="mini-texto">
+                            Música, ambiente nocturno y tragos entre amigos.
+                        </p>
+                    </div>
+
+                    <a class="mini-estado enlace-invitacion" href="plantillas/fiestas-reuniones/bar/">
+                        Ver invitación
+                    </a>
+                </article>
+
+                <!-- Restaurant -->
+                <article class="modelo-reunion">
+
+                    <div class="telefono" aria-hidden="true">
+                        <div class="pantalla-telefono">
+                            <img class="vista-previa" src="assets/vistas-previas/restaurant.webp" alt="" loading="lazy"
+                                decoding="async">
+                        </div>
+                    </div>
+
+                    <div class="mini-contenido">
+                        <span class="mini-numero">04</span>
+
+                        <h2 class="mini-titulo">
+                            Restaurant
+                        </h2>
+
+                        <p class="mini-texto">
+                            Una cena de gala elegante y de etiqueta.
+                        </p>
+                    </div>
+
+                    <a class="mini-estado enlace-invitacion" href="plantillas/fiestas-reuniones/restaurant/">
+                        Ver invitación
+                    </a>
+                </article>
+
+            </div>
+
+            <div class="nota">
+                <strong>Cuatro estilos para celebrar a tu manera.</strong>
+                Cada diseño tendrá animaciones, música y una ambientación diferente.
+            </div>
+        </section>
     </main>
 
     <footer>
@@ -1107,8 +1253,14 @@
         const catalogoInfantil =
             document.getElementById("catalogo-infantil");
 
+        const catalogoReuniones =
+            document.getElementById("catalogo-reuniones");
+
         const abrirInfantiles =
             document.getElementById("abrir-infantiles");
+
+        const abrirReuniones =
+            document.getElementById("abrir-reuniones");
 
         const etiquetaBarra =
             document.getElementById("etiqueta-barra");
@@ -1119,6 +1271,8 @@
         function mostrarInfantiles() {
             presentacionPrincipal.classList.add("vista-oculta");
             vistaCategorias.classList.add("vista-oculta");
+
+            catalogoReuniones.classList.remove("activo");
             catalogoInfantil.classList.add("activo");
 
             etiquetaBarra.textContent = "Fiestas infantiles";
@@ -1135,8 +1289,31 @@
             });
         }
 
+        function mostrarReuniones() {
+            presentacionPrincipal.classList.add("vista-oculta");
+            vistaCategorias.classList.add("vista-oculta");
+
+            catalogoInfantil.classList.remove("activo");
+            catalogoReuniones.classList.add("activo");
+
+            etiquetaBarra.textContent = "Fiestas & Reuniones";
+
+            history.replaceState(
+                null,
+                "",
+                window.location.pathname + "#fiestas-reuniones"
+            );
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+
         function mostrarCategorias() {
             catalogoInfantil.classList.remove("activo");
+            catalogoReuniones.classList.remove("activo");
+
             presentacionPrincipal.classList.remove("vista-oculta");
             vistaCategorias.classList.remove("vista-oculta");
 
@@ -1159,8 +1336,17 @@
             mostrarInfantiles
         );
 
+        abrirReuniones.addEventListener(
+            "click",
+            mostrarReuniones
+        );
+
         botonVolver.addEventListener("click", function (evento) {
-            if (catalogoInfantil.classList.contains("activo")) {
+            const catalogoAbierto =
+                catalogoInfantil.classList.contains("activo") ||
+                catalogoReuniones.classList.contains("activo");
+
+            if (catalogoAbierto) {
                 evento.preventDefault();
                 mostrarCategorias();
             }
@@ -1168,6 +1354,8 @@
 
         if (window.location.hash === "#fiestas-infantiles") {
             mostrarInfantiles();
+        } else if (window.location.hash === "#fiestas-reuniones") {
+            mostrarReuniones();
         }
     </script>
 </body>
