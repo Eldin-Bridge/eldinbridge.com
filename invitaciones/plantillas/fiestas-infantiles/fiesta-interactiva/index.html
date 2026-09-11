@@ -189,14 +189,16 @@
             width: min(92vw, 720px);
             padding: 27px 23px;
             overflow: hidden;
-            border: 2px solid rgba(255, 255, 255, .58);
-            border-radius: 34px;
+            border: 5px solid rgba(18, 104, 215, .72);
+            border-radius: 30px;
             color: var(--tinta);
             text-align: center;
-            background: linear-gradient(145deg, rgba(255, 255, 255, .94), rgba(224, 240, 255, .91));
+            background: linear-gradient(145deg, rgba(255, 255, 255, .96), rgba(234, 246, 255, .93));
             box-shadow:
                 0 25px 70px rgba(0, 0, 0, .42),
-                inset 0 2px rgba(255, 255, 255, .72);
+                8px 8px 0 rgba(255, 129, 45, .42),
+                -8px -8px 0 rgba(255, 212, 71, .28),
+                inset 0 2px rgba(255, 255, 255, .76);
             opacity: 0;
             transform: translateY(22px) scale(.94);
         }
@@ -212,50 +214,49 @@
             100% { opacity: 1; transform: none; }
         }
 
-        .tarjeta-juego::before,
+        .tarjeta-juego::before {
+            display: none;
+        }
+
         .tarjeta-juego::after {
             content: "";
             position: absolute;
-            width: 90px;
-            height: 90px;
-            border: 2px dashed rgba(77, 104, 65, .22);
-            border-radius: 50%;
+            top: 13px;
+            left: 50%;
+            width: 72px;
+            height: 7px;
+            border-radius: 999px;
+            background: linear-gradient(90deg,
+                    var(--azul) 0 25%,
+                    var(--naranja) 25% 50%,
+                    var(--amarillo) 50% 75%,
+                    var(--verde-juego) 75%);
+            transform: translateX(-50%);
             pointer-events: none;
         }
 
-        .tarjeta-juego::before {
-            top: -49px;
-            left: -44px;
-        }
-
-        .tarjeta-juego::after {
-            right: -46px;
-            bottom: -52px;
-        }
-
-        .pista {
+        .insignia-nivel {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             margin-bottom: 14px;
-            padding: 7px 13px;
-            border: 1px solid rgba(18, 104, 215, .20);
-            border-radius: 999px;
-            color: var(--azul-oscuro);
-            background: rgba(18, 104, 215, .09);
+            padding: 8px 15px;
+            border: 0;
+            border-radius: 9px 16px 9px 16px;
+            color: #ffffff;
+            background: linear-gradient(135deg, var(--azul), #42a9ff);
+            box-shadow: 4px 4px 0 rgba(255, 129, 45, .32);
             font-size: .72rem;
             font-weight: 900;
             letter-spacing: .12em;
             text-transform: uppercase;
         }
 
-        .pista::before {
-            content: "";
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: var(--naranja);
-            box-shadow: 0 0 10px rgba(255, 129, 45, .7);
+        .insignia-nivel::before {
+            content: "★";
+            color: var(--amarillo);
+            font-size: .8rem;
+            line-height: 1;
         }
 
         h1,
@@ -303,23 +304,31 @@
             font-weight: 850;
         }
 
-        .separador-ruta {
+        .separador-color {
             display: flex;
             width: min(250px, 75%);
             align-items: center;
             gap: 9px;
             margin: 19px auto;
-            color: var(--verde-juego);
+            color: var(--naranja);
+            font-size: 1.15rem;
         }
 
-        .separador-ruta::before,
-        .separador-ruta::after {
+        .separador-color::before,
+        .separador-color::after {
             content: "";
             flex: 1;
-            border-top: 2px dashed rgba(18, 104, 215, .30);
+            height: 6px;
+            border: 0;
+            border-radius: 999px;
+            background: repeating-linear-gradient(90deg,
+                    var(--azul) 0 9px,
+                    transparent 9px 16px,
+                    var(--amarillo) 16px 25px,
+                    transparent 25px 32px);
         }
 
-        .boton-pista,
+        .boton-juego,
         .boton-mapa {
             position: relative;
             z-index: 12;
@@ -330,10 +339,13 @@
             gap: 8px;
             margin-top: 20px;
             padding: 12px 20px;
-            border-radius: 999px;
-            color: #fffbed;
-            background: linear-gradient(135deg, #1268d7, #2f9cf4);
-            box-shadow: 0 10px 24px rgba(18, 104, 215, .28);
+            border: 2px solid rgba(145, 82, 4, .16);
+            border-radius: 14px;
+            color: #17355b;
+            background: linear-gradient(135deg, var(--amarillo), var(--naranja));
+            box-shadow:
+                0 10px 24px rgba(255, 129, 45, .24),
+                0 5px 0 #c96116;
             font-weight: 900;
             cursor: pointer;
             transition: transform .2s ease, filter .2s ease;
@@ -344,26 +356,35 @@
             pointer-events: none;
         }
 
-        .boton-pista:hover,
+        .boton-juego:hover,
         .boton-mapa:hover {
             filter: brightness(1.08);
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.02);
         }
 
         .contador {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 9px;
+            display: flex;
+            justify-content: center;
+            gap: 11px;
             margin-top: 21px;
         }
 
         .tiempo {
+            display: grid;
+            width: clamp(62px, 15vw, 82px);
+            aspect-ratio: 1;
             min-width: 0;
-            padding: 13px 5px;
-            border: 1px solid rgba(18, 104, 215, .16);
-            border-radius: 15px;
-            background: rgba(255, 255, 255, .42);
+            place-content: center;
+            padding: 7px 3px;
+            border: 3px solid rgba(255, 255, 255, .74);
+            border-radius: 50%;
+            background: linear-gradient(145deg, #ffffff, #dbeeff);
+            box-shadow: 0 7px 0 rgba(18, 104, 215, .22);
         }
+
+        .tiempo:nth-child(2) { box-shadow: 0 7px 0 rgba(255, 129, 45, .28); }
+        .tiempo:nth-child(3) { box-shadow: 0 7px 0 rgba(255, 212, 71, .34); }
+        .tiempo:nth-child(4) { box-shadow: 0 7px 0 rgba(53, 173, 104, .28); }
 
         .numero {
             display: block;
@@ -394,10 +415,16 @@
         .dato {
             min-width: 0;
             padding: 14px 9px;
-            border: 1px solid rgba(18, 104, 215, .14);
-            border-radius: 16px;
-            background: rgba(255, 255, 255, .4);
+            border: 0;
+            border-top: 6px solid var(--azul);
+            border-radius: 12px 12px 18px 18px;
+            background: rgba(255, 255, 255, .66);
+            box-shadow: 0 7px 18px rgba(18, 104, 215, .10);
         }
+
+        .dato:nth-child(2) { border-top-color: var(--naranja); }
+        .dato:nth-child(3) { border-top-color: var(--amarillo); }
+        .dato:nth-child(4) { border-top-color: var(--verde-juego); }
 
         .dato-icono {
             display: block;
@@ -425,37 +452,57 @@
         }
 
         .lista-juegos {
-            display: grid;
-            gap: 9px;
-            max-width: 480px;
+            display: flex;
+            max-width: 520px;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
             margin: 20px auto 0;
             list-style: none;
-            text-align: left;
+            counter-reset: actividad;
         }
 
         .lista-juegos li {
             position: relative;
-            padding: 11px 13px 11px 39px;
-            border: 1px solid rgba(18, 104, 215, .13);
-            border-radius: 14px;
-            color: #40584c;
-            background: rgba(255, 255, 255, .38);
+            display: inline-flex;
+            width: auto;
+            min-height: 44px;
+            align-items: center;
+            gap: 9px;
+            padding: 8px 14px 8px 9px;
+            border: 2px solid rgba(18, 104, 215, .15);
+            border-radius: 15px;
+            color: #34506f;
+            background: rgba(225, 241, 255, .86);
+            text-align: center;
         }
 
+        .lista-juegos li:nth-child(2) { background: rgba(255, 235, 205, .90); }
+        .lista-juegos li:nth-child(3) { background: rgba(225, 248, 231, .90); }
+
         .lista-juegos li::before {
-            content: "✓";
-            position: absolute;
-            left: 14px;
-            color: var(--verde-juego);
+            counter-increment: actividad;
+            content: counter(actividad);
+            display: grid;
+            width: 28px;
+            height: 28px;
+            flex: 0 0 28px;
+            place-items: center;
+            border-radius: 9px;
+            color: white;
+            background: var(--azul);
             font-weight: 950;
         }
+
+        .lista-juegos li:nth-child(2)::before { background: var(--naranja); }
+        .lista-juegos li:nth-child(3)::before { background: var(--verde-juego); }
 
         #cuenta .tarjeta-juego {
             padding-top: 22px;
             padding-bottom: 22px;
         }
 
-        #cuenta .pista {
+        #cuenta .insignia-nivel {
             margin-bottom: 9px;
         }
 
@@ -467,43 +514,16 @@
             margin-top: 13px;
         }
 
-        #cuenta .boton-pista {
+        #cuenta .boton-juego {
             margin-top: 13px;
-        }
-
-        #mision .lista-juegos,
-        #atuendo .lista-juegos {
-            display: flex;
-            width: 100%;
-            max-width: 100%;
-            flex-direction: column;
-            align-items: center;
-            gap: 9px;
-            margin: 20px auto 0;
         }
 
         #mision .lista-juegos li,
         #atuendo .lista-juegos li {
-            display: grid;
-            grid-template-columns: auto auto;
-            width: max-content !important;
+            width: auto;
             max-width: 100%;
             min-height: 42px;
-            align-items: center;
-            justify-content: center;
-            align-self: center;
-            gap: 10px;
-            padding: 10px 16px !important;
-            text-align: center;
-        }
-
-        #mision .lista-juegos li::before,
-        #atuendo .lista-juegos li::before {
-            position: static;
-            display: block;
-            transform: none;
-            color: var(--verde-juego);
-            font-weight: 950;
+            padding: 8px 14px 8px 9px;
         }
 
         .salir,
@@ -516,7 +536,7 @@
             border: 1px solid rgba(255, 255, 255, .22);
             border-radius: 999px;
             color: white;
-            background: rgba(7, 35, 28, .78);
+            background: rgba(7, 38, 84, .82);
             box-shadow: 0 10px 28px rgba(0, 0, 0, .24);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
@@ -574,12 +594,15 @@
         .entrada-contenido {
             width: min(90vw, 520px);
             padding: 33px 25px;
-            border: 1px solid rgba(255, 255, 255, .48);
-            border-radius: 32px;
+            border: 5px solid rgba(18, 104, 215, .76);
+            border-radius: 30px;
             color: var(--tinta);
             text-align: center;
             background: linear-gradient(145deg, rgba(255, 255, 255, .92), rgba(218, 237, 255, .88));
-            box-shadow: 0 28px 80px rgba(0, 0, 0, .42);
+            box-shadow:
+                0 28px 80px rgba(0, 0, 0, .42),
+                8px 8px 0 rgba(255, 129, 45, .44),
+                -8px -8px 0 rgba(255, 212, 71, .30);
         }
 
         .entrada-icono {
@@ -605,6 +628,14 @@
 
         .entrada h2 {
             font-size: clamp(2.2rem, 8vw, 4rem);
+            font-weight: 950;
+            letter-spacing: -.045em;
+        }
+
+        .boton-mapa {
+            color: #ffffff;
+            background: linear-gradient(135deg, var(--azul), #42a9ff);
+            box-shadow: 0 6px 0 var(--azul-oscuro);
         }
 
         .entrada p {
@@ -674,7 +705,7 @@
                 padding: 22px 18px;
                 overflow: visible;
                 border: 0;
-                border-radius: 25px 12px 24px 15px;
+                border-radius: 28px;
                 background: transparent;
                 box-shadow: none;
             }
@@ -684,14 +715,17 @@
                 position: absolute;
                 inset: 0;
                 z-index: 9;
+                display: block;
                 width: auto;
                 height: auto;
-                border: 2px solid rgba(255, 255, 255, .58);
-                border-radius: 27px;
-                background: linear-gradient(145deg, rgba(255, 255, 255, .94), rgba(224, 240, 255, .91));
+                border: 5px solid rgba(18, 104, 215, .72);
+                border-radius: 28px;
+                background: linear-gradient(145deg, rgba(255, 255, 255, .96), rgba(234, 246, 255, .93));
                 box-shadow:
                     0 25px 70px rgba(0, 0, 0, .42),
-                    inset 0 0 38px rgba(100, 59, 27, .15);
+                    6px 6px 0 rgba(255, 129, 45, .42),
+                    -6px -6px 0 rgba(255, 212, 71, .28),
+                    inset 0 2px rgba(255, 255, 255, .76);
                 pointer-events: none;
             }
 
@@ -771,23 +805,23 @@
 
             #mision .lista-juegos,
             #atuendo .lista-juegos {
-                display: block !important;
+                display: flex !important;
                 width: 100% !important;
                 max-width: 100% !important;
+                flex-direction: column;
+                align-items: center;
                 margin: 18px auto 0 !important;
-                text-align: center !important;
             }
 
             #mision .lista-juegos li,
             #atuendo .lista-juegos li {
-                position: relative;
-                display: table !important;
+                display: inline-flex !important;
                 width: auto !important;
                 max-width: calc(100% - 20px) !important;
                 min-height: 40px;
                 margin-right: auto !important;
                 margin-left: auto !important;
-                padding: 9px 35px !important;
+                padding: 7px 13px 7px 8px !important;
                 text-align: center !important;
             }
 
@@ -800,11 +834,9 @@
 
             #mision .lista-juegos li::before,
             #atuendo .lista-juegos li::before {
-                position: absolute !important;
-                top: 50% !important;
-                left: 13px !important;
-                display: block;
-                transform: translateY(-50%) !important;
+                position: static !important;
+                display: grid;
+                transform: none !important;
             }
         }
 
@@ -825,7 +857,7 @@
             <img class="entrada-icono" src="assets/elementos/elemento02.webp" alt="">
             <h2>El Mundo de Juegos está por abrir</h2>
             <p>Prepárate para brincar, jugar y celebrar un día lleno de diversión.</p>
-            <button class="boton-pista" id="entrar" type="button">Entrar a jugar →</button>
+            <button class="boton-juego" id="entrar" type="button">Entrar a jugar →</button>
         </div>
     </div>
 
@@ -843,13 +875,13 @@
                     style="--x:81.5%;--y:84%;--tamano:27vw;--z:6">
             </div>
             <div class="tarjeta-juego">
-                <span class="pista">Diversión desbloqueada</span>
+                <span class="insignia-nivel">Diversión desbloqueada</span>
                 <h1>¡Bienvenidos al <span class="resaltado">Mundo de Juegos!</span></h1>
                 <p class="nombre"><span data-nombre>Leo</span> te invita a jugar</p>
                 <p class="texto">Brincolines, pelotas, toboganes y muchas sorpresas nos esperan.</p>
-                <div class="separador-ruta">●</div>
+                <div class="separador-color">●</div>
                 <p class="edad">Cumple <span data-edad>6</span> años</p>
-                <button class="boton-pista siguiente" type="button">Comenzar la diversión →</button>
+                <button class="boton-juego siguiente" type="button">Comenzar la diversión →</button>
             </div>
         </section>
 
@@ -863,7 +895,7 @@
                     style="--x:88%;--y:19%;--tamano:11vw;--z:2">
             </div>
             <div class="tarjeta-juego">
-                <span class="pista">Nivel 01 · Cuenta regresiva</span>
+                <span class="insignia-nivel">Nivel 01 · Cuenta regresiva</span>
                 <h2>La diversión comienza en…</h2>
                 <p class="texto">Falta muy poco para abrir las puertas del Mundo de Juegos.</p>
                 <div class="contador" aria-label="Cuenta regresiva">
@@ -874,7 +906,7 @@
                     <div class="tiempo"><span class="numero" id="segundos">00</span><span class="unidad">Segundos</span>
                     </div>
                 </div>
-                <button class="boton-pista siguiente" type="button">Siguiente nivel →</button>
+                <button class="boton-juego siguiente" type="button">Siguiente nivel →</button>
             </div>
         </section>
 
@@ -888,7 +920,7 @@
                     style="--x:13%;--y:22%;--tamano:11vw;--z:2">
             </div>
             <div class="tarjeta-juego">
-                <span class="pista">Nivel 02 · La cita</span>
+                <span class="insignia-nivel">Nivel 02 · La cita</span>
                 <h2>¿Dónde será la diversión?</h2>
                 <div class="datos">
                     <div class="dato"><span class="dato-icono">📅</span><strong>Fecha</strong><span data-fecha>Sábado 24
@@ -900,7 +932,7 @@
                     <div class="dato"><span class="dato-icono">🎈</span><strong>Zona</strong><span
                             data-ciudad>Cadereyta, Nuevo León</span></div>
                 </div>
-                <button class="boton-pista siguiente" type="button">Entrar a la zona de juegos →</button>
+                <button class="boton-juego siguiente" type="button">Entrar a la zona de juegos →</button>
             </div>
         </section>
 
@@ -914,7 +946,7 @@
                     style="--x:87%;--y:21%;--tamano:11vw;--z:2">
             </div>
             <div class="tarjeta-juego">
-                <span class="pista">Nivel 03 · Zona interactiva</span>
+                <span class="insignia-nivel">Nivel 03 · Zona interactiva</span>
                 <h2>Tenemos una misión: divertirnos</h2>
                 <p class="texto">Ven a compartir con <span data-nombre>Leo</span> una tarde llena de movimiento y risas.</p>
                 <ul class="lista-juegos">
@@ -922,7 +954,7 @@
                     <li>Explorar túneles y obstáculos</li>
                     <li>Lanzarnos por los toboganes</li>
                 </ul>
-                <button class="boton-pista siguiente" type="button">Seguir jugando →</button>
+                <button class="boton-juego siguiente" type="button">Seguir jugando →</button>
             </div>
         </section>
 
@@ -936,7 +968,7 @@
                     style="--x:13%;--y:22%;--tamano:10vw;--z:2">
             </div>
             <div class="tarjeta-juego">
-                <span class="pista">Nivel 04 · Prepárate</span>
+                <span class="insignia-nivel">Nivel 04 · Prepárate</span>
                 <h2>Listos para movernos</h2>
                 <p class="texto">El atuendo perfecto es el que te permite disfrutar cada juego con comodidad.</p>
                 <ul class="lista-juegos">
@@ -944,7 +976,7 @@
                     <li>Calcetines antiderrapantes</li>
                     <li>Toda tu energía para jugar</li>
                 </ul>
-                <button class="boton-pista siguiente" type="button">Ir por un descanso →</button>
+                <button class="boton-juego siguiente" type="button">Ir por un descanso →</button>
             </div>
         </section>
 
@@ -958,12 +990,12 @@
                     style="--x:87%;--y:19%;--tamano:13vw;--z:2">
             </div>
             <div class="tarjeta-juego">
-                <span class="pista">Nivel 05 · Recarga de energía</span>
+                <span class="insignia-nivel">Nivel 05 · Recarga de energía</span>
                 <h2>Una pausa deliciosa</h2>
                 <p class="texto">Después de jugar compartiremos pizza, botanas y algo refrescante para continuar la fiesta.</p>
-                <div class="separador-ruta">★</div>
+                <div class="separador-color">★</div>
                 <p class="nombre">¡Todavía queda más diversión!</p>
-                <button class="boton-pista siguiente" type="button">Llegar a la celebración →</button>
+                <button class="boton-juego siguiente" type="button">Llegar a la celebración →</button>
             </div>
         </section>
 
@@ -977,7 +1009,7 @@
                     style="--x:14%;--y:73%;--tamano:13vw;--z:5">
             </div>
             <div class="tarjeta-juego">
-                <span class="pista">Nivel final · Celebración</span>
+                <span class="insignia-nivel">Nivel final · Celebración</span>
                 <h2>¡Te esperamos en el Mundo de Juegos!</h2>
                 <p class="texto">Ven a celebrar los <span data-edad>6</span> años de <span data-nombre>Leo</span> y hagamos de este día una fiesta inolvidable.</p>
                 <p class="nombre">Con cariño, <span data-nombre>Leo</span> 🎉</p>
@@ -985,7 +1017,7 @@
                     Ver ubicación →
                 </span>
                 <br>
-                <button class="boton-pista" id="volver-inicio" type="button">← Volver al inicio</button>
+                <button class="boton-juego" id="volver-inicio" type="button">← Volver al inicio</button>
             </div>
         </section>
     </main>
