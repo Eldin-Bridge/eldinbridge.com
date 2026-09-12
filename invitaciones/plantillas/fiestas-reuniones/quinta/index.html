@@ -209,8 +209,11 @@
         inset 0 1px rgba(255, 255, 255, 0.82);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      opacity: 1;
-      transform: none;
+      opacity: 0;
+      transform: translateY(45px) scale(0.92);
+      transition:
+        opacity 0.65s ease,
+        transform 0.82s cubic-bezier(0.18, 0.88, 0.28, 1.08);
     }
 
     .tarjeta::before,
@@ -236,24 +239,8 @@
     }
 
     .escena.activa .tarjeta {
-      animation: entrada-calida 0.82s cubic-bezier(0.18, 0.88, 0.28, 1.08) both;
-    }
-
-    @keyframes entrada-calida {
-      0% {
-        opacity: 0;
-        transform: translateY(45px) scale(0.92);
-      }
-
-      58% {
-        opacity: 1;
-        transform: translateY(-5px) scale(1.012);
-      }
-
-      100% {
-        opacity: 1;
-        transform: none;
-      }
+      opacity: 1;
+      transform: none;
     }
 
     .etiqueta {
