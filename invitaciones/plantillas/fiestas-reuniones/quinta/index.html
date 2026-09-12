@@ -576,6 +576,7 @@
 
     .salir {
       left: max(15px, env(safe-area-inset-left));
+      z-index: 60;
       padding: 0 15px;
       border-radius: 999px;
       font-size: 0.75rem;
@@ -589,7 +590,6 @@
       cursor: pointer;
     }
 
-    body:not(.invitacion-abierta) .salir,
     body:not(.invitacion-abierta) .musica {
       opacity: 0;
       pointer-events: none;
@@ -790,7 +790,6 @@
         font-size: 0.59rem;
       }
     }
-
   </style>
 </head>
 
