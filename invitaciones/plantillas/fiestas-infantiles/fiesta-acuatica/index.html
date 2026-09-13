@@ -87,10 +87,7 @@
             overflow: hidden;
             place-items: center;
             padding:
-                max(68px, env(safe-area-inset-top))
-                max(18px, env(safe-area-inset-right))
-                max(24px, env(safe-area-inset-bottom))
-                max(18px, env(safe-area-inset-left));
+                max(68px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
             scroll-snap-align: start;
             scroll-snap-stop: always;
             isolation: isolate;
@@ -104,33 +101,17 @@
             height: 100%;
             object-fit: cover;
             object-position: center;
-            filter: saturate(1.08) brightness(.72);
-            transform: scale(1.045);
-            will-change: transform, filter;
+            filter: saturate(1) brightness(.67);
+            transform: scale(1.06);
+            transition:
+                transform 1s cubic-bezier(.22, .8, .32, 1),
+                filter 1s ease;
+            will-change: transform;
         }
 
         .escena.activa .fondo {
-            animation: oleaje-fondo 1.05s cubic-bezier(.2, .8, .3, 1) both;
-        }
-
-        @keyframes oleaje-fondo {
-            0% {
-                transform: scale(1.085) translateY(7px);
-                filter: saturate(.95) brightness(.63);
-            }
-
-            58% {
-                transform: scale(1.025) translateY(-3px);
-            }
-
-            76% {
-                transform: scale(1.037) translateY(1px);
-            }
-
-            100% {
-                transform: scale(1.03) translateY(0);
-                filter: saturate(1.08) brightness(.72);
-            }
+            filter: saturate(1.08) brightness(.72);
+            transform: scale(1.03);
         }
 
         .velo {
@@ -194,7 +175,9 @@
         }
 
         @keyframes boya {
-            0%, 100% {
+
+            0%,
+            100% {
                 translate: 0 0;
                 rotate: -2deg;
             }
@@ -224,8 +207,12 @@
             backdrop-filter: blur(13px);
             -webkit-backdrop-filter: blur(13px);
             opacity: 0;
-            transform: translateY(40px) scale(.94);
+            transform: translateY(24px) scale(.96);
             transform-origin: center;
+            transition:
+                opacity .5s ease-out,
+                transform .7s cubic-bezier(.22, .8, .32, 1);
+            will-change: transform, opacity;
         }
 
         .tarjeta-agua::before {
@@ -251,32 +238,8 @@
         }
 
         .escena.activa .tarjeta-agua {
-            animation: entrada-splash .78s cubic-bezier(.18, .88, .28, 1.15) both;
-        }
-
-        @keyframes entrada-splash {
-            0% {
-                opacity: 0;
-                transform: translateY(46px) scale(.88) rotate(0);
-            }
-
-            45% {
-                opacity: 1;
-                transform: translateY(-7px) scale(1.025) rotate(-.8deg);
-            }
-
-            61% {
-                transform: translateY(3px) scale(.992) rotate(.65deg);
-            }
-
-            76% {
-                transform: translateY(-2px) scale(1.006) rotate(-.28deg);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1) rotate(0);
-            }
+            opacity: 1;
+            transform: none;
         }
 
         .etiqueta-agua {
@@ -624,6 +587,14 @@
             background:
                 linear-gradient(rgba(0, 72, 100, .16), rgba(0, 42, 65, .62)),
                 url("assets/fondos/fondo01.webp") center/cover no-repeat;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .4s ease;
+        }
+
+        body.fondo-listo .entrada {
+            opacity: 1;
+            visibility: visible;
         }
 
         body:not(.invitacion-abierta) main {
@@ -664,7 +635,9 @@
         }
 
         @keyframes chapoteo-icono {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translateY(0) rotate(-2deg);
             }
 
@@ -871,7 +844,6 @@
                 font-size: .8rem;
             }
         }
-
     </style>
 </head>
 
@@ -928,8 +900,10 @@
                 <div class="contador" aria-label="Cuenta regresiva">
                     <div class="tiempo"><span class="numero" id="dias">00</span><span class="unidad">Días</span></div>
                     <div class="tiempo"><span class="numero" id="horas">00</span><span class="unidad">Horas</span></div>
-                    <div class="tiempo"><span class="numero" id="minutos">00</span><span class="unidad">Minutos</span></div>
-                    <div class="tiempo"><span class="numero" id="segundos">00</span><span class="unidad">Segundos</span></div>
+                    <div class="tiempo"><span class="numero" id="minutos">00</span><span class="unidad">Minutos</span>
+                    </div>
+                    <div class="tiempo"><span class="numero" id="segundos">00</span><span class="unidad">Segundos</span>
+                    </div>
                 </div>
                 <button class="boton-agua siguiente" type="button">Conocer los detalles ↓</button>
             </div>
@@ -949,10 +923,14 @@
                 <span class="etiqueta-agua">La cita acuática</span>
                 <h2>¿Cuándo y dónde nadamos?</h2>
                 <div class="datos-evento">
-                    <div class="dato"><span class="dato-icono">☀️</span><strong>Fecha</strong><span data-fecha>Sábado 18 de julio</span></div>
-                    <div class="dato"><span class="dato-icono">🕓</span><strong>Hora</strong><span data-hora>4:00 p. m.</span></div>
-                    <div class="dato"><span class="dato-icono">🏊</span><strong>Lugar</strong><span data-lugar>Quinta Las Palmas</span></div>
-                    <div class="dato"><span class="dato-icono">📍</span><strong>Ciudad</strong><span data-ciudad>Cadereyta, Nuevo León</span></div>
+                    <div class="dato"><span class="dato-icono">☀️</span><strong>Fecha</strong><span data-fecha>Sábado 18
+                            de julio</span></div>
+                    <div class="dato"><span class="dato-icono">🕓</span><strong>Hora</strong><span data-hora>4:00 p.
+                            m.</span></div>
+                    <div class="dato"><span class="dato-icono">🏊</span><strong>Lugar</strong><span data-lugar>Quinta
+                            Las Palmas</span></div>
+                    <div class="dato"><span class="dato-icono">📍</span><strong>Ciudad</strong><span
+                            data-ciudad>Cadereyta, Nuevo León</span></div>
                 </div>
                 <button class="boton-agua siguiente" type="button">Preparar mi kit ↓</button>
             </div>
@@ -1042,7 +1020,8 @@
             <div class="tarjeta-agua">
                 <span class="etiqueta-agua">Te esperamos</span>
                 <h2>¡Nos vemos junto a la alberca!</h2>
-                <p class="texto">Ven a celebrar los <span data-edad>7</span> años de <span data-nombre>María</span> y hagamos de este día una fiesta inolvidable.</p>
+                <p class="texto">Ven a celebrar los <span data-edad>7</span> años de <span data-nombre>María</span> y
+                    hagamos de este día una fiesta inolvidable.</p>
                 <div class="burbuja-separador"><span></span><span></span><span></span></div>
                 <p class="nombre">Con cariño, <span data-nombre>María</span> 💦</p>
                 <span class="boton-ubicacion" aria-disabled="true">Ver ubicación</span>
@@ -1073,6 +1052,14 @@
         const invitacion = $("#invitacion");
         const audio = $("#audio");
         const botonMusica = $("#musica");
+        const fondoEntrada = new Image();
+        fondoEntrada.src = "assets/fondos/fondo01.webp";
+
+        fondoEntrada.decode()
+            .catch(() => { })
+            .finally(() => {
+                document.body.classList.add("fondo-listo");
+            });
         let indiceActivo = 0;
         let musicaActiva = false;
         let temporizadorAlto;
@@ -1144,8 +1131,10 @@
             indiceActivo = 0;
             $("#entrada").classList.add("oculta");
 
-            escenas.forEach((escena, indice) => escena.classList.toggle("activa", indice === 0));
+            escenas.forEach((escena) => escena.classList.remove("activa"));
+
             void escenas[0].offsetWidth;
+
             escenas[0].classList.add("activa");
             crearSplash();
 
