@@ -587,14 +587,6 @@
             background:
                 linear-gradient(rgba(0, 72, 100, .16), rgba(0, 42, 65, .62)),
                 url("assets/fondos/fondo01.webp") center/cover no-repeat;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity .4s ease;
-        }
-
-        body.fondo-listo .entrada {
-            opacity: 1;
-            visibility: visible;
         }
 
         body:not(.invitacion-abierta) main {
@@ -619,10 +611,25 @@
             border-radius: 38px 38px 56px 56px;
             color: var(--tinta);
             text-align: center;
-            background: linear-gradient(145deg, rgba(239, 255, 255, .90), rgba(157, 235, 250, .78));
-            box-shadow: 0 28px 78px rgba(0, 32, 52, .42), inset 0 2px rgba(255, 255, 255, .78);
+            background: linear-gradient(145deg,
+                    rgba(239, 255, 255, .90),
+                    rgba(157, 235, 250, .78));
+            box-shadow:
+                0 28px 78px rgba(0, 32, 52, .42),
+                inset 0 2px rgba(255, 255, 255, .78);
             backdrop-filter: blur(13px);
             -webkit-backdrop-filter: blur(13px);
+
+            opacity: 0;
+            transform: translateY(18px) scale(.97);
+            transition:
+                opacity .45s ease-out,
+                transform .65s cubic-bezier(.22, .8, .32, 1);
+        }
+
+        body.fondo-listo .entrada-contenido {
+            opacity: 1;
+            transform: none;
         }
 
         .entrada-icono {
@@ -638,15 +645,11 @@
 
             0%,
             100% {
-                transform: translateY(0) rotate(-2deg);
+                transform: translateY(0);
             }
 
-            45% {
-                transform: translateY(-10px) rotate(3deg) scale(1.04);
-            }
-
-            58% {
-                transform: translateY(-5px) rotate(-1deg) scale(.98);
+            50% {
+                transform: translateY(-10px);
             }
         }
 
