@@ -188,6 +188,18 @@
             box-shadow:
                 0 25px 70px rgba(0, 0, 0, .42),
                 inset 0 0 38px rgba(100, 59, 27, .15);
+
+            opacity: 0;
+            transform: translateY(24px) scale(.96);
+            transition:
+                opacity .5s ease-out,
+                transform .7s cubic-bezier(.22, .8, .32, 1);
+            will-change: transform, opacity;
+        }
+
+        .escena.activa .tarjeta-mapa {
+            opacity: 1;
+            transform: none;
         }
 
         .tarjeta-mapa::before,
@@ -558,6 +570,17 @@
             text-align: center;
             background: rgba(255, 240, 202, .94);
             box-shadow: 0 28px 80px rgba(0, 0, 0, .42);
+
+            opacity: 0;
+            transform: translateY(18px) scale(.97);
+            transition:
+                opacity .45s ease-out,
+                transform .65s cubic-bezier(.22, .8, .32, 1);
+        }
+
+        body.fondo-listo .entrada-contenido {
+            opacity: 1;
+            transform: none;
         }
 
         .entrada-icono {
@@ -1021,6 +1044,14 @@
         const carrusel = $("main");
         const audio = $("#audio");
         const botonMusica = $("#musica");
+        const fondoEntrada = new Image();
+        fondoEntrada.src = "assets/fondos/fondo01.png";
+
+        fondoEntrada.decode()
+            .catch(() => { })
+            .finally(() => {
+                document.body.classList.add("fondo-listo");
+            });
         let indiceActivo = 0;
         let temporizadorAjuste;
         let musicaActiva = false;
@@ -1083,10 +1114,18 @@
         $("#entrar").addEventListener("click", async () => {
             document.body.classList.add("invitacion-abierta");
             irA(0, false);
-            actualizarRuta(0);
+            indiceActivo = 0;
 
             $("#entrada").classList.add("oculta");
             document.body.style.overflow = "";
+
+            escenas.forEach((escena) => {
+                escena.classList.remove("activa");
+            });
+
+            void escenas[0].offsetWidth;
+
+            escenas[0].classList.add("activa");
 
             try {
                 await audio.play();
