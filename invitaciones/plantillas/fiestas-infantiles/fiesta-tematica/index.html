@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <link rel="preload" as="image" href="assets/fondos/fondo01.webp">
     <meta name="description" content="Demostración de invitación infantil temática de EldinBridge.">
     <title>El Reino de las Estrellas | Fiesta Temática</title>
@@ -360,9 +360,12 @@
         }
 
         .revelar {
-            opacity: 1;
-            transform: translateY(22px);
-            transition: transform .65s ease;
+            opacity: 0;
+            transform: translateY(24px) scale(.96);
+            transition:
+                opacity .5s ease-out,
+                transform .7s cubic-bezier(.22, .8, .32, 1);
+            will-change: transform, opacity;
         }
 
         .revelar.visible {
@@ -520,6 +523,18 @@
             text-align: center;
             background: rgba(255, 255, 255, .07);
             backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+
+            opacity: 0;
+            transform: translateY(18px) scale(.97);
+            transition:
+                opacity .45s ease-out,
+                transform .65s cubic-bezier(.22, .8, .32, 1);
+        }
+
+        body.fondo-listo .intro-caja {
+            opacity: 1;
+            transform: none;
         }
 
         .intro-icono {
@@ -1474,7 +1489,14 @@
 
         const musica = $("#musica");
         const botonMusica = $("#boton-musica");
+        const fondoEntrada = new Image();
+        fondoEntrada.src = "assets/fondos/fondo01.webp";
 
+        fondoEntrada.decode()
+            .catch(() => { })
+            .finally(() => {
+                document.body.classList.add("fondo-listo");
+            });
         let invitacionAbierta = false;
         let intervaloCascada = null;
         let ultimaEscenaVisible = "";
@@ -1558,6 +1580,16 @@
                 $("#intro").classList.add("oculto");
 
                 invitacionAbierta = true;
+
+                const primeraTarjeta =
+                    document.querySelector("#inicio .revelar");
+
+                primeraTarjeta.classList.remove("visible");
+                void primeraTarjeta.offsetWidth;
+
+                requestAnimationFrame(() => {
+                    primeraTarjeta.classList.add("visible");
+                });
 
                 lanzarConfeti();
                 lanzarCascadaMagica();
