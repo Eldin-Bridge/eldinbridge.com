@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -7,7 +8,9 @@
   <title>Una tarde en casa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap"
+    rel="stylesheet">
   <link rel="preload" as="image" href="assets/fondos/fondo01.webp">
 
   <style>
@@ -122,7 +125,7 @@
     .capa-assets {
       position: absolute;
       inset: 0;
-      z-index: 4;
+      z-index: 7;
       pointer-events: none;
     }
 
@@ -145,10 +148,13 @@
     }
 
     @keyframes flotar {
-      0%, 100% {
+
+      0%,
+      100% {
         translate: 0 0;
         rotate: 0deg;
       }
+
       50% {
         translate: 0 -12px;
         rotate: 2deg;
@@ -156,28 +162,65 @@
     }
 
     @keyframes balancear {
-      0%, 100% { translate: 0 0; rotate: -2deg; }
-      50% { translate: 0 -10px; rotate: 3deg; }
+
+      0%,
+      100% {
+        translate: 0 0;
+        rotate: -2deg;
+      }
+
+      50% {
+        translate: 0 -10px;
+        rotate: 3deg;
+      }
     }
 
     @keyframes pulso-musical {
-      0%, 100% { translate: 0 0; scale: 1; rotate: -1deg; }
-      50% { translate: 0 -9px; scale: 1.035; rotate: 2deg; }
+
+      0%,
+      100% {
+        translate: 0 0;
+        scale: 1;
+        rotate: -1deg;
+      }
+
+      50% {
+        translate: 0 -9px;
+        scale: 1.035;
+        rotate: 2deg;
+      }
     }
 
     @keyframes brillo {
-      0%, 100% { translate: 0 0; filter: drop-shadow(0 12px 15px rgba(28, 25, 18, .28)) drop-shadow(0 0 4px rgba(255, 196, 101, .2)); }
-      50% { translate: 0 -9px; filter: drop-shadow(0 14px 16px rgba(28, 25, 18, .3)) drop-shadow(0 0 15px rgba(255, 196, 101, .65)); }
+
+      0%,
+      100% {
+        translate: 0 0;
+        filter: drop-shadow(0 12px 15px rgba(28, 25, 18, .28)) drop-shadow(0 0 4px rgba(255, 196, 101, .2));
+      }
+
+      50% {
+        translate: 0 -9px;
+        filter: drop-shadow(0 14px 16px rgba(28, 25, 18, .3)) drop-shadow(0 0 15px rgba(255, 196, 101, .65));
+      }
     }
 
-    #cuenta .elemento { animation-name: balancear; }
-    #plan .elemento { animation-name: pulso-musical; }
+    #cuenta .elemento {
+      animation-name: balancear;
+    }
+
+    #plan .elemento {
+      animation-name: pulso-musical;
+    }
+
     #recomendaciones .elemento,
-    #final .elemento { animation-name: brillo; }
+    #final .elemento {
+      animation-name: brillo;
+    }
 
     .tarjeta {
       position: relative;
-      z-index: 5;
+      z-index: 9;
       width: min(88vw, 680px);
       padding: clamp(28px, 4vw, 48px);
       overflow: hidden;
@@ -310,7 +353,10 @@
       transition: transform .2s ease, box-shadow .2s ease;
     }
 
-    .boton:hover { transform: translateY(-2px); }
+    .boton:hover {
+      transform: translateY(-2px);
+    }
+
     .boton:active {
       transform: translateY(5px);
       box-shadow: 0 4px 0 #1f302a, 0 9px 17px rgba(47, 73, 63, .2);
@@ -466,7 +512,9 @@
       font-size: 1rem;
     }
 
-    body:not(.invitacion-abierta) .musica { display: none; }
+    body:not(.invitacion-abierta) .musica {
+      display: none;
+    }
 
     .entrada {
       position: fixed;
@@ -480,12 +528,21 @@
         linear-gradient(rgba(30, 47, 39, .2), rgba(19, 31, 25, .58)),
         url("assets/fondos/fondo01.webp") center/cover no-repeat;
       opacity: 0;
-      transition: opacity .65s ease;
+      transition:
+        opacity .65s ease,
+        visibility .65s ease;
       touch-action: none;
     }
 
-    body.fondo-listo .entrada { opacity: 1; }
-    .entrada.oculta { display: none; }
+    body.fondo-listo .entrada {
+      opacity: 1;
+    }
+
+    .entrada.oculta {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
 
     .entrada-contenido {
       width: min(88vw, 510px);
@@ -546,8 +603,17 @@
     }
 
     @keyframes subir-luz {
-      from { translate: 0 35px; scale: .55; opacity: .95; }
-      to { translate: var(--desvio) -110px; scale: 1.25; opacity: 0; }
+      from {
+        translate: 0 35px;
+        scale: .55;
+        opacity: .95;
+      }
+
+      to {
+        translate: var(--desvio) -110px;
+        scale: 1.25;
+        opacity: 0;
+      }
     }
 
     @media (max-width: 600px) {
@@ -556,78 +622,152 @@
       }
 
       .tarjeta {
-        width: min(87vw, 680px);
+        z-index: 9;
+        width: min(86vw, 510px);
         padding: 24px 20px;
         border-radius: 6px 34px 6px 34px;
       }
 
-      h1 { font-size: clamp(2.65rem, 13vw, 4.3rem); }
-      h2 { font-size: clamp(2.05rem, 10vw, 3.25rem); }
-      .descripcion { font-size: .95rem; line-height: 1.52; }
-      .contador { gap: 6px; }
-      .tiempo { padding: 12px 3px 9px; }
-      .tiempo strong { font-size: clamp(1.45rem, 7vw, 2rem); }
-      .tiempo span { font-size: .55rem; }
-      .datos { gap: 8px; }
-      .dato { padding: 12px 8px; }
+      .capa-assets {
+        z-index: 11;
+      }
+
+      .elemento {
+        z-index: 11 !important;
+        max-width: 46vw;
+        max-height: 27vh;
+      }
+
+      .tarjeta>* {
+        position: relative;
+        z-index: 12;
+      }
+
+      h1 {
+        font-size: clamp(2.65rem, 13vw, 4.3rem);
+      }
+
+      h2 {
+        font-size: clamp(2.05rem, 10vw, 3.25rem);
+      }
+
+      .descripcion {
+        font-size: .95rem;
+        line-height: 1.52;
+      }
+
+      .contador {
+        gap: 6px;
+      }
+
+      .tiempo {
+        padding: 12px 3px 9px;
+      }
+
+      .tiempo strong {
+        font-size: clamp(1.45rem, 7vw, 2rem);
+      }
+
+      .tiempo span {
+        font-size: .55rem;
+      }
+
+      .datos {
+        gap: 8px;
+      }
+
+      .dato {
+        padding: 12px 8px;
+      }
+
       .lista-plan,
-      .lista-recomendaciones { gap: 7px; }
+      .lista-recomendaciones {
+        justify-content: center;
+        gap: 7px;
+        text-align: center;
+      }
+
       .paso,
-      .recomendacion { padding: 10px 13px; font-size: .88rem; }
+      .recomendacion {
+        width: fit-content;
+        max-width: 100%;
+        padding: 10px 13px;
+        font-size: .88rem;
+        text-align: center;
+      }
 
-      /* TARJETA 2: bebidas */
+      /* TARJETA 2: elemento02 — bebidas */
       #cuenta .elemento {
-        --x: 17% !important;
-        --y: 77% !important;
-        --tamano: min(34vw, 170px) !important;
+        --x: 15% !important;
+        --y: 81% !important;
+        --tamano: min(29vw, 145px) !important;
       }
 
-      /* TARJETA 3: mantas y farol */
+      /* TARJETA 3: elemento06 — canasta con mantas */
       #detalles .elemento {
-        --x: 83% !important;
-        --y: 79% !important;
-        --tamano: min(36vw, 180px) !important;
+        --x: 85% !important;
+        --y: 82% !important;
+        --tamano: min(31vw, 155px) !important;
       }
 
-      /* TARJETA 4: guitarra y bocina */
+      /* TARJETA 4: elemento03 — guitarra y bocina */
       #plan .elemento {
-        --x: 17% !important;
+        --x: 15% !important;
         --y: 28% !important;
-        --tamano: min(34vw, 170px) !important;
+        --tamano: min(27vw, 140px) !important;
       }
 
-      /* TARJETA 5: tabla de botanas */
+      /* TARJETA 5: elemento05 — tabla de botanas */
       #mesa .elemento {
-        --x: 83% !important;
-        --y: 80% !important;
-        --tamano: min(38vw, 190px) !important;
+        --x: 84% !important;
+        --y: 82% !important;
+        --tamano: min(35vw, 175px) !important;
       }
 
-      /* TARJETA 6: guirnalda */
+      /* TARJETA 6: elemento04 — guirnalda */
       #recomendaciones .elemento {
         --x: 50% !important;
-        --y: 14% !important;
-        --tamano: min(78vw, 390px) !important;
+        --y: 15% !important;
+        --tamano: min(76vw, 380px) !important;
+        max-width: 76vw;
+        max-height: 18vh;
       }
 
-      /* TARJETA 7: brindis */
+      /* TARJETA 7: elemento07 — brindis */
       #final .elemento {
         --x: 50% !important;
-        --y: 24% !important;
-        --tamano: min(48vw, 240px) !important;
+        --y: 21% !important;
+        --tamano: min(40vw, 205px) !important;
+        max-width: 40vw;
+        max-height: 23vh;
       }
     }
 
     @media (max-height: 690px) {
-      .tarjeta { padding-block: 20px; }
-      .descripcion { margin-top: 12px; line-height: 1.42; }
-      .separador { margin-block: 14px; }
-      .boton { margin-top: 15px; }
+      .tarjeta {
+        padding-block: 20px;
+      }
+
+      .descripcion {
+        margin-top: 12px;
+        line-height: 1.42;
+      }
+
+      .separador {
+        margin-block: 14px;
+      }
+
+      .boton {
+        margin-top: 15px;
+      }
+
       .contador,
       .datos,
       .lista-plan,
       .lista-recomendaciones,
-      .menu { margin-top: 15px; }
+      .menu {
+        margin-top: 15px;
+      }
     }
   </style>
 </head>
@@ -652,8 +792,9 @@
       <article class="tarjeta">
         <span class="etiqueta">Tarde entre amigos</span>
         <h1>Nos vemos <span class="acento">en casa</span></h1>
-        <p class="anfitrion"><span data-nombre>Daniel</span> te invita</p>
-        <p class="descripcion">Una reunión pequeña, una mesa compartida y el pretexto perfecto para volver a encontrarnos.</p>
+        <p class="anfitrion"><span data-nombre>Mariana</span> te invita</p>
+        <p class="descripcion">Una reunión pequeña, una mesa compartida y el pretexto perfecto para volver a
+          encontrarnos.</p>
         <div class="separador">◆</div>
         <button class="boton siguiente" type="button">Pasa, estás en tu casa <span>→</span></button>
       </article>
@@ -663,7 +804,8 @@
       <img class="fondo" src="assets/fondos/fondo02.webp" alt="" loading="lazy">
       <div class="velo"></div>
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento02.png" alt="" style="--x: 16%; --y: 78%; --tamano: clamp(170px, 20vw, 310px); --giro: -3deg;">
+        <img class="elemento" src="assets/elementos/elemento02.png" alt=""
+          style="--x: 17%; --y: 80%; --tamano: clamp(150px, 16vw, 250px); --giro: -3deg;">
       </div>
       <article class="tarjeta">
         <span class="etiqueta">Ya falta poco</span>
@@ -683,7 +825,8 @@
       <img class="fondo" src="assets/fondos/fondo03.webp" alt="" loading="lazy">
       <div class="velo"></div>
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento06.png" alt="" style="--x: 84%; --y: 79%; --tamano: clamp(190px, 24vw, 370px);">
+        <img class="elemento" src="assets/elementos/elemento06.png" alt=""
+          style="--x: 83%; --y: 80%; --tamano: clamp(160px, 18vw, 280px);">
       </div>
       <article class="tarjeta">
         <span class="etiqueta">Dónde y cuándo</span>
@@ -691,7 +834,7 @@
         <div class="datos">
           <div class="dato"><i>📅</i><small>Fecha</small><strong data-fecha>Sábado 18 de julio</strong></div>
           <div class="dato"><i>🕓</i><small>Hora</small><strong data-hora>5:00 p. m.</strong></div>
-          <div class="dato"><i>🏡</i><small>Lugar</small><strong data-lugar>Casa de Daniel</strong></div>
+          <div class="dato"><i>🏡</i><small>Lugar</small><strong data-lugar>Casa de Mariana</strong></div>
           <div class="dato"><i>📍</i><small>Ciudad</small><strong data-ciudad>Cadereyta, Nuevo León</strong></div>
         </div>
         <button class="boton siguiente" type="button">Conocer el plan <span>→</span></button>
@@ -702,7 +845,8 @@
       <img class="fondo" src="assets/fondos/fondo04.webp" alt="" loading="lazy">
       <div class="velo"></div>
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento03.png" alt="" style="--x: 16%; --y: 28%; --tamano: clamp(190px, 24vw, 380px); --giro: -4deg;">
+        <img class="elemento" src="assets/elementos/elemento03.png" alt=""
+          style="--x: 17%; --y: 28%; --tamano: clamp(160px, 18vw, 285px); --giro: -4deg;">
       </div>
       <article class="tarjeta">
         <span class="etiqueta">Sin horarios complicados</span>
@@ -722,7 +866,8 @@
       <img class="fondo" src="assets/fondos/fondo05.webp" alt="" loading="lazy">
       <div class="velo"></div>
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento05.png" alt="" style="--x: 84%; --y: 79%; --tamano: clamp(210px, 27vw, 430px); --giro: 2deg;">
+        <img class="elemento" src="assets/elementos/elemento05.png" alt=""
+          style="--x: 83%; --y: 81%; --tamano: clamp(180px, 20vw, 320px); --giro: 2deg;">
       </div>
       <article class="tarjeta">
         <span class="etiqueta">Algo para compartir</span>
@@ -742,7 +887,8 @@
       <img class="fondo" src="assets/fondos/fondo06.webp" alt="" loading="lazy">
       <div class="velo"></div>
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento04.png" alt="" style="--x: 50%; --y: 14%; --tamano: min(68vw, 760px);">
+        <img class="elemento" src="assets/elementos/elemento04.png" alt=""
+          style="--x: 50%; --y: 14%; --tamano: min(54vw, 620px);">
       </div>
       <article class="tarjeta">
         <span class="etiqueta">Para disfrutar mejor</span>
@@ -761,12 +907,14 @@
       <img class="fondo" src="assets/fondos/fondo07.webp" alt="" loading="lazy">
       <div class="velo"></div>
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento07.png" alt="" style="--x: 50%; --y: 23%; --tamano: clamp(230px, 31vw, 480px);">
+        <img class="elemento" src="assets/elementos/elemento07.png" alt=""
+          style="--x: 50%; --y: 21%; --tamano: clamp(180px, 22vw, 340px);">
       </div>
       <article class="tarjeta">
         <span class="etiqueta">La mejor parte</span>
         <h2>Brindar <span class="acento">juntos</span></h2>
-        <p class="descripcion">La casa ya está lista. Solo falta tu compañía para que la tarde se convierta en un buen recuerdo.</p>
+        <p class="descripcion">La casa ya está lista. Solo falta tu compañía para que la tarde se convierta en un buen
+          recuerdo.</p>
         <p class="anfitrion">Te esperamos</p>
         <div class="separador">◆</div>
         <button class="boton" id="volver-inicio" type="button">Volver al inicio <span>↺</span></button>
@@ -774,7 +922,8 @@
     </section>
   </main>
 
-  <button class="control musica" id="musica" type="button" aria-label="Reproducir música" aria-pressed="false">▶</button>
+  <button class="control musica" id="musica" type="button" aria-label="Reproducir música"
+    aria-pressed="false">▶</button>
   <div class="transicion" id="transicion" aria-hidden="true"></div>
   <audio id="audio" loop preload="metadata">
     <source src="assets/audio/audio01.mp3" type="audio/mpeg">
@@ -782,10 +931,10 @@
 
   <script>
     const CONFIG = {
-      nombre: "Daniel",
+      nombre: "Mariana",
       fechaTexto: "Sábado 18 de julio",
       horaTexto: "5:00 p. m.",
-      lugar: "Casa de Daniel",
+      lugar: "Casa de Mariana",
       ciudad: "Cadereyta, Nuevo León",
       fechaEvento: "2027-07-18T17:00:00-06:00"
     };
@@ -858,10 +1007,15 @@
       document.body.classList.add("invitacion-abierta");
       irA(0, false);
       $("#entrada").classList.add("oculta");
-      escenas.forEach(escena => escena.classList.remove("activa"));
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => escenas[0].classList.add("activa"));
+      indiceActivo = 0;
+
+      escenas.forEach((escena, indice) => {
+        escena.classList.toggle("activa", indice === 0);
       });
+
+      escenas[0].classList.remove("activa");
+      void escenas[0].offsetWidth;
+      escenas[0].classList.add("activa");
 
       try {
         await audio.play();
@@ -958,4 +1112,5 @@
     window.addEventListener("pageshow", actualizarAltoPantalla);
   </script>
 </body>
+
 </html>
