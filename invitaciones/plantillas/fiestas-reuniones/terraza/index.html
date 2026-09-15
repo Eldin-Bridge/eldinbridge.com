@@ -512,9 +512,13 @@
     }
 
     .musica {
+      top: max(17px, env(safe-area-inset-top));
       right: max(17px, env(safe-area-inset-right));
-      bottom: max(17px, env(safe-area-inset-bottom));
-      width: 50px;
+      bottom: auto;
+      width: 46px;
+      height: 46px;
+      min-height: 46px;
+      padding: 0;
       border-radius: 50%;
       cursor: pointer;
       font-size: 1rem;
