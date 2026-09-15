@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -11,8 +12,7 @@
 
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  >
+    rel="stylesheet">
 
   <link rel="preload" as="image" href="assets/fondos/fondo01.webp">
 
@@ -24,8 +24,8 @@
       --texto: #667069;
       --terracota: #b85f43;
       --terracota-oscuro: #82412f;
-      --salvia: #748b78;
-      --salvia-claro: #dfe6dc;
+      --salvia: #70889a;
+      --salvia-claro: #e2e9ed;
       --sombra: 0 24px 65px rgba(27, 30, 25, .34);
     }
 
@@ -97,10 +97,7 @@
       place-items: center;
       overflow: hidden;
       padding:
-        max(76px, env(safe-area-inset-top))
-        max(24px, env(safe-area-inset-right))
-        max(28px, env(safe-area-inset-bottom))
-        max(24px, env(safe-area-inset-left));
+        max(76px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(28px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
       scroll-snap-align: start;
       scroll-snap-stop: always;
       isolation: isolate;
@@ -132,17 +129,13 @@
       inset: 0;
       z-index: -4;
       background:
-        linear-gradient(
-          180deg,
+        linear-gradient(180deg,
           rgba(20, 30, 25, .08),
           rgba(22, 30, 26, .28) 56%,
-          rgba(14, 21, 18, .6)
-        ),
-        radial-gradient(
-          circle at 50% 43%,
+          rgba(14, 21, 18, .6)),
+        radial-gradient(circle at 50% 43%,
           transparent 15%,
-          rgba(21, 29, 25, .18)
-        );
+          rgba(21, 29, 25, .18));
     }
 
     .capa-assets {
@@ -160,12 +153,9 @@
       max-width: none;
       user-select: none;
       transform:
-        translate(-50%, -50%)
-        rotate(var(--giro, 0deg));
+        translate(-50%, -50%) rotate(var(--giro, 0deg));
       transform-origin: center;
-      filter: drop-shadow(
-        0 15px 17px rgba(25, 24, 18, .34)
-      );
+      filter: drop-shadow(0 15px 17px rgba(25, 24, 18, .34));
       animation: flotar 4.5s ease-in-out infinite;
     }
 
@@ -174,6 +164,7 @@
     }
 
     @keyframes flotar {
+
       0%,
       100% {
         translate: 0 0;
@@ -187,6 +178,7 @@
     }
 
     @keyframes balancear {
+
       0%,
       100% {
         translate: 0 0;
@@ -200,6 +192,7 @@
     }
 
     @keyframes pulso {
+
       0%,
       100% {
         translate: 0 0;
@@ -248,7 +241,7 @@
       z-index: -1;
       border: 1px solid rgba(255, 250, 240, .32);
       border-radius: 34px;
-      background: rgba(116, 139, 120, .38);
+      background: rgba(112, 136, 154, .42);
       transform: rotate(-1.2deg);
       pointer-events: none;
     }
@@ -262,11 +255,9 @@
       height: 48px;
       border-radius: 50%;
       background:
-        radial-gradient(
-          circle,
+        radial-gradient(circle,
           rgba(184, 95, 67, .15) 0 3px,
-          transparent 4px
-        ) 0 0 / 12px 12px;
+          transparent 4px) 0 0 / 12px 12px;
       pointer-events: none;
     }
 
@@ -394,7 +385,7 @@
     .tiempo {
       padding: 14px 5px 11px;
       text-align: center;
-      background: rgba(223, 230, 220, .68);
+      background: rgba(226, 233, 237, .72);
       border-radius: 18px;
     }
 
@@ -431,7 +422,7 @@
       place-items: center;
       text-align: center;
       background: rgba(255, 255, 255, .52);
-      border: 1px solid rgba(116, 139, 120, .18);
+      border: 1px solid rgba(112, 136, 154, .22);
       border-radius: 22px;
     }
 
@@ -509,7 +500,7 @@
       line-height: 1.35;
       text-align: center;
       list-style: none;
-      background: rgba(223, 230, 220, .58);
+      background: rgba(226, 233, 237, .64);
       border-radius: 999px;
     }
 
@@ -562,12 +553,9 @@
       place-items: center;
       padding: 24px;
       background:
-        linear-gradient(
-          rgba(23, 34, 28, .26),
-          rgba(19, 27, 23, .64)
-        ),
-        url("assets/fondos/fondo01.webp")
-        center/cover no-repeat;
+        linear-gradient(rgba(23, 34, 28, .26),
+          rgba(19, 27, 23, .64)),
+        url("assets/fondos/fondo01.webp") center/cover no-repeat;
       opacity: 0;
       visibility: visible;
       transition:
@@ -601,8 +589,7 @@
       transform: translateY(17px) scale(.98);
       transition:
         opacity .5s .16s ease-out,
-        transform .7s .16s
-        cubic-bezier(.22, .8, .32, 1);
+        transform .7s .16s cubic-bezier(.22, .8, .32, 1);
     }
 
     .entrada-contenido::before {
@@ -626,9 +613,7 @@
       object-fit: contain;
       margin-bottom: 8px;
       filter:
-        drop-shadow(
-          0 10px 12px rgba(52, 39, 25, .22)
-        );
+        drop-shadow(0 10px 12px rgba(52, 39, 25, .22));
       animation: flotar 4.5s ease-in-out infinite;
     }
 
@@ -670,8 +655,7 @@
       to {
         opacity: 0;
         transform:
-          translate(var(--dx), -105px)
-          scale(.2);
+          translate(var(--dx), -105px) scale(.2);
       }
     }
 
@@ -701,7 +685,7 @@
         max-height: 27vh;
       }
 
-      .tarjeta > * {
+      .tarjeta>* {
         position: relative;
         z-index: 12;
       }
@@ -862,20 +846,11 @@
 </head>
 
 <body>
-  <audio
-    id="audio"
-    src="assets/audio/audio01.mp3"
-    loop
-    preload="metadata"
-  ></audio>
+  <audio id="audio" src="assets/audio/audio01.mp3" loop preload="metadata"></audio>
 
   <div class="entrada" id="entrada">
     <div class="entrada-contenido">
-      <img
-        class="entrada-icono"
-        src="assets/elementos/elemento01.png"
-        alt=""
-      >
+      <img class="entrada-icono" src="assets/elementos/elemento01.png" alt="">
 
       <span class="etiqueta">
         La casa está lista
@@ -891,41 +866,23 @@
         la música y una buena conversación.
       </p>
 
-      <button
-        class="boton"
-        id="entrar"
-        type="button"
-      >
+      <button class="boton" id="entrar" type="button">
         Abrir invitación <span>→</span>
       </button>
     </div>
   </div>
 
-  <a
-    class="control salir"
-    href="../../../#fiestas-reuniones"
-    aria-label="Salir de la invitación"
-  >
+  <a class="control salir" href="../../../#fiestas-reuniones" aria-label="Salir de la invitación">
     Salir
   </a>
 
-  <button
-    class="control musica"
-    id="musica"
-    type="button"
-    aria-label="Pausar música"
-    aria-pressed="true"
-  >
+  <button class="control musica" id="musica" type="button" aria-label="Pausar música" aria-pressed="true">
     Ⅱ
   </button>
 
   <main id="invitacion">
     <section class="escena activa" id="inicio">
-      <img
-        class="fondo"
-        src="assets/fondos/fondo01.webp"
-        alt=""
-      >
+      <img class="fondo" src="assets/fondos/fondo01.webp" alt="">
 
       <div class="velo"></div>
 
@@ -950,37 +907,24 @@
 
         <div class="separador">✦</div>
 
-        <button
-          class="boton siguiente"
-          type="button"
-        >
+        <button class="boton siguiente" type="button">
           Conocer los detalles <span>→</span>
         </button>
       </article>
     </section>
 
     <section class="escena" id="cuenta">
-      <img
-        class="fondo"
-        src="assets/fondos/fondo02.webp"
-        alt=""
-        loading="lazy"
-      >
+      <img class="fondo" src="assets/fondos/fondo02.webp" alt="" loading="lazy">
 
       <div class="velo"></div>
 
       <div class="capa-assets">
-        <img
-          class="elemento"
-          src="assets/elementos/elemento02.png"
-          alt=""
-          style="
+        <img class="elemento" src="assets/elementos/elemento02.png" alt="" style="
             --x: 17%;
             --y: 80%;
             --tamano: clamp(145px, 16vw, 245px);
             --giro: -3deg;
-          "
-        >
+          ">
       </div>
 
       <article class="tarjeta">
@@ -998,10 +942,7 @@
           preparando todo.
         </p>
 
-        <div
-          class="contador"
-          aria-label="Cuenta regresiva"
-        >
+        <div class="contador" aria-label="Cuenta regresiva">
           <div class="tiempo">
             <strong id="dias">00</strong>
             <span>Días</span>
@@ -1023,36 +964,23 @@
           </div>
         </div>
 
-        <button
-          class="boton siguiente"
-          type="button"
-        >
+        <button class="boton siguiente" type="button">
           Dónde nos vemos <span>→</span>
         </button>
       </article>
     </section>
 
     <section class="escena" id="detalles">
-      <img
-        class="fondo"
-        src="assets/fondos/fondo03.webp"
-        alt=""
-        loading="lazy"
-      >
+      <img class="fondo" src="assets/fondos/fondo03.webp" alt="" loading="lazy">
 
       <div class="velo"></div>
 
       <div class="capa-assets">
-        <img
-          class="elemento"
-          src="assets/elementos/elemento06.png"
-          alt=""
-          style="
+        <img class="elemento" src="assets/elementos/elemento06.png" alt="" style="
             --x: 83%;
             --y: 80%;
             --tamano: clamp(155px, 18vw, 275px);
-          "
-        >
+          ">
       </div>
 
       <article class="tarjeta">
@@ -1100,19 +1028,7 @@
         </div>
 
         <div class="acciones-datos">
-          <a
-            class="boton-ubicacion"
-            data-ubicacion
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Ver ubicación <span>↗</span>
-          </a>
-
-          <button
-            class="boton siguiente"
-            type="button"
-          >
+          <button class="boton siguiente" type="button">
             Ver el plan <span>→</span>
           </button>
         </div>
@@ -1120,27 +1036,17 @@
     </section>
 
     <section class="escena" id="plan">
-      <img
-        class="fondo"
-        src="assets/fondos/fondo04.webp"
-        alt=""
-        loading="lazy"
-      >
+      <img class="fondo" src="assets/fondos/fondo04.webp" alt="" loading="lazy">
 
       <div class="velo"></div>
 
       <div class="capa-assets">
-        <img
-          class="elemento"
-          src="assets/elementos/elemento03.png"
-          alt=""
-          style="
+        <img class="elemento" src="assets/elementos/elemento03.png" alt="" style="
             --x: 17%;
             --y: 28%;
             --tamano: clamp(155px, 18vw, 280px);
             --giro: -4deg;
-          "
-        >
+          ">
       </div>
 
       <article class="tarjeta">
@@ -1180,37 +1086,24 @@
           </li>
         </ul>
 
-        <button
-          class="boton siguiente"
-          type="button"
-        >
+        <button class="boton siguiente" type="button">
           Pasar a la mesa <span>→</span>
         </button>
       </article>
     </section>
 
     <section class="escena" id="mesa">
-      <img
-        class="fondo"
-        src="assets/fondos/fondo05.webp"
-        alt=""
-        loading="lazy"
-      >
+      <img class="fondo" src="assets/fondos/fondo05.webp" alt="" loading="lazy">
 
       <div class="velo"></div>
 
       <div class="capa-assets">
-        <img
-          class="elemento"
-          src="assets/elementos/elemento05.png"
-          alt=""
-          style="
+        <img class="elemento" src="assets/elementos/elemento05.png" alt="" style="
             --x: 83%;
             --y: 81%;
             --tamano: clamp(175px, 20vw, 315px);
             --giro: 2deg;
-          "
-        >
+          ">
       </div>
 
       <article class="tarjeta">
@@ -1235,39 +1128,23 @@
           <span>🍰 Algo dulce</span>
         </div>
 
-        <button
-          class="boton siguiente"
-          type="button"
-        >
+        <button class="boton siguiente" type="button">
           Antes de venir <span>→</span>
         </button>
       </article>
     </section>
 
-    <section
-      class="escena"
-      id="recomendaciones"
-    >
-      <img
-        class="fondo"
-        src="assets/fondos/fondo06.webp"
-        alt=""
-        loading="lazy"
-      >
+    <section class="escena" id="recomendaciones">
+      <img class="fondo" src="assets/fondos/fondo06.webp" alt="" loading="lazy">
 
       <div class="velo"></div>
 
       <div class="capa-assets">
-        <img
-          class="elemento"
-          src="assets/elementos/elemento04.png"
-          alt=""
-          style="
+        <img class="elemento" src="assets/elementos/elemento04.png" alt="" style="
             --x: 17%;
             --y: 81%;
             --tamano: clamp(175px, 22vw, 335px);
-          "
-        >
+          ">
       </div>
 
       <article class="tarjeta">
@@ -1307,36 +1184,23 @@
           </li>
         </ul>
 
-        <button
-          class="boton siguiente"
-          type="button"
-        >
+        <button class="boton siguiente" type="button">
           Ir al brindis <span>→</span>
         </button>
       </article>
     </section>
 
     <section class="escena" id="final">
-      <img
-        class="fondo"
-        src="assets/fondos/fondo07.webp"
-        alt=""
-        loading="lazy"
-      >
+      <img class="fondo" src="assets/fondos/fondo07.webp" alt="" loading="lazy">
 
       <div class="velo"></div>
 
       <div class="capa-assets">
-        <img
-          class="elemento"
-          src="assets/elementos/elemento07.png"
-          alt=""
-          style="
+        <img class="elemento" src="assets/elementos/elemento07.png" alt="" style="
             --x: 50%;
             --y: 21%;
             --tamano: clamp(175px, 22vw, 335px);
-          "
-        >
+          ">
       </div>
 
       <article class="tarjeta">
@@ -1361,33 +1225,20 @@
 
         <div class="separador">✦</div>
 
-        <a
-          class="boton-ubicacion"
-          data-ubicacion
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a class="boton-ubicacion" data-ubicacion target="_blank" rel="noopener noreferrer">
           Ver ubicación <span>↗</span>
         </a>
 
         <br>
 
-        <button
-          class="boton"
-          id="volver-inicio"
-          type="button"
-        >
+        <button class="boton" id="volver-inicio" type="button">
           Volver al inicio <span>↺</span>
         </button>
       </article>
     </section>
   </main>
 
-  <div
-    class="particulas"
-    id="particulas"
-    aria-hidden="true"
-  ></div>
+  <div class="particulas" id="particulas" aria-hidden="true"></div>
 
   <script>
     const CONFIG = {
@@ -1748,7 +1599,7 @@
           ) {
             imagen
               .decode()
-              .catch(() => {});
+              .catch(() => { });
           }
         });
     }
@@ -1884,4 +1735,5 @@
     );
   </script>
 </body>
+
 </html>
