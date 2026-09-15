@@ -1,31 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#2f493f">
+  <meta name="theme-color" content="#6f4435">
   <title>Una tarde en casa</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link
-    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap"
-    rel="stylesheet">
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
   <link rel="preload" as="image" href="assets/fondos/fondo01.webp">
 
   <style>
     :root {
-      --alto-pantalla: 100vh;
-      --crema: #fff8eb;
-      --papel: rgba(255, 250, 239, .94);
-      --terracota: #bd6644;
-      --terracota-oscuro: #8c432d;
-      --salvia: #738b78;
-      --verde: #2f493f;
-      --tinta: #29342f;
-      --azul: #567283;
-      --ambar: #e5ad62;
-      --sombra: 0 26px 70px rgba(25, 27, 22, .34);
+      --alto: 100vh;
+      --papel: rgba(255, 250, 240, .94);
+      --tinta: #34413b;
+      --texto: #667069;
+      --terracota: #b85f43;
+      --terracota-oscuro: #82412f;
+      --salvia: #748b78;
+      --salvia-claro: #dfe6dc;
+      --sombra: 0 24px 65px rgba(27, 30, 25, .34);
     }
 
     * {
@@ -40,12 +41,12 @@
       min-width: 320px;
       height: 100%;
       overflow: hidden;
-      background: #101714;
+      background: #151b18;
     }
 
     body {
-      color: var(--crema);
-      font-family: "DM Sans", "Segoe UI", sans-serif;
+      color: #fffaf0;
+      font-family: Manrope, "Segoe UI", sans-serif;
     }
 
     button,
@@ -65,7 +66,7 @@
     main {
       display: flex;
       width: 100%;
-      height: var(--alto-pantalla);
+      height: var(--alto);
       overflow-x: auto;
       overflow-y: hidden;
       scroll-behavior: smooth;
@@ -91,11 +92,15 @@
       flex: 0 0 100%;
       width: 100%;
       min-width: 100%;
-      height: var(--alto-pantalla);
-      min-height: var(--alto-pantalla);
+      height: var(--alto);
+      min-height: var(--alto);
       place-items: center;
       overflow: hidden;
-      padding: max(76px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(28px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
+      padding:
+        max(76px, env(safe-area-inset-top))
+        max(24px, env(safe-area-inset-right))
+        max(28px, env(safe-area-inset-bottom))
+        max(24px, env(safe-area-inset-left));
       scroll-snap-align: start;
       scroll-snap-stop: always;
       isolation: isolate;
@@ -109,8 +114,8 @@
       height: 100%;
       object-fit: cover;
       object-position: center;
-      filter: saturate(.86) brightness(.68);
-      transform: scale(1.055);
+      filter: saturate(.84) brightness(.64);
+      transform: scale(1.06);
       transition:
         transform 1.1s cubic-bezier(.22, .8, .32, 1),
         filter 1.1s ease;
@@ -118,7 +123,7 @@
     }
 
     .escena.activa .fondo {
-      filter: saturate(.93) brightness(.76);
+      filter: saturate(.94) brightness(.73);
       transform: scale(1.025);
     }
 
@@ -127,8 +132,17 @@
       inset: 0;
       z-index: -4;
       background:
-        linear-gradient(180deg, rgba(18, 31, 26, .08), rgba(19, 28, 24, .25) 48%, rgba(13, 22, 18, .55)),
-        radial-gradient(circle at 50% 45%, transparent 18%, rgba(19, 29, 25, .16));
+        linear-gradient(
+          180deg,
+          rgba(20, 30, 25, .08),
+          rgba(22, 30, 26, .28) 56%,
+          rgba(14, 21, 18, .6)
+        ),
+        radial-gradient(
+          circle at 50% 43%,
+          transparent 15%,
+          rgba(21, 29, 25, .18)
+        );
     }
 
     .capa-assets {
@@ -145,10 +159,14 @@
       width: var(--tamano);
       max-width: none;
       user-select: none;
-      transform: translate(-50%, -50%) rotate(var(--giro, 0deg));
+      transform:
+        translate(-50%, -50%)
+        rotate(var(--giro, 0deg));
       transform-origin: center;
-      filter: drop-shadow(0 15px 16px rgba(28, 25, 18, .3));
-      animation: flotar 4.2s ease-in-out infinite;
+      filter: drop-shadow(
+        0 15px 17px rgba(25, 24, 18, .34)
+      );
+      animation: flotar 4.5s ease-in-out infinite;
     }
 
     .escena:not(.activa) .elemento {
@@ -156,7 +174,6 @@
     }
 
     @keyframes flotar {
-
       0%,
       100% {
         translate: 0 0;
@@ -164,13 +181,12 @@
       }
 
       50% {
-        translate: 0 -12px;
+        translate: 0 -11px;
         rotate: 2deg;
       }
     }
 
     @keyframes balancear {
-
       0%,
       100% {
         translate: 0 0;
@@ -183,24 +199,7 @@
       }
     }
 
-    @keyframes pulso-musical {
-
-      0%,
-      100% {
-        translate: 0 0;
-        scale: 1;
-        rotate: -1deg;
-      }
-
-      50% {
-        translate: 0 -9px;
-        scale: 1.035;
-        rotate: 2deg;
-      }
-    }
-
-    @keyframes brillo {
-
+    @keyframes pulso {
       0%,
       100% {
         translate: 0 0;
@@ -208,7 +207,7 @@
       }
 
       50% {
-        translate: 0 -9px;
+        translate: 0 -8px;
         scale: 1.025;
       }
     }
@@ -218,186 +217,202 @@
     }
 
     #plan .elemento {
-      animation-name: pulso-musical;
-    }
-
-    #recomendaciones .elemento,
-    #final .elemento {
-      animation-name: brillo;
+      animation-name: pulso;
     }
 
     .tarjeta {
       position: relative;
       z-index: 9;
-      width: min(88vw, 680px);
-      padding: clamp(28px, 4vw, 48px);
-      overflow: hidden;
+      width: min(87vw, 660px);
+      padding: clamp(31px, 4.2vw, 50px);
       color: var(--tinta);
       text-align: center;
       background: var(--papel);
-      border: 1px solid rgba(255, 255, 255, .72);
-      border-radius: 8px 52px 8px 52px;
+      border: 1px solid rgba(255, 255, 255, .74);
+      border-radius: 34px;
       box-shadow: var(--sombra);
+      backdrop-filter: blur(11px);
+      -webkit-backdrop-filter: blur(11px);
       opacity: 0;
-      transform: translateX(24px) scale(.975);
+      transform: translateX(28px) scale(.97);
       transition:
-        opacity .44s ease-out,
-        transform .66s cubic-bezier(.22, .78, .28, 1);
+        opacity .52s ease-out,
+        transform .72s cubic-bezier(.22, .8, .32, 1);
       will-change: transform, opacity;
-    }
-
-    .escena.activa .tarjeta {
-      opacity: 1;
-      transform: translateX(0) scale(1);
     }
 
     .tarjeta::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 12%;
-      width: 76%;
-      height: 4px;
-      background: linear-gradient(90deg, transparent, var(--terracota), var(--ambar), transparent);
+      inset: 10px -10px -10px 10px;
+      z-index: -1;
+      border: 1px solid rgba(255, 250, 240, .32);
+      border-radius: 34px;
+      background: rgba(116, 139, 120, .38);
+      transform: rotate(-1.2deg);
+      pointer-events: none;
+    }
+
+    .tarjeta::after {
+      content: "";
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background:
+        radial-gradient(
+          circle,
+          rgba(184, 95, 67, .15) 0 3px,
+          transparent 4px
+        ) 0 0 / 12px 12px;
+      pointer-events: none;
+    }
+
+    .escena.activa .tarjeta {
+      opacity: 1;
+      transform: none;
     }
 
     .etiqueta {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      margin-bottom: 17px;
-      padding: 8px 14px;
+      display: block;
+      margin-bottom: 14px;
       color: var(--terracota-oscuro);
-      font-size: .72rem;
-      font-weight: 700;
-      letter-spacing: .16em;
+      font-size: .67rem;
+      font-weight: 800;
+      letter-spacing: .2em;
+      text-align: center;
       text-transform: uppercase;
-      background: rgba(189, 102, 68, .09);
-      border: 1px solid rgba(189, 102, 68, .24);
-      border-radius: 999px;
-    }
-
-    .etiqueta::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      background: var(--terracota);
-      border-radius: 50%;
-      box-shadow: 0 0 0 5px rgba(189, 102, 68, .11);
     }
 
     h1,
     h2 {
-      font-family: "Fraunces", Georgia, serif;
-      font-weight: 600;
-      line-height: .98;
-      letter-spacing: -.035em;
+      font-family: "DM Serif Display", Georgia, serif;
+      font-weight: 400;
+      line-height: 1.02;
+      letter-spacing: -.025em;
+      text-align: center;
     }
 
     h1 {
-      font-size: clamp(3.1rem, 8vw, 6.3rem);
+      font-size: clamp(3rem, 7.5vw, 5.8rem);
     }
 
     h2 {
-      font-size: clamp(2.35rem, 6vw, 4.5rem);
+      font-size: clamp(2.35rem, 5.8vw, 4.25rem);
     }
 
     .acento {
-      color: var(--terracota);
-      font-style: italic;
+      position: relative;
+      display: inline-block;
+      color: var(--tinta);
+      font-style: normal;
+      z-index: 0;
+    }
+
+    .acento::after {
+      content: "";
+      position: absolute;
+      left: -2%;
+      right: -2%;
+      bottom: .05em;
+      z-index: -1;
+      height: .26em;
+      border-radius: 999px;
+      background: rgba(218, 139, 101, .48);
+      transform: rotate(-1.5deg);
     }
 
     .anfitrion {
       margin-top: 15px;
-      color: var(--verde);
-      font-family: "Fraunces", Georgia, serif;
-      font-size: clamp(1.35rem, 3vw, 2rem);
-      font-weight: 600;
+      color: var(--terracota-oscuro);
+      font-size: clamp(1.03rem, 2.3vw, 1.32rem);
+      font-weight: 800;
+      text-align: center;
     }
 
     .descripcion {
-      max-width: 540px;
-      margin: 19px auto 0;
-      color: #657069;
-      font-size: clamp(.98rem, 2.2vw, 1.16rem);
+      max-width: 525px;
+      margin: 18px auto 0;
+      color: var(--texto);
+      font-size: clamp(.95rem, 2vw, 1.1rem);
       line-height: 1.65;
+      text-align: center;
     }
 
     .separador {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin: 21px auto;
-      color: var(--terracota);
+      margin: 19px auto 0;
+      color: var(--salvia);
+      font-size: 1.25rem;
+      text-align: center;
     }
 
-    .separador::before,
-    .separador::after {
-      content: "";
-      width: 58px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, currentColor);
-    }
-
-    .separador::after {
-      background: linear-gradient(90deg, currentColor, transparent);
-    }
-
-    .boton {
+    .boton,
+    .boton-ubicacion {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      min-height: 52px;
-      margin-top: 22px;
-      padding: 13px 24px;
-      color: #fffaf0;
-      font-weight: 700;
-      background: var(--verde);
-      border-radius: 7px 20px 7px 20px;
-      box-shadow: 0 9px 0 #1f302a, 0 17px 26px rgba(47, 73, 63, .22);
+      gap: 9px;
+      min-height: 48px;
+      margin-top: 21px;
+      padding: 12px 22px;
+      color: #fffaf1;
+      font-size: .83rem;
+      font-weight: 800;
+      background: var(--terracota);
+      border: 1px solid rgba(130, 65, 47, .2);
+      border-radius: 999px;
+      box-shadow: 0 11px 24px rgba(130, 65, 47, .2);
       cursor: pointer;
-      transition: transform .2s ease, box-shadow .2s ease;
+      transition:
+        transform .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
     }
 
-    .boton:hover {
+    .boton:hover,
+    .boton-ubicacion:hover {
+      background: var(--terracota-oscuro);
       transform: translateY(-2px);
+      box-shadow:
+        0 14px 27px rgba(130, 65, 47, .25);
     }
 
-    .boton:active {
-      transform: translateY(5px);
-      box-shadow: 0 4px 0 #1f302a, 0 9px 17px rgba(47, 73, 63, .2);
+    .boton:active,
+    .boton-ubicacion:active {
+      transform: translateY(1px);
     }
 
     .contador {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-top: 25px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 9px;
+      margin-top: 24px;
     }
 
     .tiempo {
-      padding: 14px 7px 11px;
-      background: rgba(115, 139, 120, .1);
-      border: 1px solid rgba(47, 73, 63, .16);
-      border-radius: 5px 18px 5px 18px;
+      padding: 14px 5px 11px;
+      text-align: center;
+      background: rgba(223, 230, 220, .68);
+      border-radius: 18px;
     }
 
     .tiempo strong {
       display: block;
       color: var(--terracota-oscuro);
-      font-family: "Fraunces", Georgia, serif;
-      font-size: clamp(1.7rem, 5vw, 2.75rem);
+      font-family: "DM Serif Display", Georgia, serif;
+      font-size: clamp(1.7rem, 4.8vw, 2.7rem);
+      font-weight: 400;
       line-height: 1;
     }
 
     .tiempo span {
       display: block;
       margin-top: 5px;
-      color: #66736a;
-      font-size: .66rem;
-      font-weight: 700;
+      color: #67736c;
+      font-size: .58rem;
+      font-weight: 800;
       letter-spacing: .08em;
       text-transform: uppercase;
     }
@@ -405,127 +420,138 @@
     .datos {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 24px;
+      gap: 10px;
+      margin-top: 23px;
     }
 
     .dato {
-      padding: 16px 12px;
+      display: grid;
+      min-height: 104px;
+      padding: 13px 10px;
+      place-items: center;
       text-align: center;
-      background: rgba(86, 114, 131, .08);
-      border: 1px solid rgba(86, 114, 131, .18);
-      border-radius: 6px 20px 6px 20px;
+      background: rgba(255, 255, 255, .52);
+      border: 1px solid rgba(116, 139, 120, .18);
+      border-radius: 22px;
     }
 
-    .dato i,
-    .paso i,
-    .recomendacion i {
-      display: block;
-      margin-bottom: 7px;
-      font-size: 1.45rem;
+    .dato i {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 6px;
+      place-items: center;
+      font-size: 1rem;
       font-style: normal;
+      background: var(--salvia-claro);
+      border-radius: 50%;
     }
 
     .dato small {
       display: block;
       margin-bottom: 3px;
       color: var(--terracota-oscuro);
-      font-size: .63rem;
-      font-weight: 700;
+      font-size: .59rem;
+      font-weight: 800;
       letter-spacing: .12em;
       text-transform: uppercase;
     }
 
     .dato strong {
       display: block;
-      font-size: .92rem;
+      font-size: .84rem;
       line-height: 1.35;
     }
 
-    .lista-plan,
-    .lista-recomendaciones {
+    .acciones-datos {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
-      margin-top: 24px;
+      gap: 9px;
+      margin-top: 4px;
     }
 
-    .paso,
-    .recomendacion {
-      width: fit-content;
-      max-width: 100%;
-      padding: 13px 17px;
-      color: #4d5a53;
-      line-height: 1.35;
-      background: rgba(115, 139, 120, .1);
-      border: 1px solid rgba(115, 139, 120, .22);
-      border-radius: 7px 19px 7px 19px;
+    .acciones-datos .boton,
+    .acciones-datos .boton-ubicacion {
+      margin-top: 16px;
     }
 
-    .paso i,
-    .recomendacion i {
-      display: inline;
-      margin: 0 7px 0 0;
-      font-size: 1rem;
+    .boton-ubicacion {
+      color: var(--terracota-oscuro);
+      background: transparent;
+      border: 1px solid rgba(130, 65, 47, .38);
+      box-shadow: none;
     }
 
+    .boton-ubicacion:hover {
+      color: #fffaf1;
+    }
+
+    .lista,
     .menu {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 9px;
-      margin-top: 23px;
+      max-width: 540px;
+      margin: 23px auto 0;
+      text-align: center;
     }
 
+    .lista li,
     .menu span {
       width: fit-content;
-      padding: 9px 14px;
-      color: var(--terracota-oscuro);
+      max-width: 100%;
+      padding: 10px 15px;
+      color: #4e5b54;
+      font-size: .86rem;
       font-weight: 600;
-      background: rgba(189, 102, 68, .09);
-      border: 1px solid rgba(189, 102, 68, .18);
+      line-height: 1.35;
+      text-align: center;
+      list-style: none;
+      background: rgba(223, 230, 220, .58);
       border-radius: 999px;
+    }
+
+    .lista-icono {
+      display: inline-block;
+      margin-right: 6px;
+      font-style: normal;
     }
 
     .control {
       position: fixed;
+      top: max(16px, env(safe-area-inset-top));
       z-index: 120;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 46px;
-      color: var(--crema);
-      background: rgba(27, 42, 35, .88);
-      border: 1px solid rgba(255, 248, 235, .32);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, .22);
+      display: grid;
+      height: 44px;
+      place-items: center;
+      color: #fff;
+      background: rgba(42, 52, 46, .76);
+      border: 1px solid rgba(255, 255, 255, .3);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, .2);
+      backdrop-filter: blur(9px);
+      -webkit-backdrop-filter: blur(9px);
     }
 
     .salir {
-      top: max(17px, env(safe-area-inset-top));
-      left: max(17px, env(safe-area-inset-left));
-      padding: 10px 18px;
-      border-radius: 6px 18px 6px 18px;
-      font-size: .82rem;
-      font-weight: 700;
+      left: max(16px, env(safe-area-inset-left));
+      padding: 0 16px;
+      border-radius: 999px;
+      font-size: .75rem;
+      font-weight: 800;
     }
 
     .musica {
-      top: max(17px, env(safe-area-inset-top));
-      right: max(17px, env(safe-area-inset-right));
-      bottom: auto;
-      width: 46px;
-      height: 46px;
-      min-height: 46px;
-      padding: 0;
+      right: max(16px, env(safe-area-inset-right));
+      width: 44px;
       border-radius: 50%;
       cursor: pointer;
-      font-size: 1rem;
     }
 
     body:not(.invitacion-abierta) .musica {
-      display: none;
+      opacity: 0;
+      pointer-events: none;
     }
 
     .entrada {
@@ -534,12 +560,16 @@
       z-index: 100;
       display: grid;
       place-items: center;
-      padding: 22px;
-      overflow: hidden;
+      padding: 24px;
       background:
-        linear-gradient(rgba(30, 47, 39, .2), rgba(19, 31, 25, .58)),
-        url("assets/fondos/fondo01.webp") center/cover no-repeat;
+        linear-gradient(
+          rgba(23, 34, 28, .26),
+          rgba(19, 27, 23, .64)
+        ),
+        url("assets/fondos/fondo01.webp")
+        center/cover no-repeat;
       opacity: 0;
+      visibility: visible;
       transition:
         opacity .65s ease,
         visibility .65s ease;
@@ -557,19 +587,32 @@
     }
 
     .entrada-contenido {
-      width: min(88vw, 510px);
-      padding: 31px 25px 34px;
+      position: relative;
+      width: min(88vw, 470px);
+      padding: 32px 27px 35px;
       color: var(--tinta);
       text-align: center;
-      background: rgba(255, 250, 239, .95);
+      background: rgba(255, 250, 240, .95);
       border: 1px solid rgba(255, 255, 255, .75);
-      border-radius: 8px 42px 8px 42px;
-      box-shadow: 0 28px 75px rgba(19, 25, 21, .38);
+      border-radius: 34px;
+      box-shadow:
+        0 28px 75px rgba(18, 24, 20, .4);
       opacity: 0;
-      transform: translateY(16px) scale(.98);
+      transform: translateY(17px) scale(.98);
       transition:
-        opacity .5s .18s ease-out,
-        transform .7s .18s cubic-bezier(.22, .78, .28, 1);
+        opacity .5s .16s ease-out,
+        transform .7s .16s
+        cubic-bezier(.22, .8, .32, 1);
+    }
+
+    .entrada-contenido::before {
+      content: "";
+      position: absolute;
+      inset: 9px -9px -9px 9px;
+      z-index: -1;
+      border-radius: 34px;
+      background: rgba(184, 95, 67, .42);
+      transform: rotate(1.3deg);
     }
 
     body.fondo-listo .entrada-contenido {
@@ -578,26 +621,30 @@
     }
 
     .entrada-icono {
-      width: min(45vw, 190px);
+      width: min(46vw, 190px);
       max-height: 145px;
       object-fit: contain;
       margin-bottom: 8px;
-      filter: drop-shadow(0 10px 12px rgba(52, 39, 25, .22));
-      animation: brillo 4s ease-in-out infinite;
+      filter:
+        drop-shadow(
+          0 10px 12px rgba(52, 39, 25, .22)
+        );
+      animation: flotar 4.5s ease-in-out infinite;
     }
 
     .entrada h2 {
-      font-size: clamp(2.15rem, 7vw, 3.7rem);
+      font-size: clamp(2.2rem, 7vw, 3.65rem);
     }
 
     .entrada p {
-      max-width: 390px;
-      margin: 12px auto 0;
-      color: #667169;
+      max-width: 380px;
+      margin: 13px auto 0;
+      color: var(--texto);
       line-height: 1.55;
+      text-align: center;
     }
 
-    .transicion {
+    .particulas {
       position: fixed;
       inset: 0;
       z-index: 80;
@@ -605,39 +652,43 @@
       pointer-events: none;
     }
 
-    .destello {
+    .luz {
       position: absolute;
-      width: var(--tam);
-      height: var(--tam);
+      left: var(--x);
+      top: var(--y);
+      width: var(--s);
+      height: var(--s);
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 206, 121, .9), rgba(189, 102, 68, .2) 48%, transparent 70%);
-      animation: subir-luz var(--dur) ease-out forwards;
+      background: rgba(255, 196, 113, .88);
+      box-shadow:
+        0 0 9px rgba(255, 181, 84, .7);
+      animation:
+        subir-luz var(--d) ease-out forwards;
     }
 
     @keyframes subir-luz {
-      from {
-        translate: 0 35px;
-        scale: .55;
-        opacity: .95;
-      }
-
       to {
-        translate: var(--desvio) -110px;
-        scale: 1.25;
         opacity: 0;
+        transform:
+          translate(var(--dx), -105px)
+          scale(.2);
       }
     }
 
     @media (max-width: 600px) {
       .escena {
-        padding-inline: 20px;
+        padding: 72px 17px 22px;
       }
 
       .tarjeta {
         z-index: 9;
         width: min(86vw, 510px);
-        padding: 24px 20px;
-        border-radius: 6px 34px 6px 34px;
+        padding: 27px 18px 24px;
+        border-radius: 27px;
+      }
+
+      .tarjeta::before {
+        border-radius: 27px;
       }
 
       .capa-assets {
@@ -646,26 +697,26 @@
 
       .elemento {
         z-index: 11 !important;
-        max-width: 46vw;
+        max-width: 47vw;
         max-height: 27vh;
       }
 
-      .tarjeta>* {
+      .tarjeta > * {
         position: relative;
         z-index: 12;
       }
 
       h1 {
-        font-size: clamp(2.65rem, 13vw, 4.3rem);
+        font-size: clamp(2.7rem, 13vw, 4.15rem);
       }
 
       h2 {
-        font-size: clamp(2.05rem, 10vw, 3.25rem);
+        font-size: clamp(2.05rem, 10vw, 3.2rem);
       }
 
       .descripcion {
-        font-size: .95rem;
-        line-height: 1.52;
+        font-size: .9rem;
+        line-height: 1.5;
       }
 
       .contador {
@@ -673,79 +724,89 @@
       }
 
       .tiempo {
-        padding: 12px 3px 9px;
+        padding: 11px 2px 9px;
+        border-radius: 14px;
       }
 
       .tiempo strong {
-        font-size: clamp(1.45rem, 7vw, 2rem);
+        font-size: clamp(1.4rem, 7vw, 1.95rem);
       }
 
       .tiempo span {
-        font-size: .55rem;
+        font-size: .52rem;
       }
 
       .datos {
-        gap: 8px;
+        gap: 7px;
       }
 
       .dato {
-        padding: 12px 8px;
+        min-height: 87px;
+        padding: 9px 6px;
+        border-radius: 16px;
       }
 
-      .lista-plan,
-      .lista-recomendaciones {
-        justify-content: center;
-        gap: 7px;
-        text-align: center;
-      }
-
-      .paso,
-      .recomendacion {
-        width: fit-content;
-        max-width: 100%;
-        padding: 10px 13px;
+      .dato i {
+        width: 29px;
+        height: 29px;
         font-size: .88rem;
-        text-align: center;
       }
 
-      /* TARJETA 2: elemento02 — bebidas */
+      .dato strong {
+        font-size: .76rem;
+      }
+
+      .lista,
+      .menu {
+        gap: 7px;
+      }
+
+      .lista li,
+      .menu span {
+        padding: 8px 11px;
+        font-size: .76rem;
+      }
+
+      .boton,
+      .boton-ubicacion {
+        min-height: 44px;
+        margin-top: 16px;
+        padding: 10px 17px;
+        font-size: .76rem;
+      }
+
       #cuenta .elemento {
         --x: 15% !important;
-        --y: 76% !important;
-        --tamano: min(27vw, 140px) !important;
+        --y: 77% !important;
+        --tamano: min(27vw, 138px) !important;
       }
 
-      /* TARJETA 3: elemento06 — canasta con mantas */
       #detalles .elemento {
         --x: 85% !important;
         --y: 82% !important;
-        --tamano: min(28vw, 135px) !important;
+        --tamano: min(28vw, 140px) !important;
       }
 
-      /* TARJETA 4: elemento03 — guitarra y bocina */
       #plan .elemento {
         --x: 15% !important;
-        --y: 28% !important;
-        --tamano: min(27vw, 140px) !important;
+        --y: 29% !important;
+        --tamano: min(27vw, 138px) !important;
       }
 
-      /* TARJETA 5: elemento05 — tabla de botanas */
       #mesa .elemento {
         --x: 84% !important;
         --y: 82% !important;
-        --tamano: min(28vw, 135px) !important;
+        --tamano: min(30vw, 150px) !important;
       }
 
-      /* TARJETA 6: elemento04 — guirnalda */
       #recomendaciones .elemento {
-        --x: 50% !important;
-        --y: 20% !important;
-        --tamano: min(76vw, 380px) !important;
-        max-width: 76vw;
-        max-height: 18vh;
+        --x: 16% !important;
+        --y: 82% !important;
+        --tamano: min(36vw, 180px) !important;
+        max-width: 36vw;
+        max-height: 22vh;
       }
 
-      /* TARJETA 7: elemento07 — brindis */
       #final .elemento {
         --x: 50% !important;
         --y: 21% !important;
@@ -755,9 +816,9 @@
       }
     }
 
-    @media (max-height: 690px) {
+    @media (max-height: 700px) {
       .tarjeta {
-        padding-block: 20px;
+        padding-block: 21px;
       }
 
       .descripcion {
@@ -765,421 +826,1062 @@
         line-height: 1.42;
       }
 
-      .separador {
-        margin-block: 14px;
-      }
-
-      .boton {
-        margin-top: 15px;
-      }
-
       .contador,
       .datos,
-      .lista-plan,
-      .lista-recomendaciones,
+      .lista,
       .menu {
         margin-top: 15px;
+      }
+
+      .separador {
+        margin-top: 12px;
+      }
+
+      .boton,
+      .boton-ubicacion {
+        margin-top: 13px;
+      }
+    }
+
+    @media (max-width: 370px) {
+      .tarjeta {
+        width: 88vw;
+        padding-inline: 13px;
+      }
+
+      .etiqueta {
+        font-size: .58rem;
+      }
+
+      .lista li,
+      .menu span {
+        font-size: .71rem;
       }
     }
   </style>
 </head>
 
 <body>
-  <a class="control salir" href="../../../index.html#fiestas-reuniones">Salir</a>
+  <audio
+    id="audio"
+    src="assets/audio/audio01.mp3"
+    loop
+    preload="metadata"
+  ></audio>
 
   <div class="entrada" id="entrada">
     <div class="entrada-contenido">
-      <img class="entrada-icono" src="assets/elementos/elemento01.png" alt="">
-      <span class="etiqueta">Una reunión en casa</span>
-      <h2>La puerta está <span class="acento">abierta</span></h2>
-      <p>Ven con ganas de platicar, compartir algo rico y pasar una tarde sin prisas.</p>
-      <button class="boton" id="entrar" type="button">Abrir invitación <span>→</span></button>
+      <img
+        class="entrada-icono"
+        src="assets/elementos/elemento01.png"
+        alt=""
+      >
+
+      <span class="etiqueta">
+        La casa está lista
+      </span>
+
+      <h2>
+        Pasa, estás
+        <span class="acento">en confianza</span>
+      </h2>
+
+      <p>
+        Una tarde tranquila para compartir la mesa,
+        la música y una buena conversación.
+      </p>
+
+      <button
+        class="boton"
+        id="entrar"
+        type="button"
+      >
+        Abrir invitación <span>→</span>
+      </button>
     </div>
   </div>
 
-  <main id="carrusel">
+  <a
+    class="control salir"
+    href="../../../#fiestas-reuniones"
+    aria-label="Salir de la invitación"
+  >
+    Salir
+  </a>
+
+  <button
+    class="control musica"
+    id="musica"
+    type="button"
+    aria-label="Pausar música"
+    aria-pressed="true"
+  >
+    Ⅱ
+  </button>
+
+  <main id="invitacion">
     <section class="escena activa" id="inicio">
-      <img class="fondo" src="assets/fondos/fondo01.webp" alt="">
+      <img
+        class="fondo"
+        src="assets/fondos/fondo01.webp"
+        alt=""
+      >
+
       <div class="velo"></div>
+
       <article class="tarjeta">
-        <span class="etiqueta">Tarde entre amigos</span>
-        <h1>Nos vemos <span class="acento">en casa</span></h1>
-        <p class="anfitrion"><span data-nombre>Mariana</span> te invita</p>
-        <p class="descripcion">Una reunión pequeña, una mesa compartida y el pretexto perfecto para volver a
-          encontrarnos.</p>
-        <div class="separador">◆</div>
-        <button class="boton siguiente" type="button">Pasa, estás en tu casa <span>→</span></button>
+        <span class="etiqueta">
+          01 / Bienvenida
+        </span>
+
+        <h1>
+          Una tarde
+          <span class="acento">en casa</span>
+        </h1>
+
+        <p class="anfitrion">
+          <span data-nombre>Paty</span> te invita
+        </p>
+
+        <p class="descripcion">
+          Un encuentro íntimo, algo rico para compartir
+          y tiempo para disfrutar sin prisas.
+        </p>
+
+        <div class="separador">✦</div>
+
+        <button
+          class="boton siguiente"
+          type="button"
+        >
+          Conocer los detalles <span>→</span>
+        </button>
       </article>
     </section>
 
     <section class="escena" id="cuenta">
-      <img class="fondo" src="assets/fondos/fondo02.webp" alt="" loading="lazy">
+      <img
+        class="fondo"
+        src="assets/fondos/fondo02.webp"
+        alt=""
+        loading="lazy"
+      >
+
       <div class="velo"></div>
+
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento02.png" alt=""
-          style="--x: 17%; --y: 80%; --tamano: clamp(150px, 16vw, 250px); --giro: -3deg;">
+        <img
+          class="elemento"
+          src="assets/elementos/elemento02.png"
+          alt=""
+          style="
+            --x: 17%;
+            --y: 80%;
+            --tamano: clamp(145px, 16vw, 245px);
+            --giro: -3deg;
+          "
+        >
       </div>
+
       <article class="tarjeta">
-        <span class="etiqueta">Ya falta poco</span>
-        <h2>Cuenta <span class="acento">regresiva</span></h2>
-        <p class="descripcion">Ve apartando la tarde; nosotros ponemos la casa y las bebidas frías.</p>
-        <div class="contador" aria-label="Cuenta regresiva">
-          <div class="tiempo"><strong id="dias">00</strong><span>Días</span></div>
-          <div class="tiempo"><strong id="horas">00</strong><span>Horas</span></div>
-          <div class="tiempo"><strong id="minutos">00</strong><span>Minutos</span></div>
-          <div class="tiempo"><strong id="segundos">00</strong><span>Segundos</span></div>
+        <span class="etiqueta">
+          02 / Nos falta poco
+        </span>
+
+        <h2>
+          Empieza la
+          <span class="acento">cuenta</span>
+        </h2>
+
+        <p class="descripcion">
+          Aparta la tarde; aquí ya estamos
+          preparando todo.
+        </p>
+
+        <div
+          class="contador"
+          aria-label="Cuenta regresiva"
+        >
+          <div class="tiempo">
+            <strong id="dias">00</strong>
+            <span>Días</span>
+          </div>
+
+          <div class="tiempo">
+            <strong id="horas">00</strong>
+            <span>Horas</span>
+          </div>
+
+          <div class="tiempo">
+            <strong id="minutos">00</strong>
+            <span>Minutos</span>
+          </div>
+
+          <div class="tiempo">
+            <strong id="segundos">00</strong>
+            <span>Segundos</span>
+          </div>
         </div>
-        <button class="boton siguiente" type="button">Ver los datos <span>→</span></button>
+
+        <button
+          class="boton siguiente"
+          type="button"
+        >
+          Dónde nos vemos <span>→</span>
+        </button>
       </article>
     </section>
 
     <section class="escena" id="detalles">
-      <img class="fondo" src="assets/fondos/fondo03.webp" alt="" loading="lazy">
+      <img
+        class="fondo"
+        src="assets/fondos/fondo03.webp"
+        alt=""
+        loading="lazy"
+      >
+
       <div class="velo"></div>
+
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento06.png" alt=""
-          style="--x: 83%; --y: 80%; --tamano: clamp(160px, 18vw, 280px);">
+        <img
+          class="elemento"
+          src="assets/elementos/elemento06.png"
+          alt=""
+          style="
+            --x: 83%;
+            --y: 80%;
+            --tamano: clamp(155px, 18vw, 275px);
+          "
+        >
       </div>
+
       <article class="tarjeta">
-        <span class="etiqueta">Dónde y cuándo</span>
-        <h2>Apunta los <span class="acento">detalles</span></h2>
+        <span class="etiqueta">
+          03 / Dónde y cuándo
+        </span>
+
+        <h2>
+          Apunta la
+          <span class="acento">fecha</span>
+        </h2>
+
         <div class="datos">
-          <div class="dato"><i>📅</i><small>Fecha</small><strong data-fecha>Sábado 18 de julio</strong></div>
-          <div class="dato"><i>🕓</i><small>Hora</small><strong data-hora>5:00 p. m.</strong></div>
-          <div class="dato"><i>🏡</i><small>Lugar</small><strong data-lugar>Casa de Mariana</strong></div>
-          <div class="dato"><i>📍</i><small>Ciudad</small><strong data-ciudad>Cadereyta, Nuevo León</strong></div>
+          <div class="dato">
+            <i>📅</i>
+            <small>Fecha</small>
+            <strong data-fecha>
+              Sábado 18 de julio
+            </strong>
+          </div>
+
+          <div class="dato">
+            <i>🕓</i>
+            <small>Hora</small>
+            <strong data-hora>
+              5:00 p. m.
+            </strong>
+          </div>
+
+          <div class="dato">
+            <i>🏡</i>
+            <small>Lugar</small>
+            <strong data-lugar>
+              Casa de Paty
+            </strong>
+          </div>
+
+          <div class="dato">
+            <i>📍</i>
+            <small>Ciudad</small>
+            <strong data-ciudad>
+              Cadereyta, Nuevo León
+            </strong>
+          </div>
         </div>
-        <button class="boton siguiente" type="button">Conocer el plan <span>→</span></button>
+
+        <div class="acciones-datos">
+          <a
+            class="boton-ubicacion"
+            data-ubicacion
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Ver ubicación <span>↗</span>
+          </a>
+
+          <button
+            class="boton siguiente"
+            type="button"
+          >
+            Ver el plan <span>→</span>
+          </button>
+        </div>
       </article>
     </section>
 
     <section class="escena" id="plan">
-      <img class="fondo" src="assets/fondos/fondo04.webp" alt="" loading="lazy">
+      <img
+        class="fondo"
+        src="assets/fondos/fondo04.webp"
+        alt=""
+        loading="lazy"
+      >
+
       <div class="velo"></div>
+
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento03.png" alt=""
-          style="--x: 17%; --y: 28%; --tamano: clamp(160px, 18vw, 285px); --giro: -4deg;">
+        <img
+          class="elemento"
+          src="assets/elementos/elemento03.png"
+          alt=""
+          style="
+            --x: 17%;
+            --y: 28%;
+            --tamano: clamp(155px, 18vw, 280px);
+            --giro: -4deg;
+          "
+        >
       </div>
+
       <article class="tarjeta">
-        <span class="etiqueta">Sin horarios complicados</span>
-        <h2>El plan es <span class="acento">disfrutar</span></h2>
-        <p class="descripcion">Una tarde sencilla, buena música y tiempo para conversar.</p>
-        <div class="lista-plan">
-          <div class="paso"><i>🍹</i>Llegar y servir algo fresco</div>
-          <div class="paso"><i>🎶</i>Música para acompañar</div>
-          <div class="paso"><i>💬</i>Plática sin prisas</div>
-          <div class="paso"><i>🌙</i>Quedarnos hasta que anochezca</div>
-        </div>
-        <button class="boton siguiente" type="button">Ver qué habrá <span>→</span></button>
+        <span class="etiqueta">
+          04 / El plan
+        </span>
+
+        <h2>
+          Disfrutar lo
+          <span class="acento">sencillo</span>
+        </h2>
+
+        <p class="descripcion">
+          Sin itinerarios complicados:
+          solo una tarde agradable entre amigos.
+        </p>
+
+        <ul class="lista">
+          <li>
+            <span class="lista-icono">🍹</span>
+            Algo fresco al llegar
+          </li>
+
+          <li>
+            <span class="lista-icono">🎶</span>
+            Música para acompañar
+          </li>
+
+          <li>
+            <span class="lista-icono">💬</span>
+            Plática sin prisas
+          </li>
+
+          <li>
+            <span class="lista-icono">🌙</span>
+            Quedarnos hasta la noche
+          </li>
+        </ul>
+
+        <button
+          class="boton siguiente"
+          type="button"
+        >
+          Pasar a la mesa <span>→</span>
+        </button>
       </article>
     </section>
 
     <section class="escena" id="mesa">
-      <img class="fondo" src="assets/fondos/fondo05.webp" alt="" loading="lazy">
+      <img
+        class="fondo"
+        src="assets/fondos/fondo05.webp"
+        alt=""
+        loading="lazy"
+      >
+
       <div class="velo"></div>
+
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento05.png" alt=""
-          style="--x: 83%; --y: 81%; --tamano: clamp(180px, 20vw, 320px); --giro: 2deg;">
+        <img
+          class="elemento"
+          src="assets/elementos/elemento05.png"
+          alt=""
+          style="
+            --x: 83%;
+            --y: 81%;
+            --tamano: clamp(175px, 20vw, 315px);
+            --giro: 2deg;
+          "
+        >
       </div>
+
       <article class="tarjeta">
-        <span class="etiqueta">Algo para compartir</span>
-        <h2>La mesa está <span class="acento">puesta</span></h2>
-        <p class="descripcion">Habrá botanas, algo rico para cenar y bebidas para brindar.</p>
+        <span class="etiqueta">
+          05 / Para compartir
+        </span>
+
+        <h2>
+          La mesa nos
+          <span class="acento">reúne</span>
+        </h2>
+
+        <p class="descripcion">
+          Habrá algo para picar, bebidas
+          y sabores preparados para compartir.
+        </p>
+
         <div class="menu">
           <span>🥔 Botanas</span>
           <span>🥪 Bocadillos</span>
           <span>🍋 Bebidas frescas</span>
           <span>🍰 Algo dulce</span>
         </div>
-        <button class="boton siguiente" type="button">Antes de venir <span>→</span></button>
+
+        <button
+          class="boton siguiente"
+          type="button"
+        >
+          Antes de venir <span>→</span>
+        </button>
       </article>
     </section>
 
-    <section class="escena" id="recomendaciones">
-      <img class="fondo" src="assets/fondos/fondo06.webp" alt="" loading="lazy">
+    <section
+      class="escena"
+      id="recomendaciones"
+    >
+      <img
+        class="fondo"
+        src="assets/fondos/fondo06.webp"
+        alt=""
+        loading="lazy"
+      >
+
       <div class="velo"></div>
+
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento04.png" alt=""
-          style="--x: 50%; --y: 14%; --tamano: min(54vw, 620px);">
+        <img
+          class="elemento"
+          src="assets/elementos/elemento04.png"
+          alt=""
+          style="
+            --x: 17%;
+            --y: 81%;
+            --tamano: clamp(175px, 22vw, 335px);
+          "
+        >
       </div>
+
       <article class="tarjeta">
-        <span class="etiqueta">Para disfrutar mejor</span>
-        <h2>Ven muy <span class="acento">cómodo</span></h2>
-        <div class="lista-recomendaciones">
-          <div class="recomendacion"><i>👕</i>Ropa casual y fresca</div>
-          <div class="recomendacion"><i>🧥</i>Una prenda ligera para la noche</div>
-          <div class="recomendacion"><i>🚗</i>Avísanos si necesitas ubicación</div>
-          <div class="recomendacion"><i>✨</i>Lo importante es que vengas</div>
-        </div>
-        <button class="boton siguiente" type="button">Ir al brindis <span>→</span></button>
+        <span class="etiqueta">
+          06 / Para disfrutar mejor
+        </span>
+
+        <h2>
+          Ven muy
+          <span class="acento">cómodo</span>
+        </h2>
+
+        <p class="descripcion">
+          Queremos que te sientas
+          como en tu propia casa.
+        </p>
+
+        <ul class="lista">
+          <li>
+            <span class="lista-icono">👕</span>
+            Ropa casual y fresca
+          </li>
+
+          <li>
+            <span class="lista-icono">🧥</span>
+            Algo ligero para la noche
+          </li>
+
+          <li>
+            <span class="lista-icono">🚗</span>
+            Avísanos si necesitas ayuda
+          </li>
+
+          <li>
+            <span class="lista-icono">✨</span>
+            Lo importante es que vengas
+          </li>
+        </ul>
+
+        <button
+          class="boton siguiente"
+          type="button"
+        >
+          Ir al brindis <span>→</span>
+        </button>
       </article>
     </section>
 
     <section class="escena" id="final">
-      <img class="fondo" src="assets/fondos/fondo07.webp" alt="" loading="lazy">
+      <img
+        class="fondo"
+        src="assets/fondos/fondo07.webp"
+        alt=""
+        loading="lazy"
+      >
+
       <div class="velo"></div>
+
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento07.png" alt=""
-          style="--x: 50%; --y: 21%; --tamano: clamp(180px, 22vw, 340px);">
+        <img
+          class="elemento"
+          src="assets/elementos/elemento07.png"
+          alt=""
+          style="
+            --x: 50%;
+            --y: 21%;
+            --tamano: clamp(175px, 22vw, 335px);
+          "
+        >
       </div>
+
       <article class="tarjeta">
-        <span class="etiqueta">La mejor parte</span>
-        <h2>Brindar <span class="acento">juntos</span></h2>
-        <p class="descripcion">La casa ya está lista. Solo falta tu compañía para que la tarde se convierta en un buen
-          recuerdo.</p>
-        <p class="anfitrion">Te esperamos</p>
-        <div class="separador">◆</div>
-        <button class="boton" id="volver-inicio" type="button">Volver al inicio <span>↺</span></button>
+        <span class="etiqueta">
+          07 / Te esperamos
+        </span>
+
+        <h2>
+          Brindemos
+          <span class="acento">juntos</span>
+        </h2>
+
+        <p class="descripcion">
+          La casa está lista. Solo falta tu compañía
+          para convertir la tarde en un bonito recuerdo.
+        </p>
+
+        <p class="anfitrion">
+          Nos vemos,
+          <span data-nombre>Paty</span>
+        </p>
+
+        <div class="separador">✦</div>
+
+        <a
+          class="boton-ubicacion"
+          data-ubicacion
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Ver ubicación <span>↗</span>
+        </a>
+
+        <br>
+
+        <button
+          class="boton"
+          id="volver-inicio"
+          type="button"
+        >
+          Volver al inicio <span>↺</span>
+        </button>
       </article>
     </section>
   </main>
 
-  <button class="control musica" id="musica" type="button" aria-label="Reproducir música"
-    aria-pressed="false">▶</button>
-  <div class="transicion" id="transicion" aria-hidden="true"></div>
-  <audio id="audio" loop preload="metadata">
-    <source src="assets/audio/audio01.mp3" type="audio/mpeg">
-  </audio>
+  <div
+    class="particulas"
+    id="particulas"
+    aria-hidden="true"
+  ></div>
 
   <script>
     const CONFIG = {
-      nombre: "Mariana",
+      nombre: "Paty",
       fechaTexto: "Sábado 18 de julio",
       horaTexto: "5:00 p. m.",
-      lugar: "Casa de Mariana",
+      lugar: "Casa de Paty",
       ciudad: "Cadereyta, Nuevo León",
-      fechaEvento: "2027-07-18T17:00:00-06:00"
+      fechaEvento: "2027-07-18T17:00:00-06:00",
+      ubicacionUrl: "https://maps.google.com/"
     };
 
-    const $ = (selector, contexto = document) => contexto.querySelector(selector);
-    const $$ = (selector, contexto = document) => [...contexto.querySelectorAll(selector)];
+    const $ = (selector, contexto = document) =>
+      contexto.querySelector(selector);
+
+    const $$ = (selector, contexto = document) =>
+      [...contexto.querySelectorAll(selector)];
+
     const escenas = $$(".escena");
-    const carrusel = $("#carrusel");
+    const invitacion = $("#invitacion");
     const audio = $("#audio");
     const botonMusica = $("#musica");
+
     let indiceActivo = 0;
     let temporizadorVista;
-    let ultimoDestello = 0;
+    let ultimoEfecto = 0;
 
     function aplicarDatos() {
-      $$('[data-nombre]').forEach(el => el.textContent = CONFIG.nombre);
-      $$('[data-fecha]').forEach(el => el.textContent = CONFIG.fechaTexto);
-      $$('[data-hora]').forEach(el => el.textContent = CONFIG.horaTexto);
-      $$('[data-lugar]').forEach(el => el.textContent = CONFIG.lugar);
-      $$('[data-ciudad]').forEach(el => el.textContent = CONFIG.ciudad);
-      document.title = `${CONFIG.nombre} | Una tarde en casa`;
+      $$("[data-nombre]").forEach(
+        elemento =>
+          elemento.textContent = CONFIG.nombre
+      );
+
+      $$("[data-fecha]").forEach(
+        elemento =>
+          elemento.textContent = CONFIG.fechaTexto
+      );
+
+      $$("[data-hora]").forEach(
+        elemento =>
+          elemento.textContent = CONFIG.horaTexto
+      );
+
+      $$("[data-lugar]").forEach(
+        elemento =>
+          elemento.textContent = CONFIG.lugar
+      );
+
+      $$("[data-ciudad]").forEach(
+        elemento =>
+          elemento.textContent = CONFIG.ciudad
+      );
+
+      $$("[data-ubicacion]").forEach(
+        enlace =>
+          enlace.href = CONFIG.ubicacionUrl
+      );
+
+      document.title =
+        `${CONFIG.nombre} | Una tarde en casa`;
     }
 
-    function actualizarAltoPantalla(inmediato = false) {
+    function ajustarVista(inmediato = false) {
       clearTimeout(temporizadorVista);
 
-      const aplicarAjuste = () => {
+      const aplicar = () => {
         const alto =
           window.visualViewport?.height ||
           window.innerHeight;
 
         document.documentElement.style.setProperty(
-          "--alto-pantalla",
+          "--alto",
           `${Math.round(alto)}px`
         );
 
-        if (document.body.classList.contains("invitacion-abierta")) {
+        if (
+          document.body.classList.contains(
+            "invitacion-abierta"
+          )
+        ) {
           irA(indiceActivo, false);
         }
       };
 
       if (inmediato) {
-        aplicarAjuste();
+        aplicar();
       } else {
-        temporizadorVista = setTimeout(aplicarAjuste, 80);
+        temporizadorVista =
+          setTimeout(aplicar, 80);
       }
-    }
-
-    function activarEscena(indice) {
-      if (indice === indiceActivo && escenas[indice]?.classList.contains("activa")) return;
-      indiceActivo = indice;
-      escenas.forEach((escena, i) => escena.classList.toggle("activa", i === indice));
-      crearDestellos();
     }
 
     function irA(indice, suave = true) {
-      const destino = Math.max(0, Math.min(indice, escenas.length - 1));
-      carrusel.scrollTo({
-        left: destino * carrusel.clientWidth,
+      const destino = Math.max(
+        0,
+        Math.min(indice, escenas.length - 1)
+      );
+
+      invitacion.scrollTo({
+        left:
+          destino * invitacion.clientWidth,
         top: 0,
-        behavior: suave ? "smooth" : "auto"
+        behavior:
+          suave ? "smooth" : "auto"
       });
     }
 
-    const observador = new IntersectionObserver(entradas => {
-      const visible = entradas
-        .filter(entrada => entrada.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visible) activarEscena(escenas.indexOf(visible.target));
-    }, {
-      root: carrusel,
-      threshold: [.62, .78]
-    });
-
-    escenas.forEach(escena => observador.observe(escena));
-
-    $$(".siguiente").forEach((boton, indice) => {
-      boton.addEventListener("click", () => irA(indice + 1));
-    });
-
-    $("#volver-inicio").addEventListener("click", () => irA(0));
-
-    function actualizarBotonMusica(reproduciendo) {
-      botonMusica.textContent = reproduciendo ? "Ⅱ" : "▶";
-      botonMusica.setAttribute("aria-label", reproduciendo ? "Pausar música" : "Reproducir música");
-      botonMusica.setAttribute("aria-pressed", String(reproduciendo));
-    }
-
-    $("#entrar").addEventListener("click", async () => {
-      document.body.classList.add("invitacion-abierta");
-      irA(0, false);
-      $("#entrada").classList.add("oculta");
-      indiceActivo = 0;
-
-      escenas.forEach((escena, indice) => {
-        escena.classList.toggle("activa", indice === 0);
-      });
-
-      escenas[0].classList.remove("activa");
-      void escenas[0].offsetWidth;
-      escenas[0].classList.add("activa");
-
-      try {
-        await audio.play();
-        actualizarBotonMusica(true);
-      } catch {
-        actualizarBotonMusica(false);
-      }
-    });
-
-    botonMusica.addEventListener("click", async () => {
-      if (audio.paused) {
-        try {
-          await audio.play();
-          actualizarBotonMusica(true);
-        } catch {
-          actualizarBotonMusica(false);
-        }
-      } else {
-        audio.pause();
-        actualizarBotonMusica(false);
-      }
-    });
-
-    function actualizarCuenta() {
-      const diferencia = new Date(CONFIG.fechaEvento).getTime() - Date.now();
-      const restante = Math.max(0, diferencia);
-      $("#dias").textContent = String(Math.floor(restante / 86400000)).padStart(2, "0");
-      $("#horas").textContent = String(Math.floor((restante % 86400000) / 3600000)).padStart(2, "0");
-      $("#minutos").textContent = String(Math.floor((restante % 3600000) / 60000)).padStart(2, "0");
-      $("#segundos").textContent = String(Math.floor((restante % 60000) / 1000)).padStart(2, "0");
-    }
-
-    function crearDestellos() {
-      const ahora = performance.now();
-
+    function activar(indice) {
       if (
-        ahora - ultimoDestello < 420 ||
-        document.hidden ||
-        !document.body.classList.contains("invitacion-abierta")
+        indice === indiceActivo &&
+        escenas[indice].classList.contains("activa")
       ) {
         return;
       }
-      ultimoDestello = ahora;
-      const contenedor = $("#transicion");
 
-      for (let i = 0; i < 5; i++) {
-        const luz = document.createElement("span");
-        luz.className = "destello";
-        luz.style.left = `${18 + Math.random() * 64}%`;
-        luz.style.top = `${58 + Math.random() * 28}%`;
-        luz.style.setProperty("--tam", `${10 + Math.random() * 17}px`);
-        luz.style.setProperty("--dur", `${.75 + Math.random() * .45}s`);
-        luz.style.setProperty("--desvio", `${-30 + Math.random() * 60}px`);
-        contenedor.appendChild(luz);
-        luz.addEventListener("animationend", () => luz.remove(), { once: true });
-      }
+      indiceActivo = indice;
+
+      escenas.forEach((escena, posicion) => {
+        escena.classList.toggle(
+          "activa",
+          posicion === indice
+        );
+      });
+
+      crearLuces();
     }
 
-    carrusel.addEventListener("wheel", evento => {
-      if (Math.abs(evento.deltaY) <= Math.abs(evento.deltaX)) return;
-      evento.preventDefault();
-      carrusel.scrollBy({ left: evento.deltaY, top: 0, behavior: "auto" });
-    }, { passive: false });
+    const observador =
+      new IntersectionObserver(
+        entradas => {
+          const visible = entradas
+            .filter(
+              entrada =>
+                entrada.isIntersecting
+            )
+            .sort(
+              (a, b) =>
+                b.intersectionRatio -
+                a.intersectionRatio
+            )[0];
 
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden && !audio.paused) {
-        audio.pause();
-        actualizarBotonMusica(false);
+          if (visible) {
+            activar(
+              escenas.indexOf(visible.target)
+            );
+          }
+        },
+        {
+          root: invitacion,
+          threshold: [.58, .72]
+        }
+      );
+
+    escenas.forEach(
+      escena => observador.observe(escena)
+    );
+
+    $$(".siguiente").forEach(
+      (boton, indice) => {
+        boton.addEventListener(
+          "click",
+          () => irA(indice + 1)
+        );
       }
-    });
+    );
+
+    $("#volver-inicio").addEventListener(
+      "click",
+      () => irA(0)
+    );
+
+    function estadoMusica(reproduciendo) {
+      botonMusica.textContent =
+        reproduciendo ? "Ⅱ" : "▶";
+
+      botonMusica.setAttribute(
+        "aria-label",
+        reproduciendo
+          ? "Pausar música"
+          : "Reproducir música"
+      );
+
+      botonMusica.setAttribute(
+        "aria-pressed",
+        String(reproduciendo)
+      );
+    }
+
+    $("#entrar").addEventListener(
+      "click",
+      async () => {
+        document.body.classList.add(
+          "invitacion-abierta"
+        );
+
+        irA(0, false);
+        indiceActivo = 0;
+
+        $("#entrada").classList.add("oculta");
+
+        escenas.forEach((escena, indice) => {
+          escena.classList.toggle(
+            "activa",
+            indice === 0
+          );
+        });
+
+        escenas[0].classList.remove("activa");
+        void escenas[0].offsetWidth;
+        escenas[0].classList.add("activa");
+
+        crearLuces();
+
+        try {
+          await audio.play();
+          estadoMusica(true);
+        } catch {
+          estadoMusica(false);
+        }
+      }
+    );
+
+    botonMusica.addEventListener(
+      "click",
+      async () => {
+        if (audio.paused) {
+          try {
+            await audio.play();
+            estadoMusica(true);
+          } catch {
+            estadoMusica(false);
+          }
+        } else {
+          audio.pause();
+          estadoMusica(false);
+        }
+      }
+    );
+
+    function cuenta() {
+      const restante = Math.max(
+        0,
+        new Date(
+          CONFIG.fechaEvento
+        ).getTime() - Date.now()
+      );
+
+      const dias =
+        Math.floor(restante / 86400000);
+
+      const horas =
+        Math.floor(
+          (restante % 86400000) /
+          3600000
+        );
+
+      const minutos =
+        Math.floor(
+          (restante % 3600000) /
+          60000
+        );
+
+      const segundos =
+        Math.floor(
+          (restante % 60000) /
+          1000
+        );
+
+      $("#dias").textContent =
+        String(dias).padStart(2, "0");
+
+      $("#horas").textContent =
+        String(horas).padStart(2, "0");
+
+      $("#minutos").textContent =
+        String(minutos).padStart(2, "0");
+
+      $("#segundos").textContent =
+        String(segundos).padStart(2, "0");
+    }
+
+    function crearLuces() {
+      const ahora = performance.now();
+
+      if (
+        document.hidden ||
+        !document.body.classList.contains(
+          "invitacion-abierta"
+        ) ||
+        ahora - ultimoEfecto < 420
+      ) {
+        return;
+      }
+
+      ultimoEfecto = ahora;
+
+      const contenedor =
+        $("#particulas");
+
+      const cantidad =
+        innerWidth <= 600 ? 4 : 6;
+
+      for (
+        let indice = 0;
+        indice < cantidad;
+        indice++
+      ) {
+        const luz =
+          document.createElement("span");
+
+        luz.className = "luz";
+
+        luz.style.setProperty(
+          "--x",
+          `${25 + Math.random() * 50}%`
+        );
+
+        luz.style.setProperty(
+          "--y",
+          `${72 + Math.random() * 18}%`
+        );
+
+        luz.style.setProperty(
+          "--s",
+          `${3 + Math.random() * 5}px`
+        );
+
+        luz.style.setProperty(
+          "--dx",
+          `${-45 + Math.random() * 90}px`
+        );
+
+        luz.style.setProperty(
+          "--d",
+          `${650 + Math.random() * 400}ms`
+        );
+
+        contenedor.appendChild(luz);
+
+        luz.addEventListener(
+          "animationend",
+          () => luz.remove(),
+          { once: true }
+        );
+      }
+    }
 
     function precargarFondos() {
-      $$(".fondo").slice(1).forEach(fondo => {
-        const imagen = new Image();
-        imagen.src = fondo.src;
+      $$(".fondo")
+        .slice(1)
+        .forEach(fondo => {
+          const imagen = new Image();
+          imagen.src = fondo.src;
 
-        if (typeof imagen.decode === "function") {
-          imagen.decode().catch(() => { });
-        }
-      });
+          if (
+            typeof imagen.decode ===
+            "function"
+          ) {
+            imagen
+              .decode()
+              .catch(() => {});
+          }
+        });
     }
 
+    invitacion.addEventListener(
+      "wheel",
+      evento => {
+        if (
+          Math.abs(evento.deltaY) <=
+          Math.abs(evento.deltaX)
+        ) {
+          return;
+        }
+
+        evento.preventDefault();
+
+        invitacion.scrollBy({
+          left: evento.deltaY,
+          top: 0,
+          behavior: "auto"
+        });
+      },
+      {
+        passive: false
+      }
+    );
+
+    document.addEventListener(
+      "visibilitychange",
+      () => {
+        if (
+          document.hidden &&
+          !audio.paused
+        ) {
+          audio.pause();
+          estadoMusica(false);
+        }
+      }
+    );
+
     const fondoEntrada = new Image();
-    fondoEntrada.src = "assets/fondos/fondo01.webp";
+
+    fondoEntrada.src =
+      "assets/fondos/fondo01.webp";
 
     const mostrarEntrada = () => {
-      document.body.classList.add("fondo-listo");
+      document.body.classList.add(
+        "fondo-listo"
+      );
 
-      if ("requestIdleCallback" in window) {
-        requestIdleCallback(precargarFondos, { timeout: 1200 });
+      if (
+        "requestIdleCallback" in window
+      ) {
+        requestIdleCallback(
+          precargarFondos,
+          {
+            timeout: 1200
+          }
+        );
       } else {
-        setTimeout(precargarFondos, 300);
+        setTimeout(
+          precargarFondos,
+          300
+        );
       }
     };
+
     if (fondoEntrada.complete) {
       mostrarEntrada();
     } else {
-      fondoEntrada.addEventListener("load", mostrarEntrada, { once: true });
-      fondoEntrada.addEventListener("error", mostrarEntrada, { once: true });
+      fondoEntrada.addEventListener(
+        "load",
+        mostrarEntrada,
+        {
+          once: true
+        }
+      );
+
+      fondoEntrada.addEventListener(
+        "error",
+        mostrarEntrada,
+        {
+          once: true
+        }
+      );
     }
 
     aplicarDatos();
-    actualizarAltoPantalla(true);
-    actualizarCuenta();
-    setInterval(actualizarCuenta, 1000);
+    ajustarVista(true);
+    cuenta();
+    estadoMusica(false);
+    irA(0, false);
+
+    setInterval(cuenta, 1000);
 
     window.addEventListener(
       "resize",
-      () => actualizarAltoPantalla(),
-      { passive: true }
+      () => ajustarVista(),
+      {
+        passive: true
+      }
     );
 
     window.visualViewport?.addEventListener(
       "resize",
-      () => actualizarAltoPantalla(),
-      { passive: true }
+      () => ajustarVista(),
+      {
+        passive: true
+      }
     );
 
     window.addEventListener(
       "orientationchange",
-      () => actualizarAltoPantalla(),
-      { passive: true }
+      () => ajustarVista(),
+      {
+        passive: true
+      }
     );
 
-    window.addEventListener("pageshow", () => {
-      actualizarAltoPantalla(true);
+    window.addEventListener(
+      "pageshow",
+      () => {
+        ajustarVista(true);
 
-      if (!document.body.classList.contains("invitacion-abierta")) {
-        irA(0, false);
+        if (
+          !document.body.classList.contains(
+            "invitacion-abierta"
+          )
+        ) {
+          irA(0, false);
+        }
       }
-    });
+    );
   </script>
 </body>
-
 </html>
