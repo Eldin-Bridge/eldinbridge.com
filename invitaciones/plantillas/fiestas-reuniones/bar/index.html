@@ -1,12 +1,15 @@
 <!doctype html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <link rel="preload" as="image" href="assets/fondos/fondo01.webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,600;6..96,700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,600;6..96,700&family=Sora:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <meta name="theme-color" content="#090b15">
   <meta name="description" content="Invitación digital para una noche de bar.">
   <title>Noche de Bar | Invitación</title>
@@ -176,23 +179,57 @@
     }
 
     @keyframes flotar {
-      0%, 100% { translate: 0 0; }
-      50% { translate: 0 -11px; }
+
+      0%,
+      100% {
+        translate: 0 0;
+      }
+
+      50% {
+        translate: 0 -11px;
+      }
     }
 
     @keyframes pulso-musical {
-      0%, 100% { translate: 0 0; scale: 1; }
-      50% { translate: 0 -8px; scale: 1.025; }
+
+      0%,
+      100% {
+        translate: 0 0;
+        scale: 1;
+      }
+
+      50% {
+        translate: 0 -8px;
+        scale: 1.025;
+      }
     }
 
     @keyframes microfono {
-      0%, 100% { translate: 0 0; rotate: 0deg; }
-      50% { translate: 0 -9px; rotate: 1.5deg; }
+
+      0%,
+      100% {
+        translate: 0 0;
+        rotate: 0deg;
+      }
+
+      50% {
+        translate: 0 -9px;
+        rotate: 1.5deg;
+      }
     }
 
     @keyframes destello {
-      0%, 100% { translate: 0 0; filter: brightness(1); }
-      50% { translate: 0 -8px; filter: brightness(1.18); }
+
+      0%,
+      100% {
+        translate: 0 0;
+        filter: brightness(1);
+      }
+
+      50% {
+        translate: 0 -8px;
+        filter: brightness(1.18);
+      }
     }
 
     .tarjeta {
@@ -563,11 +600,13 @@
       transition: opacity .65s ease;
     }
 
-    .entrada.oculta {
+    body.fondo-listo .entrada.oculta {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity .55s ease, visibility 0s linear .55s;
+      transition:
+        opacity .55s ease,
+        visibility 0s linear .55s;
     }
 
     .entrada-contenido {
@@ -651,8 +690,13 @@
         border-radius: 24px 7px 24px 7px;
       }
 
-      h1 { font-size: clamp(2.65rem, 13vw, 4.1rem); }
-      h2 { font-size: clamp(2.1rem, 10.5vw, 3.35rem); }
+      h1 {
+        font-size: clamp(2.65rem, 13vw, 4.1rem);
+      }
+
+      h2 {
+        font-size: clamp(2.1rem, 10.5vw, 3.35rem);
+      }
 
       .descripcion {
         margin-top: 16px;
@@ -682,8 +726,13 @@
         border-radius: 13px 4px 13px 4px;
       }
 
-      .tiempo strong { font-size: 1.42rem; }
-      .tiempo span { font-size: .49rem; }
+      .tiempo strong {
+        font-size: 1.42rem;
+      }
+
+      .tiempo span {
+        font-size: .49rem;
+      }
 
       .datos {
         gap: 7px;
@@ -695,7 +744,9 @@
         padding: 10px 5px;
       }
 
-      .dato strong { font-size: .68rem; }
+      .dato strong {
+        font-size: .68rem;
+      }
 
       .lista {
         gap: 6px;
@@ -790,17 +841,41 @@
     }
 
     @media (max-height: 690px) {
-      .tarjeta { padding-block: 24px 22px; }
-      h1 { font-size: clamp(2.45rem, 10vw, 3.6rem); }
-      h2 { font-size: clamp(1.95rem, 8.5vw, 3rem); }
-      .descripcion { margin-top: 12px; line-height: 1.46; }
+      .tarjeta {
+        padding-block: 24px 22px;
+      }
+
+      h1 {
+        font-size: clamp(2.45rem, 10vw, 3.6rem);
+      }
+
+      h2 {
+        font-size: clamp(1.95rem, 8.5vw, 3rem);
+      }
+
+      .descripcion {
+        margin-top: 12px;
+        line-height: 1.46;
+      }
+
       .contador,
       .datos,
       .lista,
-      .menu { margin-block: 15px 18px; }
-      .separador { margin-block: 15px; }
-      .dato { min-height: 79px; }
-      .lista li { padding-block: 7px; }
+      .menu {
+        margin-block: 15px 18px;
+      }
+
+      .separador {
+        margin-block: 15px;
+      }
+
+      .dato {
+        min-height: 79px;
+      }
+
+      .lista li {
+        padding-block: 7px;
+      }
     }
   </style>
 </head>
@@ -820,7 +895,8 @@
 
   <a class="control salir" href="../../../#fiestas-reuniones" aria-label="Salir de la invitación">Salir</a>
 
-  <button class="control musica" id="musica" type="button" aria-label="Reproducir música" aria-pressed="false">▶</button>
+  <button class="control musica" id="musica" type="button" aria-label="Reproducir música"
+    aria-pressed="false">▶</button>
 
   <main id="invitacion">
     <section class="escena activa" id="inicio">
@@ -843,7 +919,8 @@
       <div class="velo"></div>
       <div class="halo"></div>
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento02.png" alt="" style="--x: 17%; --y: 79%; --tamano: clamp(170px, 20vw, 310px); --giro: -3deg;">
+        <img class="elemento" src="assets/elementos/elemento02.png" alt=""
+          style="--x: 17%; --y: 79%; --tamano: clamp(170px, 20vw, 310px); --giro: -3deg;">
       </div>
 
       <article class="tarjeta">
@@ -865,7 +942,8 @@
       <div class="velo"></div>
       <div class="halo"></div>
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento06.png" alt="" style="--x: 83%; --y: 80%; --tamano: clamp(175px, 21vw, 320px);">
+        <img class="elemento" src="assets/elementos/elemento06.png" alt=""
+          style="--x: 83%; --y: 80%; --tamano: clamp(175px, 21vw, 320px);">
       </div>
 
       <article class="tarjeta">
@@ -886,7 +964,8 @@
       <div class="velo"></div>
       <div class="halo"></div>
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento03.png" alt="" style="--x: 17%; --y: 30%; --tamano: clamp(175px, 21vw, 325px); --giro: -4deg;">
+        <img class="elemento" src="assets/elementos/elemento03.png" alt=""
+          style="--x: 17%; --y: 30%; --tamano: clamp(175px, 21vw, 325px); --giro: -4deg;">
       </div>
 
       <article class="tarjeta">
@@ -907,7 +986,8 @@
       <div class="velo"></div>
       <div class="halo"></div>
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento05.png" alt="" style="--x: 83%; --y: 80%; --tamano: clamp(185px, 23vw, 350px); --giro: 2deg;">
+        <img class="elemento" src="assets/elementos/elemento05.png" alt=""
+          style="--x: 83%; --y: 80%; --tamano: clamp(185px, 23vw, 350px); --giro: 2deg;">
       </div>
 
       <article class="tarjeta">
@@ -929,7 +1009,8 @@
       <div class="velo"></div>
       <div class="halo"></div>
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento04.png" alt="" style="--x: 17%; --y: 79%; --tamano: clamp(155px, 18vw, 280px);">
+        <img class="elemento" src="assets/elementos/elemento04.png" alt=""
+          style="--x: 17%; --y: 79%; --tamano: clamp(155px, 18vw, 280px);">
       </div>
 
       <article class="tarjeta">
@@ -950,7 +1031,8 @@
       <div class="velo"></div>
       <div class="halo"></div>
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento07.png" alt="" style="--x: 50%; --y: 20%; --tamano: clamp(180px, 22vw, 340px);">
+        <img class="elemento" src="assets/elementos/elemento07.png" alt=""
+          style="--x: 50%; --y: 20%; --tamano: clamp(180px, 22vw, 340px);">
       </div>
 
       <article class="tarjeta">
@@ -959,7 +1041,8 @@
         <p class="descripcion">Tu compañía es lo único que falta. Nos vemos para compartir una gran noche.</p>
         <p class="anfitrion">Nos vemos, <span data-nombre>Alex</span></p>
         <div class="acciones-finales">
-          <a class="boton-ubicacion" data-ubicacion target="_blank" rel="noopener noreferrer">Ver ubicación <span>↗</span></a>
+          <a class="boton-ubicacion" data-ubicacion target="_blank" rel="noopener noreferrer">Ver ubicación
+            <span>↗</span></a>
           <button class="boton" id="volver-inicio" type="button">Volver al inicio <span>↺</span></button>
         </div>
       </article>
@@ -1132,7 +1215,7 @@
       $$(".fondo").slice(1).forEach(fondo => {
         const imagen = new Image();
         imagen.src = fondo.src;
-        if (typeof imagen.decode === "function") imagen.decode().catch(() => {});
+        if (typeof imagen.decode === "function") imagen.decode().catch(() => { });
       });
     }
 
@@ -1180,4 +1263,5 @@
     });
   </script>
 </body>
+
 </html>
