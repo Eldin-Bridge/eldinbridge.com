@@ -1423,87 +1423,167 @@
         const botonVolver =
             document.getElementById("boton-volver");
 
-        function mostrarInfantiles() {
+
+        function ocultarCatalogos() {
+            catalogoInfantil.classList.remove("activo");
+            catalogoReuniones.classList.remove("activo");
+            catalogoQuinceaneras.classList.remove("activo");
+        }
+
+
+        function prepararVistaCatalogo() {
             presentacionPrincipal.classList.add("vista-oculta");
             vistaCategorias.classList.add("vista-oculta");
 
-            catalogoReuniones.classList.remove("activo");
-            catalogoQuinceaneras.classList.remove("activo");
-            catalogoInfantil.classList.add("activo");
+            ocultarCatalogos();
+        }
 
-            etiquetaBarra.textContent = "Fiestas infantiles";
 
-            history.replaceState(
-                null,
-                "",
-                window.location.pathname + "#fiestas-infantiles"
-            );
-
+        function irArriba() {
             window.scrollTo({
                 top: 0,
                 behavior: "smooth"
             });
         }
 
-        function mostrarReuniones() {
-            presentacionPrincipal.classList.add("vista-oculta");
-            vistaCategorias.classList.add("vista-oculta");
 
-            catalogoInfantil.classList.remove("activo");
-            catalogoQuinceaneras.classList.remove("activo");
+        function mostrarInfantiles() {
+            prepararVistaCatalogo();
+
+            catalogoInfantil.classList.add("activo");
+
+            etiquetaBarra.textContent =
+                "Fiestas infantiles";
+
+            history.replaceState(
+                null,
+                "",
+                window.location.pathname +
+                "#fiestas-infantiles"
+            );
+
+            irArriba();
+        }
+
+
+        function mostrarReuniones() {
+            prepararVistaCatalogo();
+
             catalogoReuniones.classList.add("activo");
 
-            etiquetaBarra.textContent = "Fiestas & Reuniones";
+            etiquetaBarra.textContent =
+                "Fiestas & Reuniones";
 
-
-
-            function mostrarCategorias() {
-                catalogoInfantil.classList.remove("activo");
-                catalogoReuniones.classList.remove("activo");
-
-                presentacionPrincipal.classList.remove("vista-oculta");
-                vistaCategorias.classList.remove("vista-oculta");
-
-                etiquetaBarra.textContent = "Invitaciones digitales";
-
-                history.replaceState(
-                    null,
-                    "",
-                    window.location.pathname
-                );
-
-                window.scrollTo({
-                    top: 0,
-                    behavior: "smooth"
-                });
-            }
-
-            abrirInfantiles.addEventListener(
-                "click",
-                mostrarInfantiles
+            history.replaceState(
+                null,
+                "",
+                window.location.pathname +
+                "#fiestas-reuniones"
             );
 
-            abrirReuniones.addEventListener(
-                "click",
-                mostrarReuniones
+            irArriba();
+        }
+
+
+        function mostrarQuinceaneras() {
+            prepararVistaCatalogo();
+
+            catalogoQuinceaneras.classList.add("activo");
+
+            etiquetaBarra.textContent =
+                "Quinceañeras";
+
+            history.replaceState(
+                null,
+                "",
+                window.location.pathname +
+                "#quinceaneras"
             );
 
-            botonVolver.addEventListener("click", function (evento) {
+            irArriba();
+        }
+
+
+        function mostrarCategorias() {
+            ocultarCatalogos();
+
+            presentacionPrincipal.classList.remove(
+                "vista-oculta"
+            );
+
+            vistaCategorias.classList.remove(
+                "vista-oculta"
+            );
+
+            etiquetaBarra.textContent =
+                "Invitaciones digitales";
+
+            history.replaceState(
+                null,
+                "",
+                window.location.pathname
+            );
+
+            irArriba();
+        }
+
+
+        abrirInfantiles.addEventListener(
+            "click",
+            mostrarInfantiles
+        );
+
+        abrirReuniones.addEventListener(
+            "click",
+            mostrarReuniones
+        );
+
+        abrirQuinceaneras.addEventListener(
+            "click",
+            mostrarQuinceaneras
+        );
+
+
+        botonVolver.addEventListener(
+            "click",
+            function (evento) {
                 const catalogoAbierto =
-                    catalogoInfantil.classList.contains("activo") ||
-                    catalogoReuniones.classList.contains("activo");
+                    catalogoInfantil.classList.contains(
+                        "activo"
+                    ) ||
+                    catalogoReuniones.classList.contains(
+                        "activo"
+                    ) ||
+                    catalogoQuinceaneras.classList.contains(
+                        "activo"
+                    );
 
                 if (catalogoAbierto) {
                     evento.preventDefault();
                     mostrarCategorias();
                 }
-            });
-
-            if (window.location.hash === "#fiestas-infantiles") {
-                mostrarInfantiles();
-            } else if (window.location.hash === "#fiestas-reuniones") {
-                mostrarReuniones();
             }
+        );
+
+
+        if (
+            window.location.hash ===
+            "#fiestas-infantiles"
+        ) {
+            mostrarInfantiles();
+
+        } else if (
+            window.location.hash ===
+            "#fiestas-reuniones"
+        ) {
+            mostrarReuniones();
+
+        } else if (
+            window.location.hash ===
+            "#quinceaneras"
+        ) {
+            mostrarQuinceaneras();
+        }
     </script>
 </body>
 
