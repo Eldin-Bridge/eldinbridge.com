@@ -326,17 +326,20 @@
         }
 
         .catalogo-infantil.activo,
-        .catalogo-reuniones.activo {
+        .catalogo-reuniones.activo,
+        .catalogo-quinceaneras.activo {
             display: block;
         }
 
         .catalogo-infantil .presentacion,
-        .catalogo-reuniones .presentacion {
+        .catalogo-reuniones .presentacion,
+        .catalogo-quinceaneras .presentacion {
             margin-bottom: 0;
         }
 
         .modelos-infantiles,
-        .modelos-reuniones {
+        .modelos-reuniones,
+        .modelos-quinceaneras {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 18px;
@@ -532,7 +535,8 @@
         @media (max-width: 860px) {
 
             .modelos-infantiles,
-            .modelos-reuniones {
+            .modelos-reuniones,
+            .modelos-quinceaneras {
                 grid-template-columns: repeat(3, minmax(0, 1fr));
             }
         }
@@ -540,7 +544,8 @@
         @media (max-width: 700px) {
 
             .modelos-infantiles,
-            .modelos-reuniones {
+            .modelos-reuniones,
+            .modelos-quinceaneras {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
@@ -548,7 +553,8 @@
         @media (max-width: 580px) {
 
             .modelos-infantiles,
-            .modelos-reuniones {
+            .modelos-reuniones,
+            .modelos-quinceaneras {
                 grid-template-columns: 1fr;
                 gap: 24px;
             }
@@ -929,13 +935,19 @@
                     </div>
                 </button>
 
-                <article class="categoria quinceaneras">
+                <button class="categoria quinceaneras" type="button" id="abrir-quinceaneras"
+                    aria-label="Ver diseños de Quinceañeras">
+
                     <img class="categoria-imagen" src="assets/categorias/quinceaneras.webp"
                         alt="Celebración elegante de quinceañera" loading="lazy">
 
                     <h3>Quinceañeras</h3>
-                    <div class="categoria-pie"><span>Próximamente</span><span class="linea"></span></div>
-                </article>
+
+                    <div class="categoria-pie">
+                        <span>Ver diseños →</span>
+                        <span class="linea"></span>
+                    </div>
+                </button>
 
                 <article class="categoria bodas">
                     <img class="categoria-imagen" src="assets/categorias/bodas.webp" alt="Pareja celebrando su boda"
@@ -1232,6 +1244,143 @@
                 Cada diseño tendrá animaciones, música y una ambientación diferente.
             </div>
         </section>
+
+        <section id="catalogo-quinceaneras" class="catalogo-quinceaneras vista-oculta"
+            aria-labelledby="titulo-quinceaneras">
+
+            <div class="presentacion">
+                <h1 id="titulo-quinceaneras">
+                    Una celebración para recordar
+                    <span class="degradado">toda la vida.</span>
+                </h1>
+
+                <p>
+                    Invitaciones creadas para presentar cada detalle de sus quince años
+                    con fotografías, música, animaciones y un estilo único.
+                </p>
+            </div>
+
+            <div class="modelos-quinceaneras">
+
+                <!-- Campestre -->
+                <article class="modelo-infantil modelo-quinceanera">
+
+                    <div class="telefono" aria-hidden="true">
+                        <div class="pantalla-telefono">
+                            <img class="vista-previa" src="assets/vistas-previas/campestre.webp" alt="" loading="lazy"
+                                decoding="async">
+                        </div>
+                    </div>
+
+                    <div class="mini-contenido">
+                        <span class="mini-numero">01</span>
+
+                        <h2 class="mini-titulo">
+                            Campestre
+                        </h2>
+
+                        <p class="mini-texto">
+                            Naturaleza, flores y elegancia con esencia de campo.
+                        </p>
+                    </div>
+
+                    <a class="mini-estado enlace-invitacion" href="plantillas/quinceaneras/campestre/">
+                        Ver invitación
+                    </a>
+                </article>
+
+                <!-- Clásica -->
+                <article class="modelo-infantil modelo-quinceanera">
+
+                    <div class="telefono" aria-hidden="true">
+                        <div class="pantalla-telefono">
+                            <img class="vista-previa" src="assets/vistas-previas/clasica.webp" alt="" loading="lazy"
+                                decoding="async">
+                        </div>
+                    </div>
+
+                    <div class="mini-contenido">
+                        <span class="mini-numero">02</span>
+
+                        <h2 class="mini-titulo">
+                            Clásica
+                        </h2>
+
+                        <p class="mini-texto">
+                            Una presentación delicada, romántica y atemporal.
+                        </p>
+                    </div>
+
+                    <a class="mini-estado enlace-invitacion" href="plantillas/quinceaneras/clasica/">
+                        Ver invitación
+                    </a>
+                </article>
+
+                <!-- Moderna -->
+                <article class="modelo-infantil modelo-quinceanera">
+
+                    <div class="telefono" aria-hidden="true">
+                        <div class="pantalla-telefono">
+                            <img class="vista-previa" src="assets/vistas-previas/moderna.webp" alt="" loading="lazy"
+                                decoding="async">
+                        </div>
+                    </div>
+
+                    <div class="mini-contenido">
+                        <span class="mini-numero">03</span>
+
+                        <h2 class="mini-titulo">
+                            Moderna
+                        </h2>
+
+                        <p class="mini-texto">
+                            Diseño actual, dinámico y lleno de personalidad.
+                        </p>
+                    </div>
+
+                    <a class="mini-estado enlace-invitacion" href="plantillas/quinceaneras/moderna/">
+                        Ver invitación
+                    </a>
+                </article>
+
+                <!-- Temática -->
+                <article class="modelo-infantil modelo-quinceanera">
+
+                    <div class="telefono" aria-hidden="true">
+                        <div class="pantalla-telefono">
+                            <img class="vista-previa" src="assets/vistas-previas/tematica.webp" alt="" loading="lazy"
+                                decoding="async">
+                        </div>
+                    </div>
+
+                    <div class="mini-contenido">
+                        <span class="mini-numero">04</span>
+
+                        <h2 class="mini-titulo">
+                            Temática
+                        </h2>
+
+                        <p class="mini-texto">
+                            Un concepto especial inspirado en su mundo favorito.
+                        </p>
+                    </div>
+
+                    <a class="mini-estado enlace-invitacion" href="plantillas/quinceaneras/tematica/">
+                        Ver invitación
+                    </a>
+                </article>
+
+            </div>
+
+            <div class="nota">
+                <strong>
+                    Cuatro maneras de contar una historia inolvidable.
+                </strong>
+
+                Cada diseño combinará fotografías, música y animaciones
+                con una ambientación diferente.
+            </div>
+        </section>
     </main>
 
     <footer>
@@ -1256,11 +1405,17 @@
         const catalogoReuniones =
             document.getElementById("catalogo-reuniones");
 
+        const catalogoQuinceaneras =
+            document.getElementById("catalogo-quinceaneras");
+
         const abrirInfantiles =
             document.getElementById("abrir-infantiles");
 
         const abrirReuniones =
             document.getElementById("abrir-reuniones");
+
+        const abrirQuinceaneras =
+            document.getElementById("abrir-quinceaneras");
 
         const etiquetaBarra =
             document.getElementById("etiqueta-barra");
@@ -1273,6 +1428,7 @@
             vistaCategorias.classList.add("vista-oculta");
 
             catalogoReuniones.classList.remove("activo");
+            catalogoQuinceaneras.classList.remove("activo");
             catalogoInfantil.classList.add("activo");
 
             etiquetaBarra.textContent = "Fiestas infantiles";
@@ -1294,69 +1450,60 @@
             vistaCategorias.classList.add("vista-oculta");
 
             catalogoInfantil.classList.remove("activo");
+            catalogoQuinceaneras.classList.remove("activo");
             catalogoReuniones.classList.add("activo");
 
             etiquetaBarra.textContent = "Fiestas & Reuniones";
 
-            history.replaceState(
-                null,
-                "",
-                window.location.pathname + "#fiestas-reuniones"
-            );
 
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        }
 
-        function mostrarCategorias() {
-            catalogoInfantil.classList.remove("activo");
-            catalogoReuniones.classList.remove("activo");
+            function mostrarCategorias() {
+                catalogoInfantil.classList.remove("activo");
+                catalogoReuniones.classList.remove("activo");
 
-            presentacionPrincipal.classList.remove("vista-oculta");
-            vistaCategorias.classList.remove("vista-oculta");
+                presentacionPrincipal.classList.remove("vista-oculta");
+                vistaCategorias.classList.remove("vista-oculta");
 
-            etiquetaBarra.textContent = "Invitaciones digitales";
+                etiquetaBarra.textContent = "Invitaciones digitales";
 
-            history.replaceState(
-                null,
-                "",
-                window.location.pathname
-            );
+                history.replaceState(
+                    null,
+                    "",
+                    window.location.pathname
+                );
 
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        }
-
-        abrirInfantiles.addEventListener(
-            "click",
-            mostrarInfantiles
-        );
-
-        abrirReuniones.addEventListener(
-            "click",
-            mostrarReuniones
-        );
-
-        botonVolver.addEventListener("click", function (evento) {
-            const catalogoAbierto =
-                catalogoInfantil.classList.contains("activo") ||
-                catalogoReuniones.classList.contains("activo");
-
-            if (catalogoAbierto) {
-                evento.preventDefault();
-                mostrarCategorias();
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
             }
-        });
 
-        if (window.location.hash === "#fiestas-infantiles") {
-            mostrarInfantiles();
-        } else if (window.location.hash === "#fiestas-reuniones") {
-            mostrarReuniones();
-        }
+            abrirInfantiles.addEventListener(
+                "click",
+                mostrarInfantiles
+            );
+
+            abrirReuniones.addEventListener(
+                "click",
+                mostrarReuniones
+            );
+
+            botonVolver.addEventListener("click", function (evento) {
+                const catalogoAbierto =
+                    catalogoInfantil.classList.contains("activo") ||
+                    catalogoReuniones.classList.contains("activo");
+
+                if (catalogoAbierto) {
+                    evento.preventDefault();
+                    mostrarCategorias();
+                }
+            });
+
+            if (window.location.hash === "#fiestas-infantiles") {
+                mostrarInfantiles();
+            } else if (window.location.hash === "#fiestas-reuniones") {
+                mostrarReuniones();
+            }
     </script>
 </body>
 
