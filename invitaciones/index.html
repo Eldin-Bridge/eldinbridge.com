@@ -1425,6 +1425,12 @@
         const botonVolver =
             document.getElementById("boton-volver");
 
+        const direccionCatalogo =
+            window.location.pathname + window.location.search;
+
+        const direccionSalida =
+            new URL("../", window.location.href).pathname;
+
 
         function ocultarCatalogos() {
             catalogoInfantil.classList.remove("activo");
@@ -1595,17 +1601,49 @@
             }
         }
 
-        window.addEventListener("popstate", mostrarVistaSegunDireccion);
+        window.addEventListener("popstate", function (evento) {
+            if (evento.state && evento.state.salidaCatalogo) {
+                window.location.replace(direccionSalida);
+                return;
+            }
 
-        if (!history.state) {
-            history.replaceState(
-                {
-                    catalogo: window.location.hash
-                        ? window.location.hash.slice(1)
-                        : null
-                },
+            mostrarVistaSegunDireccion();
+        });
+
+        const hashInicial = window.location.hash;
+        const catalogosValidos = [
+            "#fiestas-infantiles",
+            "#fiestas-reuniones",
+            "#quinceaneras"
+        ];
+
+        const catalogoInicial =
+            catalogosValidos.includes(hashInicial)
+                ? hashInicial.slice(1)
+                : null;
+
+        /*
+         * Creamos una ruta de salida controlada. De esta manera,
+         * el botón Atrás nunca reutiliza una invitación visitada
+         * anteriormente como si fuera la pantalla anterior.
+         */
+        history.replaceState(
+            { salidaCatalogo: true },
+            "",
+            direccionSalida
+        );
+
+        history.pushState(
+            { catalogo: null },
+            "",
+            direccionCatalogo
+        );
+
+        if (catalogoInicial) {
+            history.pushState(
+                { catalogo: catalogoInicial },
                 "",
-                window.location.href
+                direccionCatalogo + "#" + catalogoInicial
             );
         }
 
