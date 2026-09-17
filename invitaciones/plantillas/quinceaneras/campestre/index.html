@@ -55,6 +55,26 @@
     }
 
     .entrada.oculta { opacity: 0; visibility: hidden; pointer-events: none; }
+
+    .boton-salir-portada {
+      position: absolute;
+      z-index: 3;
+      top: max(14px, env(safe-area-inset-top));
+      left: max(14px, env(safe-area-inset-left));
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.5);
+      border-radius: 50%;
+      color: white;
+      background: rgba(45,55,40,.76);
+      box-shadow: 0 8px 25px rgba(0,0,0,.2);
+      font-size: 1.35rem;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+    }
+
     .entrada-foto, .foto-pantalla img {
       position: absolute;
       inset: 0;
@@ -250,12 +270,15 @@
     .foto-leyenda {
       position: absolute;
       z-index: 2;
-      right: 22px;
-      bottom: max(24px, env(safe-area-inset-bottom));
+      left: 50%;
+      bottom: calc(max(18px, env(safe-area-inset-bottom)) + 62px);
+      width: calc(100% - 44px);
       color: white;
       font-family: Parisienne, cursive;
       font-size: 1.7rem;
+      text-align: center;
       text-shadow: 0 2px 12px rgba(0,0,0,.42);
+      transform: translateX(-50%);
     }
 
     .revelar { opacity: 0; transform: translateY(30px); transition: opacity .85s ease, transform .85s ease; }
@@ -314,7 +337,7 @@
     .boton-continuar {
       position: absolute;
       z-index: 12;
-      left: max(18px, env(safe-area-inset-left));
+      left: 50%;
       bottom: max(18px, env(safe-area-inset-bottom));
       display: inline-flex;
       min-height: 44px;
@@ -329,6 +352,7 @@
       box-shadow: 0 10px 26px rgba(0,0,0,.2);
       font-weight: 700;
       cursor: pointer;
+      transform: translateX(-50%);
       backdrop-filter: blur(8px);
     }
 
@@ -338,7 +362,7 @@
     }
 
     .boton-continuar:active {
-      transform: scale(.97);
+      transform: translateX(-50%) scale(.97);
     }
 
     .particulas { position: fixed; inset: 0; z-index: 70; overflow: hidden; pointer-events: none; }
@@ -374,6 +398,7 @@
 <body>
   <section class="entrada" id="entrada" aria-label="Portada de la invitación">
     <img class="entrada-foto" id="foto-portada" src="assets/fotos/foto06.webp" alt="Quinceañera en un ambiente campestre">
+    <button class="boton-salir-portada" id="boton-salir-portada" type="button" aria-label="Salir de la invitación" title="Salir">×</button>
     <div class="entrada-contenido">
       <div class="monograma" id="monograma-portada">XV</div>
       <p class="entrada-etiqueta">Mis quince años</p>
@@ -525,6 +550,7 @@
       telefonoWhatsApp: "528112345678",
       mensajeWhatsApp: "Hola, confirmo mi asistencia a los XV años de Sofía.",
       despedida: "Gracias por ser parte de mi historia.",
+      urlSalida: "../../../index.html",
       audio: "assets/audio/musica.mp3",
       fotos: {
         portada: "assets/fotos/foto06.webp",
@@ -712,6 +738,10 @@
       reproducirMusica();
       clearInterval(intervaloParticulas);
       intervaloParticulas = setInterval(crearLuz, 950);
+    });
+
+    $("#boton-salir-portada").addEventListener("click", () => {
+      window.location.href = DATOS_INVITACION.urlSalida;
     });
 
     $("#boton-musica").addEventListener("click", () => {
