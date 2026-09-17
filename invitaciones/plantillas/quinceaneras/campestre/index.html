@@ -284,13 +284,16 @@
     .controles {
       position: fixed;
       z-index: 80;
+      top: max(14px, env(safe-area-inset-top));
+      left: max(14px, env(safe-area-inset-left));
       right: max(14px, env(safe-area-inset-right));
-      bottom: max(14px, env(safe-area-inset-bottom));
       display: flex;
+      justify-content: space-between;
       gap: 9px;
       opacity: 0;
       visibility: hidden;
       transition: opacity .35s ease;
+      pointer-events: none;
     }
     body.iniciada .controles { opacity: 1; visibility: visible; }
     .control {
@@ -305,12 +308,13 @@
       box-shadow: 0 8px 25px rgba(0,0,0,.2);
       cursor: pointer;
       backdrop-filter: blur(8px);
+      pointer-events: auto;
     }
 
     .boton-continuar {
       position: absolute;
       z-index: 12;
-      left: 50%;
+      left: max(18px, env(safe-area-inset-left));
       bottom: max(18px, env(safe-area-inset-bottom));
       display: inline-flex;
       min-height: 44px;
@@ -325,7 +329,6 @@
       box-shadow: 0 10px 26px rgba(0,0,0,.2);
       font-weight: 700;
       cursor: pointer;
-      transform: translateX(-50%);
       backdrop-filter: blur(8px);
     }
 
@@ -335,7 +338,7 @@
     }
 
     .boton-continuar:active {
-      transform: translateX(-50%) scale(.97);
+      transform: scale(.97);
     }
 
     .particulas { position: fixed; inset: 0; z-index: 70; overflow: hidden; pointer-events: none; }
@@ -484,8 +487,8 @@
   </main>
 
   <div class="controles" aria-label="Controles de invitación">
-    <button class="control" id="boton-musica" type="button" aria-label="Pausar música" title="Música">♫</button>
     <button class="control" id="boton-salir" type="button" aria-label="Volver a la portada" title="Salir">×</button>
+    <button class="control" id="boton-musica" type="button" aria-label="Pausar música" title="Música">♫</button>
   </div>
   <div class="particulas" id="particulas" aria-hidden="true"></div>
   <audio id="musica" loop preload="none"></audio>
