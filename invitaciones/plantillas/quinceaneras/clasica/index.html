@@ -914,27 +914,52 @@
     }
 
     @keyframes escribirIniciales {
-      to { stroke-dashoffset: 0; }
+      to {
+        stroke-dashoffset: 0;
+      }
     }
 
     @keyframes fijarIniciales {
-      to { opacity: 1; }
+      to {
+        opacity: 1;
+      }
     }
 
     @keyframes portadaClasica {
-      from { opacity: 0; transform: translateY(18px) scale(.985); }
-      to { opacity: 1; transform: none; }
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(.985);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
     }
 
     @media (min-width: 760px) {
-      .tarjeta-seccion { padding: 70px 38px 94px; }
-      .tarjeta { border-radius: 170px 170px 10px 10px; }
+      .tarjeta-seccion {
+        padding: 70px 38px 94px;
+      }
+
+      .tarjeta {
+        border-radius: 170px 170px 10px 10px;
+      }
     }
 
     @media (max-width: 390px) {
-      .tarjeta { padding: 29px 18px 25px; }
-      .tarjeta::before { height: 22px; margin-bottom: 8px; }
-      .entrada-frase { font-size: .96rem; }
+      .tarjeta {
+        padding: 29px 18px 25px;
+      }
+
+      .tarjeta::before {
+        height: 22px;
+        margin-bottom: 8px;
+      }
+
+      .entrada-frase {
+        font-size: .96rem;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1083,7 +1108,8 @@
     </section>
 
     <section class="seccion foto-pantalla" data-foto="5">
-      <div class="foto-marco"><img src="assets/fotos/foto05.webp" alt="Retrato de la quinceañera en un jardín clásico" loading="lazy">
+      <div class="foto-marco"><img src="assets/fotos/foto05.webp" alt="Retrato de la quinceañera en un jardín clásico"
+          loading="lazy">
       </div>
       <p class="foto-leyenda" id="firma-final">Con cariño, Sofía</p>
     </section>
@@ -1244,6 +1270,24 @@
       $$(".foto-pantalla img").forEach((imagen, i) => imagen.src = DATOS_INVITACION.fotos.secciones[i]);
       $$(".fondo-tarjeta").forEach((imagen, i) => imagen.src = DATOS_INVITACION.fondos[i]);
       prepararCalendario();
+
+      [
+        "#mapa-iglesia",
+        "#agregar-calendario",
+        "#mapa-salon",
+        "#confirmar-whatsapp"
+      ].forEach(selector => {
+        const boton = $(selector);
+
+        boton.removeAttribute("href");
+        boton.removeAttribute("target");
+        boton.removeAttribute("rel");
+        boton.setAttribute("aria-disabled", "true");
+
+        boton.addEventListener("click", evento => {
+          evento.preventDefault();
+        });
+      });
     }
 
     function prepararCalendario() {

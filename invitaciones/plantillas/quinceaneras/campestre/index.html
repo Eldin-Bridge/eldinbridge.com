@@ -935,6 +935,24 @@
       $$(".foto-pantalla img").forEach((imagen, i) => imagen.src = DATOS_INVITACION.fotos.secciones[i]);
       $$(".fondo-tarjeta").forEach((imagen, i) => imagen.src = DATOS_INVITACION.fondos[i]);
       prepararCalendario();
+
+      [
+        "#mapa-iglesia",
+        "#agregar-calendario",
+        "#mapa-salon",
+        "#confirmar-whatsapp"
+      ].forEach(selector => {
+        const boton = $(selector);
+
+        boton.removeAttribute("href");
+        boton.removeAttribute("target");
+        boton.removeAttribute("rel");
+        boton.setAttribute("aria-disabled", "true");
+
+        boton.addEventListener("click", evento => {
+          evento.preventDefault();
+        });
+      });
     }
 
     function prepararCalendario() {
