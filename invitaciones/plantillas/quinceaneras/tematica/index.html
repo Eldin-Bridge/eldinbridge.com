@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#10271e">
+  <meta name="description" content="Invitación temática de quince años de Melisa">
+  <title>Melisa | Mis XV años</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --azul-noche: #071426;
+      --azul: #145dff;
+      --cobalto: #1747c7;
+      --cian: #51d6ff;
+      --plata: #dfe8f4;
+      --blanco: #f8fbff;
+      --tinta: #071426;
+      --muted: #526379;
+      --alto: 100svh;
+      --sombra: 0 26px 70px rgba(4, 18, 42, .22);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      background: var(--azul-noche);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 280px;
+      overflow: hidden;
+      color: var(--tinta);
+      background: var(--azul-noche);
+      font-family: "Manrope", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    a {
+      font: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      border: 0;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    /* ======================== PORTADA ======================== */
+    .entrada {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      min-height: var(--alto);
+      overflow: hidden;
+      place-items: end center;
+      padding: max(76px, env(safe-area-inset-top)) 20px max(26px, env(safe-area-inset-bottom));
+      color: white;
+      background: var(--azul-noche);
+      transition: opacity .65s ease, visibility .65s ease;
+    }
+
+    .entrada.oculta {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .entrada-foto,
+    .foto-pantalla img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .entrada-foto {
+      object-position: center center;
+      transform: scale(1.015);
+      animation: portadaZoom 14s ease-out both;
+    }
+
+    .entrada::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(90deg, rgba(7, 20, 38, .48), transparent 42%),
+        linear-gradient(180deg, rgba(7, 20, 38, .08) 22%, rgba(7, 20, 38, .22) 49%, rgba(7, 20, 38, .95) 100%);
+    }
+
+    .entrada::after {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      right: 8%;
+      width: 1px;
+      height: 42%;
+      background: linear-gradient(transparent, rgba(81, 214, 255, .9));
+      box-shadow: 11px 0 0 rgba(255, 255, 255, .16);
+    }
+
+    .boton-salir-portada,
+    .control {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, .42);
+      border-radius: 12px;
+      color: white;
+      background: rgba(5, 18, 38, .64);
+      box-shadow: 0 12px 34px rgba(0, 0, 0, .2);
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+    }
+
+    .boton-salir-portada {
+      position: absolute;
+      z-index: 5;
+      top: max(14px, env(safe-area-inset-top));
+      left: max(14px, env(safe-area-inset-left));
+      font-size: 1.45rem;
+    }
+
+    .entrada-contenido {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 620px);
+      padding: 25px 20px 8px;
+      text-align: left;
+      animation: subirEntrada 1s .12s both;
+    }
+
+    .entrada-linea {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 11px;
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .31em;
+      text-transform: uppercase;
+    }
+
+    .entrada-linea::before {
+      content: "";
+      width: 44px;
+      height: 2px;
+      background: var(--cian);
+    }
+
+    .monograma {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 3px;
+      margin-bottom: 5px;
+      font-family: "Syne", sans-serif;
+      font-size: clamp(2.4rem, 11vw, 4.6rem);
+      font-weight: 800;
+      letter-spacing: -.1em;
+      line-height: .8;
+      color: transparent;
+      -webkit-text-stroke: 1.3px rgba(255, 255, 255, .95);
+    }
+
+    .entrada-nombre {
+      max-width: 100%;
+      font-family: "Syne", sans-serif;
+      font-size: clamp(3.25rem, 16vw, 7rem);
+      font-weight: 700;
+      letter-spacing: -.075em;
+      line-height: .83;
+      overflow-wrap: anywhere;
+    }
+
+    .entrada-frase {
+      width: min(100%, 430px);
+      margin: 17px 0 22px;
+      padding-left: 15px;
+      border-left: 2px solid var(--cian);
+      color: rgba(255, 255, 255, .84);
+      font-size: clamp(.93rem, 3.8vw, 1.08rem);
+      line-height: 1.55;
+    }
+
+    .boton-principal,
+    .boton-demo,
+    .boton-continuar {
+      display: inline-flex;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 11px 20px;
+      border-radius: 4px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      cursor: pointer;
+    }
+
+    .boton-principal {
+      color: var(--azul-noche);
+      background: var(--blanco);
+      box-shadow: 8px 8px 0 var(--azul);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .boton-principal:active {
+      transform: translate(4px, 4px);
+      box-shadow: 4px 4px 0 var(--azul);
+    }
+
+    /* ======================== NAVEGACIÓN ======================== */
+    main {
+      position: relative;
+      width: 100%;
+      height: var(--alto);
+      overflow-x: hidden;
+      overflow-y: auto;
+      background: var(--azul-noche);
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+      overscroll-behavior-y: contain;
+      touch-action: pan-y;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    main::-webkit-scrollbar {
+      display: none;
+    }
+
+    .seccion {
+      position: relative;
+      display: grid;
+      width: 100%;
+      height: var(--alto);
+      min-height: var(--alto);
+      overflow: hidden;
+      place-items: center;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      isolation: isolate;
+    }
+
+    .tarjeta-seccion {
+      padding: 70px 18px 88px;
+      background: var(--plata);
+    }
+
+    .fondo-tarjeta {
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .tarjeta-seccion::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background: linear-gradient(135deg, rgba(7, 20, 38, .06), transparent 46%, rgba(20, 93, 255, .08));
+    }
+
+    .tarjeta-seccion::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 10% 8%;
+      border: 1px solid rgba(255, 255, 255, .22);
+      transform: skewY(-3deg);
+      pointer-events: none;
+    }
+
+    .tarjeta {
+      position: relative;
+      width: min(100%, 650px);
+      padding: clamp(28px, 7vw, 48px) clamp(21px, 7vw, 54px) clamp(30px, 8vw, 54px);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .58);
+      border-radius: 18px 3px 18px 3px;
+      background: rgba(248, 251, 255, .78);
+      box-shadow: var(--sombra);
+      text-align: left;
+      backdrop-filter: blur(15px) saturate(1.15);
+    }
+
+    .tarjeta::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 7px;
+      height: 100%;
+      background: linear-gradient(var(--cian), var(--azul));
+    }
+
+    .tarjeta::after {
+      content: "";
+      position: absolute;
+      top: -58px;
+      right: -42px;
+      width: 135px;
+      height: 135px;
+      border: 25px solid rgba(20, 93, 255, .08);
+      border-radius: 50%;
+    }
+
+    .numero-tarjeta {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--cobalto);
+      font-size: .67rem;
+      font-weight: 800;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+    }
+
+    .numero-tarjeta strong {
+      font-family: "Syne", sans-serif;
+      font-size: 1.55rem;
+      letter-spacing: -.06em;
+    }
+
+    .numero-tarjeta::after {
+      content: "";
+      width: 48px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    .sobrelinea {
+      position: relative;
+      z-index: 1;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    .titulo {
+      position: relative;
+      z-index: 1;
+      margin-top: 7px;
+      color: var(--azul-noche);
+      font-family: "Syne", sans-serif;
+      font-size: clamp(2.35rem, 10vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -.065em;
+      line-height: .94;
+    }
+
+    .texto {
+      position: relative;
+      z-index: 1;
+      margin-top: 18px;
+      color: #27384d;
+      font-size: clamp(.98rem, 3.7vw, 1.15rem);
+      line-height: 1.65;
+    }
+
+    .linea-dato {
+      position: relative;
+      z-index: 1;
+      width: 74px;
+      height: 3px;
+      margin: 22px 0;
+      background: var(--azul);
+    }
+
+    .dato-destacado,
+    .nombres-padres {
+      position: relative;
+      z-index: 1;
+      color: var(--azul-noche);
+      font-family: "Syne", sans-serif;
+      font-size: clamp(1.08rem, 4.4vw, 1.35rem);
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .nombres-padres {
+      margin-top: 14px;
+    }
+
+    .dato-secundario {
+      position: relative;
+      z-index: 1;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: .93rem;
+      line-height: 1.45;
+    }
+
+    .boton-demo {
+      position: relative;
+      z-index: 1;
+      margin-top: 22px;
+      border: 1px solid rgba(20, 71, 199, .2);
+      color: white;
+      background: var(--azul-noche);
+      box-shadow: 6px 6px 0 rgba(20, 93, 255, .22);
+      cursor: default;
+    }
+
+    .detalles {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .detalle {
+      padding: 14px 12px;
+      border-top: 3px solid var(--azul);
+      background: rgba(223, 232, 244, .58);
+    }
+
+    .detalle strong,
+    .detalle span {
+      display: block;
+    }
+
+    .detalle strong {
+      color: var(--azul-noche);
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .detalle span {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .contador {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+      margin-top: 23px;
+    }
+
+    .tiempo {
+      min-width: 0;
+      padding: 13px 3px 10px;
+      border: 1px solid rgba(20, 93, 255, .16);
+      background: rgba(255, 255, 255, .52);
+      text-align: center;
+    }
+
+    .tiempo strong {
+      display: block;
+      color: var(--azul-noche);
+      font-family: "Syne", sans-serif;
+      font-size: clamp(1.25rem, 6vw, 2.1rem);
+      line-height: 1;
+    }
+
+    .tiempo span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: .54rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    /* ======================== FOTOGRAFÍAS ======================== */
+    .foto-pantalla {
+      background: #061225;
+    }
+
+    .foto-marco {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      opacity: 0;
+      transform: scale(1.035);
+      transition: opacity .9s ease, transform 1.1s ease;
+    }
+
+    .foto-pantalla.visible .foto-marco {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .foto-pantalla img {
+      object-position: center center;
+      transform: scale(1.055);
+      will-change: transform;
+    }
+
+    .foto-pantalla.visible img {
+      animation: fotoMovimiento 12s ease-out both;
+    }
+
+    .foto-pantalla:nth-of-type(4n).visible img {
+      animation-name: fotoMovimientoInverso;
+    }
+
+    .foto-pantalla::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(180deg, rgba(7, 20, 38, .04) 45%, rgba(7, 20, 38, .82) 100%);
+      pointer-events: none;
+    }
+
+    .foto-pantalla::after {
+      content: attr(data-indice);
+      position: absolute;
+      z-index: 2;
+      top: 74px;
+      right: 18px;
+      color: rgba(255, 255, 255, .64);
+      font-family: "Syne", sans-serif;
+      font-size: .74rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+      writing-mode: vertical-rl;
+    }
+
+    .foto-leyenda {
+      position: absolute;
+      z-index: 3;
+      left: 50%;
+      bottom: calc(max(18px, env(safe-area-inset-bottom)) + 67px);
+      width: calc(100% - 44px);
+      color: white;
+      font-family: "Syne", sans-serif;
+      font-size: clamp(1.16rem, 5.2vw, 1.65rem);
+      font-weight: 600;
+      letter-spacing: -.03em;
+      line-height: 1.2;
+      text-align: center;
+      text-shadow: 0 3px 18px rgba(0, 0, 0, .55);
+      transform: translateX(-50%);
+    }
+
+    /* ======================== ANIMACIONES ======================== */
+    .revelar {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .72s ease, transform .72s cubic-bezier(.2, .72, .22, 1);
+    }
+
+    .revelar.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .revelar[data-demora="1"] { transition-delay: .1s; }
+    .revelar[data-demora="2"] { transition-delay: .2s; }
+    .revelar[data-demora="3"] { transition-delay: .3s; }
+
+    .controles {
+      position: fixed;
+      z-index: 80;
+      top: max(14px, env(safe-area-inset-top));
+      left: max(14px, env(safe-area-inset-left));
+      right: max(14px, env(safe-area-inset-right));
+      display: flex;
+      justify-content: space-between;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .3s ease;
+    }
+
+    body.iniciada .controles {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .control {
+      pointer-events: auto;
+    }
+
+    .boton-continuar {
+      position: absolute;
+      z-index: 12;
+      left: 50%;
+      bottom: max(18px, env(safe-area-inset-bottom));
+      min-width: 132px;
+      border: 1px solid rgba(255, 255, 255, .46);
+      color: white;
+      background: rgba(7, 20, 38, .84);
+      box-shadow: 6px 6px 0 rgba(20, 93, 255, .35);
+      transform: translateX(-50%);
+      backdrop-filter: blur(10px);
+    }
+
+    .boton-continuar:active {
+      transform: translateX(-50%) translate(3px, 3px);
+      box-shadow: 3px 3px 0 rgba(20, 93, 255, .35);
+    }
+
+    .particulas {
+      position: fixed;
+      inset: 0;
+      z-index: 70;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .destello {
+      position: absolute;
+      width: 3px;
+      height: 20px;
+      border-radius: 999px;
+      background: linear-gradient(transparent, rgba(81, 214, 255, .95), transparent);
+      opacity: 0;
+      animation: subirDestello var(--duracion) linear forwards;
+    }
+
+    @keyframes portadaZoom {
+      from { transform: scale(1.08); }
+      to { transform: scale(1.015); }
+    }
+
+    @keyframes subirEntrada {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fotoMovimiento {
+      from { transform: scale(1.09) translate3d(-1%, 0, 0); }
+      to { transform: scale(1.02) translate3d(1%, 0, 0); }
+    }
+
+    @keyframes fotoMovimientoInverso {
+      from { transform: scale(1.03) translate3d(1%, 0, 0); }
+      to { transform: scale(1.09) translate3d(-1%, 0, 0); }
+    }
+
+    @keyframes subirDestello {
+      0% { opacity: 0; transform: translateY(20px); }
+      20% { opacity: .68; }
+      100% { opacity: 0; transform: translateY(-110vh) translateX(var(--deriva)); }
+    }
+
+    @media (min-width: 760px) {
+      .tarjeta-seccion { padding: 86px 42px 100px; }
+      .entrada-contenido { padding-bottom: 36px; }
+      .tarjeta { border-radius: 24px 3px 24px 3px; }
+    }
+
+    @media (max-width: 390px) {
+      .tarjeta-seccion { padding-inline: 13px; }
+      .tarjeta { padding-inline: 19px; }
+      .detalles { grid-template-columns: 1fr; }
+      .entrada-nombre { font-size: 3.25rem; }
+      .contador { gap: 4px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .revelar, .foto-marco { transition-duration: .01ms; }
+      .entrada-foto, .foto-pantalla.visible img { animation: none; }
+      .foto-pantalla.visible img { transform: scale(1.02); }
+      .particulas { display: none; }
+    }
+
+    /* =========================================================
+       IDENTIDAD TEMÁTICA · BOSQUE ENCANTADO
+       Sobrescribe la geometría urbana sin alterar la navegación.
+       ========================================================= */
+    :root {
+      --azul-noche: #0b1c16;
+      --azul: #b18a42;
+      --cobalto: #75551d;
+      --cian: #d7b96d;
+      --plata: #eadcb5;
+      --blanco: #fff9e8;
+      --tinta: #173025;
+      --muted: #69766e;
+      --sombra: 0 28px 70px rgba(7, 28, 20, .32);
+    }
+
+    body { font-family: "Cormorant Garamond", Georgia, serif; }
+
+    .entrada {
+      place-items: end center;
+      padding: max(68px, env(safe-area-inset-top)) 22px max(30px, env(safe-area-inset-bottom));
+      background: #0b1c16;
+    }
+
+    .entrada-foto { object-position: center 35%; filter: saturate(.93) contrast(1.03); }
+
+    .entrada::before {
+      background:
+        radial-gradient(circle at 50% 36%, transparent 20%, rgba(5, 21, 14, .1) 55%, rgba(5, 18, 13, .78) 100%),
+        linear-gradient(180deg, rgba(4, 20, 13, .08) 20%, rgba(4, 20, 13, .2) 48%, rgba(4, 20, 13, .95) 100%);
+    }
+
+    .entrada::after {
+      top: 16px;
+      right: 16px;
+      bottom: 16px;
+      left: 16px;
+      width: auto;
+      height: auto;
+      border: 1px solid rgba(226, 197, 121, .55);
+      border-radius: 48% 48% 8px 8px / 15% 15% 8px 8px;
+      background: none;
+      box-shadow: inset 0 0 0 5px rgba(8, 28, 20, .12);
+      pointer-events: none;
+    }
+
+    .boton-salir-portada, .control {
+      border-color: rgba(226, 197, 121, .55);
+      border-radius: 50%;
+      color: #fff8df;
+      background: rgba(12, 39, 28, .7);
+    }
+
+    .entrada-contenido {
+      width: min(100%, 560px);
+      padding: 28px 20px 10px;
+      text-align: center;
+    }
+
+    .entrada-linea {
+      justify-content: center;
+      font-family: "Cinzel", serif;
+      font-size: .67rem;
+      letter-spacing: .38em;
+    }
+
+    .entrada-linea::before, .entrada-linea::after {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: #d7b96d;
+    }
+
+    .monograma {
+      position: relative;
+      display: grid;
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 11px;
+      place-items: center;
+      border: 1px solid rgba(226, 197, 121, .7);
+      border-radius: 50%;
+      color: #fff7df;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 2.55rem;
+      font-weight: 500;
+      letter-spacing: -.12em;
+      line-height: 1;
+      -webkit-text-stroke: 0;
+      text-shadow: 0 2px 18px rgba(0, 0, 0, .35);
+    }
+
+    .entrada-nombre {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(4rem, 18vw, 7.5rem);
+      font-weight: 500;
+      font-style: italic;
+      letter-spacing: -.035em;
+      line-height: .8;
+      text-shadow: 0 3px 28px rgba(0,0,0,.35);
+    }
+
+    .entrada-frase {
+      margin: 20px auto 24px;
+      padding: 0;
+      border: 0;
+      color: rgba(255, 249, 230, .9);
+      font-size: clamp(1.04rem, 4.2vw, 1.25rem);
+      font-style: italic;
+      line-height: 1.45;
+    }
+
+    .boton-principal, .boton-demo, .boton-continuar {
+      border: 1px solid rgba(192, 151, 67, .75);
+      border-radius: 999px;
+      font-family: "Cinzel", serif;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .16em;
+    }
+
+    .boton-principal {
+      color: #183125;
+      background: linear-gradient(135deg, #fff9e7, #dcc586);
+      box-shadow: 0 10px 30px rgba(6, 20, 13, .3);
+    }
+
+    .tarjeta-seccion::before {
+      background: linear-gradient(180deg, rgba(8, 28, 19, .38), rgba(8, 28, 19, .62));
+    }
+
+    .fondo-tarjeta { filter: saturate(.78) brightness(.72); transform: scale(1.04); }
+
+    .tarjeta {
+      width: min(88%, 520px);
+      padding: clamp(30px, 7vh, 58px) clamp(24px, 7vw, 48px);
+      border: 1px solid rgba(210, 180, 103, .66);
+      border-radius: 48% 48% 18px 18px / 10% 10% 18px 18px;
+      color: #20382c;
+      background:
+        linear-gradient(rgba(255, 250, 232, .94), rgba(243, 233, 200, .94)),
+        radial-gradient(circle at top, #fffdf2, #e8ddb7);
+      box-shadow: 0 26px 75px rgba(3, 18, 11, .42), inset 0 0 0 6px rgba(142, 107, 42, .08);
+    }
+
+    .tarjeta::before {
+      content: "✦";
+      position: absolute;
+      top: 13px;
+      left: 50%;
+      color: #9a742e;
+      font-size: 1rem;
+      transform: translateX(-50%);
+    }
+
+    .numero-tarjeta, .sobrelinea {
+      color: #775a25;
+      font-family: "Cinzel", serif;
+      letter-spacing: .2em;
+    }
+
+    .titulo {
+      color: #173629;
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(2.75rem, 12vw, 5.2rem);
+      font-weight: 500;
+      font-style: italic;
+      letter-spacing: -.035em;
+      line-height: .88;
+    }
+
+    .texto, .dato-secundario { color: #4d5a52; font-size: clamp(1rem, 4.1vw, 1.18rem); }
+    .nombres-padres, .dato-destacado { color: #284c39; font-family: "Cormorant Garamond", serif; }
+    .linea-dato { background: linear-gradient(90deg, transparent, #ad873d, transparent); }
+    .tiempo { border-color: rgba(134, 96, 33, .28); background: rgba(255, 252, 238, .58); }
+    .tiempo strong { color: #234b38; font-family: "Cinzel", serif; }
+
+    .foto-pantalla::before {
+      background: linear-gradient(180deg, rgba(4, 18, 12, .08) 28%, rgba(4, 18, 12, .8) 100%);
+    }
+
+    .foto-pantalla::after {
+      top: 18px;
+      right: 18px;
+      bottom: 18px;
+      left: 18px;
+      width: auto;
+      height: auto;
+      border: 1px solid rgba(230, 203, 129, .46);
+      border-radius: 45% 45% 8px 8px / 9% 9% 8px 8px;
+      background: none;
+      box-shadow: none;
+    }
+
+    .foto-leyenda {
+      left: 50%;
+      bottom: 88px;
+      width: min(76%, 440px);
+      color: #fff8df;
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.45rem, 6vw, 2.25rem);
+      font-style: italic;
+      letter-spacing: .02em;
+      text-align: center;
+      transform: translateX(-50%);
+    }
+
+    .boton-continuar { color: #fff8dc; background: rgba(13, 47, 33, .82); backdrop-filter: blur(10px); }
+    .tarjeta-seccion .boton-continuar { color: #f8efd4; background: #244a37; }
+    .controles { top: max(14px, env(safe-area-inset-top)); }
+
+    .destello {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #e6ca79;
+      box-shadow: 0 0 12px #e6ca79, 0 0 24px rgba(230, 202, 121, .6);
+    }
+  </style>
+</head>
+
+<body>
+  <section class="entrada" id="entrada" aria-label="Portada de la invitación">
+    <img class="entrada-foto" id="foto-portada" src="assets/fotos/foto01.webp" alt="Melisa en un paisaje de fantasía celta">
+    <button class="boton-salir-portada" id="boton-salir-portada" type="button" aria-label="Salir de la invitación" title="Salir">×</button>
+
+    <div class="entrada-contenido">
+      <p class="entrada-linea">Érase una vez mis quince años</p>
+      <div class="monograma" id="monograma-portada">MC</div>
+      <h1 class="entrada-nombre" id="nombre-portada">Melisa</h1>
+      <p class="entrada-frase" id="frase-portada">Entre bosques y estrellas comienza una historia inolvidable.</p>
+      <button class="boton-principal" id="boton-entrar" type="button">Ver invitación <span aria-hidden="true">↓</span></button>
+    </div>
+  </section>
+
+  <main id="invitacion">
+    <section class="seccion tarjeta-seccion">
+      <img class="fondo-tarjeta" src="assets/fondos/fondo01.webp" alt="" loading="eager">
+      <article class="tarjeta">
+        <p class="numero-tarjeta revelar"><strong>I</strong> El prólogo</p>
+        <p class="sobrelinea revelar" data-demora="1">La aventura está por comenzar</p>
+        <h2 class="titulo revelar" data-demora="1" id="nombre-presentacion">Melisa</h2>
+        <p class="texto revelar" data-demora="2" id="mensaje-presentacion"></p>
+        <div class="linea-dato revelar" data-demora="2"></div>
+        <p class="texto revelar" data-demora="3">Con el amor de quienes han guiado cada uno de mis pasos</p>
+        <p class="nombres-padres revelar" data-demora="3" id="padres"></p>
+      </article>
+    </section>
+
+    <section class="seccion foto-pantalla" data-indice="CAPÍTULO / II">
+      <div class="foto-marco"><img src="assets/fotos/foto02.webp" alt="Melisa junto a un arroyo en el bosque" loading="lazy"></div>
+      <p class="foto-leyenda" id="leyenda-foto1">Donde nacen los sueños</p>
+    </section>
+
+    <section class="seccion tarjeta-seccion">
+      <img class="fondo-tarjeta" src="assets/fondos/fondo02.webp" alt="" loading="lazy">
+      <article class="tarjeta">
+        <p class="numero-tarjeta revelar"><strong>II</strong> La bendición</p>
+        <p class="sobrelinea revelar" data-demora="1">Un momento para agradecer</p>
+        <h2 class="titulo revelar" data-demora="1">Sé parte de mi historia</h2>
+        <p class="texto revelar" data-demora="2">Acompáñame a recibir con gratitud esta nueva etapa de mi vida.</p>
+        <div class="linea-dato revelar" data-demora="2"></div>
+        <p class="dato-destacado revelar" data-demora="2" id="iglesia"></p>
+        <p class="dato-secundario revelar" data-demora="2" id="direccion-iglesia"></p>
+        <p class="dato-destacado revelar" data-demora="3" id="hora-ceremonia"></p>
+        <button class="boton-demo revelar" data-demora="3" type="button" aria-disabled="true">Ver ubicación</button>
+      </article>
+    </section>
+
+    <section class="seccion foto-pantalla" data-indice="CAPÍTULO / III">
+      <div class="foto-marco"><img src="assets/fotos/foto03.webp" alt="Melisa entre antiguas ruinas cubiertas de hiedra" loading="lazy"></div>
+      <p class="foto-leyenda">Cada piedra guarda un secreto</p>
+    </section>
+
+    <section class="seccion tarjeta-seccion">
+      <img class="fondo-tarjeta" src="assets/fondos/fondo03.webp" alt="" loading="lazy">
+      <article class="tarjeta">
+        <p class="numero-tarjeta revelar"><strong>III</strong> La fecha elegida</p>
+        <p class="sobrelinea revelar" data-demora="1">Cuando la luna marque el momento</p>
+        <h2 class="titulo revelar" data-demora="1" id="fecha-principal"></h2>
+        <p class="texto revelar" data-demora="2">El tiempo corre y nuestro encuentro está cada vez más cerca.</p>
+        <div class="contador revelar" data-demora="2" aria-label="Cuenta regresiva">
+          <div class="tiempo"><strong id="dias">00</strong><span>Días</span></div>
+          <div class="tiempo"><strong id="horas">00</strong><span>Horas</span></div>
+          <div class="tiempo"><strong id="minutos">00</strong><span>Min</span></div>
+          <div class="tiempo"><strong id="segundos">00</strong><span>Seg</span></div>
+        </div>
+        <button class="boton-demo revelar" data-demora="3" type="button" aria-disabled="true">Agregar al calendario</button>
+      </article>
+    </section>
+
+    <section class="seccion foto-pantalla" data-indice="CAPÍTULO / IV">
+      <div class="foto-marco"><img src="assets/fotos/foto04.webp" alt="Melisa contemplando un lago entre montañas" loading="lazy"></div>
+      <p class="foto-leyenda">El horizonte llama mi nombre</p>
+    </section>
+
+    <section class="seccion tarjeta-seccion">
+      <img class="fondo-tarjeta" src="assets/fondos/fondo04.webp" alt="" loading="lazy">
+      <article class="tarjeta">
+        <p class="numero-tarjeta revelar"><strong>IV</strong> El gran festejo</p>
+        <p class="sobrelinea revelar" data-demora="1">Después de la bendición</p>
+        <h2 class="titulo revelar" data-demora="1">El reino nos espera</h2>
+        <p class="dato-destacado revelar" data-demora="2" id="salon"></p>
+        <p class="dato-secundario revelar" data-demora="2" id="direccion-salon"></p>
+        <p class="dato-destacado revelar" data-demora="2" id="hora-recepcion"></p>
+        <div class="detalles revelar" data-demora="3">
+          <div class="detalle"><strong>Vestimenta</strong><span id="vestimenta"></span></div>
+          <div class="detalle"><strong>Obsequio</strong><span id="regalo"></span></div>
+        </div>
+        <button class="boton-demo revelar" data-demora="3" type="button" aria-disabled="true">Ver ubicación</button>
+      </article>
+    </section>
+
+    <section class="seccion foto-pantalla" data-indice="CAPÍTULO / V">
+      <div class="foto-marco"><img src="assets/fotos/foto05.webp" alt="Melisa danzando en un salón de castillo" loading="lazy"></div>
+      <p class="foto-leyenda">Esta noche escribiré mi propia leyenda</p>
+    </section>
+
+    <section class="seccion tarjeta-seccion">
+      <img class="fondo-tarjeta" src="assets/fondos/fondo05.webp" alt="" loading="lazy">
+      <article class="tarjeta">
+        <p class="numero-tarjeta revelar"><strong>V</strong> El pacto</p>
+        <p class="sobrelinea revelar" data-demora="1">Tu presencia hará la magia completa</p>
+        <h2 class="titulo revelar" data-demora="1">¿Vendrás?</h2>
+        <p class="texto revelar" data-demora="2">Quiero compartir esta aventura contigo. Confirma tu asistencia antes del</p>
+        <p class="nombres-padres revelar" data-demora="2" id="limite-confirmacion"></p>
+        <button class="boton-demo revelar" data-demora="3" type="button" aria-disabled="true">Confirmar asistencia</button>
+        <div class="linea-dato revelar" data-demora="3"></div>
+        <p class="texto revelar" data-demora="3" id="despedida"></p>
+      </article>
+    </section>
+
+    <section class="seccion foto-pantalla" data-indice="EPÍLOGO / VI">
+      <div class="foto-marco"><img src="assets/fotos/foto06.webp" alt="Melisa bajo la luna en un círculo de piedras" loading="lazy"></div>
+      <p class="foto-leyenda" id="firma-final">La aventura continúa · Melisa</p>
+    </section>
+  </main>
+
+  <div class="controles" aria-label="Controles de invitación">
+    <button class="control" id="boton-salir" type="button" aria-label="Volver a la portada" title="Salir">×</button>
+    <button class="control" id="boton-musica" type="button" aria-label="Reproducir música" title="Música">♫</button>
+  </div>
+
+  <div class="particulas" id="particulas" aria-hidden="true"></div>
+  <audio id="musica" loop preload="none"></audio>
+
+  <script>
+    /* =========================================================
+       DATOS EDITABLES DE LA INVITACIÓN
+       Cambia solamente este bloque para personalizar la plantilla.
+       Los botones de ubicación, calendario y confirmación son
+       únicamente demostrativos y no abren enlaces.
+       ========================================================= */
+    const DATOS_INVITACION = {
+      nombre: "Melisa Campbell",
+      nombreCorto: "Melisa",
+      monograma: "MC",
+      frasePortada: "Entre bosques y estrellas comienza una historia inolvidable.",
+      mensaje: "He esperado este día como quien espera una aventura. Hoy abro las puertas de mi historia para celebrar contigo el valor de crecer, soñar y elegir mi propio camino.",
+      padres: "Rodrigo Campbell y Elena Montemayor",
+      fechaISO: "2027-10-23T17:00:00-06:00",
+      fechaTexto: "23 · 10 · 2027",
+      ceremonia: {
+        lugar: "Capilla de Nuestra Señora del Roble",
+        direccion: "Santiago, Nuevo León",
+        hora: "5:00 p. m."
+      },
+      recepcion: {
+        lugar: "Castillo del Bosque Eventos",
+        direccion: "Carretera Nacional, Santiago, Nuevo León",
+        hora: "8:00 p. m."
+      },
+      vestimenta: "Formal · Tonos de bosque",
+      regalo: "Lluvia de sobres",
+      limiteConfirmacion: "9 de octubre de 2027",
+      despedida: "Gracias por acompañarme a escribir este capítulo.",
+      urlSalida: "../../../index.html",
+      audio: "assets/audio/musica.mp3",
+      fotos: {
+        portada: "assets/fotos/foto01.webp",
+        secciones: [
+          "assets/fotos/foto02.webp",
+          "assets/fotos/foto03.webp",
+          "assets/fotos/foto04.webp",
+          "assets/fotos/foto05.webp",
+          "assets/fotos/foto06.webp"
+        ]
+      },
+      fondos: [
+        "assets/fondos/fondo01.webp",
+        "assets/fondos/fondo02.webp",
+        "assets/fondos/fondo03.webp",
+        "assets/fondos/fondo04.webp",
+        "assets/fondos/fondo05.webp"
+      ]
+    };
+
+    const $ = selector => document.querySelector(selector);
+    const $$ = selector => [...document.querySelectorAll(selector)];
+    const entrada = $("#entrada");
+    const invitacion = $("#invitacion");
+    const musica = $("#musica");
+    const secciones = $$(".seccion");
+
+    let indiceActivo = 0;
+    let musicaActiva = false;
+    let temporizadorVista;
+    let temporizadorAjuste;
+    let intervaloParticulas;
+
+    function ajustarAltura(inmediato = false) {
+      clearTimeout(temporizadorVista);
+
+      const aplicar = () => {
+        const alto = window.visualViewport?.height || window.innerHeight;
+        document.documentElement.style.setProperty("--alto", `${Math.round(alto)}px`);
+
+        if (document.body.classList.contains("iniciada")) {
+          irA(indiceActivo, false);
+        }
+      };
+
+      if (inmediato) aplicar();
+      else temporizadorVista = setTimeout(aplicar, 90);
+    }
+
+    function irA(indice, suave = true) {
+      indiceActivo = Math.max(0, Math.min(indice, secciones.length - 1));
+      invitacion.scrollTo({
+        left: 0,
+        top: indiceActivo * invitacion.clientHeight,
+        behavior: suave ? "smooth" : "auto"
+      });
+    }
+
+    function crearBotonesContinuar() {
+      secciones.forEach((seccion, indice) => {
+        const boton = document.createElement("button");
+        const esUltima = indice === secciones.length - 1;
+
+        boton.className = "boton-continuar";
+        boton.type = "button";
+        boton.innerHTML = esUltima
+          ? 'Volver al inicio <span aria-hidden="true">↑</span>'
+          : 'Continuar <span aria-hidden="true">↓</span>';
+
+        boton.addEventListener("click", () => {
+          irA(esUltima ? 0 : indice + 1);
+        });
+
+        seccion.appendChild(boton);
+      });
+    }
+
+    function cargarDatos() {
+      document.title = `${DATOS_INVITACION.nombre} | Mis XV años`;
+      $("#nombre-portada").textContent = DATOS_INVITACION.nombreCorto;
+      $("#nombre-presentacion").textContent = DATOS_INVITACION.nombreCorto;
+      $("#monograma-portada").textContent = DATOS_INVITACION.monograma;
+      $("#frase-portada").textContent = DATOS_INVITACION.frasePortada;
+      $("#mensaje-presentacion").textContent = DATOS_INVITACION.mensaje;
+      $("#padres").textContent = DATOS_INVITACION.padres;
+      $("#fecha-principal").textContent = DATOS_INVITACION.fechaTexto;
+      $("#iglesia").textContent = DATOS_INVITACION.ceremonia.lugar;
+      $("#direccion-iglesia").textContent = DATOS_INVITACION.ceremonia.direccion;
+      $("#hora-ceremonia").textContent = DATOS_INVITACION.ceremonia.hora;
+      $("#salon").textContent = DATOS_INVITACION.recepcion.lugar;
+      $("#direccion-salon").textContent = DATOS_INVITACION.recepcion.direccion;
+      $("#hora-recepcion").textContent = DATOS_INVITACION.recepcion.hora;
+      $("#vestimenta").textContent = DATOS_INVITACION.vestimenta;
+      $("#regalo").textContent = DATOS_INVITACION.regalo;
+      $("#limite-confirmacion").textContent = DATOS_INVITACION.limiteConfirmacion;
+      $("#despedida").textContent = DATOS_INVITACION.despedida;
+      $("#leyenda-foto1").textContent = `${DATOS_INVITACION.nombreCorto} · Donde nacen los sueños`;
+      $("#firma-final").textContent = `La aventura continúa · ${DATOS_INVITACION.nombreCorto}`;
+      musica.src = DATOS_INVITACION.audio;
+      $("#foto-portada").src = DATOS_INVITACION.fotos.portada;
+
+      $$(".foto-pantalla img").forEach((imagen, i) => {
+        imagen.src = DATOS_INVITACION.fotos.secciones[i];
+      });
+
+      $$(".fondo-tarjeta").forEach((imagen, i) => {
+        imagen.src = DATOS_INVITACION.fondos[i];
+      });
+    }
+
+    function actualizarContador() {
+      const diferencia = new Date(DATOS_INVITACION.fechaISO).getTime() - Date.now();
+      const restante = Math.max(0, diferencia);
+      const dias = Math.floor(restante / 86400000);
+      const horas = Math.floor((restante % 86400000) / 3600000);
+      const minutos = Math.floor((restante % 3600000) / 60000);
+      const segundos = Math.floor((restante % 60000) / 1000);
+
+      $("#dias").textContent = String(dias).padStart(2, "0");
+      $("#horas").textContent = String(horas).padStart(2, "0");
+      $("#minutos").textContent = String(minutos).padStart(2, "0");
+      $("#segundos").textContent = String(segundos).padStart(2, "0");
+    }
+
+    function iniciarObservador() {
+      const observador = new IntersectionObserver(entradas => {
+        const visible = entradas
+          .filter(item => item.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        entradas.forEach(item => {
+          item.target.classList.toggle("visible", item.isIntersecting);
+        });
+
+        if (visible) {
+          indiceActivo = secciones.indexOf(visible.target);
+          visible.target.querySelectorAll(".revelar").forEach(elemento => {
+            elemento.classList.add("visible");
+          });
+        }
+      }, {
+        root: invitacion,
+        threshold: [.58, .72]
+      });
+
+      secciones.forEach(seccion => observador.observe(seccion));
+    }
+
+    async function reproducirMusica() {
+      try {
+        await musica.play();
+        musicaActiva = true;
+        $("#boton-musica").textContent = "Ⅱ";
+        $("#boton-musica").setAttribute("aria-label", "Pausar música");
+      } catch (_) {
+        musicaActiva = false;
+        $("#boton-musica").textContent = "♫";
+      }
+    }
+
+    function crearDestello() {
+      if (!document.body.classList.contains("iniciada")) return;
+
+      const destello = document.createElement("span");
+      destello.className = "destello";
+      destello.style.left = `${5 + Math.random() * 90}%`;
+      destello.style.bottom = "-24px";
+      destello.style.setProperty("--duracion", `${7 + Math.random() * 6}s`);
+      destello.style.setProperty("--deriva", `${-35 + Math.random() * 70}px`);
+      $("#particulas").appendChild(destello);
+      destello.addEventListener("animationend", () => destello.remove());
+    }
+
+    $("#boton-entrar").addEventListener("click", () => {
+      document.body.classList.add("iniciada");
+      entrada.classList.add("oculta");
+      indiceActivo = 0;
+      ajustarAltura(true);
+      irA(0, false);
+      reproducirMusica();
+      clearInterval(intervaloParticulas);
+      intervaloParticulas = setInterval(crearDestello, 1200);
+    });
+
+    $("#boton-salir-portada").addEventListener("click", () => {
+      window.location.href = DATOS_INVITACION.urlSalida;
+    });
+
+    $("#boton-musica").addEventListener("click", () => {
+      if (musicaActiva) {
+        musica.pause();
+        musicaActiva = false;
+        $("#boton-musica").textContent = "♫";
+        $("#boton-musica").setAttribute("aria-label", "Reproducir música");
+      } else {
+        reproducirMusica();
+      }
+    });
+
+    $("#boton-salir").addEventListener("click", () => {
+      musica.pause();
+      musica.currentTime = 0;
+      musicaActiva = false;
+      document.body.classList.remove("iniciada");
+      entrada.classList.remove("oculta");
+      $("#boton-musica").textContent = "♫";
+      indiceActivo = 0;
+      irA(0, false);
+      clearInterval(intervaloParticulas);
+      $("#particulas").replaceChildren();
+    });
+
+    invitacion.addEventListener("scroll", () => {
+      clearTimeout(temporizadorAjuste);
+      temporizadorAjuste = setTimeout(() => {
+        const indice = Math.round(invitacion.scrollTop / invitacion.clientHeight);
+        const posicionExacta = indice * invitacion.clientHeight;
+        if (Math.abs(invitacion.scrollTop - posicionExacta) > 2) irA(indice);
+      }, 130);
+    }, { passive: true });
+
+    window.addEventListener("resize", () => ajustarAltura());
+    window.visualViewport?.addEventListener("resize", () => ajustarAltura());
+
+    ajustarAltura(true);
+    crearBotonesContinuar();
+    cargarDatos();
+    actualizarContador();
+    setInterval(actualizarContador, 1000);
+    iniciarObservador();
+  </script>
+</body>
+
+</html>
