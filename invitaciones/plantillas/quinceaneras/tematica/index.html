@@ -1073,15 +1073,15 @@
     /* Ocultamos el contenido mientras el libro está cerrado */
     .tarjeta> :not(.portada-libro) {
       opacity: 0;
-      transform: translateY(12px);
+      transform: translateY(8px);
 
       transition:
-        opacity .8s ease 2.15s,
-        transform .8s ease 2.15s;
+        opacity .28s ease,
+        transform .28s ease;
     }
 
     /* Mostramos el contenido después de abrir la portada */
-    .tarjeta-seccion.visible .tarjeta> :not(.portada-libro) {
+    .tarjeta-seccion.libro-abierto .tarjeta> :not(.portada-libro) {
       opacity: 1;
       transform: translateY(0);
     }
@@ -1102,9 +1102,16 @@
     }
 
     /* La portada se abre hacia la izquierda */
-    .tarjeta-seccion.visible .portada-libro {
+    /* Solamente abre libros después de entrar a la invitación */
+    body.iniciada .tarjeta-seccion.visible .portada-libro {
       transform: rotateY(-145deg);
       filter: drop-shadow(12px 10px 14px rgba(4, 18, 11, .35));
+      transition-delay: 1.2s;
+    }
+
+    /* El primer libro permanece cerrado durante cinco segundos */
+    body.iniciada .tarjeta-seccion:first-child.visible .portada-libro {
+      transition-delay: 5s;
     }
 
     /* Frente y reverso de la portada */
@@ -1154,24 +1161,6 @@
       box-shadow:
         inset 0 0 0 4px rgba(213, 174, 83, .08),
         0 0 20px rgba(220, 184, 91, .08);
-    }
-
-    /* Lomo del libro */
-    .portada-frente::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      width: 19px;
-
-      background:
-        linear-gradient(90deg,
-          rgba(3, 16, 10, .72),
-          rgba(203, 163, 70, .16),
-          rgba(3, 16, 10, .34));
-
-      border-right: 1px solid rgba(228, 192, 103, .35);
     }
 
     /* Parte interior de la portada */
@@ -1284,6 +1273,11 @@
         transform: none;
         transition: none;
       }
+    }
+
+    .portada-frente::after {
+      content: none !important;
+      display: none !important;
     }
   </style>
 </head>
@@ -1566,6 +1560,21 @@
       <div class="portada-reverso"></div>
     `;
 
+        portada.addEventListener("transitionend", evento => {
+          if (evento.propertyName !== "transform") {
+            return;
+          }
+
+          const seccion = tarjeta.closest(".tarjeta-seccion");
+
+          if (
+            document.body.classList.contains("iniciada") &&
+            seccion.classList.contains("visible")
+          ) {
+            seccion.classList.add("libro-abierto");
+          }
+        });
+
         tarjeta.prepend(portada);
       });
     }
@@ -1644,6 +1653,10 @@
 
         entradas.forEach(item => {
           item.target.classList.toggle("visible", item.isIntersecting);
+
+          if (!item.isIntersecting) {
+            item.target.classList.remove("libro-abierto");
+          }
         });
 
         if (visible) {
