@@ -9,7 +9,9 @@
   <title>Melisa | Mis XV años</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&display=swap"
+    rel="stylesheet">
 
   <style>
     :root {
@@ -583,9 +585,17 @@
       transform: translateY(0);
     }
 
-    .revelar[data-demora="1"] { transition-delay: .1s; }
-    .revelar[data-demora="2"] { transition-delay: .2s; }
-    .revelar[data-demora="3"] { transition-delay: .3s; }
+    .revelar[data-demora="1"] {
+      transition-delay: .1s;
+    }
+
+    .revelar[data-demora="2"] {
+      transition-delay: .2s;
+    }
+
+    .revelar[data-demora="3"] {
+      transition-delay: .3s;
+    }
 
     .controles {
       position: fixed;
@@ -648,51 +658,121 @@
     }
 
     @keyframes portadaZoom {
-      from { transform: scale(1.08); }
-      to { transform: scale(1.015); }
+      from {
+        transform: scale(1.08);
+      }
+
+      to {
+        transform: scale(1.015);
+      }
     }
 
     @keyframes subirEntrada {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @keyframes fotoMovimiento {
-      from { transform: scale(1.09) translate3d(-1%, 0, 0); }
-      to { transform: scale(1.02) translate3d(1%, 0, 0); }
+      from {
+        transform: scale(1.09) translate3d(-1%, 0, 0);
+      }
+
+      to {
+        transform: scale(1.02) translate3d(1%, 0, 0);
+      }
     }
 
     @keyframes fotoMovimientoInverso {
-      from { transform: scale(1.03) translate3d(1%, 0, 0); }
-      to { transform: scale(1.09) translate3d(-1%, 0, 0); }
+      from {
+        transform: scale(1.03) translate3d(1%, 0, 0);
+      }
+
+      to {
+        transform: scale(1.09) translate3d(-1%, 0, 0);
+      }
     }
 
     @keyframes subirDestello {
-      0% { opacity: 0; transform: translateY(20px); }
-      20% { opacity: .68; }
-      100% { opacity: 0; transform: translateY(-110vh) translateX(var(--deriva)); }
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      20% {
+        opacity: .68;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-110vh) translateX(var(--deriva));
+      }
     }
 
     @media (min-width: 760px) {
-      .tarjeta-seccion { padding: 86px 42px 100px; }
-      .entrada-contenido { padding-bottom: 36px; }
-      .tarjeta { border-radius: 24px 3px 24px 3px; }
+      .tarjeta-seccion {
+        padding: 86px 42px 100px;
+      }
+
+      .entrada-contenido {
+        padding-bottom: 36px;
+      }
+
+      .tarjeta {
+        border-radius: 24px 3px 24px 3px;
+      }
     }
 
     @media (max-width: 390px) {
-      .tarjeta-seccion { padding-inline: 13px; }
-      .tarjeta { padding-inline: 19px; }
-      .detalles { grid-template-columns: 1fr; }
-      .entrada-nombre { font-size: 3.25rem; }
-      .contador { gap: 4px; }
+      .tarjeta-seccion {
+        padding-inline: 13px;
+      }
+
+      .tarjeta {
+        padding-inline: 19px;
+      }
+
+      .detalles {
+        grid-template-columns: 1fr;
+      }
+
+      .entrada-nombre {
+        font-size: 3.25rem;
+      }
+
+      .contador {
+        gap: 4px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .revelar, .foto-marco { transition-duration: .01ms; }
-      .entrada-foto, .foto-pantalla.visible img { animation: none; }
-      .foto-pantalla.visible img { transform: scale(1.02); }
-      .particulas { display: none; }
+      html {
+        scroll-behavior: auto;
+      }
+
+      .revelar,
+      .foto-marco {
+        transition-duration: .01ms;
+      }
+
+      .entrada-foto,
+      .foto-pantalla.visible img {
+        animation: none;
+      }
+
+      .foto-pantalla.visible img {
+        transform: scale(1.02);
+      }
+
+      .particulas {
+        display: none;
+      }
     }
 
     /* =========================================================
@@ -711,7 +791,9 @@
       --sombra: 0 28px 70px rgba(7, 28, 20, .32);
     }
 
-    body { font-family: "Cormorant Garamond", Georgia, serif; }
+    body {
+      font-family: "Cormorant Garamond", Georgia, serif;
+    }
 
     .entrada {
       place-items: end center;
@@ -719,7 +801,10 @@
       background: #0b1c16;
     }
 
-    .entrada-foto { object-position: center 35%; filter: saturate(.93) contrast(1.03); }
+    .entrada-foto {
+      object-position: center 35%;
+      filter: saturate(.93) contrast(1.03);
+    }
 
     .entrada::before {
       background:
@@ -741,7 +826,8 @@
       pointer-events: none;
     }
 
-    .boton-salir-portada, .control {
+    .boton-salir-portada,
+    .control {
       border-color: rgba(226, 197, 121, .55);
       border-radius: 50%;
       color: #fff8df;
@@ -761,7 +847,8 @@
       letter-spacing: .38em;
     }
 
-    .entrada-linea::before, .entrada-linea::after {
+    .entrada-linea::before,
+    .entrada-linea::after {
       content: "";
       width: 34px;
       height: 1px;
@@ -794,7 +881,7 @@
       font-style: italic;
       letter-spacing: -.035em;
       line-height: .8;
-      text-shadow: 0 3px 28px rgba(0,0,0,.35);
+      text-shadow: 0 3px 28px rgba(0, 0, 0, .35);
     }
 
     .entrada-frase {
@@ -807,7 +894,9 @@
       line-height: 1.45;
     }
 
-    .boton-principal, .boton-demo, .boton-continuar {
+    .boton-principal,
+    .boton-demo,
+    .boton-continuar {
       border: 1px solid rgba(192, 151, 67, .75);
       border-radius: 999px;
       font-family: "Cinzel", serif;
@@ -826,7 +915,10 @@
       background: linear-gradient(180deg, rgba(8, 28, 19, .38), rgba(8, 28, 19, .62));
     }
 
-    .fondo-tarjeta { filter: saturate(.78) brightness(.72); transform: scale(1.04); }
+    .fondo-tarjeta {
+      filter: saturate(.78) brightness(.72);
+      transform: scale(1.04);
+    }
 
     .tarjeta {
       width: min(88%, 520px);
@@ -850,7 +942,8 @@
       transform: translateX(-50%);
     }
 
-    .numero-tarjeta, .sobrelinea {
+    .numero-tarjeta,
+    .sobrelinea {
       color: #775a25;
       font-family: "Cinzel", serif;
       letter-spacing: .2em;
@@ -866,11 +959,31 @@
       line-height: .88;
     }
 
-    .texto, .dato-secundario { color: #4d5a52; font-size: clamp(1rem, 4.1vw, 1.18rem); }
-    .nombres-padres, .dato-destacado { color: #284c39; font-family: "Cormorant Garamond", serif; }
-    .linea-dato { background: linear-gradient(90deg, transparent, #ad873d, transparent); }
-    .tiempo { border-color: rgba(134, 96, 33, .28); background: rgba(255, 252, 238, .58); }
-    .tiempo strong { color: #234b38; font-family: "Cinzel", serif; }
+    .texto,
+    .dato-secundario {
+      color: #4d5a52;
+      font-size: clamp(1rem, 4.1vw, 1.18rem);
+    }
+
+    .nombres-padres,
+    .dato-destacado {
+      color: #284c39;
+      font-family: "Cormorant Garamond", serif;
+    }
+
+    .linea-dato {
+      background: linear-gradient(90deg, transparent, #ad873d, transparent);
+    }
+
+    .tiempo {
+      border-color: rgba(134, 96, 33, .28);
+      background: rgba(255, 252, 238, .58);
+    }
+
+    .tiempo strong {
+      color: #234b38;
+      font-family: "Cinzel", serif;
+    }
 
     .foto-pantalla::before {
       background: linear-gradient(180deg, rgba(4, 18, 12, .08) 28%, rgba(4, 18, 12, .8) 100%);
@@ -902,9 +1015,20 @@
       transform: translateX(-50%);
     }
 
-    .boton-continuar { color: #fff8dc; background: rgba(13, 47, 33, .82); backdrop-filter: blur(10px); }
-    .tarjeta-seccion .boton-continuar { color: #f8efd4; background: #244a37; }
-    .controles { top: max(14px, env(safe-area-inset-top)); }
+    .boton-continuar {
+      color: #fff8dc;
+      background: rgba(13, 47, 33, .82);
+      backdrop-filter: blur(10px);
+    }
+
+    .tarjeta-seccion .boton-continuar {
+      color: #f8efd4;
+      background: #244a37;
+    }
+
+    .controles {
+      top: max(14px, env(safe-area-inset-top));
+    }
 
     .destello {
       width: 5px;
@@ -913,20 +1037,276 @@
       background: #e6ca79;
       box-shadow: 0 0 12px #e6ca79, 0 0 24px rgba(230, 202, 121, .6);
     }
+
+    /* =========================================================
+   LIBRO CON PORTADA QUE ABRE HACIA LA IZQUIERDA
+   ========================================================= */
+
+    .tarjeta-seccion {
+      perspective: 1800px;
+    }
+
+    /* Esta es la hoja interior del libro */
+    .tarjeta {
+      overflow: visible;
+      transform-style: preserve-3d;
+    }
+
+    /* Ocultamos el contenido mientras el libro está cerrado */
+    .tarjeta> :not(.portada-libro) {
+      opacity: 0;
+      transform: translateY(12px);
+      transition:
+        opacity .55s ease .78s,
+        transform .55s ease .78s;
+    }
+
+    /* Mostramos el contenido después de abrir la portada */
+    .tarjeta-seccion.visible .tarjeta> :not(.portada-libro) {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Portada completa del libro */
+    .portada-libro {
+      position: absolute;
+      z-index: 20;
+      inset: -1px;
+      transform: rotateY(0deg);
+      transform-origin: left center;
+      transform-style: preserve-3d;
+      will-change: transform;
+
+      transition:
+        transform 1.15s cubic-bezier(.22, .78, .18, 1),
+        filter .8s ease;
+    }
+
+    /* La portada se abre hacia la izquierda */
+    .tarjeta-seccion.visible .portada-libro {
+      transform: rotateY(-145deg);
+      filter: drop-shadow(12px 10px 14px rgba(4, 18, 11, .35));
+    }
+
+    /* Frente y reverso de la portada */
+    .portada-frente,
+    .portada-reverso {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      border: 2px solid #b58b3d;
+      border-radius: 48% 48% 18px 18px / 10% 10% 18px 18px;
+      backface-visibility: hidden;
+    }
+
+    /* Frente del libro cerrado */
+    .portada-frente {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 26px;
+
+      color: #f9edc5;
+
+      background:
+        radial-gradient(circle at center,
+          rgba(217, 182, 99, .19),
+          transparent 47%),
+        linear-gradient(145deg,
+          #315e46 0%,
+          #173b2b 45%,
+          #0c281d 100%);
+
+      box-shadow:
+        inset 0 0 0 6px rgba(229, 196, 115, .13),
+        inset 0 0 35px rgba(0, 0, 0, .38),
+        0 25px 65px rgba(3, 17, 10, .48);
+    }
+
+    /* Marco dorado de la portada */
+    .portada-frente::before {
+      content: "";
+      position: absolute;
+      inset: 15px;
+
+      border: 1px solid rgba(226, 191, 103, .72);
+      border-radius: 46% 46% 12px 12px / 9% 9% 12px 12px;
+
+      box-shadow:
+        inset 0 0 0 4px rgba(213, 174, 83, .08),
+        0 0 20px rgba(220, 184, 91, .08);
+    }
+
+    /* Lomo del libro */
+    .portada-frente::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 19px;
+
+      background:
+        linear-gradient(90deg,
+          rgba(3, 16, 10, .72),
+          rgba(203, 163, 70, .16),
+          rgba(3, 16, 10, .34));
+
+      border-right: 1px solid rgba(228, 192, 103, .35);
+    }
+
+    /* Parte interior de la portada */
+    .portada-reverso {
+      transform: rotateY(180deg);
+
+      background:
+        linear-gradient(90deg,
+          rgba(75, 50, 15, .18),
+          transparent 12%),
+        linear-gradient(145deg,
+          #eee0b8,
+          #d9c38a);
+
+      box-shadow:
+        inset -10px 0 28px rgba(63, 42, 12, .17),
+        inset 0 0 0 7px rgba(108, 74, 20, .09);
+    }
+
+    /* Adorno interior del reverso */
+    .portada-reverso::before {
+      content: "❦";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      color: rgba(102, 72, 25, .38);
+      font-size: 3rem;
+
+      transform: translate(-50%, -50%);
+    }
+
+    /* Contenido central de la portada */
+    .portada-contenido {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Símbolo superior */
+    .portada-simbolo {
+      display: grid;
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 23px;
+      place-items: center;
+
+      border: 1px solid rgba(231, 201, 122, .75);
+      border-radius: 50%;
+
+      color: #efd38b;
+      font-size: 1.65rem;
+
+      box-shadow:
+        0 0 0 5px rgba(226, 190, 99, .07),
+        0 0 25px rgba(226, 190, 99, .12);
+    }
+
+    /* Número del capítulo */
+    .portada-capitulo {
+      margin-bottom: 13px;
+
+      color: #d9b96e;
+      font-family: "Cinzel", serif;
+      font-size: .66rem;
+      font-weight: 600;
+      letter-spacing: .29em;
+      text-transform: uppercase;
+    }
+
+    /* Título principal */
+    .portada-titulo {
+      color: #fff4ce;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: clamp(2.25rem, 10vw, 4.5rem);
+      font-weight: 500;
+      font-style: italic;
+      line-height: .9;
+
+      text-shadow: 0 3px 18px rgba(0, 0, 0, .35);
+    }
+
+    /* Indicación inferior */
+    .portada-indicacion {
+      margin-top: 25px;
+
+      color: rgba(247, 232, 190, .72);
+      font-family: "Cinzel", serif;
+      font-size: .58rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    /* Pequeño brillo al abrir */
+    .portada-libro::after {
+      content: "";
+      position: absolute;
+      z-index: 30;
+      top: 4%;
+      right: -4px;
+      width: 3px;
+      height: 92%;
+
+      background: linear-gradient(transparent,
+          rgba(255, 231, 156, .9),
+          transparent);
+
+      box-shadow: 0 0 18px rgba(255, 223, 135, .6);
+
+      opacity: 0;
+      transition: opacity .25s ease .42s;
+    }
+
+    .tarjeta-seccion.visible .portada-libro::after {
+      opacity: 1;
+    }
+
+    /* En pantallas angostas abrimos un poco menos la portada */
+    @media (max-width: 480px) {
+      .tarjeta-seccion.visible .portada-libro {
+        transform: rotateY(-132deg);
+      }
+    }
+
+    /* Accesibilidad */
+    @media (prefers-reduced-motion: reduce) {
+      .portada-libro {
+        display: none;
+      }
+
+      .tarjeta> :not(.portada-libro) {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
   </style>
 </head>
 
 <body>
   <section class="entrada" id="entrada" aria-label="Portada de la invitación">
-    <img class="entrada-foto" id="foto-portada" src="assets/fotos/foto01.webp" alt="Melisa en un paisaje de fantasía celta">
-    <button class="boton-salir-portada" id="boton-salir-portada" type="button" aria-label="Salir de la invitación" title="Salir">×</button>
+    <img class="entrada-foto" id="foto-portada" src="assets/fotos/foto01.webp"
+      alt="Melisa en un paisaje de fantasía celta">
+    <button class="boton-salir-portada" id="boton-salir-portada" type="button" aria-label="Salir de la invitación"
+      title="Salir">×</button>
 
     <div class="entrada-contenido">
       <p class="entrada-linea">Érase una vez mis quince años</p>
       <div class="monograma" id="monograma-portada">MC</div>
       <h1 class="entrada-nombre" id="nombre-portada">Melisa</h1>
       <p class="entrada-frase" id="frase-portada">Entre bosques y estrellas comienza una historia inolvidable.</p>
-      <button class="boton-principal" id="boton-entrar" type="button">Ver invitación <span aria-hidden="true">↓</span></button>
+      <button class="boton-principal" id="boton-entrar" type="button">Ver invitación <span
+          aria-hidden="true">↓</span></button>
     </div>
   </section>
 
@@ -945,7 +1325,8 @@
     </section>
 
     <section class="seccion foto-pantalla" data-indice="CAPÍTULO / II">
-      <div class="foto-marco"><img src="assets/fotos/foto02.webp" alt="Melisa junto a un arroyo en el bosque" loading="lazy"></div>
+      <div class="foto-marco"><img src="assets/fotos/foto02.webp" alt="Melisa junto a un arroyo en el bosque"
+          loading="lazy"></div>
       <p class="foto-leyenda" id="leyenda-foto1">Donde nacen los sueños</p>
     </section>
 
@@ -965,7 +1346,8 @@
     </section>
 
     <section class="seccion foto-pantalla" data-indice="CAPÍTULO / III">
-      <div class="foto-marco"><img src="assets/fotos/foto03.webp" alt="Melisa entre antiguas ruinas cubiertas de hiedra" loading="lazy"></div>
+      <div class="foto-marco"><img src="assets/fotos/foto03.webp" alt="Melisa entre antiguas ruinas cubiertas de hiedra"
+          loading="lazy"></div>
       <p class="foto-leyenda">Cada piedra guarda un secreto</p>
     </section>
 
@@ -982,12 +1364,14 @@
           <div class="tiempo"><strong id="minutos">00</strong><span>Min</span></div>
           <div class="tiempo"><strong id="segundos">00</strong><span>Seg</span></div>
         </div>
-        <button class="boton-demo revelar" data-demora="3" type="button" aria-disabled="true">Agregar al calendario</button>
+        <button class="boton-demo revelar" data-demora="3" type="button" aria-disabled="true">Agregar al
+          calendario</button>
       </article>
     </section>
 
     <section class="seccion foto-pantalla" data-indice="CAPÍTULO / IV">
-      <div class="foto-marco"><img src="assets/fotos/foto04.webp" alt="Melisa contemplando un lago entre montañas" loading="lazy"></div>
+      <div class="foto-marco"><img src="assets/fotos/foto04.webp" alt="Melisa contemplando un lago entre montañas"
+          loading="lazy"></div>
       <p class="foto-leyenda">El horizonte llama mi nombre</p>
     </section>
 
@@ -1009,7 +1393,8 @@
     </section>
 
     <section class="seccion foto-pantalla" data-indice="CAPÍTULO / V">
-      <div class="foto-marco"><img src="assets/fotos/foto05.webp" alt="Melisa danzando en un salón de castillo" loading="lazy"></div>
+      <div class="foto-marco"><img src="assets/fotos/foto05.webp" alt="Melisa danzando en un salón de castillo"
+          loading="lazy"></div>
       <p class="foto-leyenda">Esta noche escribiré mi propia leyenda</p>
     </section>
 
@@ -1019,16 +1404,19 @@
         <p class="numero-tarjeta revelar"><strong>V</strong> El pacto</p>
         <p class="sobrelinea revelar" data-demora="1">Tu presencia hará la magia completa</p>
         <h2 class="titulo revelar" data-demora="1">¿Vendrás?</h2>
-        <p class="texto revelar" data-demora="2">Quiero compartir esta aventura contigo. Confirma tu asistencia antes del</p>
+        <p class="texto revelar" data-demora="2">Quiero compartir esta aventura contigo. Confirma tu asistencia antes
+          del</p>
         <p class="nombres-padres revelar" data-demora="2" id="limite-confirmacion"></p>
-        <button class="boton-demo revelar" data-demora="3" type="button" aria-disabled="true">Confirmar asistencia</button>
+        <button class="boton-demo revelar" data-demora="3" type="button" aria-disabled="true">Confirmar
+          asistencia</button>
         <div class="linea-dato revelar" data-demora="3"></div>
         <p class="texto revelar" data-demora="3" id="despedida"></p>
       </article>
     </section>
 
     <section class="seccion foto-pantalla" data-indice="EPÍLOGO / VI">
-      <div class="foto-marco"><img src="assets/fotos/foto06.webp" alt="Melisa bajo la luna en un círculo de piedras" loading="lazy"></div>
+      <div class="foto-marco"><img src="assets/fotos/foto06.webp" alt="Melisa bajo la luna en un círculo de piedras"
+          loading="lazy"></div>
       <p class="foto-leyenda" id="firma-final">La aventura continúa · Melisa</p>
     </section>
   </main>
@@ -1127,6 +1515,63 @@
         left: 0,
         top: indiceActivo * invitacion.clientHeight,
         behavior: suave ? "smooth" : "auto"
+      });
+    }
+
+    function crearPortadasLibro() {
+      const titulosPortadas = [
+        {
+          capitulo: "Capítulo I",
+          titulo: "El prólogo",
+          simbolo: "✦"
+        },
+        {
+          capitulo: "Capítulo II",
+          titulo: "La bendición",
+          simbolo: "❧"
+        },
+        {
+          capitulo: "Capítulo III",
+          titulo: "La fecha elegida",
+          simbolo: "☾"
+        },
+        {
+          capitulo: "Capítulo IV",
+          titulo: "El gran festejo",
+          simbolo: "♛"
+        },
+        {
+          capitulo: "Capítulo V",
+          titulo: "El pacto",
+          simbolo: "❦"
+        }
+      ];
+
+      $$(".tarjeta-seccion .tarjeta").forEach((tarjeta, indice) => {
+        const datos = titulosPortadas[indice];
+
+        if (!datos || tarjeta.querySelector(".portada-libro")) {
+          return;
+        }
+
+        const portada = document.createElement("div");
+        portada.className = "portada-libro";
+        portada.setAttribute("aria-hidden", "true");
+
+        portada.innerHTML = `
+      <div class="portada-frente">
+        <div class="portada-contenido">
+          <div class="portada-simbolo">${datos.simbolo}</div>
+          <p class="portada-capitulo">${datos.capitulo}</p>
+          <p class="portada-titulo">${datos.titulo}</p>
+          <p class="portada-indicacion">La historia continúa</p>
+        </div>
+      </div>
+
+      <div class="portada-reverso"></div>
+    `;
+
+        tarjeta.prepend(portada);
       });
     }
 
@@ -1297,6 +1742,7 @@
     window.visualViewport?.addEventListener("resize", () => ajustarAltura());
 
     ajustarAltura(true);
+    crearPortadasLibro();
     crearBotonesContinuar();
     cargarDatos();
     actualizarContador();
