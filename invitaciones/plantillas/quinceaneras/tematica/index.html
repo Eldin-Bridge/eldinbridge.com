@@ -1566,7 +1566,7 @@
       <div class="portada-reverso"></div>
     `;
 
-        portada.addEventListener("transitionend", evento => {
+        portada.addEventListener("transitionstart", evento => {
           if (evento.propertyName !== "transform") {
             return;
           }
@@ -1574,11 +1574,22 @@
           const seccion = tarjeta.closest(".tarjeta-seccion");
 
           if (
-            document.body.classList.contains("iniciada") &&
-            seccion.classList.contains("visible")
+            !document.body.classList.contains("iniciada") ||
+            !seccion.classList.contains("visible")
           ) {
-            seccion.classList.add("libro-abierto");
+            return;
           }
+
+          clearTimeout(seccion.temporizadorTexto);
+
+          seccion.temporizadorTexto = setTimeout(() => {
+            if (
+              document.body.classList.contains("iniciada") &&
+              seccion.classList.contains("visible")
+            ) {
+              seccion.classList.add("libro-abierto");
+            }
+          }, 350);
         });
 
         tarjeta.prepend(portada);
@@ -1661,6 +1672,7 @@
           item.target.classList.toggle("visible", item.isIntersecting);
 
           if (!item.isIntersecting) {
+            clearTimeout(item.target.temporizadorTexto);
             item.target.classList.remove("libro-abierto");
           }
         });
