@@ -1107,11 +1107,6 @@
       transition-delay: 1.2s;
     }
 
-    /* El primer libro permanece cerrado durante cinco segundos */
-    body.iniciada .tarjeta-seccion:first-child.visible .portada-libro {
-      transition-delay: 5s;
-    }
-
     /* Frente y reverso de la portada */
     .portada-frente,
     .portada-reverso {
@@ -1669,11 +1664,13 @@
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
         entradas.forEach(item => {
-          item.target.classList.toggle("visible", item.isIntersecting);
-
-          if (!item.isIntersecting) {
-            clearTimeout(item.target.temporizadorTexto);
-            item.target.classList.remove("libro-abierto");
+          /*
+            Cada pantalla se activa solamente la primera vez.
+            Al salir no quitamos "visible", evitando que el libro
+            se cierre y vuelva a abrir al regresar.
+          */
+          if (item.isIntersecting) {
+            item.target.classList.add("visible");
           }
         });
 
@@ -1754,15 +1751,6 @@
       clearInterval(intervaloParticulas);
       $("#particulas").replaceChildren();
     });
-
-    invitacion.addEventListener("scroll", () => {
-      clearTimeout(temporizadorAjuste);
-      temporizadorAjuste = setTimeout(() => {
-        const indice = Math.round(invitacion.scrollTop / invitacion.clientHeight);
-        const posicionExacta = indice * invitacion.clientHeight;
-        if (Math.abs(invitacion.scrollTop - posicionExacta) > 2) irA(indice);
-      }, 130);
-    }, { passive: true });
 
     window.addEventListener("resize", () => ajustarAltura());
     window.visualViewport?.addEventListener("resize", () => ajustarAltura());
