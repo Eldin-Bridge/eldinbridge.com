@@ -309,16 +309,6 @@
       backdrop-filter: blur(15px) saturate(1.15);
     }
 
-    .tarjeta::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 7px;
-      height: 100%;
-      background: linear-gradient(var(--cian), var(--azul));
-    }
-
     .tarjeta::after {
       content: "";
       position: absolute;
@@ -955,8 +945,16 @@
       position: absolute;
       top: 13px;
       left: 50%;
+
+      width: auto;
+      height: auto;
+
       color: #9a742e;
+      background: none;
+
       font-size: 1rem;
+      line-height: 1;
+
       transform: translateX(-50%);
     }
 
@@ -1073,11 +1071,11 @@
     /* Ocultamos el contenido mientras el libro está cerrado */
     .tarjeta> :not(.portada-libro) {
       opacity: 0;
-      transform: translateY(8px);
+      transform: translateY(4px);
 
       transition:
-        opacity .28s ease,
-        transform .28s ease;
+        opacity .12s ease,
+        transform .12s ease;
     }
 
     /* Mostramos el contenido después de abrir la portada */
@@ -1257,7 +1255,7 @@
 
     /* En pantallas angostas abrimos un poco menos la portada */
     @media (max-width: 480px) {
-      .tarjeta-seccion.visible .portada-libro {
+      body.iniciada .tarjeta-seccion.visible .portada-libro {
         transform: rotateY(-132deg);
       }
     }
@@ -1278,6 +1276,14 @@
     .portada-frente::after {
       content: none !important;
       display: none !important;
+    }
+
+    /* El texto aparece inmediatamente después de abrir el libro */
+    .tarjeta-seccion.libro-abierto .revelar,
+    .tarjeta-seccion.libro-abierto .revelar[data-demora="1"],
+    .tarjeta-seccion.libro-abierto .revelar[data-demora="2"],
+    .tarjeta-seccion.libro-abierto .revelar[data-demora="3"] {
+      transition-delay: 0s !important;
     }
   </style>
 </head>
