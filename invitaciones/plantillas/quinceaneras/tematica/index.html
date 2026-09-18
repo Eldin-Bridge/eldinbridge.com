@@ -857,21 +857,39 @@
 
     .monograma {
       position: relative;
-      display: grid;
-      width: 88px;
-      height: 88px;
-      margin: 0 auto 11px;
-      place-items: center;
-      border: 1px solid rgba(226, 197, 121, .7);
-      border-radius: 50%;
-      color: #fff7df;
-      font-family: "Cormorant Garamond", serif;
-      font-size: 2.55rem;
-      font-weight: 500;
-      letter-spacing: -.12em;
+      display: flex;
+      width: min(220px, 70%);
+      height: auto;
+      margin: 0 auto 17px;
+      align-items: center;
+      justify-content: center;
+
+      color: #f1d48a;
+      font-family: Georgia, serif;
+      font-size: 3.2rem;
       line-height: 1;
-      -webkit-text-stroke: 0;
-      text-shadow: 0 2px 18px rgba(0, 0, 0, .35);
+
+      text-shadow:
+        0 0 12px rgba(239, 204, 116, .42),
+        0 3px 18px rgba(0, 0, 0, .45);
+    }
+
+    .monograma::before,
+    .monograma::after {
+      content: "";
+      width: 56px;
+      height: 1px;
+      margin: 0 13px;
+
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(239, 207, 124, .85));
+    }
+
+    .monograma::after {
+      background: linear-gradient(90deg,
+          rgba(239, 207, 124, .85),
+          transparent);
     }
 
     .entrada-nombre {
@@ -1056,9 +1074,10 @@
     .tarjeta> :not(.portada-libro) {
       opacity: 0;
       transform: translateY(12px);
+
       transition:
-        opacity .55s ease .78s,
-        transform .55s ease .78s;
+        opacity .8s ease 2.15s,
+        transform .8s ease 2.15s;
     }
 
     /* Mostramos el contenido después de abrir la portada */
@@ -1078,8 +1097,8 @@
       will-change: transform;
 
       transition:
-        transform 1.15s cubic-bezier(.22, .78, .18, 1),
-        filter .8s ease;
+        transform 2.8s cubic-bezier(.16, .72, .18, 1),
+        filter 2.2s ease;
     }
 
     /* La portada se abre hacia la izquierda */
@@ -1247,30 +1266,6 @@
       text-transform: uppercase;
     }
 
-    /* Pequeño brillo al abrir */
-    .portada-libro::after {
-      content: "";
-      position: absolute;
-      z-index: 30;
-      top: 4%;
-      right: -4px;
-      width: 3px;
-      height: 92%;
-
-      background: linear-gradient(transparent,
-          rgba(255, 231, 156, .9),
-          transparent);
-
-      box-shadow: 0 0 18px rgba(255, 223, 135, .6);
-
-      opacity: 0;
-      transition: opacity .25s ease .42s;
-    }
-
-    .tarjeta-seccion.visible .portada-libro::after {
-      opacity: 1;
-    }
-
     /* En pantallas angostas abrimos un poco menos la portada */
     @media (max-width: 480px) {
       .tarjeta-seccion.visible .portada-libro {
@@ -1302,7 +1297,7 @@
 
     <div class="entrada-contenido">
       <p class="entrada-linea">Érase una vez mis quince años</p>
-      <div class="monograma" id="monograma-portada">MC</div>
+      <div class="monograma" id="monograma-portada" aria-hidden="true">❦</div>
       <h1 class="entrada-nombre" id="nombre-portada">Melisa</h1>
       <p class="entrada-frase" id="frase-portada">Entre bosques y estrellas comienza una historia inolvidable.</p>
       <button class="boton-principal" id="boton-entrar" type="button">Ver invitación <span
@@ -1439,7 +1434,7 @@
     const DATOS_INVITACION = {
       nombre: "Melisa Campbell",
       nombreCorto: "Melisa",
-      monograma: "MC",
+      monograma: "❦",
       frasePortada: "Entre bosques y estrellas comienza una historia inolvidable.",
       mensaje: "He esperado este día como quien espera una aventura. Hoy abro las puertas de mi historia para celebrar contigo el valor de crecer, soñar y elegir mi propio camino.",
       padres: "Rodrigo Campbell y Elena Montemayor",
