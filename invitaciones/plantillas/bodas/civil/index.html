@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#eee9e1">
+  <title>Boda civil | Invitación</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --alto:100dvh; --tinta:#263747; --azul:#627b8c; --papel:#f9f6f0; --borde:#c6cfd0; }
+    * { box-sizing:border-box; }
+    html,body { margin:0; width:100%; height:100%; overflow:hidden; }
+    body { font-family:'DM Sans',Arial,sans-serif; color:var(--tinta); background:#e9e5de; }
+    button { font:inherit; cursor:pointer; }
+    button:focus-visible { outline:3px solid #94b6ca; outline-offset:4px; }
+    .entrada,.pantalla { position:relative; height:var(--alto); min-height:0; overflow:hidden; }
+    .entrada { position:fixed; inset:0; z-index:20; background:#46525b; transition:opacity .55s ease,visibility .55s ease; }
+    .entrada.oculta { opacity:0; visibility:hidden; pointer-events:none; }
+    .entrada img,.fondo,.foto img { display:block; width:100%; height:100%; object-fit:cover; }
+    .entrada img { object-position:center 48%; }
+    .entrada::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(15,30,42,.17) 0%,rgba(15,30,42,.03) 35%,rgba(15,30,42,.71) 100%); pointer-events:none; }
+    .portada-contenido { position:absolute; z-index:1; bottom:max(9%,calc(env(safe-area-inset-bottom) + 62px)); left:7%; width:86%; color:white; text-align:center; text-shadow:0 2px 15px #18242c85; }
+    .portada-kicker,.kicker,.folio,.leyenda,.foto-numero { text-transform:uppercase; font-family:Manrope,Arial,sans-serif; font-weight:700; letter-spacing:.22em; font-size:clamp(.59rem,2.3vw,.75rem); }
+    .portada-nombres { font-family:Manrope,Arial,sans-serif; font-size:clamp(2.3rem,9vw,4.5rem); letter-spacing:-.065em; line-height:1.06; margin:18px 0 12px; font-weight:500; }
+    .portada-frase { margin:0 auto 23px; max-width:32ch; line-height:1.5; font-size:clamp(.9rem,3vw,1.1rem); }
+    .entrar,.continuar,.boton-demo { min-height:46px; border:1px solid currentColor; border-radius:2px; padding:12px 24px; font-family:Manrope,Arial,sans-serif; font-size:.73rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; transition:background .2s,transform .2s; }
+    .entrar { color:#203546; background:#faf7f1; border-color:#faf7f1; text-shadow:none; }
+    .entrar:hover,.continuar:hover { transform:translateY(-2px); }
+    .salir-portada,.control { border:1px solid #ffffff9c; color:white; background:#172b3899; backdrop-filter:blur(8px); border-radius:50%; width:43px; height:43px; display:grid; place-items:center; font-size:1.35rem; line-height:1; }
+    .salir-portada { position:absolute; z-index:3; top:max(18px,env(safe-area-inset-top)); left:18px; }
+    .invitacion { height:var(--alto); overflow-y:auto; overflow-x:hidden; scroll-snap-type:y mandatory; overscroll-behavior:contain; scrollbar-width:none; }
+    .invitacion::-webkit-scrollbar { display:none; }
+    .pantalla { scroll-snap-align:start; scroll-snap-stop:always; display:grid; place-items:center; }
+    .fondo { position:absolute; inset:0; object-position:center; }
+    .tarjeta-pantalla::after { content:""; position:absolute; inset:0; background:#f2eee822; pointer-events:none; }
+    .tarjeta { position:relative; z-index:1; width:min(86vw,480px); max-height:calc(var(--alto) - 130px); overflow:auto; scrollbar-width:thin; background:rgba(249,247,242,.96); border:1px solid #ffffffc7; box-shadow:0 20px 65px #26374730; padding:clamp(22px,5.2vh,44px) clamp(22px,6vw,43px); text-align:center; }
+    .tarjeta::before { content:""; position:absolute; inset:9px; border:1px solid #b6c2c066; pointer-events:none; }
+    .folio { color:var(--azul); margin:0 0 25px; }
+    .folio::after { content:""; display:block; width:33px; height:1px; background:#9db1b8; margin:15px auto 0; }
+    .kicker { color:var(--azul); margin:0 0 10px; }
+    h2 { font-family:Manrope,Arial,sans-serif; font-size:clamp(1.55rem,5.8vw,2.45rem); font-weight:500; line-height:1.19; letter-spacing:-.055em; margin:0 0 17px; }
+    .texto { font-size:clamp(.88rem,2.7vw,1rem); line-height:1.7; margin:12px auto; max-width:34ch; }
+    .dato { font-size:clamp(1.02rem,3.6vw,1.28rem); line-height:1.4; font-weight:700; margin:10px 0 3px; }
+    .secundario { font-size:.84rem; color:#5d6b70; line-height:1.5; margin:5px 0; }
+    .linea { display:block; width:48px; height:1px; background:#adc0c3; margin:22px auto; }
+    .detalle { padding:8px 0; border-top:1px solid #cfd7d5; font-size:.83rem; line-height:1.5; }
+    .detalle strong { display:block; color:#607d8e; font-family:Manrope,Arial,sans-serif; font-size:.64rem; letter-spacing:.14em; text-transform:uppercase; margin-bottom:4px; }
+    .contador { display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin:22px 0 16px; }
+    .contador div { border:1px solid #b7c5c6; padding:10px 2px; }
+    .contador strong { display:block; font-size:1.3rem; font-weight:500; }
+    .contador small { text-transform:uppercase; letter-spacing:.08em; font-size:.57rem; }
+    .boton-demo { background:transparent; color:#72828a; border-color:#a9b5b6; cursor:default; margin-top:12px; }
+    .foto { background:#243544; }
+    .foto img { position:absolute; inset:0; object-position:center 45%; }
+    .foto::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,#182a3645 0%,transparent 30%,transparent 55%,#1427349c 100%); pointer-events:none; }
+    .foto-numero,.leyenda { position:absolute; z-index:1; color:white; text-shadow:0 2px 12px #102532ae; }
+    .foto-numero { top:max(75px,calc(env(safe-area-inset-top) + 66px)); left:7%; }
+    .leyenda { bottom:112px; left:9%; right:9%; text-align:center; line-height:1.6; }
+    .continuar { position:absolute; z-index:5; left:50%; bottom:max(20px,calc(env(safe-area-inset-bottom) + 15px)); transform:translateX(-50%); width:max-content; max-width:84%; color:#263747; background:#f8f7f1ef; border-color:#c1cdcf; box-shadow:0 5px 20px #12263824; }
+    .continuar:hover { transform:translate(-50%,-2px); }
+    .controles { position:fixed; z-index:12; inset:max(18px,env(safe-area-inset-top)) 18px auto; pointer-events:none; display:flex; justify-content:space-between; opacity:0; transition:opacity .35s; }
+    body.iniciada .controles { opacity:1; }
+    .controles .control { pointer-events:auto; }
+    .control.musica { font-size:1.1rem; }
+    .pantalla .tarjeta,.pantalla .leyenda { opacity:0; transform:translateY(18px); transition:opacity .55s ease,transform .55s ease; }
+    .pantalla.visible .tarjeta,.pantalla.visible .leyenda { opacity:1; transform:none; }
+    @media(max-height:650px) { .tarjeta { max-height:calc(var(--alto) - 105px); padding:17px 22px; } .folio { margin-bottom:10px; } .linea { margin:12px auto; } .texto { line-height:1.45; margin:7px auto; } .leyenda { bottom:88px; } }
+    @media(min-width:700px) { .entrada,.pantalla,.invitacion { max-width:520px; margin-inline:auto; } .entrada { left:50%; right:auto; width:520px; transform:translateX(-50%); } .controles { left:50%; right:auto; width:min(520px,100%); transform:translateX(-50%); } }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; transition-duration:.01ms!important; } .pantalla .tarjeta,.pantalla .leyenda { opacity:1; transform:none; } }
+  </style>
+</head>
+<body>
+  <section class="entrada" id="entrada" aria-label="Portada de la boda civil">
+    <img src="assets/fotos/foto06.webp" alt="La pareja después de su boda civil" fetchpriority="high">
+    <button class="salir-portada" id="salir-portada" type="button" aria-label="Salir" title="Salir">×</button>
+    <div class="portada-contenido">
+      <p class="portada-kicker">Nuestra boda civil</p>
+      <h1 class="portada-nombres" id="portada-nombres"></h1>
+      <p class="portada-frase" id="portada-frase"></p>
+      <button class="entrar" id="entrar" type="button">Ver invitación ↓</button>
+    </div>
+  </section>
+  <main class="invitacion" id="invitacion" aria-label="Invitación de boda civil">
+    <section class="pantalla tarjeta-pantalla"><img class="fondo" src="assets/fondos/fondo01.webp" alt="" fetchpriority="high"><article class="tarjeta"><p class="folio">Acta 01 / La decisión</p><p class="kicker">Un día para nosotros</p><h2 id="nombres-presentacion"></h2><p class="texto" id="mensaje"></p><span class="linea"></span><p class="texto">Un momento pequeño, compartido con las personas que hacen grande nuestra historia.</p></article></section>
+    <section class="pantalla foto"><img src="assets/fotos/foto01.webp" alt="La pareja firma el acta ante sus cuatro testigos" loading="lazy"><p class="foto-numero">01 / La firma</p><p class="leyenda">Un sí escrito entre dos</p></section>
+    <section class="pantalla tarjeta-pantalla"><img class="fondo" src="assets/fondos/fondo02.webp" alt="" loading="lazy"><article class="tarjeta"><p class="folio">Acta 02 / La ceremonia</p><p class="kicker">Nos acompañas</p><h2>El momento del sí</h2><p class="texto">Nos reuniremos para celebrar nuestra unión en una ceremonia civil íntima.</p><span class="linea"></span><p class="dato" id="registro"></p><p class="secundario" id="direccion"></p><p class="dato" id="hora"></p><button class="boton-demo" type="button" aria-disabled="true">Ver ubicación</button></article></section>
+    <section class="pantalla foto"><img src="assets/fotos/foto02.webp" alt="La pareja sale del registro civil" loading="lazy"><p class="foto-numero">02 / Juntos</p><p class="leyenda">El primer paso de esta nueva etapa</p></section>
+    <section class="pantalla tarjeta-pantalla"><img class="fondo" src="assets/fondos/fondo03.webp" alt="" loading="lazy"><article class="tarjeta"><p class="folio">Acta 03 / La fecha</p><p class="kicker">Reserva este día</p><h2 id="fecha-texto"></h2><p class="texto">Falta poco para encontrarnos y celebrar contigo.</p><div class="contador" aria-label="Cuenta regresiva"><div><strong id="dias">00</strong><small>Días</small></div><div><strong id="horas">00</strong><small>Horas</small></div><div><strong id="minutos">00</strong><small>Min</small></div><div><strong id="segundos">00</strong><small>Seg</small></div></div><button class="boton-demo" type="button" aria-disabled="true">Agregar al calendario</button></article></section>
+    <section class="pantalla foto"><img src="assets/fotos/foto03.webp" alt="La pareja intercambia los anillos" loading="lazy"><p class="foto-numero">03 / La promesa</p><p class="leyenda">Elegirnos cada día</p></section>
+    <section class="pantalla tarjeta-pantalla"><img class="fondo" src="assets/fondos/fondo04.webp" alt="" loading="lazy"><article class="tarjeta"><p class="folio">Acta 04 / El encuentro</p><p class="kicker">Después de la firma</p><h2>Brindemos juntos</h2><p class="texto">Compartiremos una reunión sencilla para celebrar este comienzo.</p><span class="linea"></span><p class="dato" id="reunion"></p><p class="secundario" id="direccion-reunion"></p><p class="dato" id="hora-reunion"></p><div class="detalle"><strong>Vestimenta</strong><span id="vestimenta"></span></div><button class="boton-demo" type="button" aria-disabled="true">Ver ubicación</button></article></section>
+    <section class="pantalla foto"><img src="assets/fotos/foto04.webp" alt="La pareja sonríe con sus cuatro amigos" loading="lazy"><p class="foto-numero">04 / Los nuestros</p><p class="leyenda">Con quienes siempre han estado cerca</p></section>
+    <section class="pantalla tarjeta-pantalla"><img class="fondo" src="assets/fondos/fondo05.webp" alt="" loading="lazy"><article class="tarjeta"><p class="folio">Acta 05 / Tu respuesta</p><p class="kicker">Nos hará ilusión verte</p><h2>¿Nos acompañas?</h2><p class="texto">Confirma tu asistencia antes del</p><p class="dato" id="limite"></p><button class="boton-demo" type="button" aria-disabled="true">Confirmar asistencia</button><span class="linea"></span><p class="texto" id="despedida"></p></article></section>
+    <section class="pantalla foto"><img src="assets/fotos/foto05.webp" alt="La pareja camina de la mano" loading="lazy"><p class="foto-numero">05 / Lo que sigue</p><p class="leyenda" id="firma"></p></section>
+  </main>
+  <div class="controles" aria-label="Controles de invitación"><button class="control" id="salir" type="button" aria-label="Volver a la portada" title="Salir">×</button><button class="control musica" id="musica-boton" type="button" aria-label="Reproducir música" title="Música">♫</button></div>
+  <audio id="musica" loop preload="none"></audio>
+  <script>
+    // Personaliza los datos aquí. Ubicación, calendario y confirmación son botones de demostración.
+    const DATOS_INVITACION = {
+      pareja: 'Lucía & Mateo',
+      frasePortada: 'Un sí sencillo, rodeados de quienes queremos.',
+      mensaje: 'Decidimos unir nuestras vidas en una ceremonia cercana, honesta y llena de cariño. Queremos compartir contigo este día especial.',
+      fechaISO: '2027-04-24T12:00:00-06:00',
+      fechaTexto: '24 · ABRIL · 2027',
+      ceremonia: { lugar:'Oficialía del Registro Civil', direccion:'Centro, Monterrey, Nuevo León', hora:'12:00 p. m.' },
+      reunion: { lugar:'Patio de la Casa', direccion:'Centro, Monterrey, Nuevo León', hora:'2:00 p. m.' },
+      vestimenta:'Semi formal · Tonos claros',
+      limiteConfirmacion:'10 de abril de 2027',
+      despedida:'Gracias por ser parte de nuestra historia.',
+      urlSalida:'../../../index.html',
+      audio:'assets/audio/musica.mp3'
+    };
+    const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+    const visor=$('#invitacion'), pantallas=$$('.pantalla'), audio=$('#musica');
+    let indice=0, iniciado=false, ajustando=false;
+    const campos={ '#portada-nombres':'pareja','#portada-frase':'frasePortada','#nombres-presentacion':'pareja','#mensaje':'mensaje','#fecha-texto':'fechaTexto','#registro':'ceremonia.lugar','#direccion':'ceremonia.direccion','#hora':'ceremonia.hora','#reunion':'reunion.lugar','#direccion-reunion':'reunion.direccion','#hora-reunion':'reunion.hora','#vestimenta':'vestimenta','#limite':'limiteConfirmacion','#despedida':'despedida' };
+    for(const [selector,ruta] of Object.entries(campos)) $(selector).textContent=ruta.split('.').reduce((obj,clave)=>obj[clave],DATOS_INVITACION);
+    $('#firma').textContent=`Todo comienza aquí · ${DATOS_INVITACION.pareja}`;
+    document.title=`${DATOS_INVITACION.pareja} | Boda civil`;
+    audio.src=DATOS_INVITACION.audio;
+    function irA(n,suave=true) { indice=Math.max(0,Math.min(n,pantallas.length-1)); visor.scrollTo({top:pantallas[indice].offsetTop,behavior:suave&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'instant'}); pantallas[indice].classList.add('visible'); }
+    pantallas.forEach((pantalla,n)=>{ const boton=document.createElement('button'); boton.className='continuar'; boton.type='button'; boton.textContent=n===pantallas.length-1?'Volver al inicio ↑':'Continuar ↓'; boton.addEventListener('click',()=>irA(n===pantallas.length-1?0:n+1)); pantalla.append(boton); });
+    const observador=new IntersectionObserver(entradas=>{ for(const e of entradas) if(e.isIntersecting) { e.target.classList.add('visible'); if(e.intersectionRatio>.5) indice=pantallas.indexOf(e.target); } },{root:visor,threshold:[.1,.55]});
+    pantallas.forEach(p=>observador.observe(p));
+    function ajustar() { const alto=Math.round(window.visualViewport?.height||window.innerHeight); document.documentElement.style.setProperty('--alto',`${alto}px`); if(iniciado&&!ajustando){ ajustando=true; requestAnimationFrame(()=>{irA(indice,false);ajustando=false;});} }
+    ajustar(); window.addEventListener('resize',ajustar); window.visualViewport?.addEventListener('resize',ajustar);
+    $('#entrar').addEventListener('click',()=>{iniciado=true;document.body.classList.add('iniciada');$('#entrada').classList.add('oculta');irA(0,false);});
+    function salir() { if(!iniciado) { window.location.href=DATOS_INVITACION.urlSalida; return; } iniciado=false;audio.pause();$('#musica-boton').textContent='♫';$('#musica-boton').setAttribute('aria-label','Reproducir música');document.body.classList.remove('iniciada');$('#entrada').classList.remove('oculta');irA(0,false); }
+    $('#salir').addEventListener('click',salir); $('#salir-portada').addEventListener('click',salir);
+    $('#musica-boton').addEventListener('click',async()=>{ if(!audio.paused){audio.pause();$('#musica-boton').textContent='♫';$('#musica-boton').setAttribute('aria-label','Reproducir música');return;} try {await audio.play();$('#musica-boton').textContent='Ⅱ';$('#musica-boton').setAttribute('aria-label','Pausar música');} catch {$('#musica-boton').textContent='♫';} });
+    function contador(){const segundos=Math.max(0,Math.floor((new Date(DATOS_INVITACION.fechaISO).getTime()-Date.now())/1000));const valores=[Math.floor(segundos/86400),Math.floor(segundos/3600)%24,Math.floor(segundos/60)%60,segundos%60];['dias','horas','minutos','segundos'].forEach((id,i)=>$('#'+id).textContent=String(valores[i]).padStart(2,'0'));} contador();setInterval(contador,1000);
+  </script>
+</body>
+</html>
