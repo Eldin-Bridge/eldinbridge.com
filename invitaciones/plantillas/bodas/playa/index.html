@@ -13,7 +13,15 @@
     *{box-sizing:border-box}html,body{height:100%;margin:0;overflow:hidden}body{background:#d9e7e5;color:var(--profundo);font-family:'DM Sans',sans-serif}button{font:inherit;cursor:pointer}button:focus-visible{outline:3px solid #eac38b;outline-offset:3px}
     .entrada,.pantalla{position:relative;height:var(--alto);overflow:hidden}.entrada{position:fixed;inset:0;z-index:20;background:#34535a;transition:opacity .55s,visibility .55s}.entrada.oculta{opacity:0;visibility:hidden;pointer-events:none}
     .entrada>img,.fondo,.foto>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.entrada>img{object-position:center 45%}.entrada::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#142e3555,transparent 32%,#102b36c7 100%);pointer-events:none}
-    .portada{position:absolute;z-index:1;left:8%;right:8%;bottom:max(8%,calc(env(safe-area-inset-bottom) + 58px));color:white;text-align:center;text-shadow:0 2px 15px #12272d95}.portada .icono{font-size:1.4rem;color:#f2d9af}.portada .rotulo,.kicker,.foto-numero{font-family:Manrope,sans-serif;font-size:.65rem;font-weight:600;letter-spacing:.26em;text-transform:uppercase}.portada h1{font:400 clamp(2.1rem,8vw,3.9rem)/1.35 'Petit Formal Script',cursive;margin:12px 0 18px}.portada .frase{font-size:.95rem;line-height:1.6;max-width:31ch;margin:0 auto 22px}
+    .portada{position:absolute;z-index:1;left:8%;right:8%;bottom:max(8%,calc(env(safe-area-inset-bottom) + 58px));color:white;text-align:center;text-shadow:0 2px 15px #12272d95}.portada .icono{font-size:1.4rem;color:#f2d9af}.portada .rotulo,.kicker,.foto-numero{font-family:Manrope,sans-serif;font-size:.65rem;font-weight:600;letter-spacing:.26em;text-transform:uppercase}.portada h1{
+    width:min(100%,390px);
+    margin:12px auto 18px;
+    font:400 clamp(2.1rem,8vw,3.9rem)/1.1 'Petit Formal Script',cursive;
+    }
+    .portada h1 span{display:block}
+    .portada h1 .nombre-izq{text-align:left}
+    .portada h1 .ampersand{text-align:center;font-size:.78em}
+    .portada h1 .nombre-der{text-align:right}.portada .frase{font-size:.95rem;line-height:1.6;max-width:31ch;margin:0 auto 22px}
     .accion,.seguir,.demo{border:1px solid #e9d9bb;border-radius:28px;background:var(--arena);color:var(--profundo);min-height:45px;padding:10px 25px;text-transform:uppercase;letter-spacing:.16em;font:600 .65rem Manrope,sans-serif;transition:transform .2s,background .2s}.accion:hover,.seguir:hover{background:white;transform:translateY(-2px)}
     .salir-entrada,.control{width:43px;height:43px;border:1px solid #fff9;border-radius:50%;background:#25444cbf;color:white;display:grid;place-items:center;line-height:1;font-size:1.3rem;backdrop-filter:blur(8px)}.salir-entrada{position:absolute;z-index:3;top:max(18px,env(safe-area-inset-top));left:18px}
     .invitacion{height:var(--alto);overflow-y:auto;overflow-x:hidden;scroll-snap-type:y mandatory;overscroll-behavior:contain;scrollbar-width:none}.invitacion::-webkit-scrollbar{display:none}.pantalla{scroll-snap-align:start;scroll-snap-stop:always;display:grid;place-items:center}.tarjeta-pantalla::after{content:"";position:absolute;inset:0;background:#204b4a35;pointer-events:none}
@@ -64,6 +72,10 @@
     const visor=$('#invitacion'),pantallas=$$('.pantalla'),audio=$('#musica');let indice=0,iniciado=false,ajustando=false;
     const campos={'#portada-nombres':'pareja','#frase-portada':'frasePortada','#nombres-presentacion':'pareja','#mensaje':'mensaje','#ceremonia':'ceremonia.lugar','#direccion-ceremonia':'ceremonia.direccion','#hora-ceremonia':'ceremonia.hora','#recepcion':'recepcion.lugar','#direccion-recepcion':'recepcion.direccion','#hora-recepcion':'recepcion.hora','#fecha-texto':'fechaTexto','#vestimenta':'vestimenta','#limite':'limiteConfirmacion','#despedida':'despedida'};
     for(const [selector,ruta] of Object.entries(campos))$(selector).textContent=ruta.split('.').reduce((obj,key)=>obj[key],DATOS_INVITACION);
+    $('#portada-nombres').innerHTML =
+    '<span class="nombre-izq">Marina</span>' +
+    '<span class="ampersand">&amp;</span>' +
+    '<span class="nombre-der">Daniel</span>';
     $('#firma').textContent=`Con amor, ${DATOS_INVITACION.pareja}`;document.title=`${DATOS_INVITACION.pareja} | Boda en la playa`;audio.src=DATOS_INVITACION.audio;
     function irA(n,suave=true){indice=Math.max(0,Math.min(n,pantallas.length-1));visor.scrollTo({top:pantallas[indice].offsetTop,behavior:suave&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'instant'});pantallas[indice].classList.add('visible')}
     pantallas.forEach((p,n)=>{const b=document.createElement('button');b.className='seguir';b.type='button';b.textContent=n===pantallas.length-1?'Volver al inicio ↑':'Continuar ↓';b.addEventListener('click',()=>irA(n===pantallas.length-1?0:n+1));p.append(b)});
