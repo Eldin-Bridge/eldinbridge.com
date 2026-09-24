@@ -89,7 +89,7 @@
     <section class="pantalla foto"><img src="assets/fotos/foto02.webp" alt="La pareja sale del registro civil" loading="lazy"><p class="foto-numero">02 / Juntos</p><p class="leyenda">El primer paso de esta nueva etapa</p></section>
     <section class="pantalla tarjeta-pantalla"><img class="fondo" src="assets/fondos/fondo03.webp" alt="" loading="lazy"><article class="tarjeta"><p class="folio">Acta 03 / La fecha</p><p class="kicker">Reserva este día</p><h2 id="fecha-texto"></h2><p class="texto">Falta poco para encontrarnos y celebrar contigo.</p><div class="contador" aria-label="Cuenta regresiva"><div><strong id="dias">00</strong><small>Días</small></div><div><strong id="horas">00</strong><small>Horas</small></div><div><strong id="minutos">00</strong><small>Min</small></div><div><strong id="segundos">00</strong><small>Seg</small></div></div><button class="boton-demo" type="button" aria-disabled="true">Agregar al calendario</button></article></section>
     <section class="pantalla foto"><img src="assets/fotos/foto03.webp" alt="La pareja intercambia los anillos" loading="lazy"><p class="foto-numero">03 / La promesa</p><p class="leyenda">Elegirnos cada día</p></section>
-    <section class="pantalla tarjeta-pantalla"><img class="fondo" src="assets/fondos/fondo04.webp" alt="" loading="lazy"><article class="tarjeta"><p class="folio">Acta 04 / El encuentro</p><p class="kicker">Después de la firma</p><h2>Brindemos juntos</h2><p class="texto">Compartiremos una reunión sencilla para celebrar este comienzo.</p><span class="linea"></span><p class="dato" id="reunion"></p><p class="secundario" id="direccion-reunion"></p><p class="dato" id="hora-reunion"></p><div class="detalle"><strong>Vestimenta</strong><span id="vestimenta"></span></div><button class="boton-demo" type="button" aria-disabled="true">Ver ubicación</button></article></section>
+       <section class="pantalla tarjeta-pantalla"><img class="fondo" src="assets/fondos/fondo04.webp" alt="" loading="lazy"><article class="tarjeta"><p class="folio">Acta 04 / Los detalles</p><p class="kicker">Para celebrar cómodos</p><h2>Código de vestimenta</h2><p class="texto">Queremos que disfrutes este momento con nosotros. Te sugerimos venir con:</p><span class="linea"></span><p class="dato" id="vestimenta"></p></article></section>
     <section class="pantalla foto"><img src="assets/fotos/foto04.webp" alt="La pareja sonríe con sus cuatro amigos" loading="lazy"><p class="foto-numero">04 / Los nuestros</p><p class="leyenda">Con quienes siempre han estado cerca</p></section>
     <section class="pantalla tarjeta-pantalla"><img class="fondo" src="assets/fondos/fondo05.webp" alt="" loading="lazy"><article class="tarjeta"><p class="folio">Acta 05 / Tu respuesta</p><p class="kicker">Nos hará ilusión verte</p><h2>¿Nos acompañas?</h2><p class="texto">Confirma tu asistencia antes del</p><p class="dato" id="limite"></p><button class="boton-demo" type="button" aria-disabled="true">Confirmar asistencia</button><span class="linea"></span><p class="texto" id="despedida"></p></article></section>
     <section class="pantalla foto"><img src="assets/fotos/foto05.webp" alt="La pareja camina de la mano" loading="lazy"><p class="foto-numero">05 / Lo que sigue</p><p class="leyenda" id="firma"></p></section>
@@ -105,7 +105,6 @@
       fechaISO: '2027-04-24T12:00:00-06:00',
       fechaTexto: '24 · ABRIL · 2027',
       ceremonia: { lugar:'Oficialía del Registro Civil', direccion:'Centro, Monterrey, Nuevo León', hora:'12:00 p. m.' },
-      reunion: { lugar:'Patio de la Casa', direccion:'Centro, Monterrey, Nuevo León', hora:'2:00 p. m.' },
       vestimenta:'Semi formal · Tonos claros',
       limiteConfirmacion:'10 de abril de 2027',
       despedida:'Gracias por ser parte de nuestra historia.',
@@ -115,7 +114,7 @@
     const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
     const visor=$('#invitacion'), pantallas=$$('.pantalla'), audio=$('#musica');
     let indice=0, iniciado=false, ajustando=false;
-    const campos={ '#portada-nombres':'pareja','#portada-frase':'frasePortada','#nombres-presentacion':'pareja','#mensaje':'mensaje','#fecha-texto':'fechaTexto','#registro':'ceremonia.lugar','#direccion':'ceremonia.direccion','#hora':'ceremonia.hora','#reunion':'reunion.lugar','#direccion-reunion':'reunion.direccion','#hora-reunion':'reunion.hora','#vestimenta':'vestimenta','#limite':'limiteConfirmacion','#despedida':'despedida' };
+    const campos={ '#portada-nombres':'pareja','#portada-frase':'frasePortada','#nombres-presentacion':'pareja','#mensaje':'mensaje','#fecha-texto':'fechaTexto','#registro':'ceremonia.lugar','#direccion':'ceremonia.direccion','#hora':'ceremonia.hora','#vestimenta':'vestimenta','#limite':'limiteConfirmacion','#despedida':'despedida' };
     for(const [selector,ruta] of Object.entries(campos)) $(selector).textContent=ruta.split('.').reduce((obj,clave)=>obj[clave],DATOS_INVITACION);
     $('#firma').textContent=`Todo comienza aquí · ${DATOS_INVITACION.pareja}`;
     document.title=`${DATOS_INVITACION.pareja} | Boda civil`;
