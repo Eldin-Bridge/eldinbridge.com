@@ -21,6 +21,8 @@
     .portada{position:absolute;z-index:1;left:7%;right:7%;bottom:max(8%,calc(env(safe-area-inset-bottom) + 62px));color:#fff;text-align:center;text-shadow:0 2px 18px #221915a3}
     .portada .adorno{margin:0 auto 12px;color:#f6dfba}.portada .subtitulo,.folio,.etiqueta,.foto-numero{font-size:.66rem;letter-spacing:.27em;text-transform:uppercase;font-weight:500}
     .portada h1{font:500 clamp(2.5rem,10vw,4.5rem)/.98 'Cormorant Garamond',Georgia,serif;margin:13px 0 9px}
+    .portada h1 span{display:block}
+    .portada h1 .amp{font-size:.62em;line-height:.8;margin:.08em 0}
     .portada .frase{font-size:.93rem;line-height:1.5;margin:0 auto 21px;max-width:32ch}
     .boton-entrada,.continuar,.demo{border:1px solid #d6bd93;background:#fffaf0;color:#5f4836;min-height:46px;padding:12px 23px;letter-spacing:.15em;text-transform:uppercase;font-size:.67rem;font-weight:600;transition:transform .25s,background .25s}
     .boton-entrada:hover,.continuar:hover{background:white;transform:translateY(-2px)}
@@ -89,6 +91,15 @@
     const visor=$('#invitacion'),pantallas=$$('.pantalla'),audio=$('#musica');let indice=0,iniciado=false,ajustando=false;
     const campos={'#portada-nombres':'pareja','#frase-portada':'frasePortada','#nombres-presentacion':'pareja','#mensaje':'mensaje','#iglesia':'ceremonia.lugar','#direccion-iglesia':'ceremonia.direccion','#hora-iglesia':'ceremonia.hora','#salon':'recepcion.lugar','#direccion-salon':'recepcion.direccion','#hora-salon':'recepcion.hora','#fecha-texto':'fechaTexto','#vestimenta':'vestimenta','#limite':'limiteConfirmacion','#despedida':'despedida'};
     for(const [selector,ruta] of Object.entries(campos)) $(selector).textContent=ruta.split('.').reduce((obj,clave)=>obj[clave],DATOS_INVITACION);
+    const [nombre1,nombre2]=DATOS_INVITACION.pareja.split(/\s*&\s*/);
+    const tituloPortada=$('#portada-nombres');
+    tituloPortada.replaceChildren();
+[nombre1,'&',nombre2].forEach((nombre,i)=>{
+    const linea=document.createElement('span');
+    linea.textContent=nombre;
+    if(i===1) linea.className='amp';
+    tituloPortada.append(linea);
+    });
     $('#firma').textContent=`Con amor, ${DATOS_INVITACION.pareja}`;document.title=`${DATOS_INVITACION.pareja} | Boda clásica`;audio.src=DATOS_INVITACION.audio;
     function irA(n,suave=true){indice=Math.max(0,Math.min(n,pantallas.length-1));visor.scrollTo({top:pantallas[indice].offsetTop,behavior:suave&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'instant'});pantallas[indice].classList.add('visible')}
     pantallas.forEach((p,n)=>{const b=document.createElement('button');b.className='continuar';b.type='button';b.textContent=n===pantallas.length-1?'Volver al inicio ↑':'Continuar ↓';b.addEventListener('click',()=>irA(n===pantallas.length-1?0:n+1));p.append(b)});
