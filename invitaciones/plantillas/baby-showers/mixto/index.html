@@ -41,17 +41,14 @@
     .paper .date{display:flex;align-items:center;justify-content:center;gap:16px;margin:16px 0;color:#455947}.paper .date b{font:500 clamp(3.7rem,16vw,5.5rem)/1 'Fraunces',Georgia,serif;letter-spacing:-.07em}.paper .date span{text-align:left;text-transform:uppercase;letter-spacing:.13em;font-size:.74rem;font-weight:700;line-height:1.7}
     .paper .actions{display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin-top:18px}
     .pill,.button{border:1px solid #596d5b;min-height:44px;padding:11px 19px;text-decoration:none;background:#4f6653;color:#fff9ed;border-radius:100px;font-size:.74rem;font-weight:700;letter-spacing:.06em;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-align:center;transition:transform .2s,background .2s}
-    .pill:hover,.button:hover{transform:translateY(-2px);background:#374d3d}.pill.secondary{background:transparent;color:#405746}.pill.secondary:hover{background:#e7e2d4}
-    .entry-start:hover{transform:translate(-50%,-2px)}
+    .pill:hover,.button:hover{background:#374d3d}.pill.secondary{background:transparent;color:#405746}.pill.secondary:hover{background:#e7e2d4}
     [hidden]{display:none!important}
-    .ornament{position:absolute;z-index:4;width:clamp(88px,26%,132px);height:auto;max-height:18%;object-fit:contain;filter:drop-shadow(0 8px 11px #1e251c50);pointer-events:none;transform-origin:50% 12%;animation:float-soft 6s ease-in-out infinite;will-change:transform}
-    .scene[data-side="right"] .ornament{right:1%;top:16%;animation-delay:-2s}.scene[data-side="left"] .ornament{left:1%;top:15%;animation-delay:-1s}.scene[data-side="bottom"] .ornament{right:1%;bottom:13%;animation-delay:-1.4s}
+    .ornament{position:absolute;z-index:4;width:clamp(88px,26%,132px);height:auto;max-height:18%;object-fit:contain;filter:drop-shadow(0 8px 11px #1e251c50);pointer-events:none;opacity:0;transition:opacity .6s ease}
+    .scene.active .ornament{opacity:1}
+    .scene[data-side="right"] .ornament{right:1%;top:16%}.scene[data-side="left"] .ornament{left:1%;top:15%}.scene[data-side="bottom"] .ornament{right:1%;bottom:13%}
     .scene[data-side="bottom"] .ornament{width:clamp(95px,29%,145px)}
-    .scene:nth-child(-n+3) .ornament,.scene:last-child .ornament{animation-name:sway-soft}
-    @keyframes sway-soft{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
-    @keyframes float-soft{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
     .next{position:absolute;z-index:5;bottom:max(20px,calc(env(safe-area-inset-bottom) + 12px));left:50%;transform:translateX(-50%);white-space:nowrap;background:#f9f1e5;color:#3e5846;border-color:#f9f1e5;box-shadow:0 8px 24px #18201c5a}
-    .next:hover{transform:translate(-50%,-2px);background:#fffaf2}
+    .next:hover{background:#fffaf2}
     .controls{position:absolute;z-index:12;top:max(14px,calc(env(safe-area-inset-top) + 10px));left:15px;right:15px;display:flex;justify-content:space-between;pointer-events:none;opacity:0;transition:opacity .4s}.started .controls{opacity:1}.controls button{pointer-events:auto}
     .round{height:44px;width:44px;border:1px solid #fff8e5a8;border-radius:50%;background:#354436bd;color:#fff9eb;display:grid;place-items:center;font-size:1.3rem;backdrop-filter:blur(9px)}
     .progress{position:absolute;z-index:8;bottom:max(76px,calc(env(safe-area-inset-bottom) + 69px));left:0;right:0;display:flex;justify-content:center;gap:7px;pointer-events:none;opacity:0}.started .progress{opacity:1}.progress i{height:5px;width:5px;border-radius:8px;background:#fff9e987;transition:width .35s,background .35s}.progress i.on{width:25px;background:#fff9ec}
