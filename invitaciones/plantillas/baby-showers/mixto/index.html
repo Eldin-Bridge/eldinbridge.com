@@ -45,13 +45,14 @@
     .pill,.button{border:1px solid #596d5b;min-height:44px;padding:11px 19px;text-decoration:none;background:#4f6653;color:#fff9ed;border-radius:100px;font-size:.74rem;font-weight:700;letter-spacing:.06em;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-align:center;transition:transform .2s,background .2s}
     .pill:hover,.button:hover{background:#374d3d}.pill.secondary{background:transparent;color:#405746}.pill.secondary:hover{background:#e7e2d4}
     [hidden]{display:none!important}
-    .ornament{position:absolute;z-index:4;width:clamp(88px,26%,132px);height:auto;max-height:18%;object-fit:contain;filter:drop-shadow(0 8px 11px #1e251c50);pointer-events:none;animation:float-ornament 4.8s ease-in-out infinite;will-change:translate}
+    .ornament{position:absolute;z-index:4;left:var(--x);top:var(--y);width:var(--size,120px);height:auto;max-width:none;transform:translate(-50%,-50%);transform-origin:center;filter:drop-shadow(0 8px 11px #1e251c50);pointer-events:none;animation:float-ornament 4.8s ease-in-out infinite;will-change:translate}
     .scene:not(.active) .ornament{animation-play-state:paused}
     .scene:nth-child(2n) .ornament{animation-duration:5.6s;animation-delay:-1.5s}
     .scene:nth-child(3n) .ornament{animation-duration:5.2s;animation-delay:-2.2s}
-    @keyframes float-ornament{0%,100%{translate:0 0}50%{translate:0 -8px}}
-    .scene[data-side="right"] .ornament{right:1%;top:16%}.scene[data-side="left"] .ornament{left:1%;top:15%}.scene[data-side="bottom"] .ornament{right:1%;bottom:13%}
-    .scene[data-side="bottom"] .ornament{width:clamp(95px,29%,145px)}
+    @keyframes float-ornament{0%,100%{translate:0 0}50%{translate:0 -6px}}
+    .scene[data-side="right"] .ornament{--x:88%;--y:23%;--size:clamp(88px,25vw,132px)}
+    .scene[data-side="left"] .ornament{--x:12%;--y:22%;--size:clamp(88px,25vw,132px)}
+    .scene[data-side="bottom"] .ornament{--x:86%;--y:78%;--size:clamp(95px,27vw,145px)}
     .next{position:absolute;z-index:5;bottom:max(20px,calc(env(safe-area-inset-bottom) + 12px));left:50%;transform:translateX(-50%);white-space:nowrap;background:#f9f1e5;color:#3e5846;border-color:#f9f1e5;box-shadow:0 8px 24px #18201c5a}
     .next:hover{background:#fffaf2}
     .controls{position:absolute;z-index:12;top:max(14px,calc(env(safe-area-inset-top) + 10px));left:15px;right:15px;display:flex;justify-content:space-between;pointer-events:none;opacity:0;transition:opacity .4s}.started .controls{opacity:1}.controls button{pointer-events:auto}
@@ -59,8 +60,8 @@
     .progress{position:absolute;z-index:8;bottom:max(76px,calc(env(safe-area-inset-bottom) + 69px));left:0;right:0;display:flex;justify-content:center;gap:7px;pointer-events:none;opacity:0}.started .progress{opacity:1}.progress i{height:5px;width:5px;border-radius:8px;background:#fff9e987;transition:width .35s,background .35s}.progress i.on{width:25px;background:#fff9ec}
     .reveal{opacity:0;translate:0 18px;transition:opacity .65s,translate .65s}.active .reveal{opacity:1;translate:0 0}
     .countdown{display:flex;gap:5px;justify-content:center;margin:15px 0}.countdown div{min-width:21%;padding:6px 2px;border-top:1px solid #a3ad9a;border-bottom:1px solid #a3ad9a}.countdown b{display:block;font:500 1.5rem 'Fraunces',Georgia,serif}.countdown small{display:block;font-size:.55rem;text-transform:uppercase;letter-spacing:.05em}
-    @media(max-height:680px){.paper{padding:21px 22px;max-height:calc(var(--h) - 138px);overflow:auto;scrollbar-width:thin}.paper h2{font-size:clamp(1.85rem,7vw,2.6rem);margin-bottom:9px}.paper p{line-height:1.4;margin:7px 0}.paper .divider{margin:10px 0}.paper .date{margin:7px 0}.ornament{max-height:15vh}}
-    @media(max-width:380px){.paper{left:5%;right:5%;padding-left:20px;padding-right:20px}.scene:nth-child(even) .paper{left:7%;right:4%}.ornament{width:83px}}
+    @media(max-height:680px){.paper{padding:21px 22px;max-height:calc(var(--h) - 138px);overflow:auto;scrollbar-width:thin}.paper h2{font-size:clamp(1.85rem,7vw,2.6rem);margin-bottom:9px}.paper p{line-height:1.4;margin:7px 0}.paper .divider{margin:10px 0}.paper .date{margin:7px 0}.ornament{--size:90px!important}}
+    @media(max-width:380px){.paper{left:5%;right:5%;padding-left:20px;padding-right:20px}.scene:nth-child(even) .paper{left:7%;right:4%}.ornament{--size:83px!important}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.reveal{opacity:1;translate:none}}
   </style>
 </head>
