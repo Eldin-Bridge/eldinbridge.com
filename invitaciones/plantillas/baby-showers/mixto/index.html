@@ -28,8 +28,10 @@
     .entry.closed{opacity:0;visibility:hidden;pointer-events:none}
     .entry-photo{object-position:center 43%}.entry:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#17221b73 0%,transparent 34%,transparent 54%,#17221bc7 100%);pointer-events:none}
     .entry-copy{position:absolute;z-index:2;left:7%;right:7%;top:max(12%,calc(env(safe-area-inset-top) + 58px));text-align:center;color:#fff8eb;text-shadow:0 2px 20px #17221b9a}
-    .entry-copy .eyebrow{color:#fbe0af}.entry-copy h1{font:500 clamp(3.1rem,14vw,5.9rem)/.89 'Fraunces',Georgia,serif;letter-spacing:-.055em;margin:14px auto 12px;max-width:9ch}
-    .entry-copy h1 em{font-weight:400}.entry-copy p:last-child{font-size:.93rem;line-height:1.5;margin:0 auto;max-width:27ch}
+    .entry-copy .eyebrow{color:#fbe0af}
+    .entry-detail{position:absolute;z-index:2;left:7%;right:7%;bottom:max(105px,calc(env(safe-area-inset-bottom) + 95px));text-align:center;color:#fff8eb;text-shadow:0 2px 20px #17221b9a}
+    .entry-detail h1{font:500 clamp(3.1rem,14vw,5.9rem)/.89 'Fraunces',Georgia,serif;letter-spacing:-.055em;margin:0 auto 12px;max-width:9ch}
+    .entry-detail h1 em{font-weight:400}.entry-detail p{font-size:.93rem;line-height:1.5;margin:0 auto;max-width:27ch}
     .entry-start{position:absolute;z-index:3;bottom:max(35px,calc(env(safe-area-inset-bottom) + 25px));left:50%;transform:translateX(-50%);white-space:nowrap}
     .eyebrow{font-size:.64rem;font-weight:700;letter-spacing:.23em;text-transform:uppercase}
     .paper{position:absolute;z-index:3;left:6%;right:6%;top:50%;transform:translateY(-50%) rotate(-1.2deg);padding:clamp(25px,4vh,40px) clamp(22px,6vw,36px);background:rgba(248,242,231,.94);box-shadow:0 22px 65px #161e1745;clip-path:polygon(0 0,100% 0,100% 95%,97% 95%,95% 97%,92% 96%,89% 99%,85% 97%,81% 99%,76% 97%,71% 99%,66% 97%,62% 99%,57% 97%,52% 99%,47% 97%,42% 99%,37% 97%,32% 99%,27% 97%,22% 99%,17% 97%,12% 99%,7% 97%,3% 99%,0 97%)}
@@ -43,8 +45,11 @@
     .pill,.button{border:1px solid #596d5b;min-height:44px;padding:11px 19px;text-decoration:none;background:#4f6653;color:#fff9ed;border-radius:100px;font-size:.74rem;font-weight:700;letter-spacing:.06em;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-align:center;transition:transform .2s,background .2s}
     .pill:hover,.button:hover{background:#374d3d}.pill.secondary{background:transparent;color:#405746}.pill.secondary:hover{background:#e7e2d4}
     [hidden]{display:none!important}
-    .ornament{position:absolute;z-index:4;width:clamp(88px,26%,132px);height:auto;max-height:18%;object-fit:contain;filter:drop-shadow(0 8px 11px #1e251c50);pointer-events:none;opacity:0;transition:opacity .6s ease}
-    .scene.active .ornament{opacity:1}
+    .ornament{position:absolute;z-index:4;width:clamp(88px,26%,132px);height:auto;max-height:18%;object-fit:contain;filter:drop-shadow(0 8px 11px #1e251c50);pointer-events:none;animation:float-ornament 4.8s ease-in-out infinite;will-change:translate}
+    .scene:not(.active) .ornament{animation-play-state:paused}
+    .scene:nth-child(2n) .ornament{animation-duration:5.6s;animation-delay:-1.5s}
+    .scene:nth-child(3n) .ornament{animation-duration:5.2s;animation-delay:-2.2s}
+    @keyframes float-ornament{0%,100%{translate:0 0}50%{translate:0 -8px}}
     .scene[data-side="right"] .ornament{right:1%;top:16%}.scene[data-side="left"] .ornament{left:1%;top:15%}.scene[data-side="bottom"] .ornament{right:1%;bottom:13%}
     .scene[data-side="bottom"] .ornament{width:clamp(95px,29%,145px)}
     .next{position:absolute;z-index:5;bottom:max(20px,calc(env(safe-area-inset-bottom) + 12px));left:50%;transform:translateX(-50%);white-space:nowrap;background:#f9f1e5;color:#3e5846;border-color:#f9f1e5;box-shadow:0 8px 24px #18201c5a}
@@ -63,7 +68,8 @@
   <main class="shell" id="shell">
     <div class="entry" id="entry">
       <img class="entry-photo" src="assets/foto/foto01.webp" alt="Los futuros papás celebran acompañados de familiares y amigos" fetchpriority="high">
-      <div class="entry-copy"><p class="eyebrow">Una nueva historia comienza</p><h1>Baby Shower <em>Mixto</em></h1><p>Queremos compartir esta alegría con todas las personas que amamos.</p></div>
+      <div class="entry-copy"><p class="eyebrow">Una nueva historia comienza</p></div>
+      <div class="entry-detail"><h1>Baby Shower <em>Mixto</em></h1><p>Queremos compartir esta alegría con todas las personas que amamos.</p></div>
       <button class="button entry-start" id="start" type="button">Abrir invitación ↗</button>
     </div>
     <div class="controls" aria-label="Controles de la invitación">
