@@ -11,17 +11,18 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght,SOFT,WONK@9..144,400,40,1;9..144,500,40,1;9..144,600,40,1&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/foto/foto01.webp">
   <style>
-    :root{--h:100dvh;--ink:#354039;--sage:#667762;--paper:#f8f2e7;--cream:#eee4d4;--rust:#a66048;--gold:#ba9565}
+    :root{--h:100svh;--ink:#354039;--sage:#667762;--paper:#f8f2e7;--cream:#eee4d4;--rust:#a66048;--gold:#ba9565}
     *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#d8c9b4}
     body{font-family:'DM Sans',Arial,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
     button,a{font:inherit}button{cursor:pointer}a{color:inherit}button:focus-visible,a:focus-visible{outline:3px solid #eabf76;outline-offset:3px}
     .shell{height:var(--h);max-width:540px;margin:auto;position:relative;overflow:hidden;background:#c8bca4;box-shadow:0 0 70px #40362c3b}
-    .pages{height:100%;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior-y:contain;scrollbar-width:none;touch-action:pan-y}
+    .pages{height:100%;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior-y:contain;scrollbar-width:none;touch-action:pan-y;-webkit-overflow-scrolling:touch}
     .pages::-webkit-scrollbar{display:none}
-    .scene,.entry{height:var(--h);min-height:320px;position:relative;overflow:hidden;isolation:isolate}
+    .scene,.entry{height:var(--h);min-height:var(--h);position:relative;overflow:hidden;isolation:isolate}
     .scene{scroll-snap-align:start;scroll-snap-stop:always;background:#796e59}
     .bg,.entry-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-    .bg{transform:none}
+    .bg{transform:scale(1.045);transition:transform 1.1s cubic-bezier(.22,.8,.32,1)}
+    .scene.active .bg{transform:scale(1.025)}
     .scene:before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,#1b261a28 0%,transparent 18%,#252c1e15 52%,#20251db0 100%);pointer-events:none}
     .scene[data-tone="dark"]:before{background:linear-gradient(180deg,#101a2540,#0e1b2a32 45%,#071018bd)}
     .entry{position:absolute;z-index:20;inset:0;background:#58634d;transition:opacity .65s,visibility .65s}
@@ -45,15 +46,16 @@
     .pill,.button{border:1px solid #596d5b;min-height:44px;padding:11px 19px;text-decoration:none;background:#4f6653;color:#fff9ed;border-radius:100px;font-size:.74rem;font-weight:700;letter-spacing:.06em;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-align:center;transition:transform .2s,background .2s}
     .pill:hover,.button:hover{background:#374d3d}.pill.secondary{background:transparent;color:#405746}.pill.secondary:hover{background:#e7e2d4}
     [hidden]{display:none!important}
-    .ornament{position:absolute;z-index:4;left:var(--x);top:var(--y);width:var(--size,120px);height:auto;max-width:none;transform:translate(-50%,-50%);transform-origin:center;filter:drop-shadow(0 8px 11px #1e251c50);pointer-events:none;animation:float-ornament 4.8s ease-in-out infinite;will-change:translate}
+    .asset-layer{position:absolute;inset:0;z-index:7;pointer-events:none}
+    .ornament{position:absolute;left:var(--x);top:var(--y);width:var(--size,120px);height:auto;max-width:none;transform:translate(-50%,-50%);transform-origin:center;filter:drop-shadow(0 8px 11px #1e251c50);pointer-events:none;user-select:none;animation:float-ornament 4.8s ease-in-out infinite;will-change:translate}
     .scene:not(.active) .ornament{animation-play-state:paused}
     .scene:nth-child(2n) .ornament{animation-duration:5.6s;animation-delay:-1.5s}
     .scene:nth-child(3n) .ornament{animation-duration:5.2s;animation-delay:-2.2s}
-    @keyframes float-ornament{0%,100%{translate:0 0}50%{translate:0 -6px}}
+    @keyframes float-ornament{0%,100%{translate:0 0}50%{translate:0 -9px}}
     .scene[data-side="right"] .ornament{--x:88%;--y:23%;--size:clamp(88px,25vw,132px)}
     .scene[data-side="left"] .ornament{--x:12%;--y:22%;--size:clamp(88px,25vw,132px)}
     .scene[data-side="bottom"] .ornament{--x:86%;--y:78%;--size:clamp(95px,27vw,145px)}
-    .next{position:absolute;z-index:5;bottom:max(20px,calc(env(safe-area-inset-bottom) + 12px));left:50%;transform:translateX(-50%);white-space:nowrap;background:#f9f1e5;color:#3e5846;border-color:#f9f1e5;box-shadow:0 8px 24px #18201c5a}
+    .next{position:absolute;z-index:8;bottom:max(20px,calc(env(safe-area-inset-bottom) + 12px));left:50%;transform:translateX(-50%);white-space:nowrap;background:#f9f1e5;color:#3e5846;border-color:#f9f1e5;box-shadow:0 8px 24px #18201c5a}
     .next:hover{background:#fffaf2}
     .controls{position:absolute;z-index:12;top:max(14px,calc(env(safe-area-inset-top) + 10px));left:15px;right:15px;display:flex;justify-content:space-between;pointer-events:none;opacity:0;transition:opacity .4s}.started .controls{opacity:1}.controls button{pointer-events:auto}
     .round{height:44px;width:44px;border:1px solid #fff8e5a8;border-radius:50%;background:#354436bd;color:#fff9eb;display:grid;place-items:center;font-size:1.3rem;backdrop-filter:blur(9px)}
@@ -79,31 +81,31 @@
     </div>
     <div class="pages" id="pages">
       <section class="scene" data-side="right" aria-label="Bienvenida">
-        <img class="bg" src="assets/fondos/fondo01.webp" alt="" fetchpriority="high"><img class="ornament" src="assets/elementos/elemento01.webp" alt="">
+        <img class="bg" src="assets/fondos/fondo01.webp" alt="" fetchpriority="high"><div class="asset-layer"><img class="ornament" src="assets/elementos/elemento01.webp" alt=""></div>
         <article class="paper reveal"><p class="eyebrow">Bienvenidos a celebrar</p><h2>La alegría se comparte</h2><p id="intro"></p><div class="divider"></div><p class="large" id="parents1"></p><p>Esta vez queremos reunir a toda nuestra gente, sin importar si son amigos, amigas, tíos o tías. ¡Nos hará muy felices verte!</p></article>
       </section>
       <section class="scene" data-side="left" aria-label="Los futuros papás">
-        <img class="bg" src="assets/fondos/fondo02.webp" alt="" loading="lazy"><img class="ornament" src="assets/elementos/elemento02.webp" alt="" loading="lazy">
+        <img class="bg" src="assets/fondos/fondo02.webp" alt="" loading="lazy"><div class="asset-layer"><img class="ornament" src="assets/elementos/elemento02.webp" alt="" loading="lazy"></div>
         <article class="paper reveal"><p class="eyebrow">Con mucho cariño</p><h2>Una pequeña vida, una gran emoción</h2><p id="message"></p><div class="divider"></div><p class="large" id="parents2"></p><p class="mini">Nos encantaría compartir contigo este momento antes de su llegada.</p></article>
       </section>
       <section class="scene" data-side="bottom" aria-label="Fecha y hora">
-        <img class="bg" src="assets/fondos/fondo03.webp" alt="" loading="lazy"><img class="ornament" src="assets/elementos/elemento03.webp" alt="" loading="lazy">
+        <img class="bg" src="assets/fondos/fondo03.webp" alt="" loading="lazy"><div class="asset-layer"><img class="ornament" src="assets/elementos/elemento03.webp" alt="" loading="lazy"></div>
         <article class="paper reveal"><p class="eyebrow">Reserva esta fecha</p><h2>Nos vemos pronto</h2><div class="date"><b id="day">00</b><span id="monthYear"></span></div><p class="large" id="time"></p><div class="countdown" aria-label="Cuenta regresiva"><div><b id="days">00</b><small>Días</small></div><div><b id="hours">00</b><small>Horas</small></div><div><b id="minutes">00</b><small>Min</small></div><div><b id="seconds">00</b><small>Seg</small></div></div><div class="actions"><a class="pill secondary" id="calendar" href="#" download="baby-shower.ics">Agregar al calendario</a></div></article>
       </section>
       <section class="scene" data-side="right" aria-label="Lugar">
-        <img class="bg" src="assets/fondos/fondo04.webp" alt="" loading="lazy"><img class="ornament" src="assets/elementos/elemento04.webp" alt="" loading="lazy">
+        <img class="bg" src="assets/fondos/fondo04.webp" alt="" loading="lazy"><div class="asset-layer"><img class="ornament" src="assets/elementos/elemento04.webp" alt="" loading="lazy"></div>
         <article class="paper reveal"><p class="eyebrow">Punto de encuentro</p><h2>Ven a celebrar</h2><p class="large" id="venue"></p><p id="address"></p><div class="divider"></div><p class="mini">Te esperamos con ganas de compartir una tarde inolvidable.</p><div class="actions"><a class="pill" id="map" href="#" target="_blank" rel="noopener noreferrer">Cómo llegar ↗</a></div></article>
       </section>
       <section class="scene" data-side="left" aria-label="Mesa de regalos">
-        <img class="bg" src="assets/fondos/fondo05.webp" alt="" loading="lazy"><img class="ornament" src="assets/elementos/elemento05.webp" alt="" loading="lazy">
+        <img class="bg" src="assets/fondos/fondo05.webp" alt="" loading="lazy"><div class="asset-layer"><img class="ornament" src="assets/elementos/elemento05.webp" alt="" loading="lazy"></div>
         <article class="paper reveal"><p class="eyebrow">Un detalle para el bebé</p><h2>Tu compañía es el mejor regalo</h2><p>Si además quieres obsequiarnos algo, preparamos una lista con algunas ideas.</p><div class="divider"></div><p class="mini" id="giftNote"></p><div class="actions"><a class="pill secondary" id="registry" href="#" target="_blank" rel="noopener noreferrer">Ver mesa de regalos ↗</a></div></article>
       </section>
       <section class="scene" data-side="bottom" aria-label="Confirmación">
-        <img class="bg" src="assets/fondos/fondo06.webp" alt="" loading="lazy"><img class="ornament" src="assets/elementos/elemento06.webp" alt="" loading="lazy">
+        <img class="bg" src="assets/fondos/fondo06.webp" alt="" loading="lazy"><div class="asset-layer"><img class="ornament" src="assets/elementos/elemento06.webp" alt="" loading="lazy"></div>
         <article class="paper reveal"><p class="eyebrow">Queremos contar contigo</p><h2>¿Nos acompañas?</h2><p>Ayúdanos a preparar todo con cariño. Confirma tu asistencia antes del:</p><p class="large" id="rsvpDate"></p><div class="actions"><a class="pill" id="rsvp" href="#" target="_blank" rel="noopener noreferrer">Confirmar por WhatsApp ↗</a></div><p class="mini">Puedes indicarnos cuántas personas te acompañarán.</p></article>
       </section>
       <section class="scene" data-tone="dark" data-side="right" aria-label="Despedida">
-        <img class="bg" src="assets/fondos/fondo07.webp" alt="" loading="lazy"><img class="ornament" src="assets/elementos/elemento07.webp" alt="" loading="lazy">
+        <img class="bg" src="assets/fondos/fondo07.webp" alt="" loading="lazy"><div class="asset-layer"><img class="ornament" src="assets/elementos/elemento07.webp" alt="" loading="lazy"></div>
         <article class="paper reveal"><p class="eyebrow">Con todo nuestro cariño</p><h2>Nos vemos muy pronto</h2><p>Hay momentos que se vuelven más bonitos cuando los vivimos juntos. Gracias por ser parte de este.</p><div class="divider"></div><p class="large" id="signature"></p><p class="mini">Te esperamos para celebrar la llegada de nuestro bebé.</p></article>
       </section>
     </div>
@@ -126,7 +128,7 @@
       salida: '../../../index.html' // catálogo principal desde plantillas/baby-showers/mixto/
     };
     const $=s=>document.querySelector(s), pages=$('#pages'), scenes=[...document.querySelectorAll('.scene')];
-    const audio=$('#audio');let current=0,started=false,calendarURL='';
+    const audio=$('#audio');let current=0,started=false,calendarURL='',heightTimer;
     const names=`${DATOS.mama} y ${DATOS.papa}`;
     $('#intro').textContent=`${DATOS.mama} y ${DATOS.papa} esperan con ilusión a su bebé.`;
     $('#parents1').textContent=names;$('#parents2').textContent=names;$('#signature').textContent=names;
@@ -152,21 +154,51 @@
     const phone=DATOS.telefonoWhatsApp.replace(/\D/g,'');
     link('#rsvp',phone?`https://wa.me/${phone}?text=${encodeURIComponent('Hola, confirmo mi asistencia al baby shower de '+names+'. Asistiremos ___ personas.')}`:'');
     const dots=scenes.map((_,i)=>{const dot=document.createElement('i');$('#progress').append(dot);return dot});
-    function mark(i){current=i;scenes.forEach((el,n)=>el.classList.toggle('active',n===i));dots.forEach((el,n)=>el.classList.toggle('on',n===i))}
-    function go(i){const target=Math.max(0,Math.min(i,scenes.length-1));pages.scrollTo({top:scenes[target].offsetTop,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});mark(target)}
+    function mark(i){
+      if(i===current&&scenes[i].classList.contains('active'))return;
+      current=i;
+      scenes.forEach((el,n)=>el.classList.toggle('active',n===i));
+      dots.forEach((el,n)=>el.classList.toggle('on',n===i));
+    }
+    function go(i,smooth=true){
+      const target=Math.max(0,Math.min(i,scenes.length-1));
+      pages.scrollTo({left:0,top:target*pages.clientHeight,behavior:smooth&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'auto'});
+    }
+    function adjustHeight(){
+      clearTimeout(heightTimer);
+      heightTimer=setTimeout(()=>{
+        const h=window.visualViewport?.height||window.innerHeight;
+        document.documentElement.style.setProperty('--h',`${Math.round(h)}px`);
+        if(started)go(current,false);
+      },80);
+    }
     scenes.forEach((scene,i)=>{const b=document.createElement('button');b.type='button';b.className='button next';b.textContent=i===scenes.length-1?'Volver al inicio ↑':'Continuar ↓';b.addEventListener('click',()=>go(i===scenes.length-1?0:i+1));scene.append(b)});
-    const observer=new IntersectionObserver(entries=>{for(const e of entries)if(e.isIntersecting&&e.intersectionRatio>=.55)mark(scenes.indexOf(e.target))},{root:pages,threshold:[.55]});scenes.forEach(s=>observer.observe(s));
+    const observer=new IntersectionObserver(entries=>{
+      const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+      if(visible)mark(scenes.indexOf(visible.target));
+    },{root:pages,threshold:[.58,.72]});scenes.forEach(s=>observer.observe(s));
     function musicState(on){$('#music').textContent=on?'Ⅱ':'♫';$('#music').setAttribute('aria-label',on?'Pausar música':'Reproducir música');$('#music').setAttribute('aria-pressed',String(on))}
     async function play(){try{await audio.play();musicState(true)}catch{musicState(false)}}
-    $('#start').addEventListener('click',()=>{started=true;history.pushState({mixto:'invitacion'},'');$('#shell').classList.add('started');$('#entry').classList.add('closed');go(0);play()});
+    $('#start').addEventListener('click',()=>{
+      started=true;history.pushState({mixto:'invitacion'},'');
+      $('#shell').classList.add('started');go(0,false);$('#entry').classList.add('closed');
+      scenes.forEach((scene,i)=>scene.classList.toggle('active',i===0));
+      current=0;dots.forEach((dot,i)=>dot.classList.toggle('on',i===0));
+      scenes[0].classList.remove('active');void scenes[0].offsetWidth;scenes[0].classList.add('active');
+      play();
+    });
     $('#music').addEventListener('click',()=>{if(audio.paused)play();else{audio.pause();musicState(false)}});
-    function exit(){if(!started){if(DATOS.salida)location.href=DATOS.salida;return}started=false;audio.pause();musicState(false);$('#shell').classList.remove('started');$('#entry').classList.remove('closed');go(0)}
+    function exit(){if(!started){if(DATOS.salida)location.href=DATOS.salida;return}started=false;audio.pause();musicState(false);$('#shell').classList.remove('started');$('#entry').classList.remove('closed');go(0,false);mark(0)}
     $('#exit').addEventListener('click',()=>{if(DATOS.salida)location.href=DATOS.salida;else exit()});
     document.addEventListener('visibilitychange',()=>{if(document.hidden&&!audio.paused){audio.pause();musicState(false)}});
+    window.addEventListener('resize',adjustHeight,{passive:true});
+    window.visualViewport?.addEventListener('resize',adjustHeight,{passive:true});
+    window.addEventListener('orientationchange',adjustHeight,{passive:true});
+    window.addEventListener('pageshow',()=>{adjustHeight();if(!started)go(0,false)});
     // Al pulsar Atrás desde la invitación se vuelve a la portada.
     addEventListener('popstate',()=>{if(started)exit()});
     addEventListener('pagehide',()=>{if(calendarURL)URL.revokeObjectURL(calendarURL)});
-    mark(0);
+    mark(0);adjustHeight();go(0,false);
   </script>
 </body>
 </html>
