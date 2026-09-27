@@ -394,22 +394,46 @@
       }
     }
 
-    .scene[data-side="right"] .elemento {
+    .scene:nth-child(1) .elemento {
       --x: 88;
       --y: 23;
       --tamano: 30;
     }
 
-    .scene[data-side="left"] .elemento {
+    .scene:nth-child(2) .elemento {
       --x: 12;
       --y: 22;
       --tamano: 30;
     }
 
-    .scene[data-side="bottom"] .elemento {
+    .scene:nth-child(3) .elemento {
       --x: 86;
       --y: 78;
       --tamano: 32;
+    }
+
+    .scene:nth-child(4) .elemento {
+      --x: 88;
+      --y: 23;
+      --tamano: 30;
+    }
+
+    .scene:nth-child(5) .elemento {
+      --x: 12;
+      --y: 22;
+      --tamano: 30;
+    }
+
+    .scene:nth-child(6) .elemento {
+      --x: 86;
+      --y: 78;
+      --tamano: 32;
+    }
+
+    .scene:nth-child(7) .elemento {
+      --x: 88;
+      --y: 23;
+      --tamano: 30;
     }
 
     .next {
@@ -431,19 +455,27 @@
 
     .controls {
       position: absolute;
-      z-index: 12;
+      z-index: 21;
       top: max(14px, calc(env(safe-area-inset-top) + 10px));
       left: 15px;
       right: 15px;
       display: flex;
       justify-content: space-between;
       pointer-events: none;
-      opacity: 0;
+      opacity: 1;
       transition: opacity .4s
     }
 
     .started .controls {
       opacity: 1
+    }
+
+    .controls #music {
+      visibility: hidden;
+    }
+
+    .started .controls #music {
+      visibility: visible;
     }
 
     .controls button {
@@ -568,6 +600,48 @@
       }
     }
 
+    .scene:nth-child(1) .elemento {
+      --x: 85;
+      --y: 23;
+      --tamano: 30;
+    }
+
+    .scene:nth-child(2) .elemento {
+      --x: 12;
+      --y: 22;
+      --tamano: 30;
+    }
+
+    .scene:nth-child(3) .elemento {
+      --x: 86;
+      --y: 78;
+      --tamano: 32;
+    }
+
+    .scene:nth-child(4) .elemento {
+      --x: 88;
+      --y: 28;
+      --tamano: 30;
+    }
+
+    .scene:nth-child(5) .elemento {
+      --x: 12;
+      --y: 22;
+      --tamano: 30;
+    }
+
+    .scene:nth-child(6) .elemento {
+      --x: 86;
+      --y: 75;
+      --tamano: 32;
+    }
+
+    .scene:nth-child(7) .elemento {
+      --x: 86;
+      --y: 23;
+      --tamano: 30;
+    }
+
     @media(max-width:380px) {
       .paper {
         left: 5%;
@@ -614,7 +688,7 @@
       <button class="button entry-start" id="start" type="button">Abrir invitación ↗</button>
     </div>
     <div class="controls" aria-label="Controles de la invitación">
-      <button class="round" id="exit" type="button" aria-label="Volver a la portada">←</button>
+      <button class="round" id="exit" type="button" aria-label="Salir de la invitación">×</button>
       <button class="round" id="music" type="button" aria-label="Reproducir música" aria-pressed="false">♫</button>
     </div>
     <div class="pages" id="pages">
