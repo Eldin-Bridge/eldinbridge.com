@@ -295,13 +295,18 @@
       top: 50%;
       transform: translateY(-50%);
       max-height: calc(var(--h) - 154px);
-      overflow: auto;
-      scrollbar-width: thin;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: none;
       background: linear-gradient(145deg, #132547f2, #101b36f3);
       border: 1px solid #e5c88a99;
       border-radius: 8px 36px 8px 36px;
       box-shadow: 0 25px 70px #061026aa, inset 0 0 0 5px #fff9ec0a;
       backdrop-filter: blur(10px)
+    }
+
+    .log::-webkit-scrollbar {
+      display: none;
     }
 
     .log::before,
@@ -553,10 +558,6 @@
       animation: float 5s ease-in-out infinite
     }
 
-    .scene:not(.scene-active) .elemento {
-      animation-play-state: paused
-    }
-
     @keyframes float {
       50% {
         translate: 0 -11px
@@ -735,24 +736,6 @@
         --x: 86;
         --y: 79;
         --size: 32
-      }
-    }
-
-    @media(prefers-reduced-motion:reduce) {
-      .elemento {
-        animation: none
-      }
-
-      .log-inner {
-        transition: none
-      }
-
-      .entry {
-        transition: none
-      }
-
-      .pages {
-        scroll-behavior: auto
       }
     }
   </style>
