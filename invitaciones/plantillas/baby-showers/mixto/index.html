@@ -1,887 +1,1568 @@
 <!doctype html>
+
 <html lang="es">
 
 <head>
+
   <meta charset="utf-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
   <meta name="theme-color" content="#efe8d9">
+
   <meta name="description" content="Invitación a un baby shower mixto">
+
   <title>Baby Shower Mixto | Invitación</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
+
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link
+
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght,SOFT,WONK@9..144,400,40,1;9..144,500,40,1;9..144,600,40,1&display=swap"
+
     rel="stylesheet">
+
   <link rel="preload" as="image" href="assets/foto/foto01.webp">
+
   <style>
+
     :root {
+
       --h: 100svh;
+
       --ink: #354039;
+
       --sage: #667762;
+
       --paper: #f8f2e7;
+
       --cream: #eee4d4;
+
       --rust: #a66048;
+
       --gold: #ba9565
+
     }
 
     * {
+
       box-sizing: border-box
+
     }
 
     html,
+
     body {
+
       margin: 0;
+
       width: 100%;
+
       height: 100%;
+
       overflow: hidden;
+
       background: #d8c9b4
+
     }
 
     body {
+
       font-family: 'DM Sans', Arial, sans-serif;
+
       color: var(--ink);
+
       -webkit-font-smoothing: antialiased
+
     }
 
     button,
+
     a {
+
       font: inherit
+
     }
 
     button {
+
       cursor: pointer
+
     }
 
     a {
+
       color: inherit
+
     }
 
     button:focus-visible,
+
     a:focus-visible {
+
       outline: 3px solid #eabf76;
+
       outline-offset: 3px
+
     }
 
     .shell {
+
       height: var(--h);
+
       max-width: 540px;
+
       margin: auto;
+
       position: relative;
+
       overflow: hidden;
+
       background: #c8bca4;
+
       box-shadow: 0 0 70px #40362c3b
+
     }
 
     .pages {
+
       height: 100%;
+
       overflow-y: auto;
+
       scroll-snap-type: y mandatory;
+
       overscroll-behavior-y: contain;
+
       scrollbar-width: none;
+
       touch-action: pan-y;
+
       -webkit-overflow-scrolling: touch
+
     }
 
     .pages::-webkit-scrollbar {
+
       display: none
+
     }
 
     .scene,
+
     .entry {
+
       height: var(--h);
+
       min-height: var(--h);
+
       position: relative;
+
       overflow: hidden;
+
       isolation: isolate
+
     }
 
     .scene {
+
       scroll-snap-align: start;
+
       scroll-snap-stop: always;
+
       background: #796e59
+
     }
 
     .bg,
+
     .entry-photo {
+
       position: absolute;
+
       inset: 0;
+
       width: 100%;
+
       height: 100%;
+
       object-fit: cover;
+
       display: block
+
     }
 
     .bg {
+
       transform: scale(1.045);
+
       transition: transform 1.1s cubic-bezier(.22, .8, .32, 1)
+
     }
 
     .scene.active .bg {
+
       transform: scale(1.025)
+
     }
 
     .scene:before {
+
       content: "";
+
       position: absolute;
+
       inset: 0;
+
       z-index: 1;
+
       background: linear-gradient(180deg, #1b261a28 0%, transparent 18%, #252c1e15 52%, #20251db0 100%);
+
       pointer-events: none
+
     }
 
     .scene[data-tone="dark"]:before {
+
       background: linear-gradient(180deg, #101a2540, #0e1b2a32 45%, #071018bd)
+
     }
 
     .entry {
+
       position: absolute;
+
       z-index: 20;
+
       inset: 0;
+
       background: #58634d;
+
       transition: opacity .65s, visibility .65s
+
     }
 
     .entry.closed {
+
       opacity: 0;
+
       visibility: hidden;
+
       pointer-events: none
+
     }
 
     .entry-photo {
+
       object-position: center 43%
+
     }
 
     .entry:after {
+
       content: "";
+
       position: absolute;
+
       inset: 0;
+
       background: linear-gradient(180deg, #17221b73 0%, transparent 34%, transparent 54%, #17221bc7 100%);
+
       pointer-events: none
+
     }
 
     .entry-copy {
+
       position: absolute;
+
       z-index: 2;
+
       left: 7%;
+
       right: 7%;
+
       top: max(12%, calc(env(safe-area-inset-top) + 58px));
+
       text-align: center;
+
       color: #fff8eb;
+
       text-shadow: 0 2px 20px #17221b9a
+
     }
 
     .entry-copy .eyebrow {
+
       color: #fbe0af
+
     }
 
     .entry-detail {
+
       position: absolute;
+
       z-index: 2;
+
       left: 7%;
+
       right: 7%;
+
       bottom: max(105px, calc(env(safe-area-inset-bottom) + 95px));
+
       text-align: center;
+
       color: #fff8eb;
+
       text-shadow: 0 2px 20px #17221b9a
+
     }
 
     .entry-detail h1 {
+
       font: 500 clamp(3.1rem, 14vw, 5.9rem)/.89 'Fraunces', Georgia, serif;
+
       letter-spacing: -.055em;
+
       margin: 0 auto 12px;
+
       max-width: 9ch
+
     }
 
     .entry-detail h1 em {
+
       font-weight: 400
+
     }
 
     .entry-detail p {
+
       font-size: .93rem;
+
       line-height: 1.5;
+
       margin: 0 auto;
+
       max-width: 27ch
+
     }
 
     .entry-start {
+
       position: absolute;
+
       z-index: 3;
+
       bottom: max(35px, calc(env(safe-area-inset-bottom) + 25px));
+
       left: 50%;
+
       transform: translateX(-50%);
+
       white-space: nowrap
+
     }
 
     .eyebrow {
+
       font-size: .64rem;
+
       font-weight: 700;
+
       letter-spacing: .23em;
+
       text-transform: uppercase
+
     }
 
     .paper {
+
       position: absolute;
+
       z-index: 3;
+
       left: 6%;
+
       right: 6%;
+
       top: 50%;
+
       transform: translateY(-50%) rotate(-1.2deg);
+
       padding: clamp(25px, 4vh, 40px) clamp(22px, 6vw, 36px);
+
       background: rgba(248, 242, 231, .94);
+
       box-shadow: 0 22px 65px #161e1745;
+
       clip-path: polygon(0 0, 100% 0, 100% 95%, 97% 95%, 95% 97%, 92% 96%, 89% 99%, 85% 97%, 81% 99%, 76% 97%, 71% 99%, 66% 97%, 62% 99%, 57% 97%, 52% 99%, 47% 97%, 42% 99%, 37% 97%, 32% 99%, 27% 97%, 22% 99%, 17% 97%, 12% 99%, 7% 97%, 3% 99%, 0 97%)
+
     }
 
     .scene:nth-child(even) .paper {
+
       left: 9%;
+
       right: 4%;
+
       transform: translateY(-50%) rotate(1deg)
+
     }
 
     .paper:before {
+
       content: "";
+
       position: absolute;
+
       top: 0;
+
       left: 0;
+
       right: 0;
+
       height: 7px;
+
       background: repeating-linear-gradient(90deg, var(--sage) 0 34px, #dcc9ad 34px 43px, var(--rust) 43px 72px, #dcc9ad 72px 81px)
+
     }
 
     .paper .eyebrow {
+
       color: var(--rust);
+
       margin: 0 0 13px
+
     }
 
     .paper h2 {
+
       font: 500 clamp(2.15rem, 9vw, 3.5rem)/1.03 'Fraunces', Georgia, serif;
+
       letter-spacing: -.045em;
+
       margin: 0 0 16px;
+
       color: #34463b
+
     }
 
     .paper p {
+
       font-size: clamp(.85rem, 3.2vw, .99rem);
+
       line-height: 1.57;
+
       margin: 11px 0
+
     }
 
     .paper strong {
+
       font-weight: 700
+
     }
 
     .paper .large {
+
       font: 500 clamp(1.42rem, 6.2vw, 2.1rem)/1.22 'Fraunces', Georgia, serif;
+
       color: #915843;
+
       margin: 16px 0
+
     }
 
     .paper .divider {
+
       height: 1px;
+
       background: #cdbda7;
+
       margin: 17px 0
+
     }
 
     .paper .mini {
+
       font-size: .76rem;
+
       color: #5d695b
+
     }
 
     .paper .stack {
+
       display: grid;
+
       gap: 8px;
+
       margin: 18px 0
+
     }
 
     .paper .stack span {
+
       display: block
+
     }
 
     .paper .date {
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
+
       gap: 16px;
+
       margin: 16px 0;
+
       color: #455947
+
     }
 
     .paper .date b {
+
       font: 500 clamp(3.7rem, 16vw, 5.5rem)/1 'Fraunces', Georgia, serif;
+
       letter-spacing: -.07em
+
     }
 
     .paper .date span {
+
       text-align: left;
+
       text-transform: uppercase;
+
       letter-spacing: .13em;
+
       font-size: .74rem;
+
       font-weight: 700;
+
       line-height: 1.7
+
     }
 
     .paper .actions {
+
       display: flex;
+
       justify-content: center;
+
       flex-wrap: wrap;
+
       gap: 9px;
+
       margin-top: 18px
+
     }
 
     .pill,
+
     .button {
+
       border: 1px solid #596d5b;
+
       min-height: 44px;
+
       padding: 11px 19px;
+
       text-decoration: none;
+
       background: #4f6653;
+
       color: #fff9ed;
+
       border-radius: 100px;
+
       font-size: .74rem;
+
       font-weight: 700;
+
       letter-spacing: .06em;
+
       display: inline-flex;
+
       align-items: center;
+
       justify-content: center;
+
       gap: 8px;
+
       text-align: center;
-      transition: transform .2s, background .2s
+
+      transition: transform .2s, *background* .2s
+
     }
 
     .pill:hover,
+
     .button:hover {
+
       background: #374d3d
+
     }
 
     .pill.secondary {
+
       background: transparent;
+
       color: #405746
+
     }
 
     .pill.secondary:hover {
+
       background: #e7e2d4
+
     }
 
     [hidden] {
+
       display: none !important
+
     }
 
     .elemento {
+
       position: absolute;
+
       left: calc(var(--x) * 1%);
+
       top: calc(var(--y) * 1%);
+
       z-index: 7;
+
       width: calc(var(--tamano) * 1%);
+
       max-width: none;
+
       transform: translate(-50%, -50%);
+
       transform-origin: center;
+
       pointer-events: none;
+
       user-select: none;
+
       filter: drop-shadow(0 7px 10px rgba(0, 0, 0, .28));
+
     }
 
     .anim-flotar {
+
       animation: flotar 3.4s ease-in-out infinite;
+
     }
 
     .scene:not(.scene-active) .elemento {
+
       animation-play-state: paused;
+
     }
 
     @keyframes flotar {
+
       50% {
+
         translate: 0 -14px;
+
       }
+
     }
 
+    /* POSICIÓN DE ELEMENTOS — escritorio: --x horizontal, --y vertical, --tamano ancho (%) */
     .scene:nth-child(1) .elemento {
+
       --x: 88;
+
       --y: 23;
+
       --tamano: 30;
+
     }
 
     .scene:nth-child(2) .elemento {
+
       --x: 12;
+
       --y: 22;
+
       --tamano: 30;
+
     }
 
     .scene:nth-child(3) .elemento {
+
       --x: 86;
+
       --y: 78;
+
       --tamano: 32;
+
     }
 
     .scene:nth-child(4) .elemento {
+
       --x: 88;
+
       --y: 23;
+
       --tamano: 30;
+
     }
 
     .scene:nth-child(5) .elemento {
+
       --x: 12;
+
       --y: 22;
+
       --tamano: 30;
+
     }
 
     .scene:nth-child(6) .elemento {
+
       --x: 86;
+
       --y: 78;
+
       --tamano: 32;
+
     }
 
     .scene:nth-child(7) .elemento {
+
       --x: 88;
+
       --y: 23;
+
       --tamano: 30;
+
     }
 
     .next {
+
       position: absolute;
+
       z-index: 8;
+
       bottom: max(20px, calc(env(safe-area-inset-bottom) + 12px));
+
       left: 50%;
+
       transform: translateX(-50%);
+
       white-space: nowrap;
+
       background: #f9f1e5;
+
       color: #3e5846;
+
       border-color: #f9f1e5;
+
       box-shadow: 0 8px 24px #18201c5a
+
     }
 
     .next:hover {
+
       background: #fffaf2
+
     }
 
     .controls {
+
       position: absolute;
+
       z-index: 21;
+
       top: max(14px, calc(env(safe-area-inset-top) + 10px));
+
       left: 15px;
+
       right: 15px;
+
       display: flex;
+
       justify-content: space-between;
+
       pointer-events: none;
+
       opacity: 1;
+
       transition: opacity .4s
+
     }
 
     .started .controls {
+
       opacity: 1
+
     }
 
     .controls #music {
+
       visibility: hidden;
+
     }
 
     .started .controls #music {
+
       visibility: visible;
+
     }
 
     .controls button {
+
       pointer-events: auto
+
     }
 
     .round {
+
       height: 44px;
+
       width: 44px;
+
       border: 1px solid #fff8e5a8;
+
       border-radius: 50%;
+
       background: #354436bd;
+
       color: #fff9eb;
+
       display: grid;
+
       place-items: center;
+
       font-size: 1.3rem;
+
       backdrop-filter: blur(9px)
+
     }
 
     .progress {
+
       position: absolute;
+
       z-index: 8;
+
       bottom: max(76px, calc(env(safe-area-inset-bottom) + 69px));
+
       left: 0;
+
       right: 0;
+
       display: flex;
+
       justify-content: center;
+
       gap: 7px;
+
       pointer-events: none;
+
       opacity: 0
+
     }
 
     .started .progress {
+
       opacity: 1
+
     }
 
     .progress i {
+
       height: 5px;
+
       width: 5px;
+
       border-radius: 8px;
+
       background: #fff9e987;
-      transition: width .35s, background .35s
+
+      transition: width .35s, *background* .35s
+
     }
 
     .progress i.on {
+
       width: 25px;
+
       background: #fff9ec
+
     }
 
     .reveal {
+
       opacity: 0;
+
       translate: 0 18px;
+
       transition: opacity .65s, translate .65s
+
     }
 
     .active .reveal {
+
       opacity: 1;
+
       translate: 0 0
+
     }
 
     .countdown {
+
       display: flex;
+
       gap: 5px;
+
       justify-content: center;
+
       margin: 15px 0
+
     }
 
     .countdown div {
+
       min-width: 21%;
+
       padding: 6px 2px;
+
       border-top: 1px solid #a3ad9a;
+
       border-bottom: 1px solid #a3ad9a
+
     }
 
     .countdown b {
+
       display: block;
+
       font: 500 1.5rem 'Fraunces', Georgia, serif
+
     }
 
     .countdown small {
+
       display: block;
+
       font-size: .55rem;
+
       text-transform: uppercase;
+
       letter-spacing: .05em
+
     }
 
     @media(max-height:680px) {
+
       .paper {
+
         padding: 21px 22px;
+
         max-height: calc(var(--h) - 138px);
+
         overflow: auto;
+
         scrollbar-width: thin
+
       }
 
       .paper h2 {
+
         font-size: clamp(1.85rem, 7vw, 2.6rem);
+
         margin-bottom: 9px
+
       }
 
       .paper p {
+
         line-height: 1.4;
+
         margin: 7px 0
+
       }
 
       .paper .divider {
+
         margin: 10px 0
+
       }
 
       .paper .date {
+
         margin: 7px 0
+
       }
+
     }
 
     @media(max-width:560px) {
+
       :root {
+
         --h: 100dvh
+
       }
 
       .elemento {
+
         max-width: 45vw;
+
         max-height: 25vh
+
       }
+
     }
 
-    .scene:nth-child(1) .elemento {
-      --x: 85;
-      --y: 23;
-      --tamano: 30;
-    }
+      /* POSICIÓN DE ELEMENTOS — celular: estos valores reemplazan los de escritorio */
+      .scene:nth-child(1) .elemento {
 
-    .scene:nth-child(2) .elemento {
-      --x: 12;
-      --y: 18;
-      --tamano: 30;
-    }
+        --x: 85;
 
-    .scene:nth-child(3) .elemento {
-      --x: 86;
-      --y: 78;
-      --tamano: 32;
-    }
+        --y: 23;
 
-    .scene:nth-child(4) .elemento {
-      --x: 88;
-      --y: 28;
-      --tamano: 30;
-    }
+        --tamano: 30;
 
-    .scene:nth-child(5) .elemento {
-      --x: 12;
-      --y: 22;
-      --tamano: 30;
-    }
+      }
 
-    .scene:nth-child(6) .elemento {
-      --x: 86;
-      --y: 75;
-      --tamano: 32;
-    }
+      .scene:nth-child(2) .elemento {
 
-    .scene:nth-child(7) .elemento {
-      --x: 86;
-      --y: 23;
-      --tamano: 30;
-    }
+        --x: 12;
+
+        --y: 18;
+
+        --tamano: 30;
+
+      }
+
+      .scene:nth-child(3) .elemento {
+
+        --x: 86;
+
+        --y: 78;
+
+        --tamano: 32;
+
+      }
+
+      .scene:nth-child(4) .elemento {
+
+        --x: 88;
+
+        --y: 28;
+
+        --tamano: 30;
+
+      }
+
+      .scene:nth-child(5) .elemento {
+
+        --x: 12;
+
+        --y: 22;
+
+        --tamano: 30;
+
+      }
+
+      .scene:nth-child(6) .elemento {
+
+        --x: 86;
+
+        --y: 75;
+
+        --tamano: 32;
+
+      }
+
+      .scene:nth-child(7) .elemento {
+
+        --x: 86;
+
+        --y: 23;
+
+        --tamano: 30;
+
+      }
 
     @media(max-width:380px) {
+
       .paper {
+
         left: 5%;
+
         right: 5%;
+
         padding-left: 20px;
+
         padding-right: 20px
+
       }
 
       .scene:nth-child(even) .paper {
+
         left: 7%;
+
         right: 4%
+
       }
+
     }
 
     @media (prefers-reduced-motion: reduce) {
 
       *,
+
       *:before,
+
       *:after {
+
         transition-duration: .01ms !important;
+
         scroll-behavior: auto !important;
+
       }
 
       .reveal {
+
         opacity: 1;
+
         translate: none;
+
       }
+
     }
+
   </style>
+
 </head>
 
 <body>
+
   <main class="shell" id="shell">
+
     <div class="entry" id="entry">
+
       <img class="entry-photo" src="assets/foto/foto01.webp"
+
         alt="Los futuros papás celebran acompañados de familiares y amigos" fetchpriority="high">
+
       <div class="entry-copy">
+
         <p class="eyebrow">Una nueva historia comienza</p>
+
       </div>
+
       <div class="entry-detail">
+
         <h1>Baby Shower <em>Mixto</em></h1>
+
         <p>Queremos compartir esta alegría con todas las personas que amamos.</p>
+
       </div>
+
       <button class="button entry-start" id="start" type="button">Abrir invitación ↗</button>
+
     </div>
+
     <div class="controls" aria-label="Controles de la invitación">
+
       <button class="round" id="exit" type="button" aria-label="Salir de la invitación">×</button>
+
       <button class="round" id="music" type="button" aria-label="Reproducir música" aria-pressed="false">♫</button>
+
     </div>
+
     <div class="pages" id="pages">
+
       <section class="scene" data-side="right" aria-label="Bienvenida">
+
         <img class="bg" src="assets/fondos/fondo01.webp" alt="" fetchpriority="high">
+
         <img class="elemento anim-flotar" src="assets/elementos/elemento01.webp" alt="">
+
         <article class="paper reveal">
+
           <p class="eyebrow">Bienvenidos a celebrar</p>
+
           <h2>La alegría se comparte</h2>
+
           <p id="intro"></p>
+
           <div class="divider"></div>
+
           <p class="large" id="parents1"></p>
+
           <p>Esta vez queremos reunir a toda nuestra gente, sin importar si son amigos, amigas, tíos o tías. ¡Nos hará
+
             muy felices verte!</p>
+
         </article>
+
       </section>
+
       <section class="scene" data-side="left" aria-label="Los futuros papás">
+
         <img class="bg" src="assets/fondos/fondo02.webp" alt="" loading="lazy">
+
         <img class="elemento anim-flotar" src="assets/elementos/elemento02.webp" alt="" loading="lazy">
+
         <article class="paper reveal">
+
           <p class="eyebrow">Con mucho cariño</p>
+
           <h2>Una pequeña vida, una gran emoción</h2>
+
           <p id="message"></p>
+
           <div class="divider"></div>
+
           <p class="large" id="parents2"></p>
+
           <p class="mini">Nos encantaría compartir contigo este momento antes de su llegada.</p>
+
         </article>
+
       </section>
+
       <section class="scene" data-side="bottom" aria-label="Fecha y hora">
+
         <img class="bg" src="assets/fondos/fondo03.webp" alt="" loading="lazy">
+
         <img class="elemento anim-flotar" src="assets/elementos/elemento03.webp" alt="" loading="lazy">
+
         <article class="paper reveal">
+
           <p class="eyebrow">Reserva esta fecha</p>
+
           <h2>Nos vemos pronto</h2>
+
           <div class="date"><b id="day">00</b><span id="monthYear"></span></div>
+
           <p class="large" id="time"></p>
+
           <div class="countdown" aria-label="Cuenta regresiva">
+
             <div><b id="days">00</b><small>Días</small></div>
+
             <div><b id="hours">00</b><small>Horas</small></div>
+
             <div><b id="minutes">00</b><small>Min</small></div>
+
             <div><b id="seconds">00</b><small>Seg</small></div>
+
           </div>
+
           <div class="actions"><a class="pill secondary" id="calendar" href="#" download="baby-shower.ics">Agregar al
+
               calendario</a></div>
+
         </article>
+
       </section>
+
       <section class="scene" data-side="right" aria-label="Lugar">
+
         <img class="bg" src="assets/fondos/fondo04.webp" alt="" loading="lazy">
+
         <img class="elemento anim-flotar" src="assets/elementos/elemento04.webp" alt="" loading="lazy">
+
         <article class="paper reveal">
+
           <p class="eyebrow">Punto de encuentro</p>
+
           <h2>Ven a celebrar</h2>
+
           <p class="large" id="venue"></p>
+
           <p id="address"></p>
+
           <div class="divider"></div>
+
           <p class="mini">Te esperamos con ganas de compartir una tarde inolvidable.</p>
+
           <div class="actions"><a class="pill" id="map" href="#" target="_blank" rel="noopener noreferrer">Cómo llegar
+
               ↗</a></div>
+
         </article>
+
       </section>
+
       <section class="scene" data-side="left" aria-label="Mesa de regalos">
+
         <img class="bg" src="assets/fondos/fondo05.webp" alt="" loading="lazy">
+
         <img class="elemento anim-flotar" src="assets/elementos/elemento05.webp" alt="" loading="lazy">
+
         <article class="paper reveal">
+
           <p class="eyebrow">Un detalle para el bebé</p>
+
           <h2>Tu compañía es el mejor regalo</h2>
+
           <p>Si además quieres obsequiarnos algo, preparamos una lista con algunas ideas.</p>
+
           <div class="divider"></div>
+
           <p class="mini" id="giftNote"></p>
+
           <div class="actions"><a class="pill secondary" id="registry" href="#" target="_blank"
+
               rel="noopener noreferrer">Ver mesa de regalos ↗</a></div>
+
         </article>
+
       </section>
+
       <section class="scene" data-side="bottom" aria-label="Confirmación">
+
         <img class="bg" src="assets/fondos/fondo06.webp" alt="" loading="lazy">
+
         <img class="elemento anim-flotar" src="assets/elementos/elemento06.webp" alt="" loading="lazy">
+
         <article class="paper reveal">
+
           <p class="eyebrow">Queremos contar contigo</p>
+
           <h2>¿Nos acompañas?</h2>
+
           <p>Ayúdanos a preparar todo con cariño. Confirma tu asistencia antes del:</p>
+
           <p class="large" id="rsvpDate"></p>
+
           <div class="actions"><a class="pill" id="rsvp" href="#" target="_blank" rel="noopener noreferrer">Confirmar
+
               por WhatsApp ↗</a></div>
+
           <p class="mini">Puedes indicarnos cuántas personas te acompañarán.</p>
+
         </article>
+
       </section>
+
       <section class="scene" data-tone="dark" data-side="right" aria-label="Despedida">
+
         <img class="bg" src="assets/fondos/fondo07.webp" alt="" loading="lazy">
+
         <img class="elemento anim-flotar" src="assets/elementos/elemento07.webp" alt="" loading="lazy">
+
         <article class="paper reveal">
+
           <p class="eyebrow">Con todo nuestro cariño</p>
+
           <h2>Nos vemos muy pronto</h2>
+
           <p>Hay momentos que se vuelven más bonitos cuando los vivimos juntos. Gracias por ser parte de este.</p>
+
           <div class="divider"></div>
+
           <p class="large" id="signature"></p>
+
           <p class="mini">Te esperamos para celebrar la llegada de nuestro bebé.</p>
+
         </article>
+
       </section>
+
     </div>
+
     <div class="progress" id="progress" aria-hidden="true"></div>
+
     <audio id="audio" src="assets/audio/musica.mp3" loop preload="none"></audio>
+
   </main>
+
   <script>
-    // EDITA AQUÍ los datos reales. Deja un enlace vacío para ocultar su botón.
+
+    // DATOS PERSONALES Y ENLACES — editar únicamente este bloque.
+    // Deja en blanco mapa, regalos o telefonoWhatsApp para ocultar el botón correspondiente.
     const DATOS = {
-      mama: 'Mariana', papa: 'Daniel',
+      mama: 'Mariana',
+      papa: 'Daniel',
       mensaje: 'Muy pronto llegará alguien que llenará nuestra vida de nuevas aventuras. Queremos compartir contigo la emoción de esta espera.',
-      fecha: '2027-05-22T16:00:00', // año-mes-día T hora local
-      duracionHoras: 4,
-      lugar: 'Jardín Los Olivos', direccion: 'Cadereyta Jiménez, Nuevo León',
-      mapa: '', // URL completa de Google Maps
-      regalos: '', // URL completa de la mesa de regalos
+      fecha: '2027-05-22T16:00:00', // AAAA-MM-DDTHH:MM, hora local
+      duracionHoras: 4,                // duración del evento en el calendario
+      lugar: 'Jardín Los Olivos',
+      direccion: 'Cadereyta Jiménez, Nuevo León',
       notaRegalos: 'Los regalos son opcionales; compartir este día contigo es lo que más nos importa.',
-      telefonoWhatsApp: '', // México: 52 + 10 dígitos, sin +, espacios ni guiones
       confirmarAntes: '15 de mayo de 2027',
-      salida: '../../../index.html' // catálogo principal desde plantillas/baby-showers/mixto/
+
+      // BOTONES — Maps, mesa de regalos, WhatsApp y calendario.
+      mapa: '',                       // URL completa de Google Maps
+      regalos: '',                    // URL completa de la mesa de regalos
+      telefonoWhatsApp: '',           // México: 52 + 10 dígitos, sin signos
+      // El archivo de calendario se crea automáticamente con fecha, duración, lugar y dirección.
+
+      // SALIDA — catálogo de Baby Showers, desde plantillas/baby-showers/mixto/.
+      salida: '../../../index.html#baby-showers'
     };
+
     const $ = s => document.querySelector(s), pages = $('#pages'), scenes = [...document.querySelectorAll('.scene')];
+
     const audio = $('#audio'); let current = 0, started = false, calendarURL = '', heightTimer;
+
     const names = `${DATOS.mama} y ${DATOS.papa}`;
+
     $('#intro').textContent = `${DATOS.mama} y ${DATOS.papa} esperan con ilusión a su bebé.`;
+
     $('#parents1').textContent = names; $('#parents2').textContent = names; $('#signature').textContent = names;
+
     $('#message').textContent = DATOS.mensaje; $('#venue').textContent = DATOS.lugar; $('#address').textContent = DATOS.direccion;
+
     $('#giftNote').textContent = DATOS.notaRegalos; $('#rsvpDate').textContent = DATOS.confirmarAntes;
+
     document.title = `Baby Shower de ${names} | Mixto`;
+
     const date = new Date(DATOS.fecha);
+
     if (!Number.isNaN(date.getTime())) {
+
       $('#day').textContent = String(date.getDate()).padStart(2, '0');
+
       $('#monthYear').innerHTML = `${new Intl.DateTimeFormat('es-MX', { month: 'long' }).format(date)}<br>${date.getFullYear()}`;
+
       $('#time').textContent = new Intl.DateTimeFormat('es-MX', { hour: 'numeric', minute: '2-digit', hour12: true }).format(date);
+
       const pad = n => String(n).padStart(2, '0');
+
       const stamp = d => `${d.getUTCFullYear()}${pad(d.getUTCMonth() + 1)}${pad(d.getUTCDate())}T${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}00Z`;
+
       const end = new Date(date.getTime() + DATOS.duracionHoras * 3600000);
+
       const escapeICS = s => String(s).replace(/\\/g, '\\\\').replace(/\n/g, '\\n').replace(/,/g, '\\,').replace(/;/g, '\\;');
+
       const ics = `BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Eldin Bridge//Baby Shower//ES\r\nBEGIN:VEVENT\r\nUID:mixto-${date.getTime()}@eldinbridge.com\r\nDTSTAMP:${stamp(new Date())}\r\nDTSTART:${stamp(date)}\r\nDTEND:${stamp(end)}\r\nSUMMARY:${escapeICS('Baby Shower de ' + names)}\r\nLOCATION:${escapeICS(DATOS.lugar + ', ' + DATOS.direccion)}\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n`;
+
       calendarURL = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' })); $('#calendar').href = calendarURL;
+
     } else $('#calendar').hidden = true;
+
     function updateCountdown() { const ms = Math.max(0, date.getTime() - Date.now()); const s = Math.floor(ms / 1000); $('#days').textContent = String(Math.floor(s / 86400)); $('#hours').textContent = String(Math.floor(s % 86400 / 3600)).padStart(2, '0'); $('#minutes').textContent = String(Math.floor(s % 3600 / 60)).padStart(2, '0'); $('#seconds').textContent = String(s % 60).padStart(2, '0') }
+
     if (!Number.isNaN(date.getTime())) { updateCountdown(); setInterval(updateCountdown, 1000) }
+
     function link(id, url) { const el = $(id); if (url) { el.href = url } else el.hidden = true }
+
     link('#map', DATOS.mapa); link('#registry', DATOS.regalos);
+
     const phone = DATOS.telefonoWhatsApp.replace(/\D/g, '');
+
     link('#rsvp', phone ? `https://wa.me/${phone}?text=${encodeURIComponent('Hola, confirmo mi asistencia al baby shower de ' + names + '. Asistiremos ___ personas.')}` : '');
+
     const dots = scenes.map((_, i) => { const dot = document.createElement('i'); $('#progress').append(dot); return dot });
+
     function mark(i) {
+
       if (i === current && scenes[i].classList.contains('active')) return;
+
       current = i;
+
       scenes.forEach((el, n) => el.classList.toggle('active', n === i));
+
       dots.forEach((el, n) => el.classList.toggle('on', n === i));
+
     }
+
     function go(i, smooth = true) {
+
       const target = Math.max(0, Math.min(i, scenes.length - 1));
+
       pages.scrollTo({ left: 0, top: target * pages.clientHeight, behavior: smooth && !matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'auto' });
+
     }
+
     function adjustHeight() {
+
       if (!matchMedia('(max-width:560px)').matches) { document.documentElement.style.removeProperty('--h'); return }
+
       clearTimeout(heightTimer);
+
       heightTimer = setTimeout(() => {
+
         const h = window.visualViewport?.height || window.innerHeight;
+
         document.documentElement.style.setProperty('--h', `${Math.round(h)}px`);
+
         if (started) go(current, false);
+
       }, 250);
+
     }
+
     scenes.forEach((scene, i) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'button next'; b.textContent = i === scenes.length - 1 ? 'Volver al inicio ↑' : 'Continuar ↓'; b.addEventListener('click', () => go(i === scenes.length - 1 ? 0 : i + 1)); scene.append(b) });
+
     const observer = new IntersectionObserver(entries => {
+
       entries.forEach(entry => entry.target.classList.toggle('scene-active', entry.isIntersecting));
+
       const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
       if (visible) mark(scenes.indexOf(visible.target));
+
     }, { root: pages, threshold: .65 }); scenes.forEach(s => observer.observe(s));
+
     function musicState(on) { $('#music').textContent = on ? 'Ⅱ' : '♫'; $('#music').setAttribute('aria-label', on ? 'Pausar música' : 'Reproducir música'); $('#music').setAttribute('aria-pressed', String(on)) }
+
     async function play() { try { await audio.play(); musicState(true) } catch { musicState(false) } }
+
     $('#start').addEventListener('click', () => {
+
       started = true; history.pushState({ mixto: 'invitacion' }, '');
+
       $('#shell').classList.add('started'); go(0, false); $('#entry').classList.add('closed');
+
       scenes.forEach((scene, i) => scene.classList.toggle('active', i === 0));
+
       scenes[0].classList.add('scene-active');
+
       current = 0; dots.forEach((dot, i) => dot.classList.toggle('on', i === 0));
+
       scenes[0].classList.remove('active'); void scenes[0].offsetWidth; scenes[0].classList.add('active');
+
       play();
+
     });
+
     $('#music').addEventListener('click', () => { if (audio.paused) play(); else { audio.pause(); musicState(false) } });
-    function exit() { if (!started) { if (DATOS.salida) location.href = DATOS.salida; return } started = false; audio.pause(); musicState(false); $('#shell').classList.remove('started'); $('#entry').classList.remove('closed'); go(0, false); mark(0) }
-    $('#exit').addEventListener('click', () => { if (DATOS.salida) location.href = DATOS.salida; else exit() });
+
+    function volverAPortada() { started = false; audio.pause(); musicState(false); $('#shell').classList.remove('started'); $('#entry').classList.remove('closed'); go(0, false); mark(0) }
+
+    $('#exit').addEventListener('click', () => { audio.pause(); location.href = DATOS.salida; });
+
     document.addEventListener('visibilitychange', () => { if (document.hidden && !audio.paused) { audio.pause(); musicState(false) } });
+
     window.addEventListener('resize', adjustHeight, { passive: true });
+
     window.visualViewport?.addEventListener('resize', adjustHeight, { passive: true });
+
     window.addEventListener('orientationchange', adjustHeight, { passive: true });
+
     window.addEventListener('pageshow', () => { adjustHeight(); if (!started) go(0, false) });
-    // Al pulsar Atrás desde la invitación se vuelve a la portada.
-    addEventListener('popstate', () => { if (started) exit() });
+
+    // Atrás desde una tarjeta abierta vuelve a la portada; Salir abre las plantillas de Baby Showers.
+
+    addEventListener('popstate', () => { if (started) volverAPortada() });
+
     addEventListener('pagehide', () => { if (calendarURL) URL.revokeObjectURL(calendarURL) });
+
     mark(0); adjustHeight(); go(0, false);
+
   </script>
+
 </body>
 
 </html>
