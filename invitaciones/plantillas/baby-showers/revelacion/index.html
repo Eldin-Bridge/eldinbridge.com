@@ -1,1006 +1,1804 @@
 <!doctype html>
+
 <html lang="es">
 
 <head>
+
   <meta charset="utf-8">
+
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
   <meta name="theme-color" content="#f5e9df">
+
   <meta name="description" content="Invitación a una fiesta de revelación">
+
   <title>Revelación | Invitación</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
+
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link
+
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap"
+
     rel="stylesheet">
+
   <link rel="preload" as="image" href="assets/foto/foto01.webp">
+
   <style>
+
     :root {
+
       --h: 100svh;
+
       --ink: #473b47;
+
       --rose: #c87692;
+
       --blue: #7fadd0;
+
       --cream: #fff8f1
+
     }
 
     * {
+
       box-sizing: border-box
+
     }
 
     html,
+
     body {
+
       width: 100%;
+
       height: 100%;
+
       margin: 0;
+
       overflow: hidden;
+
       background: #eadfdd
+
     }
 
     body {
+
       font-family: "DM Sans", Arial, sans-serif;
+
       color: var(--ink);
+
       -webkit-font-smoothing: antialiased
+
     }
 
     button,
+
     a {
+
       font: inherit
+
     }
 
     button {
+
       cursor: pointer
+
     }
 
     a {
+
       color: inherit
+
     }
 
     button:focus-visible,
+
     a:focus-visible {
+
       outline: 3px solid #5f8fb7;
+
       outline-offset: 3px
+
     }
 
     [hidden] {
+
       display: none !important
+
     }
 
     .shell {
+
       position: relative;
+
       width: 100%;
+
       max-width: 540px;
+
       height: var(--h);
+
       margin: auto;
+
       overflow: hidden;
+
       background: #ead9ce;
+
       box-shadow: 0 0 70px #30252a30
+
     }
 
     .pages {
+
       height: 100%;
+
       overflow-y: auto;
+
       scroll-snap-type: y mandatory;
+
       overscroll-behavior-y: contain;
+
       scrollbar-width: none;
+
       touch-action: pan-y;
+
       -webkit-overflow-scrolling: touch
+
     }
 
     .pages::-webkit-scrollbar {
+
       display: none
+
     }
 
     .scene,
+
     .entry {
+
       position: relative;
+
       height: var(--h);
+
       min-height: var(--h);
+
       overflow: hidden;
+
       isolation: isolate
+
     }
 
     .scene {
+
       scroll-snap-align: start;
+
       scroll-snap-stop: always;
+
       background: #d6c6be
+
     }
 
     .bg,
+
     .entry-photo {
+
       position: absolute;
+
       inset: 0;
+
       width: 100%;
+
       height: 100%;
+
       object-fit: cover;
+
       display: block
+
     }
 
     .scene::before {
+
       content: "";
+
       position: absolute;
+
       inset: 0;
+
       z-index: 1;
+
       pointer-events: none;
+
       background: linear-gradient(180deg, #1b22364d, transparent 20%, #44303a12 55%, #1e1d2e91)
+
     }
 
     .scene[data-night]::before {
+
       background: linear-gradient(180deg, #08152b78, #20193128 40%, #11172cb5)
+
     }
 
     .entry {
+
       position: absolute;
+
       z-index: 20;
+
       inset: 0;
+
       background: #695666;
+
       transition: opacity .6s, visibility .6s
+
     }
 
     .entry.closed {
+
       opacity: 0;
+
       visibility: hidden;
+
       pointer-events: none
+
     }
 
     .entry-photo {
+
       object-position: center 40%
+
     }
 
     .entry::after {
+
       content: "";
+
       position: absolute;
+
       inset: 0;
+
       pointer-events: none;
+
       background: linear-gradient(180deg, #16233778, transparent 26%, transparent 48%, #1a1c32e0 100%)
+
     }
 
     .entry-top {
+
       position: absolute;
+
       z-index: 2;
+
       top: max(95px, calc(env(safe-area-inset-top) + 88px));
+
       left: 9%;
+
       right: 9%;
+
       text-align: center;
+
       color: #fff8ec;
+
       font-size: .69rem;
+
       font-weight: 700;
+
       letter-spacing: .26em;
+
       text-transform: uppercase;
+
       text-shadow: 0 2px 15px #1a2339
+
     }
 
     .entry-top::after {
+
       content: "";
+
       display: block;
+
       width: 44px;
+
       height: 2px;
+
       margin: 16px auto;
+
       background: linear-gradient(90deg, var(--rose) 50%, var(--blue) 50%)
+
     }
 
     .entry-bottom {
+
       position: absolute;
+
       z-index: 2;
+
       left: 7%;
+
       right: 7%;
+
       bottom: max(108px, calc(env(safe-area-inset-bottom) + 100px));
+
       text-align: center;
+
       color: #fffaf3;
+
       text-shadow: 0 3px 18px #171627a6
+
     }
 
     .entry-bottom .small {
+
       margin: 0 0 10px;
+
       font-size: .7rem;
+
       letter-spacing: .19em;
+
       font-weight: 700;
+
       text-transform: uppercase
+
     }
 
     .entry-bottom h1 {
+
       font: 500 clamp(3rem, 12vw, 5.6rem)/.94 "Playfair Display", Georgia, serif;
+
       letter-spacing: -.055em;
+
       margin: 0 auto 16px
+
     }
 
     .entry-bottom h1 em {
+
       font-weight: 500
+
     }
 
     .entry-bottom p:last-child {
+
       font-size: .91rem;
+
       line-height: 1.5;
+
       max-width: 30ch;
+
       margin: 0 auto
+
     }
 
     .entry-start {
+
       position: absolute;
+
       z-index: 3;
+
       left: 50%;
+
       bottom: max(32px, calc(env(safe-area-inset-bottom) + 23px));
+
       transform: translateX(-50%);
+
       white-space: nowrap
+
     }
 
     .controls {
+
       position: absolute;
+
       z-index: 25;
+
       top: max(14px, calc(env(safe-area-inset-top) + 10px));
+
       left: 15px;
+
       right: 15px;
+
       display: flex;
+
       justify-content: space-between;
+
       pointer-events: none
+
     }
 
     .controls button {
+
       pointer-events: auto
+
     }
 
     .controls #music {
+
       visibility: hidden
+
     }
 
     .started .controls #music {
+
       visibility: visible
+
     }
 
     .round {
+
       height: 44px;
+
       width: 44px;
+
       display: grid;
+
       place-items: center;
+
       padding: 0;
+
       border: 1px solid #fff9f0b3;
+
       border-radius: 50%;
+
       background: #3c4154b8;
+
       color: #fffaf4;
+
       font-size: 1.48rem;
+
       line-height: 1;
+
       backdrop-filter: blur(8px)
+
     }
 
     .round:active {
+
       background: #2d354b
+
     }
 
     .ticket {
+
       position: absolute;
+
       z-index: 4;
+
       left: 8%;
+
       right: 8%;
+
       top: 50%;
+
       transform: translateY(-50%);
+
       max-height: calc(var(--h) - 145px);
+
       overflow: auto;
+
       scrollbar-width: thin;
+
       border-radius: 28px;
+
       background: #fffaf2ed;
+
       border: 1px solid #fff8f1;
+
       box-shadow: 0 24px 72px #1e20385c;
+
       backdrop-filter: blur(14px)
+
     }
 
     .scene:nth-child(even) .ticket {
+
       left: 9%;
+
       right: 7%
+
     }
 
     .ticket::before,
+
     .ticket::after {
+
       content: "";
+
       position: absolute;
+
       z-index: 2;
+
       top: 48%;
+
       width: 24px;
+
       height: 24px;
+
       border-radius: 50%;
+
       background: #7f8793;
+
       box-shadow: inset 0 0 8px #26314936
+
     }
 
     .ticket::before {
+
       left: -13px
+
     }
 
     .ticket::after {
+
       right: -13px
+
     }
 
     .ticket-line {
+
       height: 8px;
+
       background: linear-gradient(90deg, var(--rose) 0 47%, #fff6e9 47% 53%, var(--blue) 53% 100%)
+
     }
 
     .ticket-content {
+
       padding: clamp(24px, 3.5vh, 38px) clamp(23px, 6vw, 36px) 30px;
+
       opacity: 0;
+
       translate: 0 17px;
+
       transition: opacity .7s ease, translate .7s ease
+
     }
 
     .scene.active .ticket-content {
+
       opacity: 1;
+
       translate: 0 0
+
     }
 
     .ticket-head {
+
       display: flex;
+
       justify-content: space-between;
+
       gap: 12px;
+
       align-items: center;
+
       margin-bottom: 17px;
+
       color: #9b6d83
+
     }
 
     .ticket-head span {
+
       font-size: .61rem;
+
       font-weight: 700;
+
       letter-spacing: .2em;
+
       text-transform: uppercase
+
     }
 
     .ticket-head b {
+
       font-size: .68rem;
+
       letter-spacing: .12em;
+
       color: #739abd
+
     }
 
     .ticket h2 {
+
       font: 500 clamp(2.15rem, 8.4vw, 3.35rem)/1.04 "Playfair Display", Georgia, serif;
+
       letter-spacing: -.045em;
+
       color: #4f4152;
+
       margin: 0 0 16px
+
     }
 
     .ticket h2 em {
+
       color: #a86788;
+
       font-weight: 500
+
     }
 
     .ticket p {
+
       font-size: clamp(.86rem, 3.2vw, .99rem);
+
       line-height: 1.56;
+
       margin: 11px 0
+
     }
 
     .ticket .large {
+
       font: 500 clamp(1.45rem, 6vw, 2rem)/1.22 "Playfair Display", Georgia, serif;
+
       color: #8f6680;
+
       margin: 16px 0
+
     }
 
     .ticket .muted {
+
       font-size: .77rem;
+
       color: #756b76
+
     }
 
     .ticket .divider {
+
       border-top: 1px dashed #d8c7cf;
+
       margin: 18px 0
+
     }
 
     .ticket .actions {
+
       display: flex;
+
       flex-wrap: wrap;
+
       gap: 8px;
+
       justify-content: center;
+
       margin-top: 18px
+
     }
 
     .pill,
+
     .button {
+
       display: inline-flex;
+
       align-items: center;
+
       justify-content: center;
+
       gap: 7px;
+
       min-height: 44px;
+
       padding: 10px 18px;
+
       border: 1px solid #624d69;
+
       border-radius: 100px;
+
       background: #624d69;
+
       color: #fffaf1;
+
       text-decoration: none;
+
       text-align: center;
+
       font-weight: 700;
+
       font-size: .76rem;
+
       letter-spacing: .04em;
+
       box-shadow: 0 7px 20px #24213626
+
     }
 
     .pill.secondary {
+
       background: transparent;
+
       color: #574969;
+
       border-color: #bdaebb;
+
       box-shadow: none
+
     }
 
     .pill:active,
+
     .button:active {
+
       background: #473c54
+
     }
 
     .date {
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
+
       gap: 12px;
+
       margin: 13px 0;
+
       color: #5f5264
+
     }
 
     .date b {
+
       font: 500 4.1rem/.9 "Playfair Display", Georgia, serif
+
     }
 
     .date span {
+
       font-size: .82rem;
+
       line-height: 1.3;
+
       text-transform: uppercase;
+
       letter-spacing: .12em
+
     }
 
     .countdown {
+
       display: grid;
+
       grid-template-columns: repeat(4, 1fr);
+
       gap: 5px;
+
       margin: 15px 0
+
     }
 
     .countdown div {
+
       padding: 8px 1px;
+
       text-align: center;
+
       border-top: 1px solid #bda8b7;
+
       border-bottom: 1px solid #bda8b7
+
     }
 
     .countdown b {
+
       display: block;
+
       font: 500 clamp(1.15rem, 5vw, 1.55rem) "Playfair Display", Georgia, serif
+
     }
 
     .countdown small {
+
       display: block;
+
       font-size: .55rem;
+
       text-transform: uppercase;
+
       letter-spacing: .04em
+
     }
 
     .cubes {
+
       display: flex;
+
       gap: 7px;
+
       justify-content: center;
+
       margin: 3px 0 19px
+
     }
 
     .cubes span {
+
       display: grid;
+
       place-items: center;
+
       width: 39px;
+
       height: 39px;
+
       background: #fff3ec;
+
       border: 1px solid #d7adb9;
+
       border-radius: 7px;
+
       color: #9e6e87;
+
       font: 600 1.15rem "Playfair Display", Georgia, serif;
+
       box-shadow: 4px 5px 0 #d8b6ba66
+
     }
 
     .cubes span:nth-child(2) {
+
       background: #eff5f8;
+
       border-color: #9bbcd0;
+
       color: #6e98b4;
+
       rotate: 5deg
+
     }
 
     .cubes span:nth-child(3) {
+
       rotate: -5deg
+
     }
 
     .vote {
+
       display: flex;
+
       gap: 9px;
+
       justify-content: center;
+
       margin: 18px 0 8px
+
     }
 
     .vote button {
+
       min-height: 47px;
+
       padding: 10px 15px;
+
       border-radius: 14px;
+
       border: 2px solid #dbb0be;
+
       background: #fce8ef;
+
       color: #80576d;
+
       font-weight: 700;
+
       font-size: .76rem;
+
       cursor: pointer
+
     }
 
     .vote button[data-choice="azul"] {
+
       border-color: #a5c4d9;
+
       background: #eaf3fa;
+
       color: #547c98
+
     }
 
     .vote button[aria-pressed="true"] {
+
       outline: 3px solid #57506e;
+
       outline-offset: 2px
+
     }
 
     .vote-result {
+
       min-height: 1.5em;
+
       text-align: center;
+
       font-weight: 700;
+
       color: #6d5c76
+
     }
 
     .elemento {
+
       position: absolute;
+
       z-index: 9;
+
       left: calc(var(--x)*1%);
+
       top: calc(var(--y)*1%);
+
       width: calc(var(--tamano)*1%);
+
       max-width: none;
+
       max-height: 32vh;
+
       object-fit: contain;
+
       transform: translate(-50%, -50%);
+
       pointer-events: none;
+
       user-select: none;
+
       filter: drop-shadow(0 11px 13px #1c203b61);
+
       animation: flotar 4.8s ease-in-out infinite
+
     }
 
     .scene:not(.scene-active) .elemento {
+
       animation-play-state: paused
+
     }
 
     @keyframes flotar {
+
       50% {
+
         translate: 0 -12px
+
       }
+
     }
 
-    /* Posición y tamaño web: --x derecha/izquierda, --y abajo/arriba. */
+    /* POSICIÓN DE ELEMENTOS — escritorio: --x horizontal, --y vertical, --tamano ancho (%). */
+
     .scene:nth-child(1) .elemento {
+
       --x: 86;
+
       --y: 22;
+
       --tamano: 27
+
     }
 
     .scene:nth-child(2) .elemento {
+
       --x: 13;
+
       --y: 24;
+
       --tamano: 23
+
     }
 
     .scene:nth-child(3) .elemento {
+
       --x: 84;
+
       --y: 76;
+
       --tamano: 26
+
     }
 
     .scene:nth-child(4) .elemento {
+
       --x: 13;
+
       --y: 76;
+
       --tamano: 29
+
     }
 
     .scene:nth-child(5) .elemento {
+
       --x: 87;
+
       --y: 22;
+
       --tamano: 27
+
     }
 
     .scene:nth-child(6) .elemento {
+
       --x: 13;
+
       --y: 24;
+
       --tamano: 27
+
     }
 
     .scene:nth-child(7) .elemento {
+
       --x: 85;
+
       --y: 78;
+
       --tamano: 29
+
     }
 
     .next {
+
       position: absolute;
+
       z-index: 12;
+
       bottom: max(19px, calc(env(safe-area-inset-bottom) + 11px));
+
       left: 50%;
+
       transform: translateX(-50%);
+
       white-space: nowrap;
+
       background: #fff9f2;
+
       color: #53445d;
+
       border-color: #fff9f2;
+
       box-shadow: 0 7px 25px #1a193659
+
     }
 
     .progress {
+
       position: absolute;
+
       z-index: 12;
+
       bottom: max(76px, calc(env(safe-area-inset-bottom) + 67px));
+
       left: 0;
+
       right: 0;
+
       display: flex;
+
       justify-content: center;
+
       gap: 7px;
+
       pointer-events: none;
+
       opacity: 0
+
     }
 
     .started .progress {
+
       opacity: 1
+
     }
 
     .progress i {
+
       width: 6px;
+
       height: 6px;
+
       border-radius: 8px;
+
       background: #fff9f390;
+
       transition: width .3s
+
     }
 
     .progress i.on {
+
       width: 25px;
+
       background: #fffdf5
+
     }
 
     @media(max-height:680px) {
+
       .ticket {
+
         max-height: calc(var(--h) - 132px)
+
       }
 
       .ticket-content {
+
         padding-top: 20px;
+
         padding-bottom: 22px
+
       }
 
       .ticket h2 {
+
         font-size: clamp(1.9rem, 7vw, 2.55rem)
+
       }
 
       .ticket p {
+
         line-height: 1.42;
+
         margin: 7px 0
+
       }
 
       .ticket .divider {
+
         margin: 11px 0
+
       }
 
       .cubes {
+
         margin-bottom: 12px
+
       }
+
     }
 
     @media(max-width:560px) {
+
       :root {
+
         --h: 100dvh
+
       }
 
       .elemento {
+
         max-width: 42vw;
+
         max-height: 25vh
+
       }
 
-      /* Posición y tamaño móvil, independientes de los valores web. */
+      /* POSICIÓN DE ELEMENTOS — celular: estos valores reemplazan los de escritorio. */
+
       .scene:nth-child(1) .elemento {
+
         --x: 50;
+
         --y: 19;
+
         --tamano: 32
+
       }
 
       .scene:nth-child(2) .elemento {
+
         --x: 13;
+
         --y: 80;
+
         --tamano: 27
+
       }
 
       .scene:nth-child(3) .elemento {
+
         --x: 87;
+
         --y: 79;
+
         --tamano: 30
+
       }
 
       .scene:nth-child(4) .elemento {
+
         --x: 50;
+
         --y: 77;
+
         --tamano: 31
+
       }
 
       .scene:nth-child(5) .elemento {
+
         --x: 88;
+
         --y: 20;
+
         --tamano: 28
+
       }
 
       .scene:nth-child(6) .elemento {
+
         --x: 12;
+
         --y: 24;
+
         --tamano: 30
+
       }
 
       .scene:nth-child(7) .elemento {
+
         --x: 85;
+
         --y: 80;
+
         --tamano: 31
+
       }
+
     }
+
   </style>
+
 </head>
 
 <body>
+
   <main class="shell" id="shell">
+
     <div class="entry" id="entry">
+
       <img class="entry-photo" src="assets/foto/foto01.webp" alt="Pareja celebrando ante globos rosas y azules"
+
         fetchpriority="high">
+
       <p class="entry-top">Una sorpresa por descubrir</p>
+
       <div class="entry-bottom">
+
         <p class="small">Acompáñanos a celebrar</p>
+
         <h1>Nuestra <em>revelación</em></h1>
+
         <p>Un pequeño secreto, una emoción enorme. ¿Nos ayudas a descubrirlo?</p>
+
       </div>
+
       <button class="button entry-start" id="start" type="button">Abrir invitación ✦</button>
+
     </div>
+
     <div class="controls" aria-label="Controles de la invitación">
+
       <button class="round" id="exit" type="button" aria-label="Salir de la invitación">×</button>
+
       <button class="round" id="music" type="button" aria-label="Reproducir música" aria-pressed="false">♫</button>
+
     </div>
+
     <div class="pages" id="pages">
+
       <section class="scene" aria-label="Bienvenida">
+
         <img class="bg" src="assets/fondos/fondo01.webp" alt="" fetchpriority="high">
+
         <img class="elemento" src="assets/elementos/elemento01.webp" alt="">
+
         <article class="ticket">
+
           <div class="ticket-line"></div>
+
           <div class="ticket-content">
+
             <div class="ticket-head"><span>Invitación especial</span><b>01 / 07</b></div>
+
             <div class="cubes" aria-hidden="true"><span>R</span><span>¿</span><span>B</span></div>
+
             <h2>Una noticia <em>por descubrir</em></h2>
+
             <p>Hay una pregunta que nos llena de ilusión, y queremos vivir la respuesta rodeados de las personas que
+
               queremos.</p>
+
             <div class="divider"></div>
+
             <p class="large" id="parents1"></p>
+
             <p>Guarda un lugar para la sorpresa: esta celebración también es tuya.</p>
+
           </div>
+
         </article>
+
       </section>
+
       <section class="scene" aria-label="Nuestra historia">
+
         <img class="bg" src="assets/fondos/fondo02.webp" alt="" loading="lazy">
+
         <img class="elemento" src="assets/elementos/elemento02.webp" alt="" loading="lazy">
+
         <article class="ticket">
+
           <div class="ticket-line"></div>
+
           <div class="ticket-content">
+
             <div class="ticket-head"><span>Entre rosa y azul</span><b>02 / 07</b></div>
+
             <h2>La espera tiene <em>magia</em></h2>
+
             <p id="message"></p>
+
             <div class="divider"></div>
+
             <p>Ese día sabremos juntos un poquito más de quien viene en camino.</p>
+
             <p class="large" id="parents2"></p>
+
           </div>
+
         </article>
+
       </section>
+
       <section class="scene" aria-label="Fecha y hora">
+
         <img class="bg" src="assets/fondos/fondo03.webp" alt="" loading="lazy">
+
         <img class="elemento" src="assets/elementos/elemento03.webp" alt="" loading="lazy">
+
         <article class="ticket">
+
           <div class="ticket-line"></div>
+
           <div class="ticket-content">
+
             <div class="ticket-head"><span>Marca el calendario</span><b>03 / 07</b></div>
+
             <h2>El gran <em>día</em></h2>
+
             <div class="date"><b id="day">00</b><span id="monthYear"></span></div>
+
             <p class="large" id="time"></p>
+
             <div class="countdown" aria-label="Cuenta regresiva">
+
               <div><b id="days">00</b><small>Días</small></div>
+
               <div><b id="hours">00</b><small>Horas</small></div>
+
               <div><b id="minutes">00</b><small>Min</small></div>
+
               <div><b id="seconds">00</b><small>Seg</small></div>
+
             </div>
+
             <div class="actions"><a class="pill secondary" id="calendar" href="#" download="revelacion.ics">Agregar al
+
                 calendario</a></div>
+
           </div>
+
         </article>
+
       </section>
+
       <section class="scene" data-night aria-label="Lugar">
+
         <img class="bg" src="assets/fondos/fondo04.webp" alt="" loading="lazy">
+
         <img class="elemento" src="assets/elementos/elemento04.webp" alt="" loading="lazy">
+
         <article class="ticket">
+
           <div class="ticket-line"></div>
+
           <div class="ticket-content">
+
             <div class="ticket-head"><span>El punto de encuentro</span><b>04 / 07</b></div>
+
             <h2>Nos vemos <em>aquí</em></h2>
+
             <p class="large" id="venue"></p>
+
             <p id="address"></p>
+
             <div class="divider"></div>
+
             <p class="muted">Llega con ganas de celebrar. Los colores de tu ropa son libres; lo importante es que estés
+
               con nosotros.</p>
+
             <div class="actions"><a class="pill" id="map" href="#" target="_blank" rel="noopener noreferrer">Cómo llegar
+
                 ↗</a></div>
+
           </div>
+
         </article>
+
       </section>
+
       <section class="scene" aria-label="Haz tu apuesta">
+
         <img class="bg" src="assets/fondos/fondo05.webp" alt="" loading="lazy">
+
         <img class="elemento" src="assets/elementos/elemento05.webp" alt="" loading="lazy">
+
         <article class="ticket">
+
           <div class="ticket-line"></div>
+
           <div class="ticket-content">
+
             <div class="ticket-head"><span>Antes de saberlo</span><b>05 / 07</b></div>
+
             <h2>¿Cuál es tu <em>corazonada?</em></h2>
+
             <p>Elige un color por diversión. Tu apuesta quedará marcada aquí, pero el secreto seguirá guardado hasta la
+
               fiesta.</p>
+
             <div class="vote" role="group" aria-label="Elige tu predicción">
+
               <button type="button" data-choice="rosa" aria-pressed="false">Equipo rosa</button>
+
               <button type="button" data-choice="azul" aria-pressed="false">Equipo azul</button>
+
             </div>
+
             <p class="vote-result" id="voteResult" aria-live="polite"></p>
+
             <div class="divider"></div>
+
             <p class="muted">No hay respuesta equivocada: solo una emoción compartida.</p>
+
           </div>
+
         </article>
+
       </section>
+
       <section class="scene" aria-label="Confirmar asistencia">
+
         <img class="bg" src="assets/fondos/fondo06.webp" alt="" loading="lazy">
+
         <img class="elemento" src="assets/elementos/elemento06.webp" alt="" loading="lazy">
+
         <article class="ticket">
+
           <div class="ticket-line"></div>
+
           <div class="ticket-content">
+
             <div class="ticket-head"><span>Contamos contigo</span><b>06 / 07</b></div>
+
             <h2>Vive la sorpresa <em>con nosotros</em></h2>
+
             <p>Ayúdanos a preparar tu lugar. Confirma tu asistencia antes del:</p>
+
             <p class="large" id="rsvpDate"></p>
+
             <div class="actions"><a class="pill" id="rsvp" href="#" target="_blank" rel="noopener noreferrer">Confirmar
+
                 por WhatsApp ↗</a></div>
+
             <p class="muted">Cuéntanos cuántas personas te acompañarán.</p>
+
           </div>
+
         </article>
+
       </section>
+
       <section class="scene" data-night aria-label="Despedida">
+
         <img class="bg" src="assets/fondos/fondo07.webp" alt="" loading="lazy">
+
         <img class="elemento" src="assets/elementos/elemento07.webp" alt="" loading="lazy">
+
         <article class="ticket">
+
           <div class="ticket-line"></div>
+
           <div class="ticket-content">
+
             <div class="ticket-head"><span>El secreto nos espera</span><b>07 / 07</b></div>
+
             <div class="cubes" aria-hidden="true"><span>¿</span><span>♡</span><span>?</span></div>
+
             <h2>Muy pronto lo <em>sabremos</em></h2>
+
             <p>La mejor parte de esta historia será descubrirla juntos. Gracias por acompañarnos en un momento tan
+
               especial.</p>
+
             <div class="divider"></div>
+
             <p class="large" id="signature"></p>
+
             <p class="muted" id="giftNote"></p>
+
             <div class="actions"><a class="pill secondary" id="registry" href="#" target="_blank"
+
                 rel="noopener noreferrer">Ver mesa de regalos ↗</a></div>
+
           </div>
+
         </article>
+
       </section>
+
     </div>
+
     <div class="progress" id="progress" aria-hidden="true"></div>
+
     <audio id="audio" src="assets/audio/musica.mp3" loop preload="none"></audio>
+
   </main>
+
   <script>
-    // EDITA AQUÍ los datos reales. Deja vacíos los enlaces que todavía no utilices.
+
+    // DATOS PERSONALES Y ENLACES — editar únicamente este bloque.
+    // Deja en blanco mapa, regalos o telefonoWhatsApp para ocultar su botón.
     const DATOS = {
-      mama: "Mariana", papa: "Daniel",
+      mama: "Mariana",
+      papa: "Daniel",
       mensaje: "Muy pronto sabremos si nuestro bebé será niña o niño. Nos emociona que estés a nuestro lado cuando llegue ese instante.",
-      fecha: "2027-05-22T17:00:00", duracionHoras: 4,
-      lugar: "Salón Cielo Abierto", direccion: "Cadereyta Jiménez, Nuevo León",
-      mapa: "", regalos: "", telefonoWhatsApp: "",
-      confirmarAntes: "15 de mayo de 2027",
+      fecha: "2027-05-22T17:00:00", // AAAA-MM-DDTHH:MM, hora local
+      duracionHoras: 4,                // duración del evento en el calendario
+      lugar: "Salón Cielo Abierto",
+      direccion: "Cadereyta Jiménez, Nuevo León",
       notaRegalos: "Tu presencia es nuestro mejor regalo. Si deseas llevar un detalle, aquí encontrarás algunas ideas.",
-      salida: "../../../index.html"
+      confirmarAntes: "15 de mayo de 2027",
+
+      // BOTONES — Maps, mesa de regalos, WhatsApp y calendario.
+      mapa: "",                       // URL completa de Google Maps
+      regalos: "",                    // URL completa de la mesa de regalos
+      telefonoWhatsApp: "",           // México: 52 + 10 dígitos, sin signos
+      // El calendario usa automáticamente fecha, duración, lugar y dirección.
+
+      // SALIDA — listado de Baby Showers, desde plantillas/baby-showers/revelacion/.
+      salida: "../../../index.html#baby-showers"
     };
+
     const $ = s => document.querySelector(s);
+
     const pages = $("#pages"), scenes = [...document.querySelectorAll(".scene")], audio = $("#audio");
+
     let current = 0, started = false, calendarURL = "", heightTimer;
+
     const names = DATOS.mama + " y " + DATOS.papa;
+
     $("#parents1").textContent = names;
+
     $("#parents2").textContent = names;
+
     $("#signature").textContent = names;
+
     $("#message").textContent = DATOS.mensaje;
+
     $("#venue").textContent = DATOS.lugar;
+
     $("#address").textContent = DATOS.direccion;
+
     $("#giftNote").textContent = DATOS.notaRegalos;
+
     $("#rsvpDate").textContent = DATOS.confirmarAntes;
+
     document.title = "Revelación de " + names + " | Invitación";
+
     const date = new Date(DATOS.fecha);
+
     function pad(n) { return String(n).padStart(2, "0") }
+
     function stamp(d) { return "" + d.getUTCFullYear() + pad(d.getUTCMonth() + 1) + pad(d.getUTCDate()) + "T" + pad(d.getUTCHours()) + pad(d.getUTCMinutes()) + "00Z" }
+
     function escapeICS(s) { return String(s).replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/,/g, "\\,").replace(/;/g, "\\;") }
+
     if (!Number.isNaN(date.getTime())) {
+
       $("#day").textContent = pad(date.getDate());
+
       $("#monthYear").innerHTML = new Intl.DateTimeFormat("es-MX", { month: "long" }).format(date) + "<br>" + date.getFullYear();
+
       $("#time").textContent = new Intl.DateTimeFormat("es-MX", { hour: "numeric", minute: "2-digit", hour12: true }).format(date);
+
       const end = new Date(date.getTime() + DATOS.duracionHoras * 3600000);
+
       const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Eldin Bridge//Revelacion//ES", "BEGIN:VEVENT", "UID:revelacion-" + date.getTime() + "@eldinbridge.com", "DTSTAMP:" + stamp(new Date()), "DTSTART:" + stamp(date), "DTEND:" + stamp(end), "SUMMARY:" + escapeICS("Revelación de " + names), "LOCATION:" + escapeICS(DATOS.lugar + ", " + DATOS.direccion), "END:VEVENT", "END:VCALENDAR", ""].join("\r\n");
+
       calendarURL = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
+
       $("#calendar").href = calendarURL;
+
     } else $("#calendar").hidden = true;
+
     function updateCountdown() {
+
       const s = Math.floor(Math.max(0, date.getTime() - Date.now()) / 1000);
+
       $("#days").textContent = String(Math.floor(s / 86400));
+
       $("#hours").textContent = pad(Math.floor(s % 86400 / 3600));
+
       $("#minutes").textContent = pad(Math.floor(s % 3600 / 60));
+
       $("#seconds").textContent = pad(s % 60);
+
     }
+
     if (!Number.isNaN(date.getTime())) { updateCountdown(); setInterval(updateCountdown, 1000) }
+
     function optionalLink(id, url) { if (url) $(id).href = url; else $(id).hidden = true }
+
     optionalLink("#map", DATOS.mapa);
+
     optionalLink("#registry", DATOS.regalos);
+
     const phone = DATOS.telefonoWhatsApp.replace(/\D/g, "");
+
     optionalLink("#rsvp", phone ? "https://wa.me/" + phone + "?text=" + encodeURIComponent("Hola, confirmo mi asistencia a la revelación de " + names + ". Asistiremos ___ personas.") : "");
+
     const dots = scenes.map(() => { const dot = document.createElement("i"); $("#progress").append(dot); return dot });
+
     function mark(i) {
+
       if (i === current && scenes[i].classList.contains("active")) return;
+
       current = i;
+
       scenes.forEach((scene, n) => scene.classList.toggle("active", n === i));
+
       dots.forEach((dot, n) => dot.classList.toggle("on", n === i));
+
     }
+
     function go(i, smooth = true) {
+
       const target = Math.max(0, Math.min(i, scenes.length - 1));
+
       pages.scrollTo({ left: 0, top: target * pages.clientHeight, behavior: smooth ? "smooth" : "auto" });
+
     }
+
     function adjustHeight() {
+
       if (!matchMedia("(max-width:560px)").matches) { document.documentElement.style.removeProperty("--h"); return }
+
       clearTimeout(heightTimer);
+
       heightTimer = setTimeout(() => {
+
         const h = window.visualViewport?.height || window.innerHeight;
+
         document.documentElement.style.setProperty("--h", Math.round(h) + "px");
+
         if (started) go(current, false);
+
       }, 250);
+
     }
+
     scenes.forEach((scene, i) => {
+
       const button = document.createElement("button");
+
       button.type = "button";
+
       button.className = "button next";
+
       button.textContent = i === scenes.length - 1 ? "Volver al inicio ↑" : "Continuar ↓";
+
       button.addEventListener("click", () => go(i === scenes.length - 1 ? 0 : i + 1));
+
       scene.append(button);
+
     });
+
     const observer = new IntersectionObserver(entries => {
+
       for (const entry of entries) entry.target.classList.toggle("scene-active", entry.isIntersecting);
+
       const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
       if (visible) mark(scenes.indexOf(visible.target));
+
     }, { root: pages, threshold: .65 });
+
     scenes.forEach(scene => observer.observe(scene));
+
     function musicState(on) {
+
       $("#music").textContent = on ? "Ⅱ" : "♫";
+
       $("#music").setAttribute("aria-label", on ? "Pausar música" : "Reproducir música");
+
       $("#music").setAttribute("aria-pressed", String(on));
+
     }
+
     async function play() { try { await audio.play(); musicState(true) } catch { musicState(false) } }
+
     $("#start").addEventListener("click", () => {
+
       started = true;
+
       history.pushState({ revelacion: "invitacion" }, "");
+
       $("#shell").classList.add("started");
+
       go(0, false);
+
       $("#entry").classList.add("closed");
+
       scenes[0].classList.add("scene-active");
+
       mark(0);
+
       play();
+
     });
+
     $("#music").addEventListener("click", () => { if (audio.paused) play(); else { audio.pause(); musicState(false) } });
-    function exit() {
-      if (!started) { if (DATOS.salida) location.href = DATOS.salida; return }
+
+    function volverAPortada() {
+
+      if (!started) return
+
       started = false; audio.pause(); musicState(false);
+
       $("#shell").classList.remove("started");
+
       $("#entry").classList.remove("closed");
+
       go(0, false); mark(0);
+
     }
-    $("#exit").addEventListener("click", () => { if (DATOS.salida) location.href = DATOS.salida; else exit() });
+
+    $("#exit").addEventListener("click", () => { audio.pause(); location.href = DATOS.salida; });
+
     document.querySelectorAll(".vote button").forEach(button => button.addEventListener("click", () => {
+
       document.querySelectorAll(".vote button").forEach(item => item.setAttribute("aria-pressed", String(item === button)));
+
       $("#voteResult").textContent = "¡Anotamos tu corazonada: equipo " + button.dataset.choice + "!";
+
     }));
+
     document.addEventListener("visibilitychange", () => { if (document.hidden && !audio.paused) { audio.pause(); musicState(false) } });
+
     window.addEventListener("resize", adjustHeight, { passive: true });
+
     window.visualViewport?.addEventListener("resize", adjustHeight, { passive: true });
+
     window.addEventListener("orientationchange", adjustHeight, { passive: true });
+
     window.addEventListener("pageshow", () => { adjustHeight(); if (!started) go(0, false) });
-    addEventListener("popstate", () => { if (started) exit() });
+
+    addEventListener("popstate", () => { if (started) volverAPortada() });
+
     addEventListener("pagehide", () => { if (calendarURL) URL.revokeObjectURL(calendarURL) });
+
     mark(0); adjustHeight(); go(0, false);
+
   </script>
+
 </body>
 
 </html>
