@@ -730,6 +730,8 @@
 
     }
 
+    .pill[aria-disabled="true"] { opacity: .65; cursor: default; pointer-events: none; }
+
     .date {
 
       display: flex;
@@ -1082,6 +1084,10 @@
 
       }
 
+    }
+
+    /* Posiciones táctiles independientes: una ventana estrecha de PC usa los valores web. */
+    @media (max-width:560px) and (pointer:coarse) {
       /* POSICIÓN DE ELEMENTOS — celular: estos valores reemplazan los de escritorio. */
 
       .scene:nth-child(1) .elemento {
@@ -1098,7 +1104,7 @@
 
         --x: 13;
 
-        --y: 79;
+        --y: 76;
 
         --size: 29
 
@@ -1116,11 +1122,11 @@
 
       .scene:nth-child(4) .elemento {
 
-        --x: 12;
+        --x: 14;
 
         --y: 21;
 
-        --size: 30
+        --size: 27
 
       }
 
@@ -1194,208 +1200,132 @@
 
     <div class="pages" id="pages">
 
-      <section class="scene" aria-label="Bienvenida"><img class="bg" src="assets/fondos/fondo01.webp" alt=""
+      <section class="scene" aria-label="Mensaje de bienvenida"><img class="bg" src="assets/fondos/fondo01.webp" alt=""
 
           fetchpriority="high"><img class="elemento" src="assets/elementos/elemento01.webp" alt="">
 
         <article class="letter">
 
           <div class="letter-inner">
-
-            <div class="chapter">Invitación especial · 01</div><span class="script">Con cariño</span>
-
-            <h2>Una nueva vida <em>florece</em></h2>
-
-            <p>Estoy viviendo una de las etapas más bonitas de mi vida y quiero celebrarla rodeada de mujeres que han
-
-              sido parte de mi historia.</p>
-
+            <div class="chapter">Una invitación especial · 01</div><span class="script">Con cariño</span>
+            <h2>Me hará feliz <em>verte aquí</em></h2>
+            <p id="welcomeMessage"></p>
             <div class="flourish">❧ ✿ ❧</div>
-
             <p class="large" id="mama1"></p>
-
-            <p>Será un gusto tenerte en mi baby shower.</p>
-
           </div>
-
         </article>
 
       </section>
 
-      <section class="scene" aria-label="Mensaje"><img class="bg" src="assets/fondos/fondo02.webp" alt=""
+      <section class="scene" aria-label="Mensaje emotivo"><img class="bg" src="assets/fondos/fondo02.webp" alt=""
 
           loading="lazy"><img class="elemento" src="assets/elementos/elemento02.webp" alt="" loading="lazy">
 
         <article class="letter">
 
           <div class="letter-inner">
-
-            <div class="chapter">De corazón · 02</div><span class="script">La dulce espera</span>
-
-            <h2>Quiero compartir <em>mi alegría</em></h2>
-
+            <div class="chapter">De mi corazón · 02</div><span class="script">La dulce espera</span>
+            <h2>Una vida <em>florece</em></h2>
             <p id="message"></p>
-
             <div class="flourish">❧ ✿ ❧</div>
-
-            <p class="large">Tu compañía será un regalo que guardaré con mucho cariño.</p>
-
+            <p class="muted">Pronto podré sostener a mi bebé entre mis brazos.</p>
           </div>
-
         </article>
 
       </section>
 
-      <section class="scene" aria-label="Fecha y hora"><img class="bg" src="assets/fondos/fondo03.webp" alt=""
+      <section class="scene" aria-label="Contador"><img class="bg" src="assets/fondos/fondo03.webp" alt=""
 
           loading="lazy"><img class="elemento" src="assets/elementos/elemento03.webp" alt="" loading="lazy">
 
         <article class="letter">
 
           <div class="letter-inner">
-
-            <div class="chapter">Apunta la fecha · 03</div><span class="script">Nos reunimos</span>
-
-            <h2>El día de <em>celebrar</em></h2>
-
+            <div class="chapter">Cuenta regresiva · 03</div><span class="script">Se acerca el día</span>
+            <h2>Falta muy <em>poquito</em></h2>
             <div class="date"><b id="day">00</b><span id="monthYear"></span></div>
-
-            <p class="large" id="time"></p>
-
             <div class="countdown" aria-label="Cuenta regresiva">
-
               <div><b id="days">00</b><small>Días</small></div>
-
               <div><b id="hours">00</b><small>Horas</small></div>
-
               <div><b id="minutes">00</b><small>Min</small></div>
-
               <div><b id="seconds">00</b><small>Seg</small></div>
-
             </div>
-
-            <div class="actions"><a class="pill secondary" id="calendar" href="#"
-
-                download="baby-shower-tradicional.ics">Agregar al calendario</a></div>
-
           </div>
-
         </article>
 
       </section>
 
-      <section class="scene" aria-label="Lugar"><img class="bg" src="assets/fondos/fondo04.webp" alt=""
+      <section class="scene" aria-label="Dirección"><img class="bg" src="assets/fondos/fondo04.webp" alt=""
 
           loading="lazy"><img class="elemento" src="assets/elementos/elemento04.webp" alt="" loading="lazy">
 
         <article class="letter">
 
           <div class="letter-inner">
-
-            <div class="chapter">Dónde nos veremos · 04</div><span class="script">Te espero</span>
-
-            <h2>En un lugar <em>especial</em></h2>
-
+            <div class="chapter">Fecha y lugar · 04</div><span class="script">Te espero</span>
+            <h2>Nos reuniremos <em>aquí</em></h2>
             <p class="large" id="venue"></p>
-
             <p id="address"></p>
-
             <div class="flourish">❧ ✿ ❧</div>
-
-            <p>Ven con ganas de reír, compartir y hacer de esta tarde un recuerdo precioso.</p>
-
-            <div class="actions"><a class="pill" id="map" href="#" target="_blank" rel="noopener noreferrer">Cómo llegar
-
-                ↗</a></div>
-
+            <p><strong>Fecha:</strong> <span id="eventDate"></span></p>
+            <p><strong>Hora:</strong> <span id="time"></span></p>
+            <div class="actions"><a class="pill" id="map" target="_blank" rel="noopener noreferrer" aria-disabled="true">Ver ubicación ↗</a></div>
           </div>
-
         </article>
 
       </section>
 
-      <section class="scene" aria-label="Programa"><img class="bg" src="assets/fondos/fondo05.webp" alt=""
+      <section class="scene" aria-label="Regalos"><img class="bg" src="assets/fondos/fondo05.webp" alt=""
 
           loading="lazy"><img class="elemento" src="assets/elementos/elemento05.webp" alt="" loading="lazy">
 
         <article class="letter">
 
           <div class="letter-inner">
-
-            <div class="chapter">Nuestra tarde · 05</div><span class="script">Celebramos juntas</span>
-
-            <h2>Detalles para <em>disfrutar</em></h2>
-
-            <p>Habrá una rica merienda, recuerdos para compartir y algunas actividades para divertirnos juntas.</p>
-
-            <div class="program"><span>✿ Bienvenida</span><span>♡ Juegos</span><span>☕ Merienda</span><span>✧
-
-                Sorpresas</span></div>
-
-            <p class="muted" id="showNote"></p>
-
+            <div class="chapter">Detalles para el bebé · 05</div><span class="script">Con amor</span>
+            <h2>Un regalo <em>de corazón</em></h2>
+            <p>Si deseas traer algo, puedes elegir lo que más te guste para recibir a mi bebé.</p>
+            <div class="program" aria-label="Ideas de regalo"><span>🍼 Biberones</span><span>🧷 Pañales</span><span>🎁 Un detalle</span><span>✉️ Un sobre</span></div>
+            <p class="muted" id="giftNote"></p>
+            <div class="actions"><a class="pill secondary" id="registry" href="#" target="_blank" rel="noopener noreferrer">Ver mesa de regalos ↗</a></div>
           </div>
-
         </article>
 
       </section>
 
-      <section class="scene" aria-label="Confirmación"><img class="bg" src="assets/fondos/fondo06.webp" alt=""
+      <section class="scene" aria-label="Vestimenta"><img class="bg" src="assets/fondos/fondo06.webp" alt=""
 
           loading="lazy"><img class="elemento" src="assets/elementos/elemento06.webp" alt="" loading="lazy">
 
         <article class="letter">
 
           <div class="letter-inner">
-
-            <div class="chapter">Confirma tu lugar · 06</div><span class="script">Contigo será mejor</span>
-
-            <h2>¿Me <em>acompañas?</em></h2>
-
-            <p>Para preparar todo con cariño, te agradeceré confirmar tu asistencia antes del:</p>
-
-            <p class="large" id="rsvpDate"></p>
-
-            <div class="actions"><a class="pill" id="rsvp" href="#" target="_blank" rel="noopener noreferrer">Confirmar
-
-                por WhatsApp ↗</a></div>
-
-            <p class="muted">Dime cuántas personas asistirán contigo.</p>
-
+            <div class="chapter">Vestimenta · 06</div><span class="script">Siéntete cómoda</span>
+            <h2>Ven como más <em>te guste</em></h2>
+            <p id="dressCode"></p>
+            <div class="flourish">❧ ✿ ❧</div>
+            <p class="large" aria-hidden="true">👗 👚 👖</p>
+            <p class="muted" id="showNote" hidden></p>
           </div>
-
         </article>
 
       </section>
 
-      <section class="scene" aria-label="Despedida"><img class="bg" src="assets/fondos/fondo07.webp" alt=""
+      <section class="scene" aria-label="Nos vemos pronto"><img class="bg" src="assets/fondos/fondo07.webp" alt=""
 
           loading="lazy"><img class="elemento" src="assets/elementos/elemento07.webp" alt="" loading="lazy">
 
         <article class="letter">
 
           <div class="letter-inner">
-
-            <div class="chapter">Con todo mi amor · 07</div><span class="script">Hasta pronto</span>
-
-            <h2>Los mejores recuerdos <em>se comparten</em></h2>
-
-            <p>Gracias por acompañarme en esta espera. Deseo que pasemos una tarde llena de risas, cariño y buenos
-
-              deseos para mi bebé.</p>
-
+            <div class="chapter">Nos vemos pronto · 07</div><span class="script">Hasta ese día</span>
+            <h2>Será hermoso <em>encontrarnos</em></h2>
+            <p id="farewellMessage"></p>
             <div class="flourish">❧ ✿ ❧</div>
-
             <p class="large" id="signature"></p>
-
-            <p class="muted" id="giftNote"></p>
-
-            <div class="actions"><a class="pill secondary" id="registry" href="#" target="_blank"
-
-                rel="noopener noreferrer">Ver mesa de regalos ↗</a></div>
-
+            <p class="muted">Confirma antes del <span id="rsvpDate"></span>.</p>
+            <div class="actions"><a class="pill" id="rsvp" target="_blank" rel="noopener noreferrer" aria-disabled="true">Confirmar por WhatsApp ↗</a></div>
           </div>
-
         </article>
 
       </section>
@@ -1410,26 +1340,26 @@
 
   <script>
 
-    // DATOS PERSONALES Y ENLACES — editar únicamente este bloque.
-    // Deja en blanco mapa, regalos o telefonoWhatsApp para ocultar su botón.
+    // DATOS EDITABLES — textos, fecha y enlaces de esta invitación.
     const DATOS = {
       mama: "Isabela",
-      mensaje: "Mi corazón está lleno de ilusión por la llegada de mi bebé. Quiero compartir contigo una tarde especial para conversar, reír y crear recuerdos que siempre atesoraremos.",
+      bienvenida: "Me gustaría reunir a las mujeres que quiero para disfrutar una tarde cercana y alegre. Tenerte conmigo hará aún más bonita esta celebración.",
+      mensaje: "Desde que supe de su llegada, imagino los pequeños gestos y momentos que nos esperan. Cada día crece en mí una ilusión diferente al pensar en mi bebé.",
+      despedida: "Ya cuento los días para abrazarte y celebrar juntas esta etapa tan especial. Espero verte muy pronto en mi baby shower.",
       fecha: "2027-07-10T16:00:00", // AAAA-MM-DDTHH:MM, hora local
-      duracionHoras: 4,                // duración del evento en el calendario
       lugar: "Salón Jardín de Rosas",
-      direccion: "Cadereyta Jiménez, Nuevo León",
-      notaRegalos: "Tu presencia es mi mejor regalo. Si deseas llevar un detalle, aquí encontrarás algunas ideas.",
+      direccion: "Cadereyta Jiménez, Nuevo León", // texto mostrado en la tarjeta
+      notaRegalos: "Tu compañía es suficiente; cualquier obsequio adicional será recibido con gratitud.",
+      vestimenta: "Ropa casual y cómoda. Puedes elegir un vestido, jeans con blusa o el conjunto con el que más disfrutes la tarde.",
       confirmarAntes: "3 de julio de 2027",
-      show: "",                       // texto opcional para anunciar el espectáculo
+      show: "",                       // nota opcional sobre el espectáculo; aparece en tarjeta 06
 
-      // BOTONES — Maps, mesa de regalos, WhatsApp y calendario.
-      mapa: "",                       // URL completa de Google Maps
-      regalos: "",                    // URL completa de la mesa de regalos
+      // ENLACES OPCIONALES — Maps y WhatsApp visibles e inactivos mientras estén vacíos.
+      mapa: "",                       // URL real de Google Maps para activar «Ver ubicación»
+      regalos: "",                    // URL de mesa de regalos; en blanco oculta su botón
       telefonoWhatsApp: "",           // México: 52 + 10 dígitos, sin signos
-      // El calendario usa automáticamente fecha, duración, lugar y dirección.
 
-      // SALIDA — listado de Baby Showers, desde plantillas/baby-showers/tradicional/.
+      // SALIDA — listado de Baby Showers desde plantillas/baby-showers/tradicional/.
       salida: "../../../index.html#baby-showers"
     };
 
@@ -1437,17 +1367,21 @@
 
     const pages = $("#pages"), scenes = [...document.querySelectorAll(".scene")], audio = $("#audio");
 
-    let current = 0, started = false, calendarURL = "", heightTimer;
+    let current = 0, started = false, heightTimer;
 
     const name = DATOS.mama;
 
     $("#mama1").textContent = name; $("#signature").textContent = "Con cariño, " + name;
 
-    $("#message").textContent = DATOS.mensaje; $("#venue").textContent = DATOS.lugar; $("#address").textContent = DATOS.direccion;
+    $("#welcomeMessage").textContent = DATOS.bienvenida;
+    $("#message").textContent = DATOS.mensaje;
+    $("#farewellMessage").textContent = DATOS.despedida;
+    $("#dressCode").textContent = DATOS.vestimenta;
+    $("#venue").textContent = DATOS.lugar; $("#address").textContent = DATOS.direccion;
 
     $("#giftNote").textContent = DATOS.notaRegalos; $("#rsvpDate").textContent = DATOS.confirmarAntes;
 
-    if (DATOS.show) $("#showNote").textContent = DATOS.show; else $("#showNote").hidden = true;
+    if (DATOS.show) { $("#showNote").textContent = DATOS.show; $("#showNote").hidden = false } else $("#showNote").hidden = true;
 
     document.title = "Baby Shower de " + name + " | Invitación";
 
@@ -1455,33 +1389,28 @@
 
     function pad(n) { return String(n).padStart(2, "0") }
 
-    function stamp(d) { return "" + d.getUTCFullYear() + pad(d.getUTCMonth() + 1) + pad(d.getUTCDate()) + "T" + pad(d.getUTCHours()) + pad(d.getUTCMinutes()) + "00Z" }
-
-    function escapeICS(s) { return String(s).replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/,/g, "\\,").replace(/;/g, "\\;") }
-
     if (!Number.isNaN(date.getTime())) {
 
       $("#day").textContent = pad(date.getDate()); $("#monthYear").innerHTML = new Intl.DateTimeFormat("es-MX", { month: "long" }).format(date) + "<br>" + date.getFullYear();
 
       $("#time").textContent = new Intl.DateTimeFormat("es-MX", { hour: "numeric", minute: "2-digit", hour12: true }).format(date);
 
-      const end = new Date(date.getTime() + DATOS.duracionHoras * 3600000);
-
-      const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Eldin Bridge//Baby Shower Tradicional//ES", "BEGIN:VEVENT", "UID:baby-tradicional-" + date.getTime() + "@eldinbridge.com", "DTSTAMP:" + stamp(new Date()), "DTSTART:" + stamp(date), "DTEND:" + stamp(end), "SUMMARY:" + escapeICS("Baby Shower de " + name), "LOCATION:" + escapeICS(DATOS.lugar + ", " + DATOS.direccion), "END:VEVENT", "END:VCALENDAR", ""].join("\r\n");
-
-      calendarURL = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" })); $("#calendar").href = calendarURL;
-
-    } else $("#calendar").hidden = true;
+      $("#eventDate").textContent = new Intl.DateTimeFormat("es-MX", { day: "numeric", month: "long", year: "numeric" }).format(date);
+    }
 
     function updateCountdown() { const s = Math.floor(Math.max(0, date.getTime() - Date.now()) / 1000); $("#days").textContent = String(Math.floor(s / 86400)); $("#hours").textContent = pad(Math.floor(s % 86400 / 3600)); $("#minutes").textContent = pad(Math.floor(s % 3600 / 60)); $("#seconds").textContent = pad(s % 60) }
 
     if (!Number.isNaN(date.getTime())) { updateCountdown(); setInterval(updateCountdown, 1000) }
 
-    function optionalLink(id, url) { if (url) $(id).href = url; else $(id).hidden = true }
-
-    optionalLink("#map", DATOS.mapa); optionalLink("#registry", DATOS.regalos);
-
-    const phone = DATOS.telefonoWhatsApp.replace(/\D/g, ""); optionalLink("#rsvp", phone ? "https://wa.me/" + phone + "?text=" + encodeURIComponent("Hola, confirmo mi asistencia al baby shower de " + name + ". Asistiremos ___ personas.") : "");
+    function optionalLink(id, url, visibleSinEnlace = false) {
+      const el = $(id);
+      if (url) { el.href = url; el.hidden = false; el.removeAttribute("aria-disabled") }
+      else { el.removeAttribute("href"); el.hidden = !visibleSinEnlace; el.setAttribute("aria-disabled", "true") }
+    }
+    optionalLink("#map", DATOS.mapa, true);
+    optionalLink("#registry", DATOS.regalos);
+    const phone = DATOS.telefonoWhatsApp.replace(/\D/g, "");
+    optionalLink("#rsvp", phone ? "https://wa.me/" + phone + "?text=" + encodeURIComponent("Hola, confirmo mi asistencia al baby shower de " + name + ". Asistiremos ___ personas.") : "", true);
 
     const dots = scenes.map(() => { const dot = document.createElement("i"); $("#progress").append(dot); return dot });
 
@@ -1511,7 +1440,7 @@
 
     window.addEventListener("resize", adjustHeight, { passive: true }); window.visualViewport?.addEventListener("resize", adjustHeight, { passive: true }); window.addEventListener("orientationchange", adjustHeight, { passive: true });
 
-    window.addEventListener("pageshow", () => { adjustHeight(); if (!started) go(0, false) }); addEventListener("popstate", () => { if (started) volverAPortada() }); addEventListener("pagehide", () => { if (calendarURL) URL.revokeObjectURL(calendarURL) });
+    window.addEventListener("pageshow", () => { adjustHeight(); if (!started) go(0, false) }); addEventListener("popstate", () => { if (started) volverAPortada() });
 
     mark(0); adjustHeight(); go(0, false);
 
