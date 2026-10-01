@@ -1,138 +1,882 @@
 <!doctype html>
+
 <html lang="es">
+
 <head>
+
   <meta charset="utf-8">
+
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
   <meta name="theme-color" content="#173c51">
+
   <meta name="description" content="Invitación a una posada pública">
+
   <title>Posada Pública | Invitación</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
+
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Josefin+Sans:wght@500;600;700&family=Yeseva+One&display=swap" rel="stylesheet">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Josefin+Sans:wght@500;600;700&family=Yeseva+One&display=swap"
+    rel="stylesheet">
+
   <link rel="preload" as="image" href="assets/foto/foto01.webp">
+
   <style>
-    :root{--h:100svh;--blue:#17526a;--coral:#d65b44;--gold:#e6a949;--cream:#fff9e9}
-    *{box-sizing:border-box}html,body{height:100%;width:100%;margin:0;overflow:hidden;background:#173c51}
-    body{font-family:"DM Sans",Arial,sans-serif;color:var(--cream);-webkit-font-smoothing:antialiased}
-    button,a{font:inherit}button{cursor:pointer}a{color:inherit}[hidden]{display:none!important}
-    button:focus-visible,a:focus-visible{outline:3px solid #fff;outline-offset:3px}
-    .shell{position:relative;width:100%;max-width:540px;height:var(--h);margin:auto;overflow:hidden;background:#173c51;box-shadow:0 0 70px #0008}
-    .pages{height:100%;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior-y:contain;scrollbar-width:none;touch-action:pan-y;-webkit-overflow-scrolling:touch}.pages::-webkit-scrollbar{display:none}
-    .scene,.entry{position:relative;height:var(--h);min-height:var(--h);overflow:hidden;isolation:isolate}.scene{scroll-snap-align:start;scroll-snap-stop:always}
-    .bg,.entry-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}.scene::before{content:"";position:absolute;z-index:1;inset:0;background:linear-gradient(180deg,#0b2b3c69,#123c4879 48%,#082a3ead);pointer-events:none}
-    .entry{position:absolute;inset:0;z-index:20;transition:opacity .65s,visibility .65s}.entry.closed{opacity:0;visibility:hidden;pointer-events:none}.entry-photo{object-position:center center}.entry::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#102a3b8c,transparent 38%,#102b3b24 47%,#0b2e43ed 92%);pointer-events:none}
-    .entry-bottom{position:absolute;z-index:2;left:5%;right:5%;bottom:max(104px,calc(env(safe-area-inset-bottom) + 98px));text-align:center;text-shadow:0 3px 17px #000}.entry-bottom .eyebrow{font-size:.66rem;letter-spacing:.19em;text-transform:uppercase;font-weight:700;color:#ffe7bd}.entry h1{font:400 clamp(3.1rem,12vw,5rem)/1 "Yeseva One",Georgia,serif;margin:8px 0;color:#fffaf0}.entry h1 em{display:block;font:700 clamp(3.1rem,12vw,4.8rem)/1 "Josefin Sans",sans-serif;text-transform:uppercase;font-style:normal;letter-spacing:.025em;color:#ffd486;margin-top:12px}.entry-bottom p:last-child{max-width:34ch;margin:15px auto 0;line-height:1.5;font-size:.9rem}
-    .button,.pill{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;text-align:center;text-decoration:none;border:1px solid #ffe4a7;border-radius:4px;background:#ffd684;color:#17435a;font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;box-shadow:0 9px 24px #08203166}.button:active,.pill:active{background:#fff0ca}
-    .entry-start{position:absolute;z-index:3;left:50%;bottom:max(28px,calc(env(safe-area-inset-bottom) + 22px));transform:translateX(-50%);white-space:nowrap}
-    .controls{position:absolute;z-index:25;top:max(14px,calc(env(safe-area-inset-top) + 10px));left:15px;right:15px;display:flex;justify-content:space-between;pointer-events:none}.controls button{pointer-events:auto}.controls #music{visibility:hidden}.started .controls #music{visibility:visible}
-    .round{height:44px;width:44px;padding:0;display:grid;place-items:center;border:1px solid #fff4d0b8;border-radius:50%;background:#17455bd9;color:#fff7e8;font-size:1.5rem;line-height:1;backdrop-filter:blur(8px)}
+    :root {
+      --h: 100svh;
+      --blue: #17526a;
+      --coral: #d65b44;
+      --gold: #e6a949;
+      --cream: #fff9e9
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: #173c51
+    }
+
+    body {
+      font-family: "DM Sans", Arial, sans-serif;
+      color: var(--cream);
+      -webkit-font-smoothing: antialiased
+    }
+
+    button,
+    a {
+      font: inherit
+    }
+
+    button {
+      cursor: pointer
+    }
+
+    a {
+      color: inherit
+    }
+
+    [hidden] {
+      display: none !important
+    }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 3px solid #fff;
+      outline-offset: 3px
+    }
+
+    .shell {
+      position: relative;
+      width: 100%;
+      max-width: 540px;
+      height: var(--h);
+      margin: auto;
+      overflow: hidden;
+      background: #173c51;
+      box-shadow: 0 0 70px #0008
+    }
+
+    .pages {
+      height: 100%;
+      overflow-y: auto;
+      scroll-snap-type: y mandatory;
+      overscroll-behavior-y: contain;
+      scrollbar-width: none;
+      touch-action: pan-y;
+      -webkit-overflow-scrolling: touch
+    }
+
+    .pages::-webkit-scrollbar {
+      display: none
+    }
+
+    .scene,
+    .entry {
+      position: relative;
+      height: var(--h);
+      min-height: var(--h);
+      overflow: hidden;
+      isolation: isolate
+    }
+
+    .scene {
+      scroll-snap-align: start;
+      scroll-snap-stop: always
+    }
+
+    .bg,
+    .entry-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block
+    }
+
+    .scene::before {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      background: linear-gradient(180deg, #0b2b3c69, #123c4879 48%, #082a3ead);
+      pointer-events: none
+    }
+
+    .entry {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      transition: opacity .65s, visibility .65s
+    }
+
+    .entry.closed {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none
+    }
+
+    .entry-photo {
+      object-position: center center
+    }
+
+    .entry::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, #102a3b8c, transparent 38%, #102b3b24 47%, #0b2e43ed 92%);
+      pointer-events: none
+    }
+
+    .entry-bottom {
+      position: absolute;
+      z-index: 2;
+      left: 5%;
+      right: 5%;
+      bottom: max(104px, calc(env(safe-area-inset-bottom) + 98px));
+      text-align: center;
+      text-shadow: 0 3px 17px #000
+    }
+
+    .entry-bottom .eyebrow {
+      font-size: .66rem;
+      letter-spacing: .19em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #ffe7bd
+    }
+
+    .entry h1 {
+      font: 400 clamp(3.1rem, 12vw, 5rem)/1 "Yeseva One", Georgia, serif;
+      margin: 8px 0;
+      color: #fffaf0
+    }
+
+    .entry h1 em {
+      display: block;
+      font: 700 clamp(3.1rem, 12vw, 4.8rem)/1 "Josefin Sans", sans-serif;
+      text-transform: uppercase;
+      font-style: normal;
+      letter-spacing: .025em;
+      color: #ffd486;
+      margin-top: 12px
+    }
+
+    .entry-bottom p:last-child {
+      max-width: 34ch;
+      margin: 15px auto 0;
+      line-height: 1.5;
+      font-size: .9rem
+    }
+
+    .button,
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      border: 1px solid #ffe4a7;
+      border-radius: 4px;
+      background: #ffd684;
+      color: #17435a;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      box-shadow: 0 9px 24px #08203166
+    }
+
+    .button:active,
+    .pill:active {
+      background: #fff0ca
+    }
+
+    .entry-start {
+      position: absolute;
+      z-index: 3;
+      left: 50%;
+      bottom: max(28px, calc(env(safe-area-inset-bottom) + 22px));
+      transform: translateX(-50%);
+      white-space: nowrap
+    }
+
+    .controls {
+      position: absolute;
+      z-index: 25;
+      top: max(14px, calc(env(safe-area-inset-top) + 10px));
+      left: 15px;
+      right: 15px;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none
+    }
+
+    .controls button {
+      pointer-events: auto
+    }
+
+    .controls #music {
+      visibility: hidden
+    }
+
+    .started .controls #music {
+      visibility: visible
+    }
+
+    .round {
+      height: 44px;
+      width: 44px;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      border: 1px solid #fff4d0b8;
+      border-radius: 50%;
+      background: #17455bd9;
+      color: #fff7e8;
+      font-size: 1.5rem;
+      line-height: 1;
+      backdrop-filter: blur(8px)
+    }
+
     /* Cartel festivo de plaza: bandas de color y marco inspirado en papel picado. */
-    .card{position:absolute;z-index:4;left:8%;right:8%;top:50%;transform:translateY(-50%);max-height:calc(var(--h) - 150px);overflow-x:hidden;overflow-y:auto;scrollbar-width:none;background:#fff9e9;color:#234353;border:5px solid #ffe0a0;border-radius:2px;box-shadow:0 18px 48px #082333b3,inset 0 0 0 3px #fff9e9,inset 0 0 0 5px #e77555}.card::-webkit-scrollbar{display:none}
-    .card::before{content:"";position:absolute;z-index:1;top:0;left:0;right:0;height:23px;background:repeating-linear-gradient(90deg,#e75d4b 0 30px,#f0ad4c 30px 60px,#3a9a83 60px 90px,#4c83a6 90px 120px);clip-path:polygon(0 0,100% 0,100% 64%,96% 100%,92% 64%,88% 100%,84% 64%,80% 100%,76% 64%,72% 100%,68% 64%,64% 100%,60% 64%,56% 100%,52% 64%,48% 100%,44% 64%,40% 100%,36% 64%,32% 100%,28% 64%,24% 100%,20% 64%,16% 100%,12% 64%,8% 100%,4% 64%,0 100%);pointer-events:none}
-    .card-inner{position:relative;padding:clamp(39px,5vh,51px) clamp(22px,6vw,37px) 31px;text-align:center;opacity:0;translate:0 17px;transition:opacity .7s ease,translate .7s ease}.scene.active .card-inner{opacity:1;translate:0 0}
-    .series{display:inline-block;margin:0 0 14px;padding:5px 10px;background:#17627c;color:#fff8e9;text-transform:uppercase;font-size:.56rem;letter-spacing:.12em;font-weight:700}
-    .monogram{display:block;margin:0 auto 13px;color:var(--coral)}.monogram span{font:2rem "Yeseva One",Georgia,serif}
-    .card h2{font:400 clamp(1.87rem,7.4vw,2.7rem)/1.16 "Yeseva One",Georgia,serif;letter-spacing:-.025em;margin:0 0 17px;text-wrap:balance;color:#194b60}.card h2 em{font-style:normal;color:#d0563f}
-    .card p{font-size:clamp(.86rem,3.1vw,.98rem);line-height:1.6;margin:11px 0}.card .lead{font:700 clamp(1.2rem,4.9vw,1.62rem)/1.31 "Josefin Sans",sans-serif;color:#c44f3d;margin:16px 0}.card .muted{color:#64717a;font-size:.76rem}.divider{font:1rem Georgia,serif;color:#d49a45;letter-spacing:.35em;margin:16px 0}
-    .date{display:flex;justify-content:center;align-items:center;gap:14px;color:var(--coral);margin:13px auto}.date b{font:400 4rem/.9 "Yeseva One",Georgia,serif}.date span{text-align:left;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;line-height:1.5}
-    .countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:17px 0}.countdown div{padding:8px 1px;border-top:2px solid #e3b465;border-bottom:2px solid #e3b465}.countdown b{display:block;font:400 clamp(1.1rem,5vw,1.5rem) "Yeseva One",Georgia,serif;color:var(--coral)}.countdown small{font-size:.53rem;text-transform:uppercase}
-    .program{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:18px 0}.program span{border-left:4px solid #e5a749;padding:11px 6px;background:#f7e8cb;color:#28556a;font-size:.7rem}.actions{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:17px 0 0}.pill.secondary{background:transparent;color:#194b60;box-shadow:none}
-    .elemento{position:absolute;z-index:9;left:calc(var(--x)*1%);top:calc(var(--y)*1%);width:calc(var(--size)*1%);max-width:none;max-height:30vh;object-fit:contain;transform:translate(-50%,-50%);pointer-events:none;user-select:none;filter:drop-shadow(0 10px 14px #0b1111a1);animation:flotar 4.8s ease-in-out infinite}@keyframes flotar{50%{translate:0 -13px}}
+
+    .card {
+      position: absolute;
+      z-index: 4;
+      left: 8%;
+      right: 8%;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #fff9e9;
+      color: #234353;
+      border: 5px solid #ffe0a0;
+      border-radius: 2px;
+      box-shadow: 0 18px 48px #082333b3, inset 0 0 0 3px #fff9e9, inset 0 0 0 5px #e77555
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 23px;
+      background: repeating-linear-gradient(90deg, #e75d4b 0 30px, #f0ad4c 30px 60px, #3a9a83 60px 90px, #4c83a6 90px 120px);
+      clip-path: polygon(0 0, 100% 0, 100% 64%, 96% 100%, 92% 64%, 88% 100%, 84% 64%, 80% 100%, 76% 64%, 72% 100%, 68% 64%, 64% 100%, 60% 64%, 56% 100%, 52% 64%, 48% 100%, 44% 64%, 40% 100%, 36% 64%, 32% 100%, 28% 64%, 24% 100%, 20% 64%, 16% 100%, 12% 64%, 8% 100%, 4% 64%, 0 100%);
+      pointer-events: none
+    }
+
+    .card-inner {
+      position: relative;
+      padding: clamp(39px, 5vh, 51px) clamp(22px, 6vw, 37px) 31px;
+      text-align: center;
+      opacity: 0;
+      translate: 0 17px;
+      transition: opacity .7s ease, translate .7s ease
+    }
+
+    .scene.active .card-inner {
+      opacity: 1;
+      translate: 0 0
+    }
+
+    .series {
+      display: inline-block;
+      margin: 0 0 14px;
+      padding: 5px 10px;
+      background: #17627c;
+      color: #fff8e9;
+      text-transform: uppercase;
+      font-size: .56rem;
+      letter-spacing: .12em;
+      font-weight: 700
+    }
+
+    .monogram {
+      display: block;
+      margin: 0 auto 13px;
+      color: var(--coral)
+    }
+
+    .monogram span {
+      font: 2rem "Yeseva One", Georgia, serif
+    }
+
+    .card h2 {
+      font: 400 clamp(1.87rem, 7.4vw, 2.7rem)/1.16 "Yeseva One", Georgia, serif;
+      letter-spacing: -.025em;
+      margin: 0 0 17px;
+      text-wrap: balance;
+      color: #194b60
+    }
+
+    .card h2 em {
+      font-style: normal;
+      color: #d0563f
+    }
+
+    .card p {
+      font-size: clamp(.86rem, 3.1vw, .98rem);
+      line-height: 1.6;
+      margin: 11px 0
+    }
+
+    .card .lead {
+      font: 700 clamp(1.2rem, 4.9vw, 1.62rem)/1.31 "Josefin Sans", sans-serif;
+      color: #c44f3d;
+      margin: 16px 0
+    }
+
+    .card .muted {
+      color: #64717a;
+      font-size: .76rem
+    }
+
+    .divider {
+      font: 1rem Georgia, serif;
+      color: #d49a45;
+      letter-spacing: .35em;
+      margin: 16px 0
+    }
+
+    .date {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      color: var(--coral);
+      margin: 13px auto
+    }
+
+    .date b {
+      font: 400 4rem/.9 "Yeseva One", Georgia, serif
+    }
+
+    .date span {
+      text-align: left;
+      font-size: .8rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      line-height: 1.5
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      margin: 17px 0
+    }
+
+    .countdown div {
+      padding: 8px 1px;
+      border-top: 2px solid #e3b465;
+      border-bottom: 2px solid #e3b465
+    }
+
+    .countdown b {
+      display: block;
+      font: 400 clamp(1.1rem, 5vw, 1.5rem) "Yeseva One", Georgia, serif;
+      color: var(--coral)
+    }
+
+    .countdown small {
+      font-size: .53rem;
+      text-transform: uppercase
+    }
+
+    .program {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 18px 0
+    }
+
+    .program span {
+      border-left: 4px solid #e5a749;
+      padding: 11px 6px;
+      background: #f7e8cb;
+      color: #28556a;
+      font-size: .7rem
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin: 17px 0 0
+    }
+
+    .pill[aria-disabled="true"] {
+      opacity: .62;
+      cursor: default;
+      pointer-events: none
+    }
+
+    .pill.secondary {
+      background: transparent;
+      color: #194b60;
+      box-shadow: none
+    }
+
+    .elemento {
+      position: absolute;
+      z-index: 9;
+      left: calc(var(--x)*1%);
+      top: calc(var(--y)*1%);
+      width: calc(var(--size)*1%);
+      max-width: none;
+      max-height: 30vh;
+      object-fit: contain;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 10px 14px #0b1111a1);
+      animation: flotar 4.8s ease-in-out infinite
+    }
+
+    @keyframes flotar {
+      50% {
+        translate: 0 -13px
+      }
+    }
+
     /* POSICIONES WEB: más X = derecha, más Y = abajo, --size = tamaño. */
-    .scene:nth-child(1) .elemento{--x:86;--y:22;--size:29}
-    .scene:nth-child(2) .elemento{--x:13;--y:77;--size:27}
-    .scene:nth-child(3) .elemento{--x:86;--y:76;--size:26}
-    .scene:nth-child(4) .elemento{--x:13;--y:21;--size:27}
-    .scene:nth-child(5) .elemento{--x:86;--y:20;--size:27}
-    .scene:nth-child(6) .elemento{--x:13;--y:78;--size:27}
-    .scene:nth-child(7) .elemento{--x:86;--y:78;--size:27}
-    .next{position:absolute;z-index:12;bottom:max(19px,calc(env(safe-area-inset-bottom) + 11px));left:50%;transform:translateX(-50%);white-space:nowrap}.progress{position:absolute;z-index:12;bottom:max(76px,calc(env(safe-area-inset-bottom) + 68px));left:0;right:0;display:flex;justify-content:center;gap:7px;pointer-events:none;opacity:0}.started .progress{opacity:1}.progress i{height:5px;width:5px;border-radius:50%;background:#f4e3c3a0;transition:width .3s}.progress i.on{width:21px;border-radius:8px;background:#fff8e7}
-    @media(max-height:680px){.card{max-height:calc(var(--h) - 130px)}.card-inner{padding-top:24px;padding-bottom:24px}.card h2{font-size:clamp(1.65rem,7vw,2.3rem)}.card p{line-height:1.4;margin:7px 0}.monogram{height:40px;width:40px;margin-bottom:9px}}
-    @media(max-width:560px){:root{--h:100dvh}.elemento{max-width:43vw;max-height:25vh}
+
+    .scene:nth-child(1) .elemento {
+      --x: 50;
+      --y: 18;
+      --size: 29
+    }
+
+    .scene:nth-child(2) .elemento {
+      --x: 13;
+      --y: 79;
+      --size: 27
+    }
+
+    .scene:nth-child(3) .elemento {
+      --x: 86;
+      --y: 75;
+      --size: 26
+    }
+
+    .scene:nth-child(4) .elemento {
+      --x: 50;
+      --y: 18;
+      --size: 27
+    }
+
+    .scene:nth-child(5) .elemento {
+      --x: 50;
+      --y: 25;
+      --size: 27
+    }
+
+    .scene:nth-child(6) .elemento {
+      --x: 14;
+      --y: 82;
+      --size: 27
+    }
+
+    .scene:nth-child(7) .elemento {
+      --x: 86;
+      --y: 78;
+      --size: 27
+    }
+
+    .next {
+      position: absolute;
+      z-index: 12;
+      bottom: max(19px, calc(env(safe-area-inset-bottom) + 11px));
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap
+    }
+
+    .progress {
+      position: absolute;
+      z-index: 12;
+      bottom: max(76px, calc(env(safe-area-inset-bottom) + 68px));
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      pointer-events: none;
+      opacity: 0
+    }
+
+    .started .progress {
+      opacity: 1
+    }
+
+    .progress i {
+      height: 5px;
+      width: 5px;
+      border-radius: 50%;
+      background: #f4e3c3a0;
+      transition: width .3s
+    }
+
+    .progress i.on {
+      width: 21px;
+      border-radius: 8px;
+      background: #fff8e7
+    }
+
+    @media(max-height:680px) {
+      .card-inner {
+        padding-top: 24px;
+        padding-bottom: 24px
+      }
+
+      .card h2 {
+        font-size: clamp(1.65rem, 7vw, 2.3rem)
+      }
+
+      .card p {
+        line-height: 1.4;
+        margin: 7px 0
+      }
+
+      .monogram {
+        height: 40px;
+        width: 40px;
+        margin-bottom: 9px
+      }
+    }
+
+    @media(max-width:560px) {
+      :root {
+        --h: 100dvh
+      }
+
+      .elemento {
+        max-width: 43vw;
+        max-height: 25vh
+      }
+    }
+
+    @media(max-width:560px) and (pointer:coarse) {
       /* POSICIONES MÓVIL: independientes de las de web. */
-      .scene:nth-child(1) .elemento{--x:87;--y:21;--size:30}
-      .scene:nth-child(2) .elemento{--x:12;--y:79;--size:30}
-      .scene:nth-child(3) .elemento{--x:87;--y:79;--size:30}
-      .scene:nth-child(4) .elemento{--x:12;--y:21;--size:30}
-      .scene:nth-child(5) .elemento{--x:87;--y:19;--size:30}
-      .scene:nth-child(6) .elemento{--x:12;--y:79;--size:30}
-      .scene:nth-child(7) .elemento{--x:87;--y:78;--size:30}}
+
+      .scene:nth-child(1) .elemento {
+        --x: 50;
+        --y: 16;
+        --size: 30
+      }
+
+      .scene:nth-child(2) .elemento {
+        --x: 12;
+        --y: 79;
+        --size: 30
+      }
+
+      .scene:nth-child(3) .elemento {
+        --x: 85;
+        --y: 76;
+        --size: 30
+      }
+
+      .scene:nth-child(4) .elemento {
+        --x: 50;
+        --y: 15;
+        --size: 30
+      }
+
+      .scene:nth-child(5) .elemento {
+        --x: 50;
+        --y: 20;
+        --size: 30
+      }
+
+      .scene:nth-child(6) .elemento {
+        --x: 15;
+        --y: 81;
+        --size: 27
+      }
+
+      .scene:nth-child(7) .elemento {
+        --x: 85;
+        --y: 78;
+        --size: 27
+      }
+    }
   </style>
+
 </head>
+
 <body>
+
   <main class="shell" id="shell">
+
     <div class="entry" id="entry">
-      <img class="entry-photo" src="assets/foto/foto01.webp" alt="Comunidad reunida en una plaza mexicana para celebrar la posada" fetchpriority="high">
-      <div class="entry-bottom"><p class="eyebrow">La plaza se llena de Navidad</p><h1>Posada <em>Pública</em></h1><p>Luces, piñata, ponche y una noche para celebrar con toda la comunidad.</p></div>
+
+      <img class="entry-photo" src="assets/foto/foto01.webp"
+        alt="Comunidad reunida en una plaza mexicana para celebrar la posada" fetchpriority="high">
+
+      <div class="entry-bottom">
+        <p class="eyebrow">La plaza se llena de Navidad</p>
+        <h1>Posada <em>Pública</em></h1>
+        <p>Luces, piñata, ponche y una noche para celebrar con toda la comunidad.</p>
+      </div>
+
       <button class="button entry-start" id="start" type="button">Abrir invitación ✦</button>
+
     </div>
-    <div class="controls" aria-label="Controles de la invitación"><button class="round" id="exit" type="button" aria-label="Salir de la invitación">×</button><button class="round" id="music" type="button" aria-label="Reproducir música" aria-pressed="false">♫</button></div>
+
+    <div class="controls" aria-label="Controles de la invitación"><button class="round" id="exit" type="button"
+        aria-label="Salir de la invitación">×</button><button class="round" id="music" type="button"
+        aria-label="Reproducir música" aria-pressed="false">♫</button></div>
+
     <div class="pages" id="pages">
-      <section class="scene" aria-label="Bienvenida"><img class="bg" src="assets/fondos/fondo01.webp" alt="" fetchpriority="high"><img class="elemento" src="assets/elementos/elemento01.webp" alt=""><article class="card"><div class="card-inner"><p class="series">Toda la comunidad está invitada · 01</p><span class="monogram"><span>✶</span></span><h2>La plaza será <em>nuestra fiesta</em></h2><p>Las luces ya están listas y la piñata espera. Queremos llenar de risas y buenos deseos nuestro punto de encuentro.</p><div class="divider">✦ ✶ ✦</div><p class="lead" id="organizerWelcome"></p><p>Ven con tu familia, tus vecinos y tus amigos.</p></div></article></section>
-      <section class="scene" aria-label="Mensaje"><img class="bg" src="assets/fondos/fondo02.webp" alt="" loading="lazy"><img class="elemento" src="assets/elementos/elemento02.webp" alt="" loading="lazy"><article class="card"><div class="card-inner"><p class="series">Una fiesta para encontrarnos · 02</p><span class="monogram"><span>❋</span></span><h2>La Navidad <em>nos reúne</em></h2><p id="message"></p><div class="divider">✦ ✶ ✦</div><p class="lead">La invitación es para todos.</p></div></article></section>
-      <section class="scene" aria-label="Fecha y hora"><img class="bg" src="assets/fondos/fondo03.webp" alt="" loading="lazy"><img class="elemento" src="assets/elementos/elemento03.webp" alt="" loading="lazy"><article class="card"><div class="card-inner"><p class="series">Apunta la fecha · 03</p><h2>Nos vemos <em>en la plaza</em></h2><div class="date"><b id="day">00</b><span id="monthYear"></span></div><p class="lead" id="time"></p><div class="countdown" aria-label="Cuenta regresiva"><div><b id="days">00</b><small>Días</small></div><div><b id="hours">00</b><small>Horas</small></div><div><b id="minutes">00</b><small>Min</small></div><div><b id="seconds">00</b><small>Seg</small></div></div><div class="actions"><a class="pill secondary" id="calendar" href="#" download="posada-publica.ics">Agregar al calendario</a></div></div></article></section>
-      <section class="scene" aria-label="Lugar"><img class="bg" src="assets/fondos/fondo04.webp" alt="" loading="lazy"><img class="elemento" src="assets/elementos/elemento04.webp" alt="" loading="lazy"><article class="card"><div class="card-inner"><p class="series">Punto de encuentro · 04</p><span class="monogram"><span>⌖</span></span><h2>Nos vemos <em>aquí</em></h2><p class="lead" id="venue"></p><p id="address"></p><div class="divider">✦ ✶ ✦</div><p id="accessNote"></p><div class="actions"><a class="pill" id="map" href="#" target="_blank" rel="noopener noreferrer">Cómo llegar ↗</a></div></div></article></section>
-      <section class="scene" aria-label="Actividades"><img class="bg" src="assets/fondos/fondo05.webp" alt="" loading="lazy"><img class="elemento" src="assets/elementos/elemento05.webp" alt="" loading="lazy"><article class="card"><div class="card-inner"><p class="series">Lo que nos espera · 05</p><h2>Tradición y <em>convivencia</em></h2><p>Una noche para romper la piñata, disfrutar algo rico y compartir la alegría de nuestra comunidad.</p><div class="program"><span>✶ Piñata</span><span>❋ Aguinaldos</span><span>♨ Ponche</span><span>✦ Antojitos</span></div><p class="muted" id="programNote"></p></div></article></section>
-      <section class="scene" aria-label="Información útil"><img class="bg" src="assets/fondos/fondo06.webp" alt="" loading="lazy"><img class="elemento" src="assets/elementos/elemento06.webp" alt="" loading="lazy"><article class="card"><div class="card-inner"><p class="series">Antes de venir · 06</p><span class="monogram"><span>☼</span></span><h2>Trae ganas <em>de celebrar</em></h2><p>Este encuentro es abierto para quienes quieran acompañarnos. Llega con tiempo para encontrar un buen lugar y disfruta las actividades en familia.</p><div class="divider">✦ ✶ ✦</div><p class="lead" id="visitorNote"></p><p class="muted">Cuida el espacio público y acompaña a los pequeños durante la piñata.</p></div></article></section>
-      <section class="scene" aria-label="Despedida"><img class="bg" src="assets/fondos/fondo07.webp" alt="" loading="lazy"><img class="elemento" src="assets/elementos/elemento07.webp" alt="" loading="lazy"><article class="card"><div class="card-inner"><p class="series">Nos vemos pronto · 07</p><span class="monogram"><span>✶</span></span><h2>Una plaza, <em>muchas historias</em></h2><p>Que esta posada nos regale una noche de vecinos reunidos, niños felices y nuevas memorias compartidas.</p><div class="divider">✦ ✶ ✦</div><p class="lead" id="signature"></p><p class="muted">¡Te esperamos!</p></div></article></section>
+
+      <section class="scene" aria-label="Bienvenida"><img class="bg" src="assets/fondos/fondo01.webp" alt=""
+          fetchpriority="high"><img class="elemento" src="assets/elementos/elemento01.webp" alt="">
+        <article class="card">
+          <div class="card-inner">
+            <p class="series">Las puertas de la plaza se abren · 01</p><span class="monogram"><span>✶</span></span>
+            <h2>La plaza será <em>nuestra fiesta</em></h2>
+            <p>Las luces ya están listas y la piñata espera. Queremos llenar de risas y buenos deseos nuestro punto de
+              encuentro.</p>
+            <div class="divider">✦ ✶ ✦</div>
+            <p class="lead" id="organizerWelcome"></p>
+            <p>Ven con tu familia, tus vecinos y tus amigos.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="scene" aria-label="Mensaje"><img class="bg" src="assets/fondos/fondo02.webp" alt=""
+          loading="lazy"><img class="elemento" src="assets/elementos/elemento02.webp" alt="" loading="lazy">
+        <article class="card">
+          <div class="card-inner">
+            <p class="series">Gracias por ser parte · 02</p><span class="monogram"><span>❋</span></span>
+            <h2>Gracias por <em>sumarte</em></h2>
+            <p id="message"></p>
+            <div class="divider">✦ ✶ ✦</div>
+            <p class="lead">Tu presencia hará más alegre la plaza.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="scene" aria-label="Cuenta regresiva"><img class="bg" src="assets/fondos/fondo03.webp" alt=""
+          loading="lazy"><img class="elemento" src="assets/elementos/elemento03.webp" alt="" loading="lazy">
+        <article class="card">
+          <div class="card-inner">
+            <p class="series">Apunta la fecha · 03</p>
+            <h2>Nos vemos <em>en la plaza</em></h2>
+            <div class="date"><b id="day">00</b><span id="monthYear"></span></div>
+            <div class="countdown" aria-label="Cuenta regresiva">
+              <div><b id="days">00</b><small>Días</small></div>
+              <div><b id="hours">00</b><small>Horas</small></div>
+              <div><b id="minutes">00</b><small>Min</small></div>
+              <div><b id="seconds">00</b><small>Seg</small></div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="scene" aria-label="Ubicación"><img class="bg" src="assets/fondos/fondo04.webp" alt=""
+          loading="lazy"><img class="elemento" src="assets/elementos/elemento04.webp" alt="" loading="lazy">
+        <article class="card">
+          <div class="card-inner">
+            <p class="series">Punto de encuentro · 04</p><span class="monogram"><span>⌖</span></span>
+            <h2>Nos vemos <em>aquí</em></h2>
+            <p class="lead" id="venue"></p>
+            <p id="eventDate"></p>
+            <p id="eventTime"></p>
+            <p id="address"></p>
+            <div class="divider">✦ ✶ ✦</div>
+            <p id="accessNote"></p>
+            <div class="actions"><a class="pill" id="map" href="#" target="_blank" rel="noopener noreferrer">Ver
+                ubicación ↗</a></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="scene" aria-label="Celebración en la plaza"><img class="bg" src="assets/fondos/fondo05.webp"
+          alt="" loading="lazy"><img class="elemento" src="assets/elementos/elemento05.webp" alt="" loading="lazy">
+        <article class="card">
+          <div class="card-inner">
+            <p class="series">En nuestra plaza · 05</p>
+            <h2>Tradición y <em>convivencia</em></h2>
+            <p>Una noche para romper la piñata, disfrutar algo rico y compartir la alegría de nuestra comunidad.</p>
+            <div class="program"><span>✶ Piñata</span><span>❋ Aguinaldos</span><span>♨ Ponche</span><span>✦
+                Antojitos</span></div>
+            <p class="muted" id="programNote"></p>
+          </div>
+        </article>
+      </section>
+
+      <section class="scene" aria-label="Confirmación"><img class="bg" src="assets/fondos/fondo06.webp" alt=""
+          loading="lazy"><img class="elemento" src="assets/elementos/elemento06.webp" alt="" loading="lazy">
+        <article class="card">
+          <div class="card-inner">
+            <p class="series">Nos encantará verte · 06</p><span class="monogram"><span>✉</span></span>
+            <h2>¿Te sumas <em>a la posada?</em></h2>
+            <p>La entrada es libre. Si piensas venir, puedes avisarnos para preparar mejor la celebración.</p>
+            <p class="lead" id="visitorNote"></p>
+            <div class="actions"><a class="pill" id="rsvp" target="_blank" rel="noopener noreferrer">Confirmar por
+                WhatsApp ↗</a></div>
+            <p class="muted">Ven con tiempo y acompaña a los pequeños durante la piñata.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="scene" aria-label="Despedida"><img class="bg" src="assets/fondos/fondo07.webp" alt=""
+          loading="lazy"><img class="elemento" src="assets/elementos/elemento07.webp" alt="" loading="lazy">
+        <article class="card">
+          <div class="card-inner">
+            <p class="series">Nos vemos pronto · 07</p><span class="monogram"><span>✶</span></span>
+            <h2>Una plaza, <em>muchas historias</em></h2>
+            <p>Que esta posada nos regale una noche de vecinos reunidos, niños felices y nuevas memorias compartidas.
+            </p>
+            <div class="divider">✦ ✶ ✦</div>
+            <p class="lead" id="signature"></p>
+            <p class="muted">¡Te esperamos!</p>
+          </div>
+        </article>
+      </section>
+
     </div>
+
     <div class="progress" id="progress" aria-hidden="true"></div>
-    <audio id="audio" src="assets/audio/musica.mp3" loop preload="none"></audio>
+
+    <audio id="audio" src="assets/audio/audio01.mp3" loop preload="none"></audio>
+
   </main>
+
   <script>
-    // EDITA AQUÍ los datos del evento público. Deja vacío el enlace del mapa si aún no lo tienes.
-    const DATOS={
-      organizador:"Comunidad de la Plaza",
-      mensaje:"Esta posada es una oportunidad para vernos, compartir nuestras tradiciones y disfrutar una noche de fiesta en el espacio que es de todos.",
-      fecha:"2026-12-20T18:00:00",duracionHoras:4,
-      lugar:"Plaza Principal",direccion:"Cadereyta Jiménez, Nuevo León",
-      mapa:"",notaAcceso:"Consulta los accesos y cierres de calles que anuncie la organización.",
-      notaPrograma:"Las actividades y su horario pueden cambiar según la organización.",
-      notaVisitantes:"Entrada libre · Evento familiar",
-      salida:"../../../index.html"
+
+    // DATOS EDITABLES: información de esta posada pública.
+    // Deja mapa y telefonoWhatsApp vacíos mientras no haya enlaces reales:
+    // sus botones permanecerán visibles y desactivados.
+    const DATOS = {
+      organizador: "Comunidad de la Plaza",
+      mensaje: "Gracias a quienes hacen posible este encuentro y a cada vecino que comparte nuestras tradiciones. Nos alegra celebrar juntos en el espacio que es de todos.",
+      fecha: "2026-12-20T18:00:00",
+      lugar: "Plaza Principal",
+      direccion: "Cadereyta Jiménez, Nuevo León",
+      mapa: "",
+      telefonoWhatsApp: "",
+      notaAcceso: "Consulta los accesos y cierres de calles que anuncie la organización.",
+      notaCelebracion: "Las actividades pueden cambiar según la organización.",
+      notaVisitantes: "Entrada libre · Ven con tu familia",
+      salida: "../../../index.html#posadas"
     };
-    const $=s=>document.querySelector(s);
-    const pages=$("#pages"),scenes=[...document.querySelectorAll(".scene")],audio=$("#audio");
-    let current=0,started=false,calendarURL="",heightTimer;
-    $("#organizerWelcome").textContent=DATOS.organizador;
-    $("#signature").textContent=DATOS.organizador;
-    $("#message").textContent=DATOS.mensaje;
-    $("#venue").textContent=DATOS.lugar;$("#address").textContent=DATOS.direccion;
-    $("#accessNote").textContent=DATOS.notaAcceso;
-    $("#visitorNote").textContent=DATOS.notaVisitantes;
-    if(DATOS.notaPrograma)$("#programNote").textContent=DATOS.notaPrograma;else $("#programNote").hidden=true;
-    document.title="Posada Pública | "+DATOS.organizador;
-    const date=new Date(DATOS.fecha);
-    const pad=n=>String(n).padStart(2,"0");
-    function stamp(d){return ""+d.getUTCFullYear()+pad(d.getUTCMonth()+1)+pad(d.getUTCDate())+"T"+pad(d.getUTCHours())+pad(d.getUTCMinutes())+"00Z"}
-    function escapeICS(s){return String(s).replace(/\\/g,"\\\\").replace(/\n/g,"\\n").replace(/,/g,"\\,").replace(/;/g,"\\;")}
-    if(!Number.isNaN(date.getTime())){
-      $("#day").textContent=pad(date.getDate());$("#monthYear").innerHTML=new Intl.DateTimeFormat("es-MX",{month:"long"}).format(date)+"<br>"+date.getFullYear();
-      $("#time").textContent=new Intl.DateTimeFormat("es-MX",{hour:"numeric",minute:"2-digit",hour12:true}).format(date);
-      const end=new Date(date.getTime()+DATOS.duracionHoras*3600000);
-      const ics=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Eldin Bridge//Posada Publica//ES","BEGIN:VEVENT","UID:posada-publica-"+date.getTime()+"@eldinbridge.com","DTSTAMP:"+stamp(new Date()),"DTSTART:"+stamp(date),"DTEND:"+stamp(end),"SUMMARY:"+escapeICS("Posada Pública · "+DATOS.organizador),"LOCATION:"+escapeICS(DATOS.lugar+", "+DATOS.direccion),"END:VEVENT","END:VCALENDAR",""].join("\r\n");
-      calendarURL=URL.createObjectURL(new Blob([ics],{type:"text/calendar;charset=utf-8"}));$("#calendar").href=calendarURL;
-    }else $("#calendar").hidden=true;
-    function updateCountdown(){const s=Math.floor(Math.max(0,date.getTime()-Date.now())/1000);$("#days").textContent=String(Math.floor(s/86400));$("#hours").textContent=pad(Math.floor(s%86400/3600));$("#minutes").textContent=pad(Math.floor(s%3600/60));$("#seconds").textContent=pad(s%60)}
-    if(!Number.isNaN(date.getTime())){updateCountdown();setInterval(updateCountdown,1000)}
-    function optionalLink(id,url){if(url)$(id).href=url;else $(id).hidden=true}
-    optionalLink("#map",DATOS.mapa);
-    const dots=scenes.map(()=>{const dot=document.createElement("i");$("#progress").append(dot);return dot});
-    function mark(i){if(i===current&&scenes[i].classList.contains("active"))return;current=i;scenes.forEach((scene,n)=>scene.classList.toggle("active",n===i));dots.forEach((dot,n)=>dot.classList.toggle("on",n===i))}
-    function go(i,smooth=true){const target=Math.max(0,Math.min(i,scenes.length-1));pages.scrollTo({left:0,top:target*pages.clientHeight,behavior:smooth?"smooth":"auto"})}
-    function adjustHeight(){if(!matchMedia("(max-width:560px)").matches){document.documentElement.style.removeProperty("--h");return}clearTimeout(heightTimer);heightTimer=setTimeout(()=>{const h=window.visualViewport?.height||window.innerHeight;document.documentElement.style.setProperty("--h",Math.round(h)+"px");if(started)go(current,false)},250)}
-    scenes.forEach((scene,i)=>{const button=document.createElement("button");button.type="button";button.className="button next";button.textContent=i===scenes.length-1?"Volver al inicio ↑":"Continuar ↓";button.addEventListener("click",()=>go(i===scenes.length-1?0:i+1));scene.append(button)});
-    const observer=new IntersectionObserver(entries=>{const visible=entries.filter(entry=>entry.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];if(visible)mark(scenes.indexOf(visible.target))},{root:pages,threshold:.65});scenes.forEach(scene=>observer.observe(scene));
-    function musicState(on){$("#music").textContent=on?"Ⅱ":"♫";$("#music").setAttribute("aria-label",on?"Pausar música":"Reproducir música");$("#music").setAttribute("aria-pressed",String(on))}
-    async function play(){try{await audio.play();musicState(true)}catch{musicState(false)}}
-    $("#start").addEventListener("click",()=>{started=true;history.pushState({posadaPublica:"invitacion"},"");$("#shell").classList.add("started");go(0,false);$("#entry").classList.add("closed");mark(0);play()});
-    $("#music").addEventListener("click",()=>{if(audio.paused)play();else{audio.pause();musicState(false)}});
-    function exit(){if(!started){if(DATOS.salida)location.href=DATOS.salida;return}started=false;audio.pause();musicState(false);$("#shell").classList.remove("started");$("#entry").classList.remove("closed");go(0,false);mark(0)}
-    $("#exit").addEventListener("click",()=>{if(DATOS.salida)location.href=DATOS.salida;else exit()});
-    document.addEventListener("visibilitychange",()=>{if(document.hidden&&!audio.paused){audio.pause();musicState(false)}});
-    window.addEventListener("resize",adjustHeight,{passive:true});window.visualViewport?.addEventListener("resize",adjustHeight,{passive:true});window.addEventListener("orientationchange",adjustHeight,{passive:true});
-    window.addEventListener("pageshow",()=>{adjustHeight();if(!started)go(0,false)});addEventListener("popstate",()=>{if(started)exit()});addEventListener("pagehide",()=>{if(calendarURL)URL.revokeObjectURL(calendarURL)});
-    mark(0);adjustHeight();go(0,false);
+
+    const $ = s => document.querySelector(s);
+    const pages = $("#pages"), scenes = [...document.querySelectorAll(".scene")], audio = $("#audio");
+    let current = 0, started = false, heightTimer;
+
+    $("#organizerWelcome").textContent = DATOS.organizador;
+    $("#signature").textContent = DATOS.organizador;
+    $("#message").textContent = DATOS.mensaje;
+    $("#venue").textContent = DATOS.lugar;
+    $("#address").textContent = DATOS.direccion;
+    $("#accessNote").textContent = DATOS.notaAcceso;
+    $("#visitorNote").textContent = DATOS.notaVisitantes;
+    if (DATOS.notaCelebracion) $("#programNote").textContent = DATOS.notaCelebracion;
+    else $("#programNote").hidden = true;
+    document.title = "Posada Pública | " + DATOS.organizador;
+
+    const date = new Date(DATOS.fecha);
+    const validDate = !Number.isNaN(date.getTime());
+    const pad = n => String(n).padStart(2, "0");
+    if (validDate) {
+      $("#day").textContent = pad(date.getDate());
+      $("#monthYear").innerHTML = new Intl.DateTimeFormat("es-MX", { month: "long" }).format(date) + "<br>" + date.getFullYear();
+      $("#eventDate").textContent = new Intl.DateTimeFormat("es-MX", { weekday: "long", day: "numeric", month: "long", year: "numeric" }).format(date);
+      $("#eventTime").textContent = new Intl.DateTimeFormat("es-MX", { hour: "numeric", minute: "2-digit", hour12: true }).format(date);
+    }
+    function updateCountdown() {
+      const seconds = Math.floor(Math.max(0, date.getTime() - Date.now()) / 1000);
+      $("#days").textContent = String(Math.floor(seconds / 86400));
+      $("#hours").textContent = pad(Math.floor(seconds % 86400 / 3600));
+      $("#minutes").textContent = pad(Math.floor(seconds % 3600 / 60));
+      $("#seconds").textContent = pad(seconds % 60);
+    }
+    if (validDate) { updateCountdown(); setInterval(updateCountdown, 1000) }
+
+    // ENLACES EDITABLES: Maps y WhatsApp solo se activan al completar DATOS.
+    function optionalLink(id, url) {
+      const link = $(id);
+      if (url) { link.href = url; link.removeAttribute("aria-disabled"); link.removeAttribute("tabindex") }
+      else { link.removeAttribute("href"); link.setAttribute("aria-disabled", "true"); link.setAttribute("tabindex", "-1") }
+    }
+    optionalLink("#map", DATOS.mapa.trim());
+    const phone = DATOS.telefonoWhatsApp.replace(/\D/g, "");
+    optionalLink("#rsvp", phone ? "https://wa.me/" + phone + "?text=" + encodeURIComponent("Hola, confirmo que asistiré a la Posada Pública organizada por " + DATOS.organizador + ".") : "");
+
+    const dots = scenes.map(() => { const dot = document.createElement("i"); $("#progress").append(dot); return dot });
+
+    function mark(i) { if (i === current && scenes[i].classList.contains("active")) return; current = i; scenes.forEach((scene, n) => scene.classList.toggle("active", n === i)); dots.forEach((dot, n) => dot.classList.toggle("on", n === i)) }
+
+    function go(i, smooth = true) { const target = Math.max(0, Math.min(i, scenes.length - 1)); pages.scrollTo({ left: 0, top: target * pages.clientHeight, behavior: smooth ? "smooth" : "auto" }) }
+
+    function adjustHeight() { if (!matchMedia("(max-width:560px)").matches) { document.documentElement.style.removeProperty("--h"); return } clearTimeout(heightTimer); heightTimer = setTimeout(() => { const h = window.visualViewport?.height || window.innerHeight; document.documentElement.style.setProperty("--h", Math.round(h) + "px"); if (started) go(current, false) }, 250) }
+
+    scenes.forEach((scene, i) => { const button = document.createElement("button"); button.type = "button"; button.className = "button next"; button.textContent = i === scenes.length - 1 ? "Volver al inicio ↑" : "Continuar ↓"; button.addEventListener("click", () => go(i === scenes.length - 1 ? 0 : i + 1)); scene.append(button) });
+
+    const observer = new IntersectionObserver(entries => { const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]; if (visible) mark(scenes.indexOf(visible.target)) }, { root: pages, threshold: .65 }); scenes.forEach(scene => observer.observe(scene));
+
+    function musicState(on) { $("#music").textContent = on ? "Ⅱ" : "♫"; $("#music").setAttribute("aria-label", on ? "Pausar música" : "Reproducir música"); $("#music").setAttribute("aria-pressed", String(on)) }
+
+    async function play() { try { await audio.play(); musicState(true) } catch { musicState(false) } }
+
+    $("#start").addEventListener("click", () => { started = true; history.pushState({ posadaPublica: "invitacion" }, ""); $("#shell").classList.add("started"); go(0, false); $("#entry").classList.add("closed"); mark(0); play() });
+
+    $("#music").addEventListener("click", () => { if (audio.paused) play(); else { audio.pause(); musicState(false) } });
+
+    function exit() { if (!started) { if (DATOS.salida) location.href = DATOS.salida; return } started = false; audio.pause(); musicState(false); $("#shell").classList.remove("started"); $("#entry").classList.remove("closed"); go(0, false); mark(0) }
+
+    $("#exit").addEventListener("click", () => { if (DATOS.salida) location.href = DATOS.salida; else exit() });
+
+    document.addEventListener("visibilitychange", () => { if (document.hidden && !audio.paused) { audio.pause(); musicState(false) } });
+
+    window.addEventListener("resize", adjustHeight, { passive: true }); window.visualViewport?.addEventListener("resize", adjustHeight, { passive: true }); window.addEventListener("orientationchange", adjustHeight, { passive: true });
+
+    window.addEventListener("pageshow", () => { adjustHeight(); if (!started) go(0, false) }); addEventListener("popstate", () => { if (started) exit() });
+
+    mark(0); adjustHeight(); go(0, false);
+
   </script>
+
 </body>
+
 </html>
