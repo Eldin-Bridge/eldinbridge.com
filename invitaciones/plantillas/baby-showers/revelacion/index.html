@@ -19,12 +19,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link
+
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap"
+
     rel="stylesheet">
 
   <link rel="preload" as="image" href="assets/foto/foto01.webp">
 
   <style>
+
     :root {
 
       --h: 100svh;
@@ -36,11 +39,13 @@
       --blue: #7fadd0;
 
       --cream: #fff8f1
+
     }
 
     * {
 
       box-sizing: border-box
+
     }
 
     html,
@@ -56,6 +61,7 @@
       overflow: hidden;
 
       background: #eadfdd
+
     }
 
     body {
@@ -65,6 +71,7 @@
       color: var(--ink);
 
       -webkit-font-smoothing: antialiased
+
     }
 
     button,
@@ -72,16 +79,19 @@
     a {
 
       font: inherit
+
     }
 
     button {
 
       cursor: pointer
+
     }
 
     a {
 
       color: inherit
+
     }
 
     button:focus-visible,
@@ -91,11 +101,13 @@
       outline: 3px solid #5f8fb7;
 
       outline-offset: 3px
+
     }
 
     [hidden] {
 
       display: none !important
+
     }
 
     .shell {
@@ -115,6 +127,7 @@
       background: #ead9ce;
 
       box-shadow: 0 0 70px #30252a30
+
     }
 
     .pages {
@@ -132,11 +145,13 @@
       touch-action: pan-y;
 
       -webkit-overflow-scrolling: touch
+
     }
 
     .pages::-webkit-scrollbar {
 
       display: none
+
     }
 
     .scene,
@@ -152,6 +167,7 @@
       overflow: hidden;
 
       isolation: isolate
+
     }
 
     .scene {
@@ -161,6 +177,7 @@
       scroll-snap-stop: always;
 
       background: #d6c6be
+
     }
 
     .bg,
@@ -178,6 +195,7 @@
       object-fit: cover;
 
       display: block
+
     }
 
     .scene::before {
@@ -193,11 +211,13 @@
       pointer-events: none;
 
       background: linear-gradient(180deg, #1b22364d, transparent 20%, #44303a12 55%, #1e1d2e91)
+
     }
 
     .scene[data-night]::before {
 
       background: linear-gradient(180deg, #08152b78, #20193128 40%, #11172cb5)
+
     }
 
     .entry {
@@ -211,6 +231,7 @@
       background: #695666;
 
       transition: opacity .6s, visibility .6s
+
     }
 
     .entry.closed {
@@ -220,11 +241,13 @@
       visibility: hidden;
 
       pointer-events: none
+
     }
 
     .entry-photo {
 
       object-position: center 40%
+
     }
 
     .entry::after {
@@ -238,6 +261,7 @@
       pointer-events: none;
 
       background: linear-gradient(180deg, #16233778, transparent 26%, transparent 48%, #1a1c32e0 100%)
+
     }
 
     .entry-top {
@@ -265,6 +289,7 @@
       text-transform: uppercase;
 
       text-shadow: 0 2px 15px #1a2339
+
     }
 
     .entry-top::after {
@@ -280,6 +305,7 @@
       margin: 16px auto;
 
       background: linear-gradient(90deg, var(--rose) 50%, var(--blue) 50%)
+
     }
 
     .entry-bottom {
@@ -299,6 +325,7 @@
       color: #fffaf3;
 
       text-shadow: 0 3px 18px #171627a6
+
     }
 
     .entry-bottom .small {
@@ -312,6 +339,7 @@
       font-weight: 700;
 
       text-transform: uppercase
+
     }
 
     .entry-bottom h1 {
@@ -321,11 +349,13 @@
       letter-spacing: -.055em;
 
       margin: 0 auto 16px
+
     }
 
     .entry-bottom h1 em {
 
       font-weight: 500
+
     }
 
     .entry-bottom p:last-child {
@@ -337,6 +367,7 @@
       max-width: 30ch;
 
       margin: 0 auto
+
     }
 
     .entry-start {
@@ -352,6 +383,7 @@
       transform: translateX(-50%);
 
       white-space: nowrap
+
     }
 
     .controls {
@@ -371,21 +403,25 @@
       justify-content: space-between;
 
       pointer-events: none
+
     }
 
     .controls button {
 
       pointer-events: auto
+
     }
 
     .controls #music {
 
       visibility: hidden
+
     }
 
     .started .controls #music {
 
       visibility: visible
+
     }
 
     .round {
@@ -413,11 +449,13 @@
       line-height: 1;
 
       backdrop-filter: blur(8px)
+
     }
 
     .round:active {
 
       background: #2d354b
+
     }
 
     .ticket {
@@ -443,6 +481,7 @@
       box-shadow: 0 24px 72px #1e20385c;
 
       backdrop-filter: blur(14px)
+
     }
 
     .scene:nth-child(even) .ticket {
@@ -450,6 +489,7 @@
       left: 9%;
 
       right: 7%
+
     }
 
     .ticket::before,
@@ -473,16 +513,19 @@
       background: #7f8793;
 
       box-shadow: inset 0 0 8px #26314936
+
     }
 
     .ticket::before {
 
       left: -13px
+
     }
 
     .ticket::after {
 
       right: -13px
+
     }
 
     .ticket-line {
@@ -490,6 +533,7 @@
       height: 8px;
 
       background: linear-gradient(90deg, var(--rose) 0 47%, #fff6e9 47% 53%, var(--blue) 53% 100%)
+
     }
 
     .ticket-content {
@@ -501,6 +545,7 @@
       translate: 0 17px;
 
       transition: opacity .7s ease, translate .7s ease
+
     }
 
     .scene.active .ticket-content {
@@ -508,6 +553,7 @@
       opacity: 1;
 
       translate: 0 0
+
     }
 
     .ticket-head {
@@ -523,6 +569,7 @@
       margin-bottom: 17px;
 
       color: #9b6d83
+
     }
 
     .ticket-head span {
@@ -534,6 +581,7 @@
       letter-spacing: .2em;
 
       text-transform: uppercase
+
     }
 
     .ticket-head b {
@@ -543,6 +591,7 @@
       letter-spacing: .12em;
 
       color: #739abd
+
     }
 
     .ticket h2 {
@@ -554,6 +603,7 @@
       color: #4f4152;
 
       margin: 0 0 16px
+
     }
 
     .ticket h2 em {
@@ -561,6 +611,7 @@
       color: #a86788;
 
       font-weight: 500
+
     }
 
     .ticket p {
@@ -570,6 +621,7 @@
       line-height: 1.56;
 
       margin: 11px 0
+
     }
 
     .ticket .large {
@@ -579,6 +631,7 @@
       color: #8f6680;
 
       margin: 16px 0
+
     }
 
     .ticket .muted {
@@ -586,6 +639,7 @@
       font-size: .77rem;
 
       color: #756b76
+
     }
 
     .ticket .divider {
@@ -593,6 +647,7 @@
       border-top: 1px dashed #d8c7cf;
 
       margin: 18px 0
+
     }
 
     .ticket .actions {
@@ -606,6 +661,7 @@
       justify-content: center;
 
       margin-top: 18px
+
     }
 
     .pill,
@@ -643,6 +699,7 @@
       letter-spacing: .04em;
 
       box-shadow: 0 7px 20px #24213626
+
     }
 
     .pill.secondary {
@@ -654,6 +711,7 @@
       border-color: #bdaebb;
 
       box-shadow: none
+
     }
 
     .pill:active,
@@ -661,6 +719,7 @@
     .button:active {
 
       background: #473c54
+
     }
 
     .date {
@@ -676,11 +735,13 @@
       margin: 13px 0;
 
       color: #5f5264
+
     }
 
     .date b {
 
       font: 500 4.1rem/.9 "Playfair Display", Georgia, serif
+
     }
 
     .date span {
@@ -692,6 +753,7 @@
       text-transform: uppercase;
 
       letter-spacing: .12em
+
     }
 
     .countdown {
@@ -703,6 +765,7 @@
       gap: 5px;
 
       margin: 15px 0
+
     }
 
     .countdown div {
@@ -714,6 +777,7 @@
       border-top: 1px solid #bda8b7;
 
       border-bottom: 1px solid #bda8b7
+
     }
 
     .countdown b {
@@ -721,6 +785,7 @@
       display: block;
 
       font: 500 clamp(1.15rem, 5vw, 1.55rem) "Playfair Display", Georgia, serif
+
     }
 
     .countdown small {
@@ -732,76 +797,127 @@
       text-transform: uppercase;
 
       letter-spacing: .04em
+
     }
 
     /* Símbolos abiertos de la tarjeta 01: sin cuadros ni marcos. */
+
     .reveal-symbols {
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
+
       gap: clamp(13px, 5vw, 30px);
+
       margin: 5px 0 17px;
+
       line-height: 1;
+
     }
 
     .reveal-symbols .girl,
+
     .reveal-symbols .boy {
+
       font-size: clamp(2rem, 10vw, 3.1rem);
+
     }
 
     .reveal-symbols .question {
+
       color: #8d7491;
+
       font: 500 clamp(2.1rem, 10vw, 3.2rem) "Playfair Display", Georgia, serif;
+
       letter-spacing: .08em;
+
     }
 
     .reveal-mark {
+
       color: #ad819c;
+
       font-size: 2.4rem;
+
       margin: 3px 0 12px;
+
     }
 
     .vote {
+
       display: flex;
+
       gap: 9px;
+
       justify-content: center;
+
       margin: 16px 0 8px;
+
     }
 
     .vote button {
+
       min-height: 47px;
+
       padding: 10px 15px;
+
       border-radius: 14px;
+
       border: 2px solid #dbb0be;
+
       background: #fce8ef;
+
       color: #80576d;
+
       font-weight: 700;
+
       font-size: .76rem;
+
       cursor: pointer;
+
     }
 
     .vote button[data-choice="azul"] {
+
       border-color: #a5c4d9;
+
       background: #eaf3fa;
+
       color: #547c98;
+
     }
 
     .vote button[aria-pressed="true"] {
+
       outline: 3px solid #57506e;
+
       outline-offset: 2px;
+
     }
 
     .vote-result {
+
       min-height: 1.5em;
+
       text-align: center;
+
       font-weight: 700;
+
       color: #6d5c76;
+
     }
 
     .pill[aria-disabled="true"] {
+
       opacity: .65;
+
       cursor: default;
+
       pointer-events: none;
+
     }
 
     .cubes {
@@ -813,6 +929,7 @@
       justify-content: center;
 
       margin: 3px 0 19px
+
     }
 
     .cubes span {
@@ -836,6 +953,7 @@
       font: 600 1.15rem "Playfair Display", Georgia, serif;
 
       box-shadow: 4px 5px 0 #d8b6ba66
+
     }
 
     .cubes span:nth-child(2) {
@@ -847,17 +965,23 @@
       color: #6e98b4;
 
       rotate: 5deg
+
     }
 
     .cubes span:nth-child(3) {
 
       rotate: -5deg
+
     }
 
     .cubes .heart-blue {
+
       background: #eff5f8;
+
       border-color: #9bbcd0;
+
       color: #6e98b4;
+
     }
 
     .elemento {
@@ -887,11 +1011,13 @@
       filter: drop-shadow(0 11px 13px #1c203b61);
 
       animation: flotar 4.8s ease-in-out infinite
+
     }
 
     .scene:not(.scene-active) .elemento {
 
       animation-play-state: paused
+
     }
 
     @keyframes flotar {
@@ -899,6 +1025,7 @@
       50% {
 
         translate: 0 -12px
+
       }
 
     }
@@ -907,11 +1034,12 @@
 
     .scene:nth-child(1) .elemento {
 
-      --x: 86;
+      --x: 50;
 
       --y: 22;
 
       --tamano: 27
+
     }
 
     .scene:nth-child(2) .elemento {
@@ -921,42 +1049,47 @@
       --y: 24;
 
       --tamano: 23
+
     }
 
     .scene:nth-child(3) .elemento {
 
-      --x: 84;
+      --x: 75;
 
-      --y: 76;
+      --y: 51;
 
       --tamano: 26
+
     }
 
     .scene:nth-child(4) .elemento {
 
-      --x: 13;
+      --x: 76;
 
-      --y: 76;
+      --y: 68;
 
       --tamano: 29
+
     }
 
     .scene:nth-child(5) .elemento {
 
-      --x: 65;
+      --x: 78;
 
-      --y: 25;
+      --y: 46;
 
       --tamano: 27
+
     }
 
     .scene:nth-child(6) .elemento {
 
-      --x: 13;
+      --x: 50;
 
-      --y: 24;
+      --y: 35;
 
       --tamano: 27
+
     }
 
     .scene:nth-child(7) .elemento {
@@ -966,6 +1099,7 @@
       --y: 78;
 
       --tamano: 29
+
     }
 
     .next {
@@ -989,6 +1123,7 @@
       border-color: #fff9f2;
 
       box-shadow: 0 7px 25px #1a193659
+
     }
 
     .progress {
@@ -1012,11 +1147,13 @@
       pointer-events: none;
 
       opacity: 0
+
     }
 
     .started .progress {
 
       opacity: 1
+
     }
 
     .progress i {
@@ -1030,6 +1167,7 @@
       background: #fff9f390;
 
       transition: width .3s
+
     }
 
     .progress i.on {
@@ -1037,6 +1175,7 @@
       width: 25px;
 
       background: #fffdf5
+
     }
 
     @media(max-height:680px) {
@@ -1046,11 +1185,13 @@
         padding-top: 20px;
 
         padding-bottom: 22px
+
       }
 
       .ticket h2 {
 
         font-size: clamp(1.9rem, 7vw, 2.55rem)
+
       }
 
       .ticket p {
@@ -1058,16 +1199,19 @@
         line-height: 1.42;
 
         margin: 7px 0
+
       }
 
       .ticket .divider {
 
         margin: 11px 0
+
       }
 
       .cubes {
 
         margin-bottom: 12px
+
       }
 
     }
@@ -1077,6 +1221,7 @@
       :root {
 
         --h: 100dvh
+
       }
 
       .elemento {
@@ -1084,8 +1229,14 @@
         max-width: 42vw;
 
         max-height: 25vh
+
       }
 
+    }
+
+    /* Las posiciones móviles se aplican en pantallas táctiles hasta 560 px.
+       En una ventana angosta de PC siguen activas las posiciones de escritorio. */
+    @media (max-width:560px) and (pointer:coarse) {
       /* POSICIÓN DE ELEMENTOS — celular: estos valores reemplazan los de escritorio. */
 
       .scene:nth-child(1) .elemento {
@@ -1095,6 +1246,7 @@
         --y: 19;
 
         --tamano: 32
+
       }
 
       .scene:nth-child(2) .elemento {
@@ -1104,6 +1256,7 @@
         --y: 80;
 
         --tamano: 27
+
       }
 
       .scene:nth-child(3) .elemento {
@@ -1113,6 +1266,7 @@
         --y: 79;
 
         --tamano: 30
+
       }
 
       .scene:nth-child(4) .elemento {
@@ -1122,6 +1276,7 @@
         --y: 77;
 
         --tamano: 31
+
       }
 
       .scene:nth-child(5) .elemento {
@@ -1131,6 +1286,7 @@
         --y: 35;
 
         --tamano: 28
+
       }
 
       .scene:nth-child(6) .elemento {
@@ -1140,6 +1296,7 @@
         --y: 24;
 
         --tamano: 30
+
       }
 
       .scene:nth-child(7) .elemento {
@@ -1149,9 +1306,11 @@
         --y: 80;
 
         --tamano: 31
+
       }
 
     }
+
   </style>
 
 </head>
@@ -1163,6 +1322,7 @@
     <div class="entry" id="entry">
 
       <img class="entry-photo" src="assets/foto/foto01.webp" alt="Pareja celebrando ante globos rosas y azules"
+
         fetchpriority="high">
 
       <p class="entry-top">Una sorpresa por descubrir</p>
@@ -1202,14 +1362,23 @@
           <div class="ticket-line"></div>
 
           <div class="ticket-content">
+
             <div class="ticket-head"><span>Invitación especial</span><b>01 / 07</b></div>
+
             <div class="reveal-symbols" aria-hidden="true"><span class="girl">👧</span><span
+
                 class="question">¿?</span><span class="boy">👦</span></div>
+
             <h2>Qué alegría <em>tenerte cerca</em></h2>
+
             <p id="welcomeMessage"></p>
+
             <div class="divider"></div>
+
             <p class="large" id="parents1"></p>
+
           </div>
+
         </article>
 
       </section>
@@ -1225,17 +1394,29 @@
           <div class="ticket-line"></div>
 
           <div class="ticket-content">
+
             <div class="ticket-head"><span>Una nueva vida</span><b>02 / 07</b></div>
+
             <h2>El corazón ya <em>late distinto</em></h2>
+
             <p id="message"></p>
+
             <div class="vote" role="group" aria-label="Elige tu predicción">
+
               <button type="button" data-choice="rosa" aria-pressed="false">Equipo rosa</button>
+
               <button type="button" data-choice="azul" aria-pressed="false">Equipo azul</button>
+
             </div>
+
             <p class="vote-result" id="voteResult" aria-live="polite"></p>
+
             <div class="divider"></div>
+
             <p class="large" id="parents2"></p>
+
           </div>
+
         </article>
 
       </section>
@@ -1251,16 +1432,27 @@
           <div class="ticket-line"></div>
 
           <div class="ticket-content">
+
             <div class="ticket-head"><span>Cuenta regresiva</span><b>03 / 07</b></div>
+
             <h2>Cada día <em>más cerca</em></h2>
+
             <div class="date"><b id="day">00</b><span id="monthYear"></span></div>
+
             <div class="countdown" aria-label="Cuenta regresiva">
+
               <div><b id="days">00</b><small>Días</small></div>
+
               <div><b id="hours">00</b><small>Horas</small></div>
+
               <div><b id="minutes">00</b><small>Min</small></div>
+
               <div><b id="seconds">00</b><small>Seg</small></div>
+
             </div>
+
           </div>
+
         </article>
 
       </section>
@@ -1276,16 +1468,27 @@
           <div class="ticket-line"></div>
 
           <div class="ticket-content">
+
             <div class="ticket-head"><span>Fecha y dirección</span><b>04 / 07</b></div>
+
             <h2>El lugar de la <em>revelación</em></h2>
+
             <p class="large" id="venue"></p>
+
             <p id="address"></p>
+
             <div class="divider"></div>
+
             <p><strong>Fecha:</strong> <span id="eventDate"></span></p>
+
             <p><strong>Hora:</strong> <span id="time"></span></p>
+
             <div class="actions"><a class="pill" id="map" target="_blank" rel="noopener noreferrer"
+
                 aria-disabled="true">Ver ubicación ↗</a></div>
+
           </div>
+
         </article>
 
       </section>
@@ -1301,15 +1504,25 @@
           <div class="ticket-line"></div>
 
           <div class="ticket-content">
+
             <div class="ticket-head"><span>Un detalle para el bebé</span><b>05 / 07</b></div>
+
             <h2>Regalitos con <em>cariño</em></h2>
+
             <p>Si deseas llevar algo, puedes elegir pañales, cobijas o mantas suaves, cualquier detalle neutral o sobre.
+
               🧷🧣✉️</p>
+
             <div class="divider"></div>
+
             <p class="muted" id="giftNote"></p>
+
             <div class="actions"><a class="pill secondary" id="registry" href="#" target="_blank"
+
                 rel="noopener noreferrer">Ver mesa de regalos ↗</a></div>
+
           </div>
+
         </article>
 
       </section>
@@ -1325,13 +1538,21 @@
           <div class="ticket-line"></div>
 
           <div class="ticket-content">
+
             <div class="ticket-head"><span>Vestimenta</span><b>06 / 07</b></div>
+
             <h2>Ven a tu <em>manera</em></h2>
+
             <p id="dressCode"></p>
+
             <div class="divider"></div>
+
             <p class="large" aria-hidden="true">👗 👕 👖</p>
+
             <p class="muted">Rosa y azul quedan a tu elección; el secreto se revelará en la celebración.</p>
+
           </div>
+
         </article>
 
       </section>
@@ -1347,18 +1568,31 @@
           <div class="ticket-line"></div>
 
           <div class="ticket-content">
+
             <div class="ticket-head"><span>Nos vemos pronto</span><b>07 / 07</b></div>
+
             <div class="cubes" aria-hidden="true">
+
               <span class="heart-blue">♡</span>
+
             </div>
+
             <h2>La sorpresa nos <em>espera</em></h2>
+
             <p id="farewellMessage"></p>
+
             <div class="divider"></div>
+
             <p class="large" id="signature"></p>
+
             <p class="muted">Confirma antes del <span id="rsvpDate"></span>.</p>
+
             <div class="actions"><a class="pill" id="rsvp" target="_blank" rel="noopener noreferrer"
+
                 aria-disabled="true">Confirmar por WhatsApp ↗</a></div>
+
           </div>
+
         </article>
 
       </section>
@@ -1374,26 +1608,43 @@
   <script>
 
     // DATOS EDITABLES — textos, fecha y enlaces para personalizar la invitación.
+
     const DATOS = {
+
       mama: "Adriana",
+
       papa: "Pedro",
+
       bienvenida: "Queremos compartir contigo un momento que recordaremos siempre. Tu compañía hará aún más especial el día en que descubramos quién viene en camino.",
+
       mensaje: "Desde que supimos de su llegada, imaginamos sus primeras sonrisas y todo lo que viviremos en familia. ¿Tú qué crees que será?",
+
       despedida: "Ya contamos los días para reunirnos y descubrir la gran noticia a tu lado. ¡Nos vemos pronto en la celebración!",
+
       fecha: "2027-05-22T17:00:00", // AAAA-MM-DDTHH:MM, hora local
+
       lugar: "Salón Cielo Abierto",
+
       direccion: "Cadereyta Jiménez, Nuevo León", // texto mostrado en la tarjeta
+
       notaRegalos: "Agradecemos de corazón cualquier muestra de cariño.",
+
       vestimenta: "Elige ropa casual y cómoda: vestido, blusa o jeans. Puedes llevar rosa o azul si quieres jugar con tu predicción.",
+
       confirmarAntes: "15 de mayo de 2027",
 
       // ENLACES OPCIONALES — Maps y WhatsApp se ven desactivados mientras estén vacíos.
+
       mapa: "",                       // URL real de Google Maps para activar «Ver ubicación»
+
       regalos: "",                    // URL de mesa de regalos; si está vacía, su botón se oculta
+
       telefonoWhatsApp: "",           // México: 52 + 10 dígitos, sin signos
 
       // SALIDA — listado de Baby Showers desde plantillas/baby-showers/revelacion/.
+
       salida: "../../../index.html#baby-showers"
+
     };
 
     const $ = s => document.querySelector(s);
@@ -1411,8 +1662,11 @@
     $("#signature").textContent = names;
 
     $("#welcomeMessage").textContent = DATOS.bienvenida;
+
     $("#message").textContent = DATOS.mensaje;
+
     $("#farewellMessage").textContent = DATOS.despedida;
+
     $("#dressCode").textContent = DATOS.vestimenta;
 
     $("#venue").textContent = DATOS.lugar;
@@ -1438,6 +1692,7 @@
       $("#time").textContent = new Intl.DateTimeFormat("es-MX", { hour: "numeric", minute: "2-digit", hour12: true }).format(date);
 
       $("#eventDate").textContent = new Intl.DateTimeFormat("es-MX", { day: "numeric", month: "long", year: "numeric" }).format(date);
+
     }
 
     function updateCountdown() {
@@ -1457,13 +1712,21 @@
     if (!Number.isNaN(date.getTime())) { updateCountdown(); setInterval(updateCountdown, 1000) }
 
     function optionalLink(id, url, visibleSinEnlace = false) {
+
       const el = $(id);
+
       if (url) { el.href = url; el.hidden = false; el.removeAttribute("aria-disabled") }
+
       else { el.removeAttribute("href"); el.hidden = !visibleSinEnlace; el.setAttribute("aria-disabled", "true") }
+
     }
+
     optionalLink("#map", DATOS.mapa, true);
+
     optionalLink("#registry", DATOS.regalos);
+
     const phone = DATOS.telefonoWhatsApp.replace(/\D/g, "");
+
     optionalLink("#rsvp", phone ? "https://wa.me/" + phone + "?text=" + encodeURIComponent("Hola, confirmo mi asistencia a la revelación de " + names + ". Asistiremos ___ personas.") : "", true);
 
     const dots = scenes.map(() => { const dot = document.createElement("i"); $("#progress").append(dot); return dot });
@@ -1585,8 +1848,11 @@
     $("#exit").addEventListener("click", () => { audio.pause(); location.href = DATOS.salida; });
 
     document.querySelectorAll(".vote button").forEach(button => button.addEventListener("click", () => {
+
       document.querySelectorAll(".vote button").forEach(item => item.setAttribute("aria-pressed", String(item === button)));
+
       $("#voteResult").textContent = "¡Tu corazonada: equipo " + button.dataset.choice + "!";
+
     }));
 
     document.addEventListener("visibilitychange", () => { if (document.hidden && !audio.paused) { audio.pause(); musicState(false) } });
@@ -1600,7 +1866,6 @@
     window.addEventListener("pageshow", () => { adjustHeight(); if (!started) go(0, false) });
 
     addEventListener("popstate", () => { if (started) volverAPortada() });
-
 
     mark(0); adjustHeight(); go(0, false);
 
