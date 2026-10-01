@@ -97,7 +97,7 @@
         .capa-elementos {
             position: absolute;
             inset: 0;
-            z-index: -2;
+            z-index: 11;
             pointer-events: none;
         }
 
@@ -176,19 +176,30 @@
 
         .contenido {
             position: relative;
-            z-index: 10;
+            z-index: auto;
             width: min(92vw, 720px);
             padding: 27px 23px;
-            border: 1px solid rgba(255, 255, 255, .19);
+            border: 0;
             border-radius: 28px;
             text-align: center;
-            background:
-                linear-gradient(145deg,
-                    rgba(8, 24, 54, .30),
-                    rgba(55, 28, 102, .20));
-            box-shadow:
-                0 24px 80px rgba(0, 0, 0, .42),
-                inset 0 1px rgba(255, 255, 255, .18);
+            background: transparent;
+        }
+
+        .contenido::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 9;
+            border: 1px solid rgba(255, 255, 255, .19);
+            border-radius: 28px;
+            background: linear-gradient(145deg, rgba(8, 24, 54, .30), rgba(55, 28, 102, .20));
+            box-shadow: 0 24px 80px rgba(0, 0, 0, .42), inset 0 1px rgba(255, 255, 255, .18);
+            pointer-events: none;
+        }
+
+        .contenido>* {
+            position: relative;
+            z-index: 12;
         }
 
         .etiqueta {
@@ -271,6 +282,23 @@
             box-shadow: 0 14px 35px rgba(255, 213, 106, .22);
             font-weight: 850;
             cursor: pointer;
+        }
+
+        .navegacion-escena {
+            position: absolute;
+            z-index: 20;
+            bottom: max(18px, env(safe-area-inset-bottom));
+            left: 50%;
+            transform: translateX(-50%);
+            width: max-content;
+            max-width: calc(100% - 36px);
+            margin: 0;
+        }
+
+        .boton[aria-disabled="true"] {
+            opacity: .65;
+            cursor: default;
+            pointer-events: none;
         }
 
         .boton-secundario {
@@ -701,61 +729,6 @@
             }
 
 
-            .contenido {
-                z-index: auto;
-                background: transparent;
-                border: 0;
-                box-shadow: none;
-                backdrop-filter: none;
-            }
-
-            .contenido::before {
-                content: "";
-                position: absolute;
-                inset: 0;
-                z-index: 9;
-                border: 1px solid rgba(255, 255, 255, .19);
-                border-radius: 28px;
-                background:
-                    linear-gradient(145deg,
-                        rgba(8, 24, 54, .30),
-                        rgba(55, 28, 102, .20));
-                box-shadow:
-                    0 24px 80px rgba(0, 0, 0, .42),
-                    inset 0 1px rgba(255, 255, 255, .18);
-                pointer-events: none;
-            }
-
-
-            .contenido>* {
-                position: relative;
-                z-index: 12;
-            }
-
-            .capa-elementos {
-                z-index: 11;
-            }
-
-            .elemento.personaje {
-                width: calc(var(--tamano) * .84%);
-            }
-
-
-            #inicio .elemento.personaje,
-            #cuenta .elemento.personaje,
-            #atuendo .elemento.personaje,
-            #detalles .elemento.personaje,
-            #final .elemento.personaje {
-                left: 88%;
-            }
-
-
-            #mision .elemento.personaje,
-            #regalo .elemento.personaje {
-                left: 12%;
-            }
-
-
             .contador {
                 grid-template-columns: repeat(4, minmax(0, 1fr));
                 gap: 5px;
@@ -803,6 +776,15 @@
                 line-height: 1.32;
             }
         }
+
+        /* POSICIONES MÓVIL: variables independientes en configuracion.elementos. */
+        @media (max-width: 560px) and (pointer: coarse) {
+            .elemento {
+                left: calc(var(--x-movil) * 1%);
+                top: calc(var(--y-movil) * 1%);
+                width: calc(var(--tamano-movil) * 1%);
+            }
+        }
     </style>
 </head>
 
@@ -824,7 +806,7 @@
         <div class="intro-caja">
             <img class="intro-icono" src="assets/elementos/elemento01.webp" alt="">
 
-            <h1>El Reino de las Estrellas</h1>
+            <h1 id="titulo-entrada"></h1>
 
             <p>
                 Una celebración mágica está a punto de comenzar.
@@ -853,8 +835,8 @@
                 </div>
 
                 <h1>
-                    Luna
-                    <span>cumple 7 años</span>
+                    <span id="nombre-festejada"></span>
+                    <span id="edad-festejada"></span>
                 </h1>
 
                 <p class="texto">
@@ -862,13 +844,15 @@
                     magia y nuevas aventuras.
                 </p>
 
-                <div class="botones">
-                    <a class="boton" href="#cuenta">
-                        Comenzar ↓
-                    </a>
-                </div>
+
             </div>
 
+
+            <div class="botones navegacion-escena">
+                <a class="boton" href="#cuenta">
+                    Comenzar ↓
+                </a>
+            </div>
         </section>
 
         <section class="escena" id="cuenta" data-escena="cuenta">
@@ -910,11 +894,13 @@
                     </div>
                 </div>
 
-                <div class="botones">
-                    <a class="boton" href="#mision">
-                        Continuar ↓
-                    </a>
-                </div>
+
+            </div>
+
+            <div class="botones navegacion-escena">
+                <a class="boton" href="#mision">
+                    Continuar ↓
+                </a>
             </div>
         </section>
 
@@ -940,11 +926,13 @@
                     y crear recuerdos que brillarán para siempre.
                 </p>
 
-                <div class="botones">
-                    <a class="boton" href="#atuendo">
-                        Continuar ↓
-                    </a>
-                </div>
+
+            </div>
+
+            <div class="botones navegacion-escena">
+                <a class="boton" href="#atuendo">
+                    Continuar ↓
+                </a>
             </div>
         </section>
 
@@ -971,11 +959,13 @@
                     violeta, dorado o brillante.
                 </p>
 
-                <div class="botones">
-                    <a class="boton" href="#regalo">
-                        Continuar ↓
-                    </a>
-                </div>
+
+            </div>
+
+            <div class="botones navegacion-escena">
+                <a class="boton" href="#regalo">
+                    Continuar ↓
+                </a>
             </div>
         </section>
 
@@ -998,15 +988,17 @@
                 <h2>Tu presencia es el mejor regalo</h2>
 
                 <p class="texto">
-                    Si deseas llevar un detalle para Luna,
+                    Si deseas llevar un detalle para <span id="nombre-regalos"></span>,
                     será recibido con muchísimo cariño.
                 </p>
 
-                <div class="botones">
-                    <a class="boton" href="#detalles">
-                        Continuar ↓
-                    </a>
-                </div>
+
+            </div>
+
+            <div class="botones navegacion-escena">
+                <a class="boton" href="#detalles">
+                    Continuar ↓
+                </a>
             </div>
         </section>
 
@@ -1028,8 +1020,7 @@
                         <span class="dato-icono">📅</span>
                         <span class="dato-titulo">Fecha</span>
                         <span class="dato-texto">
-                            Sábado<br>
-                            24 de julio de 2027
+                            <span id="fecha-tarjeta"></span>
                         </span>
                     </div>
 
@@ -1037,7 +1028,7 @@
                         <span class="dato-icono">🕓</span>
                         <span class="dato-titulo">Hora</span>
                         <span class="dato-texto">
-                            Desde las 4:00 p. m.
+                            <span id="hora-tarjeta"></span>
                         </span>
                     </div>
 
@@ -1045,7 +1036,7 @@
                         <span class="dato-icono">🏰</span>
                         <span class="dato-titulo">Lugar</span>
                         <span class="dato-texto">
-                            Jardín Reino Celestial
+                            <span id="lugar-tarjeta"></span>
                         </span>
                     </div>
 
@@ -1053,17 +1044,18 @@
                         <span class="dato-icono">📍</span>
                         <span class="dato-titulo">Dirección</span>
                         <span class="dato-texto">
-                            Ubicación ficticia<br>
-                            Monterrey, N.L.
+                            <span id="direccion-tarjeta"></span>
                         </span>
                     </div>
                 </div>
 
-                <div class="botones">
-                    <a class="boton" href="#final">
-                        Continuar ↓
-                    </a>
-                </div>
+
+            </div>
+
+            <div class="botones navegacion-escena">
+                <a class="boton" href="#final">
+                    Continuar ↓
+                </a>
             </div>
         </section>
 
@@ -1086,19 +1078,14 @@
                 </p>
 
                 <div class="firma">
-                    Con cariño, Luna ⭐
+                    Con cariño, <span id="nombre-firma"></span> ⭐
                 </div>
 
-                <div class="botones">
-                    <a class="boton" href="#inicio">
-                        ↑ Volver al inicio
-                    </a>
-
-                    <button class="boton boton-secundario" type="button">
-                        📍 Ver ubicación
-                    </button>
-                </div>
+                <div class="botones"><a class="boton boton-secundario" id="ver-ubicacion" target="_blank"
+                        rel="noopener noreferrer">📍 Ver ubicación</a></div>
             </div>
+
+            <div class="botones navegacion-escena"><a class="boton" href="#inicio">↑ Volver al inicio</a></div>
         </section>
     </main>
 
@@ -1220,6 +1207,100 @@
     </aside>
 
     <script>
+        // DATOS EDITABLES: información y enlaces de esta invitación.
+        // El botón de ubicación permanece visible hasta completar mapa.
+        const DATOS = {
+            titulo: "El Reino de las Estrellas",
+            nombre: "Luna",
+            edad: 7,
+            fecha: "2027-07-24T16:00:00-06:00",
+            lugar: "Jardín Reino Celestial",
+            direccion: "Ubicación ficticia, Monterrey, N.L.",
+            mapa: "",
+            salida: "../../../index.html#fiestas-infantiles"
+        };
+
+        // POSICIONES EDITABLES DE PERSONAJES Y ELEMENTOS
+        // X: 0 = izquierda, 100 = derecha. Y: 0 = arriba, 100 = abajo.
+        // tamano: ancho como porcentaje de la pantalla. Web y móvil son independientes.
+        // El orden corresponde a las tarjetas 01 a 07.
+        const POSICIONES = {
+            // Tarjeta 01 · Bienvenida
+            inicio: {
+                "personaje-inicio": {
+                    web: { x: 14, y: 70, tamano: 28 },
+                    movil: { x: 13, y: 71, tamano: 25 }
+                }
+            },
+            // Tarjeta 02 · Cuenta regresiva
+            cuenta: {
+                "personaje-cuenta": {
+                    web: { x: 82, y: 73, tamano: 31 },
+                    movil: { x: 88, y: 81, tamano: 26 }
+                },
+                "luna-cuenta": {
+                    web: { x: 24, y: 19, tamano: 18 },
+                    movil: { x: 14, y: 33, tamano: 18 }
+                }
+            },
+            // Tarjeta 03 · Misión
+            mision: {
+                "personaje-mision": {
+                    web: { x: 17, y: 72, tamano: 31 },
+                    movil: { x: 14, y: 80, tamano: 26 }
+                },
+                "castillo-mision": {
+                    web: { x: 83, y: 19, tamano: 21 },
+                    movil: { x: 83, y: 22, tamano: 30 }
+                }
+            },
+            // Tarjeta 04 · Atuendo
+            atuendo: {
+                "personaje-atuendo": {
+                    web: { x: 82, y: 72, tamano: 31 },
+                    movil: { x: 86, y: 80, tamano: 26 }
+                },
+                "tiara-atuendo": {
+                    web: { x: 18, y: 22, tamano: 19 },
+                    movil: { x: 50, y: 27, tamano: 22 }
+                }
+            },
+            // Tarjeta 05 · Regalos
+            regalo: {
+                "personaje-regalo": {
+                    web: { x: 18, y: 72, tamano: 31 },
+                    movil: { x: 14, y: 78, tamano: 26 }
+                },
+                "regalos": {
+                    web: { x: 84, y: 76, tamano: 21 },
+                    movil: { x: 82, y: 35, tamano: 24 }
+                }
+            },
+            // Tarjeta 06 · Detalles
+            detalles: {
+                "personaje-detalles": {
+                    web: { x: 84, y: 73, tamano: 29 },
+                    movil: { x: 88, y: 82, tamano: 24 }
+                },
+                "globos-detalles": {
+                    web: { x: 15, y: 24, tamano: 18 },
+                    movil: { x: 15, y: 26, tamano: 22 }
+                }
+            },
+            // Tarjeta 07 · Despedida
+            final: {
+                "personaje-final": {
+                    web: { x: 82, y: 68, tamano: 33 },
+                    movil: { x: 15, y: 70, tamano: 28 }
+                },
+                "pastel-final": {
+                    web: { x: 17, y: 72, tamano: 20 },
+                    movil: { x: 84, y: 72, tamano: 20 }
+                }
+            }
+        };
+
+        // RECURSOS Y EFECTOS: los valores de posición se leen del bloque anterior.
         const configuracion = {
             fondos: {},
 
@@ -1228,9 +1309,6 @@
                     id: "personaje-inicio",
                     escena: "inicio",
                     archivo: "assets/personajes/personaje01.webp",
-                    x: 82,
-                    y: 70,
-                    tamano: 35,
                     z: 4,
                     animacion: "flotar",
                     voltear: false
@@ -1239,20 +1317,14 @@
                     id: "personaje-cuenta",
                     escena: "cuenta",
                     archivo: "assets/personajes/personaje02.webp",
-                    x: 82,
-                    y: 73,
-                    tamano: 31,
                     z: 4,
                     animacion: "flotar",
                     voltear: false
                 },
                 {
-                    id: "estela-cuenta",
+                    id: "luna-cuenta",
                     escena: "cuenta",
                     archivo: "assets/elementos/elemento02.webp",
-                    x: 24,
-                    y: 19,
-                    tamano: 18,
                     z: 2,
                     animacion: "deriva",
                     voltear: false
@@ -1261,20 +1333,14 @@
                     id: "personaje-mision",
                     escena: "mision",
                     archivo: "assets/personajes/personaje03.webp",
-                    x: 17,
-                    y: 72,
-                    tamano: 31,
                     z: 4,
                     animacion: "flotar",
-                    voltear: true
+                    voltear: false
                 },
                 {
-                    id: "luna-mision",
+                    id: "castillo-mision",
                     escena: "mision",
                     archivo: "assets/elementos/elemento03.webp",
-                    x: 83,
-                    y: 19,
-                    tamano: 21,
                     z: 3,
                     animacion: "flotar",
                     voltear: false
@@ -1282,10 +1348,7 @@
                 {
                     id: "personaje-atuendo",
                     escena: "atuendo",
-                    archivo: "assets/personajes/personaje07.webp",
-                    x: 82,
-                    y: 72,
-                    tamano: 31,
+                    archivo: "assets/personajes/personaje04.webp",
                     z: 4,
                     animacion: "flotar",
                     voltear: false
@@ -1294,9 +1357,6 @@
                     id: "tiara-atuendo",
                     escena: "atuendo",
                     archivo: "assets/elementos/elemento04.webp",
-                    x: 18,
-                    y: 22,
-                    tamano: 19,
                     z: 3,
                     animacion: "pulso",
                     voltear: false
@@ -1304,10 +1364,7 @@
                 {
                     id: "personaje-regalo",
                     escena: "regalo",
-                    archivo: "assets/personajes/personaje06.webp",
-                    x: 18,
-                    y: 72,
-                    tamano: 31,
+                    archivo: "assets/personajes/personaje05.webp",
                     z: 4,
                     animacion: "flotar",
                     voltear: false
@@ -1316,9 +1373,6 @@
                     id: "regalos",
                     escena: "regalo",
                     archivo: "assets/elementos/elemento05.webp",
-                    x: 84,
-                    y: 76,
-                    tamano: 21,
                     z: 3,
                     animacion: "deriva",
                     voltear: false
@@ -1326,10 +1380,7 @@
                 {
                     id: "personaje-detalles",
                     escena: "detalles",
-                    archivo: "assets/personajes/personaje10.webp",
-                    x: 84,
-                    y: 73,
-                    tamano: 29,
+                    archivo: "assets/personajes/personaje06.webp",
                     z: 4,
                     animacion: "flotar",
                     voltear: false
@@ -1338,9 +1389,6 @@
                     id: "globos-detalles",
                     escena: "detalles",
                     archivo: "assets/elementos/elemento06.webp",
-                    x: 15,
-                    y: 24,
-                    tamano: 18,
                     z: 3,
                     animacion: "deriva",
                     voltear: false
@@ -1348,10 +1396,7 @@
                 {
                     id: "personaje-final",
                     escena: "final",
-                    archivo: "assets/personajes/personaje05.webp",
-                    x: 82,
-                    y: 68,
-                    tamano: 33,
+                    archivo: "assets/personajes/personaje07.webp",
                     z: 4,
                     animacion: "flotar",
                     voltear: false
@@ -1360,9 +1405,6 @@
                     id: "pastel-final",
                     escena: "final",
                     archivo: "assets/elementos/elemento07.webp",
-                    x: 17,
-                    y: 72,
-                    tamano: 20,
                     z: 3,
                     animacion: "pulso",
                     voltear: false
@@ -1375,6 +1417,25 @@
         const escenas = [
             ...document.querySelectorAll(".escena")
         ];
+
+        // Todos los textos personales se llenan desde DATOS.
+        $("#titulo-entrada").textContent = DATOS.titulo;
+        document.title = DATOS.titulo + " | Fiesta Temática";
+        $("#nombre-festejada").textContent = DATOS.nombre;
+        $("#edad-festejada").textContent = "cumple " + DATOS.edad + " años";
+        $("#nombre-regalos").textContent = DATOS.nombre;
+        $("#nombre-firma").textContent = DATOS.nombre;
+        const fechaTexto = new Date(DATOS.fecha);
+        if (!Number.isNaN(fechaTexto.getTime())) {
+            $("#fecha-tarjeta").textContent = new Intl.DateTimeFormat("es-MX", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "America/Monterrey" }).format(fechaTexto);
+            $("#hora-tarjeta").textContent = "Desde las " + new Intl.DateTimeFormat("es-MX", { hour: "numeric", minute: "2-digit", hour12: true, timeZone: "America/Monterrey" }).format(fechaTexto);
+        }
+        $("#lugar-tarjeta").textContent = DATOS.lugar;
+        $("#direccion-tarjeta").textContent = DATOS.direccion;
+        $("#boton-salir").href = DATOS.salida;
+        const ubicacion = $("#ver-ubicacion");
+        if (DATOS.mapa.trim()) ubicacion.href = DATOS.mapa.trim();
+        else { ubicacion.removeAttribute("href"); ubicacion.setAttribute("aria-disabled", "true"); ubicacion.tabIndex = -1; }
 
         const editorActivo =
             new URLSearchParams(location.search).get("editor") === "1";
@@ -1430,6 +1491,9 @@
             imagen.style.setProperty("--y", datos.y);
             imagen.style.setProperty("--tamano", datos.tamano);
             imagen.style.setProperty("--z", datos.z);
+            imagen.style.setProperty("--x-movil", datos.xMovil ?? datos.x);
+            imagen.style.setProperty("--y-movil", datos.yMovil ?? datos.y);
+            imagen.style.setProperty("--tamano-movil", datos.tamanoMovil ?? datos.tamano);
 
             imagen.style.setProperty(
                 "--voltear",
@@ -1437,7 +1501,29 @@
             );
         }
 
-        configuracion.elementos.forEach(crearElemento);
+        function cargarPosicion(datos) {
+            const posicion = POSICIONES[datos.escena]?.[datos.id];
+            if (!posicion) return;
+            datos.x = posicion.web.x;
+            datos.y = posicion.web.y;
+            datos.tamano = posicion.web.tamano;
+            datos.xMovil = posicion.movil.x;
+            datos.yMovil = posicion.movil.y;
+            datos.tamanoMovil = posicion.movil.tamano;
+        }
+
+        function guardarPosicion(datos) {
+            if (!POSICIONES[datos.escena]) POSICIONES[datos.escena] = {};
+            POSICIONES[datos.escena][datos.id] = {
+                web: {x: datos.x, y: datos.y, tamano: datos.tamano},
+                movil: {x: datos.xMovil, y: datos.yMovil, tamano: datos.tamanoMovil}
+            };
+        }
+
+        configuracion.elementos.forEach(datos => {
+            cargarPosicion(datos);
+            crearElemento(datos);
+        });
 
         const observador = new IntersectionObserver(
             entradas => {
@@ -1457,7 +1543,7 @@
             .forEach(elemento => observador.observe(elemento));
 
         const fechaEvento =
-            new Date("2027-07-24T16:00:00-06:00");
+            new Date(DATOS.fecha);
 
         function actualizarContador() {
             const diferencia =
@@ -1896,13 +1982,16 @@
                 x: 50,
                 y: 50,
                 tamano: 30,
+                xMovil: 50,
+                yMovil: 50,
+                tamanoMovil: 30,
                 z: 3,
                 animacion: "flotar",
                 voltear: false
             };
 
             configuracion.elementos.push(datos);
-
+            guardarPosicion(datos);
             crearElemento(datos);
             actualizarSelector();
             seleccionar(datos.id);
@@ -1951,9 +2040,10 @@
             imagen?.classList.add("seleccionado");
 
             $("#selector-elemento").value = id;
-            $("#pos-x").value = seleccionado.x;
-            $("#pos-y").value = seleccionado.y;
-            $("#tamano").value = seleccionado.tamano;
+            const movil = matchMedia("(max-width: 560px) and (pointer: coarse)").matches;
+            $("#pos-x").value = movil ? (seleccionado.xMovil ?? seleccionado.x) : seleccionado.x;
+            $("#pos-y").value = movil ? (seleccionado.yMovil ?? seleccionado.y) : seleccionado.y;
+            $("#tamano").value = movil ? (seleccionado.tamanoMovil ?? seleccionado.tamano) : seleccionado.tamano;
             $("#capa").value = seleccionado.z;
             $("#animacion").value = seleccionado.animacion;
             $("#voltear").checked = seleccionado.voltear;
@@ -1964,9 +2054,10 @@
                 return;
             }
 
-            seleccionado.x = +$("#pos-x").value;
-            seleccionado.y = +$("#pos-y").value;
-            seleccionado.tamano = +$("#tamano").value;
+            const movil = matchMedia("(max-width: 560px) and (pointer: coarse)").matches;
+            seleccionado[movil ? "xMovil" : "x"] = +$("#pos-x").value;
+            seleccionado[movil ? "yMovil" : "y"] = +$("#pos-y").value;
+            seleccionado[movil ? "tamanoMovil" : "tamano"] = +$("#tamano").value;
             seleccionado.z = +$("#capa").value;
             seleccionado.voltear = $("#voltear").checked;
             seleccionado.animacion = $("#animacion").value;
@@ -1986,6 +2077,7 @@
                 seleccionado
             `;
 
+            guardarPosicion(seleccionado);
             aplicarEstilos(imagen, seleccionado);
         }
 
@@ -2001,7 +2093,8 @@
                 const limites =
                     escena.getBoundingClientRect();
 
-                seleccionado.x = Math.max(
+                const movil = matchMedia("(max-width: 560px) and (pointer: coarse)").matches;
+                seleccionado[movil ? "xMovil" : "x"] = Math.max(
                     0,
                     Math.min(
                         100,
@@ -2012,7 +2105,7 @@
                     )
                 );
 
-                seleccionado.y = Math.max(
+                seleccionado[movil ? "yMovil" : "y"] = Math.max(
                     0,
                     Math.min(
                         100,
@@ -2023,9 +2116,10 @@
                     )
                 );
 
-                $("#pos-x").value = seleccionado.x;
-                $("#pos-y").value = seleccionado.y;
+                $("#pos-x").value = movil ? seleccionado.xMovil : seleccionado.x;
+                $("#pos-y").value = movil ? seleccionado.yMovil : seleccionado.y;
 
+                guardarPosicion(seleccionado);
                 aplicarEstilos(
                     evento.currentTarget,
                     seleccionado
@@ -2072,6 +2166,7 @@
                         elemento.id !== seleccionado.id
                 );
 
+            delete POSICIONES[seleccionado.escena]?.[seleccionado.id];
             seleccionado = null;
             actualizarSelector();
         }
@@ -2108,6 +2203,9 @@
                             x,
                             y,
                             tamano,
+                            xMovil,
+                            yMovil,
+                            tamanoMovil,
                             z,
                             animacion,
                             voltear
@@ -2121,6 +2219,9 @@
                             x: +x.toFixed(2),
                             y: +y.toFixed(2),
                             tamano: +tamano,
+                            xMovil: +(xMovil ?? x).toFixed(2),
+                            yMovil: +(yMovil ?? y).toFixed(2),
+                            tamanoMovil: +(tamanoMovil ?? tamano),
                             z: +z,
                             animacion,
                             voltear
