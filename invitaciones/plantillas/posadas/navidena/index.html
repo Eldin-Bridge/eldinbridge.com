@@ -1,815 +1,1582 @@
 <!doctype html>
+
 <html lang="es">
 
+
+
 <head>
+
   <meta charset="utf-8">
+
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
   <meta name="theme-color" content="#172b3b">
+
   <meta name="description" content="Invitación a una posada navideña">
+
   <title>Posada Navideña | Invitación</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
+
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link
+
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Marcellus&display=swap"
+
     rel="stylesheet">
+
   <link rel="preload" as="image" href="assets/foto/foto01.webp">
+
   <style>
+
     :root {
+
       --h: 100svh;
+
       --night: #172b3b;
+
       --ink: #344050;
+
       --gold: #c79d61;
+
       --cream: #fff8ea
+
     }
+
+
 
     * {
+
       box-sizing: border-box
+
     }
+
+
 
     html,
-    body {
-      height: 100%;
-      width: 100%;
-      margin: 0;
-      overflow: hidden;
-      background: #172b3b
-    }
 
     body {
-      font-family: "DM Sans", Arial, sans-serif;
-      color: var(--cream);
-      -webkit-font-smoothing: antialiased
+
+      height: 100%;
+
+      width: 100%;
+
+      margin: 0;
+
+      overflow: hidden;
+
+      background: #172b3b
+
     }
+
+
+
+    body {
+
+      font-family: "DM Sans", Arial, sans-serif;
+
+      color: var(--cream);
+
+      -webkit-font-smoothing: antialiased
+
+    }
+
+
 
     button,
+
     a {
+
       font: inherit
+
     }
+
+
 
     button {
+
       cursor: pointer
+
     }
+
+
 
     a {
+
       color: inherit
+
     }
+
+
 
     [hidden] {
+
       display: none !important
+
     }
+
+
 
     button:focus-visible,
+
     a:focus-visible {
+
       outline: 3px solid #fff;
+
       outline-offset: 3px
+
     }
+
+
 
     .shell {
+
       position: relative;
+
       width: 100%;
+
       max-width: 540px;
+
       height: var(--h);
+
       margin: auto;
+
       overflow: hidden;
+
       background: #172b3b;
+
       box-shadow: 0 0 70px #0008
+
     }
+
+
 
     .pages {
+
       height: 100%;
+
       overflow-y: auto;
+
       scroll-snap-type: y mandatory;
+
       overscroll-behavior-y: contain;
+
       scrollbar-width: none;
+
       touch-action: pan-y;
+
       -webkit-overflow-scrolling: touch
+
     }
+
+
 
     .pages::-webkit-scrollbar {
+
       display: none
+
     }
+
+
 
     .scene,
+
     .entry {
+
       position: relative;
+
       height: var(--h);
+
       min-height: var(--h);
+
       overflow: hidden;
+
       isolation: isolate
+
     }
+
+
 
     .scene {
+
       scroll-snap-align: start;
+
       scroll-snap-stop: always
+
     }
+
+
 
     .bg,
+
     .entry-photo {
+
       position: absolute;
+
       inset: 0;
+
       width: 100%;
+
       height: 100%;
+
       object-fit: cover;
+
       display: block
+
     }
+
+
 
     .scene::before {
+
       content: "";
+
       position: absolute;
+
       z-index: 1;
+
       inset: 0;
+
       background: linear-gradient(180deg, #07182578, #2431426e 48%, #09192bb8);
+
       pointer-events: none
+
     }
+
+
 
     .entry {
+
       position: absolute;
+
       inset: 0;
+
       z-index: 20;
+
       transition: opacity .65s, visibility .65s
+
     }
+
+
 
     .entry.closed {
+
       opacity: 0;
+
       visibility: hidden;
+
       pointer-events: none
+
     }
+
+
 
     .entry-photo {
+
       object-position: center center
+
     }
+
+
 
     .entry::after {
+
       content: "";
+
       position: absolute;
+
       inset: 0;
+
       background: linear-gradient(180deg, #0e203492, transparent 34%, #1c22313b 50%, #0c1b2be8 92%);
+
       pointer-events: none
+
     }
+
+
 
     .entry-bottom {
+
       position: absolute;
+
       z-index: 2;
+
       left: 5%;
+
       right: 5%;
+
       bottom: max(104px, calc(env(safe-area-inset-bottom) + 98px));
+
       text-align: center;
+
       text-shadow: 0 3px 17px #000
+
     }
+
+
 
     .entry-bottom .eyebrow {
+
       font-size: .66rem;
+
       letter-spacing: .18em;
+
       text-transform: uppercase;
+
       font-weight: 700;
+
       color: #ffe7b8
+
     }
+
+
 
     .entry h1 {
+
       font: 400 clamp(3.15rem, 12vw, 5rem)/1 "Marcellus", Georgia, serif;
+
       margin: 8px 0;
+
       color: #fffaf0
+
     }
+
+
 
     .entry h1 em {
+
       display: block;
+
       font: italic 400 clamp(2.8rem, 11vw, 4.5rem)/1 "Libre Baskerville", Georgia, serif;
+
       color: #f8d8a0;
+
       margin-top: 12px
+
     }
+
+
 
     .entry-bottom p:last-child {
+
       max-width: 34ch;
+
       margin: 15px auto 0;
+
       line-height: 1.5;
+
       font-size: .9rem
+
     }
+
+
 
     .button,
+
     .pill {
+
       display: inline-flex;
+
       align-items: center;
+
       justify-content: center;
+
       min-height: 44px;
+
       padding: 10px 20px;
+
       text-align: center;
+
       text-decoration: none;
+
       border: 1px solid #f7dfb5;
+
       border-radius: 100px;
+
       background: #f4d9a7;
+
       color: #334251;
+
       font-size: .75rem;
+
       font-weight: 700;
+
       letter-spacing: .04em;
+
       box-shadow: 0 9px 24px #0b172866
+
     }
+
+
 
     .button:active,
+
     .pill:active {
+
       background: #fff0d0
+
     }
+
+
 
     .entry-start {
+
       position: absolute;
+
       z-index: 3;
+
       left: 50%;
+
       bottom: max(28px, calc(env(safe-area-inset-bottom) + 22px));
+
       transform: translateX(-50%);
+
       white-space: nowrap
+
     }
+
+
 
     .controls {
+
       position: absolute;
+
       z-index: 25;
+
       top: max(14px, calc(env(safe-area-inset-top) + 10px));
+
       left: 15px;
+
       right: 15px;
+
       display: flex;
+
       justify-content: space-between;
+
       pointer-events: none
+
     }
+
+
 
     .controls button {
+
       pointer-events: auto
+
     }
+
+
 
     .controls #music {
+
       visibility: hidden
+
     }
+
+
 
     .started .controls #music {
+
       visibility: visible
+
     }
+
+
 
     .round {
+
       height: 44px;
+
       width: 44px;
+
       padding: 0;
+
       display: grid;
+
       place-items: center;
+
       border: 1px solid #fff1d9b8;
+
       border-radius: 50%;
+
       background: #243746d9;
+
       color: #fff7e8;
+
       font-size: 1.5rem;
+
       line-height: 1;
+
       backdrop-filter: blur(8px)
+
     }
+
+
 
     /* Tarjeta de pergamino bajo un arco colonial iluminado. */
+
     .card {
+
       position: absolute;
+
       z-index: 4;
+
       left: 8%;
+
       right: 8%;
+
       top: 50%;
+
       transform: translateY(-50%);
-      max-height: calc(var(--h) - 150px);
-      overflow-x: hidden;
-      overflow-y: auto;
-      scrollbar-width: none;
+
       background: radial-gradient(circle at 50% -12%, #fffdf1 0, #fff8e9 56%, #ece0c9 100%);
+
       color: var(--ink);
+
       border: 3px solid #c6a36f;
+
       border-radius: 49% 49% 17px 17px / 55px 55px 17px 17px;
+
       box-shadow: 0 20px 51px #091525b3, inset 0 0 0 6px #f8f0dd, inset 0 0 0 7px #c7ae83
+
     }
+
+
 
     .card::-webkit-scrollbar {
+
       display: none
+
     }
+
+
 
     .card::before {
+
       content: "✧";
+
       position: absolute;
+
       z-index: 1;
+
       top: 10px;
+
       left: 50%;
+
       transform: translateX(-50%);
+
       font-size: 1.2rem;
+
       color: #b68b4d;
+
       pointer-events: none
+
     }
+
+
 
     .card-inner {
+
       position: relative;
+
       padding: clamp(45px, 6vh, 57px) clamp(22px, 6vw, 37px) 32px;
+
       text-align: center;
+
       opacity: 0;
+
       translate: 0 18px;
+
       transition: opacity .75s ease, translate .75s ease
+
     }
+
+
 
     .scene.active .card-inner {
+
       opacity: 1;
+
       translate: 0 0
+
     }
+
+
 
     .series {
+
       margin: 0 0 15px;
+
       color: #967246;
+
       text-transform: uppercase;
+
       font-size: .56rem;
+
       letter-spacing: .2em;
+
       font-weight: 700
+
     }
+
+
 
     .series::after {
+
       content: "";
+
       display: block;
+
       margin: 12px auto 0;
+
       width: 45px;
+
       height: 1px;
+
       background: #bea06e
+
     }
+
+
 
     .monogram {
+
       display: block;
+
       margin: 0 auto 11px;
+
       color: #b58b4e
+
     }
+
+
 
     .monogram span {
+
       font: 1.9rem "Marcellus", Georgia, serif
+
     }
+
+
 
     .card h2 {
+
       font: 400 clamp(1.8rem, 7.3vw, 2.65rem)/1.19 "Libre Baskerville", Georgia, serif;
+
       letter-spacing: -.04em;
+
       margin: 0 0 17px;
+
       text-wrap: balance;
+
       color: #354653
+
     }
+
+
 
     .card h2 em {
+
       font-weight: 400;
+
       color: #a26b56
+
     }
+
+
 
     .card p {
+
       font-size: clamp(.86rem, 3.1vw, .98rem);
+
       line-height: 1.62;
+
       margin: 11px 0
+
     }
+
+
 
     .card .lead {
+
       font: 400 clamp(1.18rem, 4.8vw, 1.57rem)/1.38 "Marcellus", Georgia, serif;
+
       color: #a27155;
+
       margin: 16px 0
+
     }
+
+
 
     .card .muted {
+
       color: #7b7b76;
+
       font-size: .76rem
+
     }
+
+
 
     .divider {
+
       font: 1rem Georgia, serif;
+
       color: #b79458;
+
       letter-spacing: .45em;
+
       margin: 16px 0
+
     }
+
+
 
     .date {
+
       display: flex;
+
       justify-content: center;
+
       align-items: center;
+
       gap: 14px;
+
       color: #9e6d57;
+
       margin: 13px auto
+
     }
+
+
 
     .date b {
+
       font: 400 4rem/.9 "Marcellus", Georgia, serif
+
     }
+
+
 
     .date span {
+
       text-align: left;
+
       font-size: .8rem;
+
       letter-spacing: .12em;
+
       text-transform: uppercase;
+
       line-height: 1.5
+
     }
+
+
 
     .countdown {
+
       display: grid;
+
       grid-template-columns: repeat(4, 1fr);
+
       gap: 5px;
+
       margin: 17px 0
+
     }
+
+
 
     .countdown div {
+
       padding: 8px 1px;
+
       border-top: 1px solid #ccb88e;
+
       border-bottom: 1px solid #ccb88e
+
     }
+
+
 
     .countdown b {
+
       display: block;
+
       font: 400 clamp(1.1rem, 5vw, 1.5rem) "Marcellus", Georgia, serif;
+
       color: #9e6d57
+
     }
+
+
 
     .countdown small {
+
       font-size: .53rem;
+
       text-transform: uppercase
+
     }
+
+
 
     .program {
+
       display: grid;
+
       grid-template-columns: 1fr 1fr;
+
       gap: 8px;
+
       margin: 18px 0
+
     }
+
+
 
     .program span {
+
       border: 1px solid #d3bc90;
+
       padding: 11px 6px;
+
       background: #f8efdc;
+
       color: #56616b;
+
       font-size: .7rem
+
     }
+
+
 
     .actions {
+
       display: flex;
+
       flex-wrap: wrap;
+
       justify-content: center;
+
       gap: 8px;
+
       margin: 17px 0 0
+
     }
+
+
+
+    .pill[aria-disabled="true"] { opacity: .62; cursor: default; pointer-events: none }
 
     .pill.secondary {
+
       background: transparent;
+
       color: #485667;
+
       box-shadow: none
+
     }
+
+
 
     .elemento {
+
       position: absolute;
+
       z-index: 9;
+
       left: calc(var(--x)*1%);
+
       top: calc(var(--y)*1%);
+
       width: calc(var(--size)*1%);
+
       max-width: none;
+
       max-height: 30vh;
+
       object-fit: contain;
+
       transform: translate(-50%, -50%);
+
       pointer-events: none;
+
       user-select: none;
+
       filter: drop-shadow(0 10px 14px #0b1111a1);
+
       animation: flotar 4.8s ease-in-out infinite
+
     }
+
+
 
     @keyframes flotar {
+
       50% {
+
         translate: 0 -13px
+
       }
+
     }
+
+
 
     /* POSICIONES WEB: más X = derecha, más Y = abajo, --size = tamaño. */
+
     .scene:nth-child(1) .elemento {
-      --x: 86;
+
+      --x: 85;
+
       --y: 22;
-      --size: 29
+
+      --size: 27
+
     }
+
+
 
     .scene:nth-child(2) .elemento {
-      --x: 13;
-      --y: 77;
+
+      --x: 14;
+
+      --y: 80;
+
       --size: 27
+
     }
+
+
 
     .scene:nth-child(3) .elemento {
-      --x: 86;
-      --y: 76;
+
+      --x: 85;
+
+      --y: 74;
+
       --size: 26
+
     }
+
+
 
     .scene:nth-child(4) .elemento {
-      --x: 13;
-      --y: 21;
+
+      --x: 50;
+
+      --y: 18;
+
       --size: 27
+
     }
+
+
 
     .scene:nth-child(5) .elemento {
+
       --x: 86;
-      --y: 20;
+
+      --y: 22;
+
       --size: 27
+
     }
+
+
 
     .scene:nth-child(6) .elemento {
-      --x: 13;
+
+      --x: 14;
+
       --y: 78;
-      --size: 27
+
+      --size: 25
+
     }
+
+
 
     .scene:nth-child(7) .elemento {
-      --x: 86;
+
+      --x: 85;
+
       --y: 78;
-      --size: 27
+
+      --size: 26
+
     }
+
+
 
     .next {
+
       position: absolute;
+
       z-index: 12;
+
       bottom: max(19px, calc(env(safe-area-inset-bottom) + 11px));
+
       left: 50%;
+
       transform: translateX(-50%);
+
       white-space: nowrap
+
     }
+
+
 
     .progress {
+
       position: absolute;
+
       z-index: 12;
+
       bottom: max(76px, calc(env(safe-area-inset-bottom) + 68px));
+
       left: 0;
+
       right: 0;
+
       display: flex;
+
       justify-content: center;
+
       gap: 7px;
+
       pointer-events: none;
+
       opacity: 0
+
     }
+
+
 
     .started .progress {
+
       opacity: 1
+
     }
+
+
 
     .progress i {
+
       height: 5px;
+
       width: 5px;
+
       border-radius: 50%;
+
       background: #f4e3c3a0;
+
       transition: width .3s
+
     }
+
+
 
     .progress i.on {
+
       width: 21px;
+
       border-radius: 8px;
+
       background: #fff8e7
+
     }
+
+
 
     @media(max-height:680px) {
-      .card {
-        max-height: calc(var(--h) - 130px)
-      }
+
+
 
       .card-inner {
+
         padding-top: 24px;
+
         padding-bottom: 24px
+
       }
+
+
 
       .card h2 {
+
         font-size: clamp(1.65rem, 7vw, 2.3rem)
+
       }
+
+
 
       .card p {
+
         line-height: 1.4;
+
         margin: 7px 0
+
       }
+
+
 
       .monogram {
+
         height: 40px;
+
         width: 40px;
+
         margin-bottom: 9px
+
       }
+
     }
+
+
 
     @media(max-width:560px) {
+
       :root {
+
         --h: 100dvh
+
       }
+
+
 
       .elemento {
+
         max-width: 43vw;
+
         max-height: 25vh
+
       }
 
+
+
+    }
+
+    @media(max-width:560px) and (pointer:coarse) {
       /* POSICIONES MÓVIL: independientes de las de web. */
+
       .scene:nth-child(1) .elemento {
-        --x: 87;
+
+        --x: 85;
+
         --y: 21;
-        --size: 30
+
+        --size: 26
+
       }
+
+
 
       .scene:nth-child(2) .elemento {
-        --x: 12;
-        --y: 79;
-        --size: 30
+
+        --x: 14;
+
+        --y: 82;
+
+        --size: 27
+
       }
+
+
 
       .scene:nth-child(3) .elemento {
-        --x: 87;
-        --y: 79;
-        --size: 30
+
+        --x: 85;
+
+        --y: 74;
+
+        --size: 27
+
       }
+
+
 
       .scene:nth-child(4) .elemento {
-        --x: 12;
-        --y: 21;
+
+        --x: 50;
+
+        --y: 16;
+
         --size: 30
+
       }
+
+
 
       .scene:nth-child(5) .elemento {
-        --x: 87;
+
+        --x: 85;
+
         --y: 19;
-        --size: 30
+
+        --size: 27
+
       }
+
+
 
       .scene:nth-child(6) .elemento {
+
         --x: 12;
+
         --y: 79;
-        --size: 30
+
+        --size: 26
+
       }
+
+
 
       .scene:nth-child(7) .elemento {
+
         --x: 87;
+
         --y: 78;
-        --size: 30
+
+        --size: 26
+
       }
+
     }
+
   </style>
+
 </head>
 
+
+
 <body>
+
   <main class="shell" id="shell">
+
     <div class="entry" id="entry">
+
       <img class="entry-photo" src="assets/foto/foto01.webp"
+
         alt="Familias reunidas entre faroles y villancicos durante una posada navideña" fetchpriority="high">
+
       <div class="entry-bottom">
+
         <p class="eyebrow">Una noche de luz y tradición</p>
+
         <h1>Posada <em>Navideña</em></h1>
+
         <p>Compartamos villancicos, el nacimiento y la alegría de reunirnos en Navidad.</p>
+
       </div>
+
       <button class="button entry-start" id="start" type="button">Abrir invitación ✦</button>
+
     </div>
+
     <div class="controls" aria-label="Controles de la invitación"><button class="round" id="exit" type="button"
+
         aria-label="Salir de la invitación">×</button><button class="round" id="music" type="button"
+
         aria-label="Reproducir música" aria-pressed="false">♫</button></div>
+
     <div class="pages" id="pages">
+
       <section class="scene" aria-label="Bienvenida"><img class="bg" src="assets/fondos/fondo01.webp" alt=""
+
           fetchpriority="high"><img class="elemento" src="assets/elementos/elemento01.webp" alt="">
+
         <article class="card">
+
           <div class="card-inner">
+
             <p class="series">La luz nos guía · 01</p><span class="monogram"><span>✧</span></span>
+
             <h2>Te esperamos en nuestra <em>posada</em></h2>
+
             <p>Entre faroles y cantos caminaremos juntos para recordar el camino de María y José, y recibir con alegría
+
               la Navidad.</p>
+
             <div class="divider">✧ ✦ ✧</div>
+
             <p class="lead" id="organizerWelcome"></p>
+
             <p>Nos encantará compartir esta noche contigo.</p>
+
           </div>
+
         </article>
+
       </section>
+
       <section class="scene" aria-label="Mensaje"><img class="bg" src="assets/fondos/fondo02.webp" alt=""
+
           loading="lazy"><img class="elemento" src="assets/elementos/elemento02.webp" alt="" loading="lazy">
+
         <article class="card">
+
           <div class="card-inner">
-            <p class="series">El sentido de reunirnos · 02</p><span class="monogram"><span>❂</span></span>
-            <h2>Una noche de <em>esperanza</em></h2>
+
+            <p class="series">Gracias por caminar con nosotros · 02</p><span class="monogram"><span>❂</span></span>
+
+            <h2>Tu compañía <em>nos alegra</em></h2>
+
             <p id="message"></p>
+
             <div class="divider">✧ ✦ ✧</div>
-            <p class="lead">Que siempre encontremos un lugar para compartir.</p>
+
+            <p class="lead">Gracias por acompañarnos en esta tradición.</p>
+
           </div>
+
         </article>
+
       </section>
-      <section class="scene" aria-label="Fecha y hora"><img class="bg" src="assets/fondos/fondo03.webp" alt=""
+
+      <section class="scene" aria-label="Cuenta regresiva"><img class="bg" src="assets/fondos/fondo03.webp" alt=""
+
           loading="lazy"><img class="elemento" src="assets/elementos/elemento03.webp" alt="" loading="lazy">
+
         <article class="card">
+
           <div class="card-inner">
+
             <p class="series">Reserva esta noche · 03</p>
+
             <h2>La cita está <em>cerca</em></h2>
+
             <div class="date"><b id="day">00</b><span id="monthYear"></span></div>
-            <p class="lead" id="time"></p>
+
+            
+
             <div class="countdown" aria-label="Cuenta regresiva">
+
               <div><b id="days">00</b><small>Días</small></div>
+
               <div><b id="hours">00</b><small>Horas</small></div>
+
               <div><b id="minutes">00</b><small>Min</small></div>
+
               <div><b id="seconds">00</b><small>Seg</small></div>
+
             </div>
-            <div class="actions"><a class="pill secondary" id="calendar" href="#" download="posada-navidena.ics">Agregar
-                al calendario</a></div>
+
           </div>
+
         </article>
+
       </section>
-      <section class="scene" aria-label="Lugar"><img class="bg" src="assets/fondos/fondo04.webp" alt=""
+
+      <section class="scene" aria-label="Ubicación"><img class="bg" src="assets/fondos/fondo04.webp" alt=""
+
           loading="lazy"><img class="elemento" src="assets/elementos/elemento04.webp" alt="" loading="lazy">
+
         <article class="card">
+
           <div class="card-inner">
+
             <p class="series">Punto de encuentro · 04</p><span class="monogram"><span>⌖</span></span>
+
             <h2>Nos vemos <em>aquí</em></h2>
+
             <p class="lead" id="venue"></p>
+            <p id="eventDate"></p>
+            <p id="eventTime"></p>
+
             <p id="address"></p>
+
             <div class="divider">✧ ✦ ✧</div>
+
             <p id="accessNote"></p>
-            <div class="actions"><a class="pill" id="map" href="#" target="_blank" rel="noopener noreferrer">Cómo llegar
-                ↗</a></div>
+
+            <div class="actions"><a class="pill" id="map" href="#" target="_blank" rel="noopener noreferrer">Ver ubicación ↗</a></div>
+
           </div>
+
         </article>
+
       </section>
+
       <section class="scene" aria-label="Celebración"><img class="bg" src="assets/fondos/fondo05.webp" alt=""
+
           loading="lazy"><img class="elemento" src="assets/elementos/elemento05.webp" alt="" loading="lazy">
+
         <article class="card">
+
           <div class="card-inner">
-            <p class="series">Una tradición compartida · 05</p>
+
+            <p class="series">Lo que viviremos juntos · 05</p>
+
             <h2>Luces, cantos <em>y encuentro</em></h2>
+
             <p>Compartiremos el nacimiento, los villancicos y el recorrido de la posada; al terminar, habrá un momento
+
               para convivir.</p>
+
             <div class="program"><span>✧ Faroles</span><span>♫ Villancicos</span><span>✦ Nacimiento</span><span>♨
+
                 Ponche</span></div>
+
             <p class="muted" id="programNote"></p>
+
           </div>
+
         </article>
+
       </section>
-      <section class="scene" aria-label="Detalles"><img class="bg" src="assets/fondos/fondo06.webp" alt=""
-          loading="lazy"><img class="elemento" src="assets/elementos/elemento06.webp" alt="" loading="lazy">
-        <article class="card">
-          <div class="card-inner">
-            <p class="series">Para disfrutar la noche · 06</p><span class="monogram"><span>✧</span></span>
-            <h2>Ven con <em>el corazón abierto</em></h2>
-            <p>Trae a quienes quieres y acompáñanos a cantar. El mejor regalo será reunirnos y conservar viva esta
-              tradición.</p>
-            <div class="divider">✧ ✦ ✧</div>
-            <p class="lead" id="visitorNote"></p>
-            <p class="muted">Abrígate para disfrutar el recorrido al aire libre.</p>
-          </div>
-        </article>
+
+      <section class="scene" aria-label="Confirmación"><img class="bg" src="assets/fondos/fondo06.webp" alt="" loading="lazy"><img class="elemento" src="assets/elementos/elemento06.webp" alt="" loading="lazy">
+        <article class="card"><div class="card-inner">
+          <p class="series">Contamos contigo · 06</p><span class="monogram"><span>✧</span></span>
+          <h2>¿Nos acompañas <em>esa noche?</em></h2>
+          <p>Para preparar los faroles y el momento de convivencia, avísanos si podrás venir.</p>
+          <p class="lead" id="visitorNote"></p>
+          <div class="actions"><a class="pill" id="rsvp" target="_blank" rel="noopener noreferrer">Confirmar por WhatsApp ↗</a></div>
+          <p class="muted">Abrígate para disfrutar el recorrido al aire libre.</p>
+        </div></article>
       </section>
+
       <section class="scene" aria-label="Despedida"><img class="bg" src="assets/fondos/fondo07.webp" alt=""
+
           loading="lazy"><img class="elemento" src="assets/elementos/elemento07.webp" alt="" loading="lazy">
+
         <article class="card">
+
           <div class="card-inner">
-            <p class="series">Con alegría y gratitud · 07</p><span class="monogram"><span>✦</span></span>
+
+            <p class="series">Hasta encontrarnos bajo las luces · 07</p><span class="monogram"><span>✦</span></span>
+
             <h2>Que la luz de Navidad <em>nos acompañe</em></h2>
-            <p>Deseamos que esta noche nos deje paz, buenos recuerdos y la alegría de celebrar juntos.</p>
+
+            <p>Pronto caminaremos entre faroles y villancicos. Será una alegría verte junto al nacimiento y compartir esta Navidad.</p>
+
             <div class="divider">✧ ✦ ✧</div>
+
             <p class="lead" id="signature"></p>
+
             <p class="muted">¡Te esperamos!</p>
+
           </div>
+
         </article>
+
       </section>
+
     </div>
+
     <div class="progress" id="progress" aria-hidden="true"></div>
-    <audio id="audio" src="assets/audio/musica.mp3" loop preload="none"></audio>
+
+    <audio id="audio" src="assets/audio/audio01.mp3" loop preload="none"></audio>
+
   </main>
+
   <script>
-    // EDITA AQUÍ los datos. Usa tus propios foto01.webp y fondos en assets/foto y assets/fondos.
+
+    // DATOS EDITABLES: información de la posada navideña.
+    // Deja mapa y telefonoWhatsApp vacíos mientras no tengas los enlaces reales;
+    // los botones permanecerán visibles y desactivados.
     const DATOS = {
       organizador: "Comunidad anfitriona",
-      mensaje: "La posada nos invita a caminar juntos, ofrecer hospitalidad y recordar que la Navidad se construye con pequeños gestos de amor y esperanza.",
-      fecha: "2026-12-21T19:00:00", duracionHoras: 3,
-      lugar: "Atrio y calle principal", direccion: "Cadereyta Jiménez, Nuevo León",
-      mapa: "", notaAcceso: "Nos reuniremos en el punto indicado antes de iniciar el recorrido.",
-      notaPrograma: "El orden de las actividades puede adaptarse a la celebración.",
-      notaVisitantes: "Villancicos · Nacimiento · Convivencia",
-      // Si tus siete fondos tienen otros nombres (por ejemplo fondo08 o fondo09), cámbialos aquí.
+      mensaje: "Gracias por acompañarnos en el camino de la posada. Con cada voz en los villancicos y cada gesto de hospitalidad, esta noche tendrá un significado especial.",
+      fecha: "2026-12-21T19:00:00",
+      lugar: "Atrio y calle principal",
+      direccion: "Cadereyta Jiménez, Nuevo León",
+      mapa: "",
+      telefonoWhatsApp: "",
+      notaAcceso: "Nos reuniremos en el punto indicado antes de iniciar el recorrido.",
+      notaCelebracion: "El orden de las actividades puede adaptarse a la celebración.",
+      notaConfirmacion: "Villancicos · Nacimiento · Convivencia",
+      // FONDOS EDITABLES: ajusta los nombres aquí si cambias los archivos de assets/fondos.
       fondos: ["fondo01.webp", "fondo02.webp", "fondo03.webp", "fondo04.webp", "fondo05.webp", "fondo06.webp", "fondo07.webp"],
-      salida: "../../../index.html"
+      salida: "../../../index.html#posadas"
     };
+
     const $ = s => document.querySelector(s);
     const pages = $("#pages"), scenes = [...document.querySelectorAll(".scene")], audio = $("#audio");
     scenes.forEach((scene, i) => { scene.querySelector(".bg").src = "assets/fondos/" + DATOS.fondos[i] });
-    let current = 0, started = false, calendarURL = "", heightTimer;
+    let current = 0, started = false, heightTimer;
+
     $("#organizerWelcome").textContent = DATOS.organizador;
     $("#signature").textContent = DATOS.organizador;
     $("#message").textContent = DATOS.mensaje;
-    $("#venue").textContent = DATOS.lugar; $("#address").textContent = DATOS.direccion;
+    $("#venue").textContent = DATOS.lugar;
+    $("#address").textContent = DATOS.direccion;
     $("#accessNote").textContent = DATOS.notaAcceso;
-    $("#visitorNote").textContent = DATOS.notaVisitantes;
-    if (DATOS.notaPrograma) $("#programNote").textContent = DATOS.notaPrograma; else $("#programNote").hidden = true;
+    $("#visitorNote").textContent = DATOS.notaConfirmacion;
+    if (DATOS.notaCelebracion) $("#programNote").textContent = DATOS.notaCelebracion;
+    else $("#programNote").hidden = true;
     document.title = "Posada Navideña | " + DATOS.organizador;
+
     const date = new Date(DATOS.fecha);
+    const validDate = !Number.isNaN(date.getTime());
     const pad = n => String(n).padStart(2, "0");
-    function stamp(d) { return "" + d.getUTCFullYear() + pad(d.getUTCMonth() + 1) + pad(d.getUTCDate()) + "T" + pad(d.getUTCHours()) + pad(d.getUTCMinutes()) + "00Z" }
-    function escapeICS(s) { return String(s).replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/,/g, "\\,").replace(/;/g, "\\;") }
-    if (!Number.isNaN(date.getTime())) {
-      $("#day").textContent = pad(date.getDate()); $("#monthYear").innerHTML = new Intl.DateTimeFormat("es-MX", { month: "long" }).format(date) + "<br>" + date.getFullYear();
-      $("#time").textContent = new Intl.DateTimeFormat("es-MX", { hour: "numeric", minute: "2-digit", hour12: true }).format(date);
-      const end = new Date(date.getTime() + DATOS.duracionHoras * 3600000);
-      const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Eldin Bridge//Posada Navidena//ES", "BEGIN:VEVENT", "UID:posada-navidena-" + date.getTime() + "@eldinbridge.com", "DTSTAMP:" + stamp(new Date()), "DTSTART:" + stamp(date), "DTEND:" + stamp(end), "SUMMARY:" + escapeICS("Posada Navideña · " + DATOS.organizador), "LOCATION:" + escapeICS(DATOS.lugar + ", " + DATOS.direccion), "END:VEVENT", "END:VCALENDAR", ""].join("\r\n");
-      calendarURL = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" })); $("#calendar").href = calendarURL;
-    } else $("#calendar").hidden = true;
-    function updateCountdown() { const s = Math.floor(Math.max(0, date.getTime() - Date.now()) / 1000); $("#days").textContent = String(Math.floor(s / 86400)); $("#hours").textContent = pad(Math.floor(s % 86400 / 3600)); $("#minutes").textContent = pad(Math.floor(s % 3600 / 60)); $("#seconds").textContent = pad(s % 60) }
-    if (!Number.isNaN(date.getTime())) { updateCountdown(); setInterval(updateCountdown, 1000) }
-    function optionalLink(id, url) { if (url) $(id).href = url; else $(id).hidden = true }
-    optionalLink("#map", DATOS.mapa);
+    if (validDate) {
+      $("#day").textContent = pad(date.getDate());
+      $("#monthYear").innerHTML = new Intl.DateTimeFormat("es-MX", { month: "long" }).format(date) + "<br>" + date.getFullYear();
+      $("#eventDate").textContent = new Intl.DateTimeFormat("es-MX", { weekday: "long", day: "numeric", month: "long", year: "numeric" }).format(date);
+      $("#eventTime").textContent = new Intl.DateTimeFormat("es-MX", { hour: "numeric", minute: "2-digit", hour12: true }).format(date);
+    }
+    function updateCountdown() {
+      const seconds = Math.floor(Math.max(0, date.getTime() - Date.now()) / 1000);
+      $("#days").textContent = String(Math.floor(seconds / 86400));
+      $("#hours").textContent = pad(Math.floor(seconds % 86400 / 3600));
+      $("#minutes").textContent = pad(Math.floor(seconds % 3600 / 60));
+      $("#seconds").textContent = pad(seconds % 60);
+    }
+    if (validDate) { updateCountdown(); setInterval(updateCountdown, 1000) }
+
+    // ENLACES EDITABLES: Maps y WhatsApp se activan al completar los datos anteriores.
+    function optionalLink(id, url) {
+      const link = $(id);
+      if (url) { link.href = url; link.removeAttribute("aria-disabled"); link.removeAttribute("tabindex") }
+      else { link.removeAttribute("href"); link.setAttribute("aria-disabled", "true"); link.setAttribute("tabindex", "-1") }
+    }
+    optionalLink("#map", DATOS.mapa.trim());
+    const phone = DATOS.telefonoWhatsApp.replace(/\D/g, "");
+    optionalLink("#rsvp", phone ? "https://wa.me/" + phone + "?text=" + encodeURIComponent("Hola, confirmo mi asistencia a la Posada Navideña organizada por " + DATOS.organizador + ".") : "");
+
     const dots = scenes.map(() => { const dot = document.createElement("i"); $("#progress").append(dot); return dot });
+
     function mark(i) { if (i === current && scenes[i].classList.contains("active")) return; current = i; scenes.forEach((scene, n) => scene.classList.toggle("active", n === i)); dots.forEach((dot, n) => dot.classList.toggle("on", n === i)) }
+
     function go(i, smooth = true) { const target = Math.max(0, Math.min(i, scenes.length - 1)); pages.scrollTo({ left: 0, top: target * pages.clientHeight, behavior: smooth ? "smooth" : "auto" }) }
+
     function adjustHeight() { if (!matchMedia("(max-width:560px)").matches) { document.documentElement.style.removeProperty("--h"); return } clearTimeout(heightTimer); heightTimer = setTimeout(() => { const h = window.visualViewport?.height || window.innerHeight; document.documentElement.style.setProperty("--h", Math.round(h) + "px"); if (started) go(current, false) }, 250) }
+
     scenes.forEach((scene, i) => { const button = document.createElement("button"); button.type = "button"; button.className = "button next"; button.textContent = i === scenes.length - 1 ? "Volver al inicio ↑" : "Continuar ↓"; button.addEventListener("click", () => go(i === scenes.length - 1 ? 0 : i + 1)); scene.append(button) });
+
     const observer = new IntersectionObserver(entries => { const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]; if (visible) mark(scenes.indexOf(visible.target)) }, { root: pages, threshold: .65 }); scenes.forEach(scene => observer.observe(scene));
+
     function musicState(on) { $("#music").textContent = on ? "Ⅱ" : "♫"; $("#music").setAttribute("aria-label", on ? "Pausar música" : "Reproducir música"); $("#music").setAttribute("aria-pressed", String(on)) }
+
     async function play() { try { await audio.play(); musicState(true) } catch { musicState(false) } }
+
     $("#start").addEventListener("click", () => { started = true; history.pushState({ posadaNavidena: "invitacion" }, ""); $("#shell").classList.add("started"); go(0, false); $("#entry").classList.add("closed"); mark(0); play() });
+
     $("#music").addEventListener("click", () => { if (audio.paused) play(); else { audio.pause(); musicState(false) } });
+
     function exit() { if (!started) { if (DATOS.salida) location.href = DATOS.salida; return } started = false; audio.pause(); musicState(false); $("#shell").classList.remove("started"); $("#entry").classList.remove("closed"); go(0, false); mark(0) }
+
     $("#exit").addEventListener("click", () => { if (DATOS.salida) location.href = DATOS.salida; else exit() });
+
     document.addEventListener("visibilitychange", () => { if (document.hidden && !audio.paused) { audio.pause(); musicState(false) } });
+
     window.addEventListener("resize", adjustHeight, { passive: true }); window.visualViewport?.addEventListener("resize", adjustHeight, { passive: true }); window.addEventListener("orientationchange", adjustHeight, { passive: true });
-    window.addEventListener("pageshow", () => { adjustHeight(); if (!started) go(0, false) }); addEventListener("popstate", () => { if (started) exit() }); addEventListener("pagehide", () => { if (calendarURL) URL.revokeObjectURL(calendarURL) });
+
+    window.addEventListener("pageshow", () => { adjustHeight(); if (!started) go(0, false) }); addEventListener("popstate", () => { if (started) exit() });
+
     mark(0); adjustHeight(); go(0, false);
+
   </script>
+
 </body>
+
+
 
 </html>
