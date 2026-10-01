@@ -798,25 +798,7 @@
 
     }
 
-    .coordinates {
-
-      font-size: .58rem;
-
-      letter-spacing: .18em;
-
-      text-transform: uppercase;
-
-      color: #c2ceec;
-
-      margin-top: 23px;
-
-      display: flex;
-
-      justify-content: space-between;
-
-      gap: 10px
-
-    }
+    .pill[aria-disabled="true"] { opacity: .65; cursor: default; pointer-events: none; }
 
     .date {
 
@@ -988,9 +970,9 @@
 
     .scene:nth-child(2) .elemento {
 
-      --x: 14;
+      --x: 82;
 
-      --y: 86;
+      --y: 30;
 
       --size: 29
 
@@ -1000,7 +982,7 @@
 
       --x: 84;
 
-      --y: 86;
+      --y: 30;
 
       --size: 26
 
@@ -1008,9 +990,9 @@
 
     .scene:nth-child(4) .elemento {
 
-      --x: 13;
+      --x: 84;
 
-      --y: 19;
+      --y: 25;
 
       --size: 29
 
@@ -1020,7 +1002,7 @@
 
       --x: 85;
 
-      --y: 20;
+      --y: 30;
 
       --size: 25
 
@@ -1028,9 +1010,9 @@
 
     .scene:nth-child(6) .elemento {
 
-      --x: 14;
+      --x: 84;
 
-      --y: 80;
+      --y: 30;
 
       --size: 29
 
@@ -1038,9 +1020,9 @@
 
     .scene:nth-child(7) .elemento {
 
-      --x: 84;
+      --x: 82;
 
-      --y: 16;
+      --y: 25;
 
       --size: 31
 
@@ -1188,6 +1170,10 @@
 
       }
 
+    }
+
+    /* Posiciones táctiles independientes: una ventana estrecha de PC usa los valores web. */
+    @media (max-width:560px) and (pointer:coarse) {
       /* POSICIÓN DE ELEMENTOS — celular: estos valores reemplazan los de escritorio. */
 
       .scene:nth-child(1) .elemento {
@@ -1202,9 +1188,9 @@
 
       .scene:nth-child(2) .elemento {
 
-        --x: 13;
+        --x: 82;
 
-        --y: 86;
+        --y: 25;
 
         --size: 30
 
@@ -1212,9 +1198,9 @@
 
       .scene:nth-child(3) .elemento {
 
-        --x: 87;
+        --x: 84;
 
-        --y: 21;
+        --y: 25;
 
         --size: 29
 
@@ -1222,9 +1208,9 @@
 
       .scene:nth-child(4) .elemento {
 
-        --x: 13;
+        --x: 82;
 
-        --y: 18;
+        --y: 25;
 
         --size: 29
 
@@ -1234,7 +1220,7 @@
 
         --x: 85;
 
-        --y: 19;
+        --y: 25;
 
         --size: 29
 
@@ -1242,9 +1228,9 @@
 
       .scene:nth-child(6) .elemento {
 
-        --x: 14;
+        --x: 82;
 
-        --y: 79;
+        --y: 27;
 
         --size: 30
 
@@ -1252,9 +1238,9 @@
 
       .scene:nth-child(7) .elemento {
 
-        --x: 84;
+        --x: 82;
 
-        --y: 19;
+        --y: 27;
 
         --size: 32
 
@@ -1300,248 +1286,134 @@
 
     <div class="pages" id="pages">
 
-      <section class="scene" aria-label="Bienvenida"><img class="bg" src="assets/fondos/fondo01.webp" alt=""
+      <section class="scene" aria-label="Mensaje de bienvenida"><img class="bg" src="assets/fondos/fondo01.webp" alt=""
 
           fetchpriority="high"><img class="elemento" src="assets/elementos/elemento01.webp" alt="">
 
         <article class="log">
 
           <div class="log-inner">
-
-            <div class="log-head"><span class="step">01</span><span class="label">Inicio de la misión</span><span
-
-                class="trace"></span></div>
-
+            <div class="log-head"><span class="step">01</span><span class="label">Bienvenida a bordo</span><span class="trace"></span></div>
             <div class="orbit" aria-hidden="true">✦</div>
-
-            <h2>Tenemos una <em>gran noticia</em></h2>
-
-            <p>Una nueva personita viene en camino. Antes de conocerla, queremos reunir a nuestra tripulación favorita
-
-              para darle la bienvenida.</p>
-
+            <h2>Qué gusto tenerte <em>en la misión</em></h2>
+            <p id="welcomeMessage"></p>
             <div class="rule"></div>
-
             <p class="lead" id="parents1"></p>
-
-            <p>¡Estás invitado a nuestro baby shower!</p>
-
-            <div class="coordinates"><span>Bitácora · 01/07</span><span>Rumbo a las estrellas</span></div>
-
           </div>
-
         </article>
 
       </section>
 
-      <section class="scene" aria-label="Nuestra aventura"><img class="bg" src="assets/fondos/fondo02.webp" alt=""
+      <section class="scene" aria-label="Mensaje emotivo"><img class="bg" src="assets/fondos/fondo02.webp" alt=""
 
           loading="lazy"><img class="elemento" src="assets/elementos/elemento02.webp" alt="" loading="lazy">
 
         <article class="log">
 
           <div class="log-inner">
-
-            <div class="log-head"><span class="step">02</span><span class="label">Mensaje de la tripulación</span><span
-
-                class="trace"></span></div>
-
-            <h2>Un universo <em>por descubrir</em></h2>
-
+            <div class="log-head"><span class="step">02</span><span class="label">Un nuevo integrante</span><span class="trace"></span></div>
+            <h2>Nuestro mundo <em>crece</em></h2>
             <p id="message"></p>
-
-            <div class="mission-grid" aria-hidden="true"><span>✦ Sueños nuevos</span><span>☾ Mucho amor</span><span>✧
-
-                Risas infinitas</span><span>◌ Una aventura</span></div>
-
-            <p class="lead">Tu compañía hará este viaje aún más especial.</p>
-
-            <div class="coordinates"><span>Bitácora · 02/07</span><span>Transmisión recibida</span></div>
-
+            <div class="mission-grid" aria-hidden="true"><span>✦ Nuevos sueños</span><span>☾ Abrazos</span><span>✧ Primeras risas</span><span>◌ Mucho cariño</span></div>
           </div>
-
         </article>
 
       </section>
 
-      <section class="scene" aria-label="Fecha y hora"><img class="bg" src="assets/fondos/fondo03.webp" alt=""
+      <section class="scene" aria-label="Contador"><img class="bg" src="assets/fondos/fondo03.webp" alt=""
 
           loading="lazy"><img class="elemento" src="assets/elementos/elemento03.webp" alt="" loading="lazy">
 
         <article class="log">
 
           <div class="log-inner">
-
-            <div class="log-head"><span class="step">03</span><span class="label">Cuenta para despegar</span><span
-
-                class="trace"></span></div>
-
-            <h2>Fecha de <em>lanzamiento</em></h2>
-
+            <div class="log-head"><span class="step">03</span><span class="label">Cuenta regresiva</span><span class="trace"></span></div>
+            <h2>Falta para el <em>despegue</em></h2>
             <div class="date"><b id="day">00</b><span id="monthYear"></span></div>
-
-            <p class="lead" id="time"></p>
-
             <div class="countdown" aria-label="Cuenta regresiva">
-
               <div><b id="days">00</b><small>Días</small></div>
-
               <div><b id="hours">00</b><small>Horas</small></div>
-
               <div><b id="minutes">00</b><small>Min</small></div>
-
               <div><b id="seconds">00</b><small>Seg</small></div>
-
             </div>
-
-            <div class="actions"><a class="pill secondary" id="calendar" href="#"
-
-                download="baby-shower-tematico.ics">Agregar al calendario</a></div>
-
-            <div class="coordinates"><span>Bitácora · 03/07</span><span>Preparando despegue</span></div>
-
           </div>
-
         </article>
 
       </section>
 
-      <section class="scene" aria-label="Lugar"><img class="bg" src="assets/fondos/fondo04.webp" alt=""
+      <section class="scene" aria-label="Dirección"><img class="bg" src="assets/fondos/fondo04.webp" alt=""
 
           loading="lazy"><img class="elemento" src="assets/elementos/elemento04.webp" alt="" loading="lazy">
 
         <article class="log">
 
           <div class="log-inner">
-
-            <div class="log-head"><span class="step">04</span><span class="label">Coordenadas</span><span
-
-                class="trace"></span></div>
-
+            <div class="log-head"><span class="step">04</span><span class="label">Punto de encuentro</span><span class="trace"></span></div>
             <div class="orbit" aria-hidden="true">⌖</div>
-
-            <h2>La estación <em>de encuentro</em></h2>
-
+            <h2>Coordenadas <em>del festejo</em></h2>
             <p class="lead" id="venue"></p>
-
             <p id="address"></p>
-
             <div class="rule"></div>
-
-            <p>Trae muchas ganas de compartir, jugar y celebrar esta nueva aventura con nosotros.</p>
-
-            <div class="actions"><a class="pill" id="map" href="#" target="_blank" rel="noopener noreferrer">Abrir
-
-                ubicación ↗</a></div>
-
-            <div class="coordinates"><span>Bitácora · 04/07</span><span>Destino localizado</span></div>
-
+            <p><strong>Fecha:</strong> <span id="eventDate"></span></p>
+            <p><strong>Hora:</strong> <span id="time"></span></p>
+            <div class="actions"><a class="pill" id="map" target="_blank" rel="noopener noreferrer" aria-disabled="true">Ver ubicación ↗</a></div>
           </div>
-
         </article>
 
       </section>
 
-      <section class="scene" aria-label="Detalles de la celebración"><img class="bg" src="assets/fondos/fondo05.webp"
+      <section class="scene" aria-label="Regalos"><img class="bg" src="assets/fondos/fondo05.webp"
 
           alt="" loading="lazy"><img class="elemento" src="assets/elementos/elemento05.webp" alt="" loading="lazy">
 
         <article class="log">
 
           <div class="log-inner">
-
-            <div class="log-head"><span class="step">05</span><span class="label">Plan de vuelo</span><span
-
-                class="trace"></span></div>
-
-            <h2>Lo que nos <em>espera</em></h2>
-
-            <p>Prepararemos una tarde para reunir a quienes más queremos antes de la llegada de nuestro pequeño
-
-              explorador.</p>
-
-            <div class="mission-grid"><span>✦ Buenos deseos</span><span>☾ Algo delicioso</span><span>✧ Juegos y
-
-                sorpresas</span><span>◌ Recuerdos juntos</span></div>
-
-            <div class="rule"></div>
-
-            <p class="muted">No necesitas venir vestido de astronauta; tu sonrisa ya tiene un lugar reservado.</p>
-
-            <div class="coordinates"><span>Bitácora · 05/07</span><span>Tripulación lista</span></div>
-
+            <div class="log-head"><span class="step">05</span><span class="label">Detalles para el bebé</span><span class="trace"></span></div>
+            <h2>Un obsequio <em>especial</em></h2>
+            <p>Si deseas llevar un detalle, aquí tienes algunas ideas para nuestro pequeño explorador.</p>
+            <div class="mission-grid" aria-label="Ideas de regalo"><span>🍼 Biberón</span><span>🧷 Pañales</span><span>🎁 Regalito</span><span>✉️ Sobre</span></div>
+            <p class="muted" id="giftNote"></p>
+            <div class="actions"><a class="pill secondary" id="registry" href="#" target="_blank" rel="noopener noreferrer">Ver mesa de regalos ↗</a></div>
           </div>
-
         </article>
 
       </section>
 
-      <section class="scene" aria-label="Confirmación"><img class="bg" src="assets/fondos/fondo06.webp" alt=""
+      <section class="scene" aria-label="Vestimenta"><img class="bg" src="assets/fondos/fondo06.webp" alt=""
 
           loading="lazy"><img class="elemento" src="assets/elementos/elemento06.webp" alt="" loading="lazy">
 
         <article class="log">
 
           <div class="log-inner">
-
-            <div class="log-head"><span class="step">06</span><span class="label">Pase de abordaje</span><span
-
-                class="trace"></span></div>
-
-            <h2>Reserva tu lugar <em>en la nave</em></h2>
-
-            <p>Ayúdanos a preparar todo para recibirte. Confirma tu asistencia antes del:</p>
-
-            <p class="lead" id="rsvpDate"></p>
-
-            <div class="actions"><a class="pill" id="rsvp" href="#" target="_blank" rel="noopener noreferrer">Confirmar
-
-                por WhatsApp ↗</a></div>
-
-            <p class="muted">Cuéntanos cuántas personas vendrán contigo.</p>
-
-            <div class="coordinates"><span>Bitácora · 06/07</span><span>Esperando confirmación</span></div>
-
+            <div class="log-head"><span class="step">06</span><span class="label">Vestimenta</span><span class="trace"></span></div>
+            <h2>Tu atuendo <em>para la ocasión</em></h2>
+            <p id="dressCode"></p>
+            <div class="rule"></div>
+            <p class="lead" aria-hidden="true">👗 👕 👖</p>
+            <p class="muted">Elige lo que te permita celebrar y jugar con comodidad.</p>
           </div>
-
         </article>
 
       </section>
 
-      <section class="scene" aria-label="Despedida"><img class="bg" src="assets/fondos/fondo07.webp" alt=""
+      <section class="scene" aria-label="Nos vemos pronto"><img class="bg" src="assets/fondos/fondo07.webp" alt=""
 
           loading="lazy"><img class="elemento" src="assets/elementos/elemento07.webp" alt="" loading="lazy">
 
         <article class="log">
 
           <div class="log-inner">
-
-            <div class="log-head"><span class="step">07</span><span class="label">Hasta las estrellas</span><span
-
-                class="trace"></span></div>
-
+            <div class="log-head"><span class="step">07</span><span class="label">Nos vemos pronto</span><span class="trace"></span></div>
             <div class="orbit" aria-hidden="true">♥</div>
-
-            <h2>La aventura apenas <em>comienza</em></h2>
-
-            <p>Pronto llegará alguien que transformará nuestro mundo. Gracias por acompañarnos desde el inicio de esta
-
-              historia.</p>
-
+            <h2>La tripulación <em>te espera</em></h2>
+            <p id="farewellMessage"></p>
             <div class="rule"></div>
-
             <p class="lead" id="signature"></p>
-
-            <p class="muted" id="giftNote"></p>
-
-            <div class="actions"><a class="pill secondary" id="registry" href="#" target="_blank"
-
-                rel="noopener noreferrer">Ver mesa de regalos ↗</a></div>
-
-            <div class="coordinates"><span>Bitácora · 07/07</span><span>Nos vemos pronto ✦</span></div>
-
+            <p class="muted">Confirma antes del <span id="rsvpDate"></span>.</p>
+            <div class="actions"><a class="pill" id="rsvp" target="_blank" rel="noopener noreferrer" aria-disabled="true">Confirmar por WhatsApp ↗</a></div>
           </div>
-
         </article>
 
       </section>
@@ -1556,26 +1428,26 @@
 
   <script>
 
-    // DATOS PERSONALES Y ENLACES — editar únicamente este bloque.
-    // Deja en blanco mapa, regalos o telefonoWhatsApp para ocultar su botón.
+    // DATOS EDITABLES — textos, fecha y enlaces de esta invitación.
     const DATOS = {
       mama: "Mariana",
       papa: "Daniel",
-      mensaje: "Desde que supimos que nuestro bebé viene en camino, cada día se siente como una aventura nueva. Nos hará muy felices compartir contigo esta espera.",
+      bienvenida: "Nos encantará que formes parte de este encuentro. Reservamos un lugar para ti en una tarde de juegos, sonrisas y buenos deseos para nuestro bebé.",
+      mensaje: "Desde que supimos que llegaría, nuestra familia comenzó a imaginar nuevos caminos. Soñamos con sus primeras risas y con todo lo que descubriremos a su lado.",
+      despedida: "Pronto estaremos juntos para celebrar esta nueva vida. Prepara tu mejor sonrisa: tu lugar en esta misión ya está reservado.",
       fecha: "2027-06-12T17:00:00", // AAAA-MM-DDTHH:MM, hora local
-      duracionHoras: 4,                // duración del evento en el calendario
       lugar: "Salón Galaxia",
-      direccion: "Cadereyta Jiménez, Nuevo León",
-      notaRegalos: "Tu presencia es nuestro mejor regalo. Si deseas llevar un detalle, aquí encontrarás algunas ideas.",
+      direccion: "Cadereyta Jiménez, Nuevo León", // texto visible en la tarjeta
+      notaRegalos: "Recibiremos con cariño tu regalo, ya sea uno para jugar, cuidar al bebé o ayudar con sus primeros días.",
+      vestimenta: "Ropa casual: vestido, blusa o jeans. No hace falta traje espacial para unirse a la celebración.",
       confirmarAntes: "5 de junio de 2027",
 
-      // BOTONES — Maps, mesa de regalos, WhatsApp y calendario.
-      mapa: "",                       // URL completa de Google Maps
-      regalos: "",                    // URL completa de la mesa de regalos
+      // ENLACES OPCIONALES — Maps y WhatsApp permanecen visibles, inactivos mientras estén vacíos.
+      mapa: "",                       // URL real de Google Maps para activar «Ver ubicación»
+      regalos: "",                    // URL de mesa de regalos; en blanco oculta su botón
       telefonoWhatsApp: "",           // México: 52 + 10 dígitos, sin signos
-      // El calendario usa automáticamente fecha, duración, lugar y dirección.
 
-      // SALIDA — listado de Baby Showers, desde plantillas/baby-showers/tematico/.
+      // SALIDA — listado de Baby Showers desde plantillas/baby-showers/tematico/.
       salida: "../../../index.html#baby-showers"
     };
 
@@ -1583,11 +1455,15 @@
 
     const pages = $("#pages"), scenes = [...document.querySelectorAll(".scene")], audio = $("#audio");
 
-    let current = 0, started = false, calendarURL = "", heightTimer;
+    let current = 0, started = false, heightTimer;
 
     const names = DATOS.mama + " y " + DATOS.papa;
 
-    $("#parents1").textContent = names; $("#signature").textContent = names; $("#message").textContent = DATOS.mensaje;
+    $("#parents1").textContent = names; $("#signature").textContent = names;
+    $("#welcomeMessage").textContent = DATOS.bienvenida;
+    $("#message").textContent = DATOS.mensaje;
+    $("#farewellMessage").textContent = DATOS.despedida;
+    $("#dressCode").textContent = DATOS.vestimenta;
 
     $("#venue").textContent = DATOS.lugar; $("#address").textContent = DATOS.direccion; $("#giftNote").textContent = DATOS.notaRegalos; $("#rsvpDate").textContent = DATOS.confirmarAntes;
 
@@ -1597,33 +1473,28 @@
 
     function pad(n) { return String(n).padStart(2, "0") }
 
-    function stamp(d) { return "" + d.getUTCFullYear() + pad(d.getUTCMonth() + 1) + pad(d.getUTCDate()) + "T" + pad(d.getUTCHours()) + pad(d.getUTCMinutes()) + "00Z" }
-
-    function escapeICS(s) { return String(s).replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/,/g, "\\,").replace(/;/g, "\\;") }
-
     if (!Number.isNaN(date.getTime())) {
 
       $("#day").textContent = pad(date.getDate()); $("#monthYear").innerHTML = new Intl.DateTimeFormat("es-MX", { month: "long" }).format(date) + "<br>" + date.getFullYear();
 
       $("#time").textContent = new Intl.DateTimeFormat("es-MX", { hour: "numeric", minute: "2-digit", hour12: true }).format(date);
 
-      const end = new Date(date.getTime() + DATOS.duracionHoras * 3600000);
-
-      const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Eldin Bridge//Baby Shower Tematico//ES", "BEGIN:VEVENT", "UID:baby-tematico-" + date.getTime() + "@eldinbridge.com", "DTSTAMP:" + stamp(new Date()), "DTSTART:" + stamp(date), "DTEND:" + stamp(end), "SUMMARY:" + escapeICS("Baby Shower de " + names), "LOCATION:" + escapeICS(DATOS.lugar + ", " + DATOS.direccion), "END:VEVENT", "END:VCALENDAR", ""].join("\r\n");
-
-      calendarURL = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" })); $("#calendar").href = calendarURL;
-
-    } else $("#calendar").hidden = true;
+      $("#eventDate").textContent = new Intl.DateTimeFormat("es-MX", { day: "numeric", month: "long", year: "numeric" }).format(date);
+    }
 
     function updateCountdown() { const s = Math.floor(Math.max(0, date.getTime() - Date.now()) / 1000); $("#days").textContent = String(Math.floor(s / 86400)); $("#hours").textContent = pad(Math.floor(s % 86400 / 3600)); $("#minutes").textContent = pad(Math.floor(s % 3600 / 60)); $("#seconds").textContent = pad(s % 60) }
 
     if (!Number.isNaN(date.getTime())) { updateCountdown(); setInterval(updateCountdown, 1000) }
 
-    function optionalLink(id, url) { if (url) $(id).href = url; else $(id).hidden = true }
-
-    optionalLink("#map", DATOS.mapa); optionalLink("#registry", DATOS.regalos);
-
-    const phone = DATOS.telefonoWhatsApp.replace(/\D/g, ""); optionalLink("#rsvp", phone ? "https://wa.me/" + phone + "?text=" + encodeURIComponent("Hola, confirmo mi asistencia al baby shower de " + names + ". Asistiremos ___ personas.") : "");
+    function optionalLink(id, url, visibleSinEnlace = false) {
+      const el = $(id);
+      if (url) { el.href = url; el.hidden = false; el.removeAttribute("aria-disabled") }
+      else { el.removeAttribute("href"); el.hidden = !visibleSinEnlace; el.setAttribute("aria-disabled", "true") }
+    }
+    optionalLink("#map", DATOS.mapa, true);
+    optionalLink("#registry", DATOS.regalos);
+    const phone = DATOS.telefonoWhatsApp.replace(/\D/g, "");
+    optionalLink("#rsvp", phone ? "https://wa.me/" + phone + "?text=" + encodeURIComponent("Hola, confirmo mi asistencia al baby shower de " + names + ". Asistiremos ___ personas.") : "", true);
 
     const dots = scenes.map(() => { const dot = document.createElement("i"); $("#progress").append(dot); return dot });
 
@@ -1653,7 +1524,7 @@
 
     window.addEventListener("resize", adjustHeight, { passive: true }); window.visualViewport?.addEventListener("resize", adjustHeight, { passive: true }); window.addEventListener("orientationchange", adjustHeight, { passive: true });
 
-    window.addEventListener("pageshow", () => { adjustHeight(); if (!started) go(0, false) }); addEventListener("popstate", () => { if (started) volverAPortada() }); addEventListener("pagehide", () => { if (calendarURL) URL.revokeObjectURL(calendarURL) });
+    window.addEventListener("pageshow", () => { adjustHeight(); if (!started) go(0, false) }); addEventListener("popstate", () => { if (started) volverAPortada() });
 
     mark(0); adjustHeight(); go(0, false);
 
