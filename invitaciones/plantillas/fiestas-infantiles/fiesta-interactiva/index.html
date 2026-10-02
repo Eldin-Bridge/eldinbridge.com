@@ -135,7 +135,7 @@
             left: var(--x);
             top: var(--y);
             z-index: var(--z, 1);
-            width: var(--tamano);
+            width: calc(var(--tamano) * 1%);
             max-width: none;
             transform: translate(-50%, -50%) scaleX(var(--voltear, 1));
             transform-origin: center;
@@ -836,7 +836,7 @@
             .asset {
                 left: var(--x-movil);
                 top: var(--y-movil);
-                width: var(--tamano-movil);
+                width: calc(var(--tamano-movil) * 1%);
             }
 
             h1 {
@@ -964,7 +964,7 @@
                 <div class="separador-color">●</div>
                 <p class="edad">Cumple <span data-edad>6</span> años</p>
             </div>
-            <button class="boton-juego navegacion-escena siguiente" type="button">Comenzar la diversión →</button>
+            <button class="boton-juego navegacion-escena siguiente" type="button">Comenzar →</button>
         </section>
         <section class="escena" id="cuenta">
             <img class="fondo" src="assets/fondos/fondo02.webp" alt="">
@@ -1011,7 +1011,7 @@
                             data-ciudad>Cadereyta, Nuevo León</span></div>
                 </div>
             </div>
-            <button class="boton-juego navegacion-escena siguiente" type="button">Entrar a la zona de juegos →</button>
+            <button class="boton-juego navegacion-escena siguiente" type="button">Siguiente zona →</button>
         </section>
         <section class="escena" id="mision">
             <img class="fondo" src="assets/fondos/fondo04.webp" alt="">
@@ -1061,7 +1061,7 @@
                     </li>
                 </ul>
             </div>
-            <button class="boton-juego navegacion-escena siguiente" type="button">Ir por un descanso →</button>
+            <button class="boton-juego navegacion-escena siguiente" type="button">Vayamos a comer →</button>
         </section>
         <section class="escena" id="regalo">
             <img class="fondo" src="assets/fondos/fondo06.webp" alt="">
@@ -1079,7 +1079,7 @@
                 <div class="separador-color">★</div>
                 <p class="nombre">¡Todavía queda más diversión!</p>
             </div>
-            <button class="boton-juego navegacion-escena siguiente" type="button">Llegar a la celebración →</button>
+            <button class="boton-juego navegacion-escena siguiente" type="button">Llegar al final →</button>
         </section>
         <section class="escena" id="final">
             <img class="fondo" src="assets/fondos/fondo07.webp" alt="">
@@ -1121,8 +1121,8 @@
             mapa: "",
             salida: "../../../#fiestas-infantiles",
         };
-        /* POSICIONES EDITABLES: valores CSS exactos del diseño original.
-           x / y: posición. tamano: ancho; admite vw, px, min() y clamp().
+        /* POSICIONES EDITABLES DE PERSONAJES Y ELEMENTOS.
+           x / y: posición. tamano: un solo número como porcentaje de la pantalla.
            Web y móvil son independientes. capa y voltear se comparten. */
         const POSICIONES = {
             "inicio": {
@@ -1130,12 +1130,12 @@
                     "web": {
                         "x": "81.5%",
                         "y": "84%",
-                        "tamano": "27vw"
+                        "tamano": 27
                     },
                     "movil": {
                         "x": "84%",
                         "y": "82%",
-                        "tamano": "min(27vw, 43vw)"
+                        "tamano": 27
                     },
                     "capa": 6,
                     "voltear": false
@@ -1146,26 +1146,26 @@
                     "web": {
                         "x": "18%",
                         "y": "78%",
-                        "tamano": "25vw"
+                        "tamano": 25
                     },
                     "movil": {
                         "x": "12%",
                         "y": "78%",
-                        "tamano": "min(25vw, 43vw)"
+                        "tamano": 25
                     },
                     "capa": 6,
-                    "voltear": true
+                    "voltear": false
                 },
                 "elemento-cuenta": {
                     "web": {
                         "x": "87%",
                         "y": "31%",
-                        "tamano": "clamp(88px,11vw,145px)"
+                        "tamano": 11
                     },
                     "movil": {
                         "x": "87%",
-                        "y": "31%",
-                        "tamano": "min(clamp(88px,11vw,145px), 24vw)"
+                        "y": "35%",
+                        "tamano": 16
                     },
                     "capa": 6,
                     "voltear": false
@@ -1176,12 +1176,12 @@
                     "web": {
                         "x": "83%",
                         "y": "83%",
-                        "tamano": "25vw"
+                        "tamano": 25
                     },
                     "movil": {
-                        "x": "88%",
+                        "x": "86%",
                         "y": "83%",
-                        "tamano": "min(25vw, 43vw)"
+                        "tamano": 25
                     },
                     "capa": 6,
                     "voltear": false
@@ -1190,12 +1190,12 @@
                     "web": {
                         "x": "13%",
                         "y": "32%",
-                        "tamano": "clamp(88px,11vw,145px)"
+                        "tamano": 18
                     },
                     "movil": {
                         "x": "13%",
                         "y": "32%",
-                        "tamano": "min(clamp(88px,11vw,145px), 24vw)"
+                        "tamano": 20
                     },
                     "capa": 6,
                     "voltear": false
@@ -1206,12 +1206,12 @@
                     "web": {
                         "x": "18%",
                         "y": "83%",
-                        "tamano": "25vw"
+                        "tamano": 25
                     },
                     "movil": {
                         "x": "12%",
                         "y": "83%",
-                        "tamano": "min(25vw, 43vw)"
+                        "tamano": 25
                     },
                     "capa": 6,
                     "voltear": false
@@ -1220,12 +1220,12 @@
                     "web": {
                         "x": "87%",
                         "y": "32%",
-                        "tamano": "clamp(88px,11vw,145px)"
+                        "tamano": 15
                     },
                     "movil": {
-                        "x": "87%",
-                        "y": "32%",
-                        "tamano": "min(clamp(88px,11vw,145px), 24vw)"
+                        "x": "50%",
+                        "y": "25%",
+                        "tamano": 30
                     },
                     "capa": 6,
                     "voltear": false
@@ -1236,12 +1236,12 @@
                     "web": {
                         "x": "82%",
                         "y": "83%",
-                        "tamano": "25vw"
+                        "tamano": 25
                     },
                     "movil": {
                         "x": "88%",
-                        "y": "83%",
-                        "tamano": "min(25vw, 43vw)"
+                        "y": "80%",
+                        "tamano": 25
                     },
                     "capa": 6,
                     "voltear": false
@@ -1250,12 +1250,12 @@
                     "web": {
                         "x": "13%",
                         "y": "32%",
-                        "tamano": "clamp(88px,11vw,145px)"
+                        "tamano": 15
                     },
                     "movil": {
                         "x": "13%",
                         "y": "32%",
-                        "tamano": "min(clamp(88px,11vw,145px), 24vw)"
+                        "tamano": 20
                     },
                     "capa": 6,
                     "voltear": false
@@ -1265,27 +1265,27 @@
                 "personaje-regalo": {
                     "web": {
                         "x": "18%",
-                        "y": "72%",
-                        "tamano": "25vw"
+                        "y": "85%",
+                        "tamano": 25
                     },
                     "movil": {
                         "x": "12%",
-                        "y": "72%",
-                        "tamano": "min(25vw, 43vw)"
+                        "y": "80%",
+                        "tamano": 25
                     },
                     "capa": 6,
-                    "voltear": true
+                    "voltear": false
                 },
                 "elemento-regalo": {
                     "web": {
                         "x": "87%",
                         "y": "31%",
-                        "tamano": "clamp(92px,12vw,155px)"
+                        "tamano": 15
                     },
                     "movil": {
                         "x": "87%",
-                        "y": "31%",
-                        "tamano": "min(clamp(92px,12vw,155px), 24vw)"
+                        "y": "36%",
+                        "tamano": 20
                     },
                     "capa": 6,
                     "voltear": false
@@ -1296,12 +1296,12 @@
                     "web": {
                         "x": "82%",
                         "y": "72%",
-                        "tamano": "26vw"
+                        "tamano": 26
                     },
                     "movil": {
                         "x": "88%",
                         "y": "72%",
-                        "tamano": "min(26vw, 43vw)"
+                        "tamano": 26
                     },
                     "capa": 6,
                     "voltear": false
@@ -1310,12 +1310,12 @@
                     "web": {
                         "x": "14%",
                         "y": "73%",
-                        "tamano": "13vw"
+                        "tamano": 15
                     },
                     "movil": {
                         "x": "14%",
                         "y": "73%",
-                        "tamano": "min(13vw, 25vw)"
+                        "tamano": 20
                     },
                     "capa": 5,
                     "voltear": false
@@ -1323,7 +1323,6 @@
             }
         };
         // FIN DE DATOS EDITABLES. No es necesario cambiar el código inferior.
-
         const $ = (selector, contexto = document) => contexto.querySelector(selector);
         const $$ = (selector, contexto = document) => [...contexto.querySelectorAll(selector)];
         const escenas = $$(".escena");
