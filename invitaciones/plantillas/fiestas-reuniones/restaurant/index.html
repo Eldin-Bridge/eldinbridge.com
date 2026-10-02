@@ -1,16 +1,18 @@
 <!doctype html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <link rel="preload" as="image" href="assets/fondos/fondo01.webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;1,500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;1,500&display=swap"
+    rel="stylesheet">
   <meta name="theme-color" content="#111013">
   <meta name="description" content="Invitación digital para una cena de gala.">
   <title>Cena de Gala | Invitación</title>
-
   <style>
     :root {
       --alto: 100svh;
@@ -25,7 +27,11 @@
       --sombra: 0 30px 90px rgba(0, 0, 0, .56);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     html,
     body {
@@ -43,9 +49,18 @@
     }
 
     button,
-    a { color: inherit; font: inherit; }
-    button { border: 0; }
-    a { text-decoration: none; }
+    a {
+      color: inherit;
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+    }
+
+    a {
+      text-decoration: none;
+    }
 
     main {
       display: flex;
@@ -61,7 +76,9 @@
       -webkit-overflow-scrolling: touch;
     }
 
-    main::-webkit-scrollbar { display: none; }
+    main::-webkit-scrollbar {
+      display: none;
+    }
 
     body:not(.invitacion-abierta) main {
       visibility: hidden;
@@ -146,8 +163,17 @@
     }
 
     @keyframes luz-gala {
-      0%, 100% { opacity: .32; transform: translateX(-53%) rotate(-7deg); }
-      50% { opacity: .58; transform: translateX(-47%) rotate(5deg); }
+
+      0%,
+      100% {
+        opacity: .32;
+        transform: translateX(-53%) rotate(-7deg);
+      }
+
+      50% {
+        opacity: .58;
+        transform: translateX(-47%) rotate(5deg);
+      }
     }
 
     .capa-assets {
@@ -159,41 +185,89 @@
 
     .elemento {
       position: absolute;
-      left: var(--x);
-      top: var(--y);
-      width: var(--tamano);
+      left: calc(var(--x) * 1%);
+      top: calc(var(--y) * 1%);
+      width: calc(var(--tamano) * 1%);
       max-width: none;
       user-select: none;
-      transform: translate(-50%, -50%) rotate(var(--giro, 0deg));
+      transform: translate(-50%, -50%) rotate(calc(var(--giro, 0) * 1deg));
       transform-origin: center;
       filter: drop-shadow(0 20px 24px rgba(0, 0, 0, .55));
       animation: flotar 4.8s ease-in-out infinite;
       will-change: translate;
     }
 
-    .escena:not(.activa) .elemento { animation-play-state: paused; }
-    #detalles .elemento { animation-name: marcar-hora; animation-duration: 5s; }
-    #menu .elemento { animation-name: presentar-plato; animation-duration: 4.2s; }
-    #final .elemento { animation-name: postre-gala; animation-duration: 5.4s; }
+    .escena:not(.activa) .elemento {
+      animation-play-state: paused;
+    }
+
+    #detalles .elemento {
+      animation-name: marcar-hora;
+      animation-duration: 5s;
+    }
+
+    #menu .elemento {
+      animation-name: presentar-plato;
+      animation-duration: 4.2s;
+    }
+
+    #final .elemento {
+      animation-name: postre-gala;
+      animation-duration: 5.4s;
+    }
 
     @keyframes flotar {
-      0%, 100% { translate: 0 0; }
-      50% { translate: 0 -10px; }
+
+      0%,
+      100% {
+        translate: 0 0;
+      }
+
+      50% {
+        translate: 0 -10px;
+      }
     }
 
     @keyframes marcar-hora {
-      0%, 100% { translate: 0 0; rotate: 0deg; }
-      50% { translate: 0 -8px; rotate: -1.5deg; }
+
+      0%,
+      100% {
+        translate: 0 0;
+        rotate: 0deg;
+      }
+
+      50% {
+        translate: 0 -8px;
+        rotate: -1.5deg;
+      }
     }
 
     @keyframes presentar-plato {
-      0%, 100% { translate: 0 0; scale: 1; }
-      50% { translate: 0 -7px; scale: 1.025; }
+
+      0%,
+      100% {
+        translate: 0 0;
+        scale: 1;
+      }
+
+      50% {
+        translate: 0 -7px;
+        scale: 1.025;
+      }
     }
 
     @keyframes postre-gala {
-      0%, 100% { translate: 0 0; filter: brightness(1); }
-      50% { translate: 0 -9px; filter: brightness(1.12); }
+
+      0%,
+      100% {
+        translate: 0 0;
+        filter: brightness(1);
+      }
+
+      50% {
+        translate: 0 -9px;
+        filter: brightness(1.12);
+      }
     }
 
     .tarjeta {
@@ -219,7 +293,7 @@
       padding: 31px 31px 29px;
       overflow: hidden;
       background:
-        linear-gradient(135deg, rgba(255,255,255,.48), transparent 35%),
+        linear-gradient(135deg, rgba(255, 255, 255, .48), transparent 35%),
         var(--papel);
       border: 1px solid rgba(181, 138, 69, .55);
       clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 18px, 100% calc(100% - 18px), calc(100% - 18px) 100%, 18px 100%, 0 calc(100% - 18px), 0 18px);
@@ -289,8 +363,13 @@
       text-wrap: balance;
     }
 
-    h1 { font-size: clamp(2.65rem, 6.5vw, 5.1rem); }
-    h2 { font-size: clamp(2.15rem, 5.2vw, 4rem); }
+    h1 {
+      font-size: clamp(2.65rem, 6.5vw, 5.1rem);
+    }
+
+    h2 {
+      font-size: clamp(2.15rem, 5.2vw, 4rem);
+    }
 
     .acento {
       display: block;
@@ -336,7 +415,9 @@
       background: linear-gradient(90deg, transparent, var(--oro));
     }
 
-    .ornamento::after { transform: rotate(180deg); }
+    .ornamento::after {
+      transform: rotate(180deg);
+    }
 
     .ornamento span {
       width: 8px;
@@ -357,7 +438,7 @@
       border-radius: 2px;
       color: #fffaf0;
       background: #181518;
-      box-shadow: inset 0 0 0 2px rgba(219, 194, 140, .18), 0 12px 24px rgba(0,0,0,.2);
+      box-shadow: inset 0 0 0 2px rgba(219, 194, 140, .18), 0 12px 24px rgba(0, 0, 0, .2);
       cursor: pointer;
       font-family: Cinzel, Georgia, serif;
       font-size: .72rem;
@@ -370,11 +451,13 @@
     .boton-ubicacion:hover {
       background: var(--borgona);
       transform: translateY(-2px);
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,.1), 0 15px 28px rgba(72,16,35,.26);
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .1), 0 15px 28px rgba(72, 16, 35, .26);
     }
 
     .boton:active,
-    .boton-ubicacion:active { transform: translateY(1px) scale(.985); }
+    .boton-ubicacion:active {
+      transform: translateY(1px) scale(.985);
+    }
 
     .boton-ubicacion {
       color: #211d1c;
@@ -431,9 +514,25 @@
       background: rgba(255, 255, 255, .38);
     }
 
-    .dato i { margin-bottom: 5px; font-size: 1.2rem; font-style: normal; }
-    .dato small { color: var(--borgona); font: 700 .54rem Cinzel, serif; letter-spacing: .14em; text-transform: uppercase; }
-    .dato strong { margin-top: 5px; color: #322c29; font-size: .76rem; line-height: 1.35; }
+    .dato i {
+      margin-bottom: 5px;
+      font-size: 1.2rem;
+      font-style: normal;
+    }
+
+    .dato small {
+      color: var(--borgona);
+      font: 700 .54rem Cinzel, serif;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .dato strong {
+      margin-top: 5px;
+      color: #322c29;
+      font-size: .76rem;
+      line-height: 1.35;
+    }
 
     .lista {
       display: grid;
@@ -501,16 +600,29 @@
       border-radius: 2px;
       color: #fff7e8;
       background: rgba(17, 16, 19, .8);
-      box-shadow: 0 10px 28px rgba(0,0,0,.32);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, .32);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       cursor: pointer;
       transition: opacity .3s ease, transform .2s ease, background .2s ease;
     }
 
-    .control:hover { background: var(--borgona); transform: translateY(-2px); }
-    .salir { left: max(18px, env(safe-area-inset-left)); width: auto; padding-inline: 19px; font: 700 .72rem Cinzel, serif; }
-    .musica { right: max(18px, env(safe-area-inset-right)); font-family: Cinzel, serif; }
+    .control:hover {
+      background: var(--borgona);
+      transform: translateY(-2px);
+    }
+
+    .salir {
+      left: max(18px, env(safe-area-inset-left));
+      width: auto;
+      padding-inline: 19px;
+      font: 700 .72rem Cinzel, serif;
+    }
+
+    .musica {
+      right: max(18px, env(safe-area-inset-right));
+      font-family: Cinzel, serif;
+    }
 
     body:not(.invitacion-abierta) .musica {
       opacity: 0;
@@ -535,7 +647,7 @@
     body.fondo-listo .entrada {
       opacity: 1;
       visibility: visible;
-      background: linear-gradient(rgba(9,8,9,.38), rgba(9,8,9,.74)), url("assets/fondos/fondo01.webp") center / cover no-repeat;
+      background: linear-gradient(rgba(9, 8, 9, .38), rgba(9, 8, 9, .74)), url("assets/fondos/fondo01.webp") center / cover no-repeat;
       transition: opacity .65s ease;
     }
 
@@ -552,35 +664,47 @@
       padding: 14px;
       color: var(--tinta);
       text-align: center;
-      background: rgba(15,14,16,.94);
-      border: 1px solid rgba(219,194,140,.6);
+      background: rgba(15, 14, 16, .94);
+      border: 1px solid rgba(219, 194, 140, .6);
       clip-path: polygon(22px 0, calc(100% - 22px) 0, 100% 22px, 100% calc(100% - 22px), calc(100% - 22px) 100%, 22px 100%, 0 calc(100% - 22px), 0 22px);
       box-shadow: var(--sombra);
       transform: translateY(18px) scale(.97);
       opacity: 0;
-      transition: opacity .7s ease .12s, transform .8s cubic-bezier(.22,.8,.32,1) .12s;
+      transition: opacity .7s ease .12s, transform .8s cubic-bezier(.22, .8, .32, 1) .12s;
     }
 
     .entrada-panel {
       padding: 27px 25px 29px;
       background: var(--papel);
-      border: 1px solid rgba(181,138,69,.58);
+      border: 1px solid rgba(181, 138, 69, .58);
       clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
     }
 
-    body.fondo-listo .entrada-contenido { opacity: 1; transform: translateY(0) scale(1); }
+    body.fondo-listo .entrada-contenido {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
 
     .entrada-icono {
       width: min(49vw, 235px);
       max-height: 150px;
       margin: -5px auto 2px;
       object-fit: contain;
-      filter: drop-shadow(0 12px 18px rgba(0,0,0,.34));
+      filter: drop-shadow(0 12px 18px rgba(0, 0, 0, .34));
       animation: flotar 4.5s ease-in-out infinite;
     }
 
-    .entrada h2 { font-size: clamp(2rem, 6.5vw, 3.5rem); }
-    .entrada p { margin: 15px auto 21px; color: var(--texto); font-size: .88rem; line-height: 1.6; text-wrap: balance; }
+    .entrada h2 {
+      font-size: clamp(2rem, 6.5vw, 3.5rem);
+    }
+
+    .entrada p {
+      margin: 15px auto 21px;
+      color: var(--texto);
+      font-size: .88rem;
+      line-height: 1.6;
+      text-wrap: balance;
+    }
 
     .particulas {
       position: fixed;
@@ -596,68 +720,197 @@
       top: var(--y);
       width: var(--s);
       height: var(--s);
-      border: 1px solid rgba(255,240,204,.9);
+      border: 1px solid rgba(255, 240, 204, .9);
       transform: rotate(45deg);
-      box-shadow: 0 0 9px rgba(219,194,140,.9);
+      box-shadow: 0 0 9px rgba(219, 194, 140, .9);
       animation: elevar-destello var(--d) ease-out forwards;
     }
 
     @keyframes elevar-destello {
-      to { opacity: 0; transform: translate(var(--dx), -80px) rotate(135deg) scale(.2); }
+      to {
+        opacity: 0;
+        transform: translate(var(--dx), -80px) rotate(135deg) scale(.2);
+      }
     }
 
     @media (max-width: 600px) {
-      .escena { padding: max(72px, env(safe-area-inset-top)) max(25px, env(safe-area-inset-right)) max(25px, env(safe-area-inset-bottom)) max(25px, env(safe-area-inset-left)); }
-      .tarjeta { width: 100%; padding: 11px; clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 18px, 100% calc(100% - 18px), calc(100% - 18px) 100%, 18px 100%, 0 calc(100% - 18px), 0 18px); }
-      .tarjeta-interior { padding: 27px 19px 24px; }
-      h1 { font-size: clamp(2.3rem, 10.8vw, 3.7rem); }
-      h2 { font-size: clamp(1.85rem, 8.8vw, 3rem); }
-      .descripcion { margin-top: 14px; font-size: .82rem; line-height: 1.52; }
-      .sello { margin-bottom: 13px; font-size: .56rem; }
-      .boton, .boton-ubicacion { min-height: 44px; padding: 10px 17px; font-size: .63rem; }
-      .contador { gap: 5px; margin: 18px auto 21px; }
-      .tiempo { padding: 11px 2px 9px; }
-      .tiempo strong { font-size: 1.3rem; }
-      .tiempo span { font-size: .46rem; }
-      .datos { gap: 6px; margin: 18px auto 20px; }
-      .dato { min-height: 86px; padding: 9px 4px; }
-      .dato strong { font-size: .65rem; }
-      .lista { gap: 5px; margin: 17px auto 20px; }
-      .lista li { padding: 7px 10px; font-size: .69rem; }
-      .menu { gap: 6px; margin: 17px auto 20px; }
-      .menu span { padding: 7px 9px; font-size: .66rem; }
-      .elemento { max-width: 43vw; max-height: 24vh; }
-      #cuenta .elemento { --x: 17% !important; --y: 79% !important; --tamano: min(31vw, 155px) !important; }
-      #detalles .elemento { --x: 83% !important; --y: 79% !important; --tamano: min(32vw, 160px) !important; }
-      #itinerario .elemento { --x: 18% !important; --y: 31% !important; --tamano: min(34vw, 170px) !important; }
-      #menu .elemento { --x: 82% !important; --y: 81% !important; --tamano: min(39vw, 195px) !important; }
-      #etiqueta .elemento { --x: 18% !important; --y: 80% !important; --tamano: min(34vw, 170px) !important; }
-      #final .elemento { --x: 50% !important; --y: 20% !important; --tamano: min(37vw, 185px) !important; max-height: 21vh; }
-      .control { top: max(14px, env(safe-area-inset-top)); min-width: 46px; height: 46px; }
-      .salir { left: max(14px, env(safe-area-inset-left)); padding-inline: 16px; }
-      .musica { right: max(14px, env(safe-area-inset-right)); }
-      .entrada { padding: 78px 24px 27px; }
-      .entrada-contenido { width: 100%; }
-      .entrada-panel { padding: 23px 19px 25px; }
-      .entrada-icono { width: min(48vw, 190px); max-height: 128px; }
+      .escena {
+        padding: max(72px, env(safe-area-inset-top)) max(25px, env(safe-area-inset-right)) max(25px, env(safe-area-inset-bottom)) max(25px, env(safe-area-inset-left));
+      }
+
+      .tarjeta {
+        width: 100%;
+        padding: 11px;
+        clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 18px, 100% calc(100% - 18px), calc(100% - 18px) 100%, 18px 100%, 0 calc(100% - 18px), 0 18px);
+      }
+
+      .tarjeta-interior {
+        padding: 27px 19px 24px;
+      }
+
+      h1 {
+        font-size: clamp(2.3rem, 10.8vw, 3.7rem);
+      }
+
+      h2 {
+        font-size: clamp(1.85rem, 8.8vw, 3rem);
+      }
+
+      .descripcion {
+        margin-top: 14px;
+        font-size: .82rem;
+        line-height: 1.52;
+      }
+
+      .sello {
+        margin-bottom: 13px;
+        font-size: .56rem;
+      }
+
+      .boton,
+      .boton-ubicacion {
+        min-height: 44px;
+        padding: 10px 17px;
+        font-size: .63rem;
+      }
+
+      .contador {
+        gap: 5px;
+        margin: 18px auto 21px;
+      }
+
+      .tiempo {
+        padding: 11px 2px 9px;
+      }
+
+      .tiempo strong {
+        font-size: 1.3rem;
+      }
+
+      .tiempo span {
+        font-size: .46rem;
+      }
+
+      .datos {
+        gap: 6px;
+        margin: 18px auto 20px;
+      }
+
+      .dato {
+        min-height: 86px;
+        padding: 9px 4px;
+      }
+
+      .dato strong {
+        font-size: .65rem;
+      }
+
+      .lista {
+        gap: 5px;
+        margin: 17px auto 20px;
+      }
+
+      .lista li {
+        padding: 7px 10px;
+        font-size: .69rem;
+      }
+
+      .menu {
+        gap: 6px;
+        margin: 17px auto 20px;
+      }
+
+      .menu span {
+        padding: 7px 9px;
+        font-size: .66rem;
+      }
+
+      .elemento {
+        left: calc(var(--x-movil) * 1%);
+        top: calc(var(--y-movil) * 1%);
+        width: calc(var(--tamano-movil) * 1%);
+      }
+
+
+
+
+
+
+      .control {
+        top: max(14px, env(safe-area-inset-top));
+        min-width: 46px;
+        height: 46px;
+      }
+
+      .salir {
+        left: max(14px, env(safe-area-inset-left));
+        padding-inline: 16px;
+      }
+
+      .musica {
+        right: max(14px, env(safe-area-inset-right));
+      }
+
+      .entrada {
+        padding: 78px 24px 27px;
+      }
+
+      .entrada-contenido {
+        width: 100%;
+      }
+
+      .entrada-panel {
+        padding: 23px 19px 25px;
+      }
+
+      .entrada-icono {
+        width: min(48vw, 190px);
+        max-height: 128px;
+      }
     }
 
     @media (max-height: 690px) {
-      .tarjeta-interior { padding-block: 20px 19px; }
-      h1 { font-size: clamp(2.1rem, 9vw, 3.2rem); }
-      h2 { font-size: clamp(1.7rem, 7.5vw, 2.7rem); }
-      .descripcion { margin-top: 10px; line-height: 1.43; }
-      .contador, .datos, .lista, .menu { margin-block: 13px 16px; }
-      .ornamento { margin-block: 13px; }
-      .dato { min-height: 74px; }
-      .lista li { padding-block: 6px; }
+      .tarjeta-interior {
+        padding-block: 20px 19px;
+      }
+
+      h1 {
+        font-size: clamp(2.1rem, 9vw, 3.2rem);
+      }
+
+      h2 {
+        font-size: clamp(1.7rem, 7.5vw, 2.7rem);
+      }
+
+      .descripcion {
+        margin-top: 10px;
+        line-height: 1.43;
+      }
+
+      .contador,
+      .datos,
+      .lista,
+      .menu {
+        margin-block: 13px 16px;
+      }
+
+      .ornamento {
+        margin-block: 13px;
+      }
+
+      .dato {
+        min-height: 74px;
+      }
+
+      .lista li {
+        padding-block: 6px;
+      }
     }
   </style>
 </head>
 
 <body>
   <audio id="audio" src="assets/audio/audio01.mp3" loop preload="metadata"></audio>
-
   <div class="entrada" id="entrada">
     <div class="entrada-contenido">
       <div class="entrada-panel">
@@ -669,128 +922,151 @@
       </div>
     </div>
   </div>
-
   <a class="control salir" href="../../../#fiestas-reuniones" aria-label="Salir de la invitación">Salir</a>
-  <button class="control musica" id="musica" type="button" aria-label="Reproducir música" aria-pressed="false">▶</button>
-
+  <button class="control musica" id="musica" type="button" aria-label="Reproducir música"
+    aria-pressed="false">▶</button>
   <main id="invitacion">
     <section class="escena activa" id="inicio">
       <img class="fondo" src="assets/fondos/fondo01.webp" alt="">
-      <div class="velo"></div><div class="resplandor"></div>
-      <article class="tarjeta"><div class="tarjeta-interior">
-        <span class="sello">Invitación a cenar</span>
-        <h1>Una noche <span class="acento">para celebrar</span></h1>
-        <p class="anfitrion"><span data-nombre>Victoria</span> te invita</p>
-        <p class="descripcion">Acompáñame a compartir una cena especial en un ambiente elegante y lleno de buenos momentos.</p>
-        <div class="ornamento"><span></span></div>
-        <button class="boton siguiente" type="button">Tomar asiento <span>→</span></button>
-      </div></article>
+      <div class="velo"></div>
+      <div class="resplandor"></div>
+      <article class="tarjeta">
+        <div class="tarjeta-interior">
+          <span class="sello">Invitación a cenar</span>
+          <h1>Una noche <span class="acento">para celebrar</span></h1>
+          <p class="anfitrion"><span data-nombre>Victoria</span> te invita</p>
+          <p class="descripcion">Acompáñame a compartir una cena especial en un ambiente elegante y lleno de buenos
+            momentos.</p>
+          <div class="ornamento"><span></span></div>
+          <button class="boton siguiente" type="button">Tomar asiento <span>→</span></button>
+        </div>
+      </article>
     </section>
-
     <section class="escena" id="cuenta">
       <img class="fondo" src="assets/fondos/fondo02.webp" alt="" loading="lazy">
-      <div class="velo"></div><div class="resplandor"></div>
-      <div class="capa-assets"><img class="elemento" src="assets/elementos/elemento02.png" alt="" style="--x:17%; --y:79%; --tamano:clamp(165px,19vw,295px); --giro:-3deg;"></div>
-      <article class="tarjeta"><div class="tarjeta-interior">
-        <span class="sello">La fecha se acerca</span>
-        <h2>Contemos los días <span class="acento">para brindar</span></h2>
-        <p class="descripcion">La reservación está hecha. Nuestra mesa nos espera en…</p>
-        <div class="contador" aria-label="Cuenta regresiva">
-          <div class="tiempo"><strong id="dias">00</strong><span>Días</span></div>
-          <div class="tiempo"><strong id="horas">00</strong><span>Horas</span></div>
-          <div class="tiempo"><strong id="minutos">00</strong><span>Minutos</span></div>
-          <div class="tiempo"><strong id="segundos">00</strong><span>Segundos</span></div>
+      <div class="velo"></div>
+      <div class="resplandor"></div>
+      <div class="capa-assets"><img class="elemento" src="assets/elementos/elemento02.png" alt=""
+          data-elemento="elemento-cuenta"></div>
+      <article class="tarjeta">
+        <div class="tarjeta-interior">
+          <span class="sello">La fecha se acerca</span>
+          <h2>Contemos los días <span class="acento">para brindar</span></h2>
+          <p class="descripcion">La reservación está hecha. Nuestra mesa nos espera en…</p>
+          <div class="contador" aria-label="Cuenta regresiva">
+            <div class="tiempo"><strong id="dias">00</strong><span>Días</span></div>
+            <div class="tiempo"><strong id="horas">00</strong><span>Horas</span></div>
+            <div class="tiempo"><strong id="minutos">00</strong><span>Minutos</span></div>
+            <div class="tiempo"><strong id="segundos">00</strong><span>Segundos</span></div>
+          </div>
+          <button class="boton siguiente" type="button">Ver la reservación <span>→</span></button>
         </div>
-        <button class="boton siguiente" type="button">Ver la reservación <span>→</span></button>
-      </div></article>
+      </article>
     </section>
-
     <section class="escena" id="detalles">
       <img class="fondo" src="assets/fondos/fondo03.webp" alt="" loading="lazy">
-      <div class="velo"></div><div class="resplandor"></div>
-      <div class="capa-assets"><img class="elemento" src="assets/elementos/elemento03.png" alt="" style="--x:83%; --y:79%; --tamano:clamp(165px,19vw,295px);"></div>
-      <article class="tarjeta"><div class="tarjeta-interior">
-        <span class="sello">La reservación</span>
-        <h2>El lugar y <span class="acento">la hora</span></h2>
-        <div class="datos">
-          <div class="dato"><i>📅</i><small>Fecha</small><strong data-fecha>Sábado 18 de julio</strong></div>
-          <div class="dato"><i>🕗</i><small>Hora</small><strong data-hora>8:00 p. m.</strong></div>
-          <div class="dato"><i>🍽️</i><small>Restaurant</small><strong data-lugar>Salón Imperial</strong></div>
-          <div class="dato"><i>📍</i><small>Ciudad</small><strong data-ciudad>Monterrey, Nuevo León</strong></div>
+      <div class="velo"></div>
+      <div class="resplandor"></div>
+      <div class="capa-assets"><img class="elemento" src="assets/elementos/elemento03.png" alt=""
+          data-elemento="elemento-detalles"></div>
+      <article class="tarjeta">
+        <div class="tarjeta-interior">
+          <span class="sello">La reservación</span>
+          <h2>El lugar y <span class="acento">la hora</span></h2>
+          <div class="datos">
+            <div class="dato"><i>📅</i><small>Fecha</small><strong data-fecha>Sábado 18 de julio</strong></div>
+            <div class="dato"><i>🕗</i><small>Hora</small><strong data-hora>8:00 p. m.</strong></div>
+            <div class="dato"><i>🍽️</i><small>Restaurant</small><strong data-lugar>Salón Imperial</strong></div>
+            <div class="dato"><i>📍</i><small>Ciudad</small><strong data-ciudad>Monterrey, Nuevo León</strong></div>
+          </div>
+          <button class="boton siguiente" type="button">Conocer la velada <span>→</span></button>
         </div>
-        <button class="boton siguiente" type="button">Conocer la velada <span>→</span></button>
-      </div></article>
+      </article>
     </section>
-
     <section class="escena" id="itinerario">
       <img class="fondo" src="assets/fondos/fondo04.webp" alt="" loading="lazy">
-      <div class="velo"></div><div class="resplandor"></div>
-      <div class="capa-assets"><img class="elemento" src="assets/elementos/elemento06.png" alt="" style="--x:17%; --y:31%; --tamano:clamp(175px,21vw,325px); --giro:-3deg;"></div>
-      <article class="tarjeta"><div class="tarjeta-interior">
-        <span class="sello">El orden de la noche</span>
-        <h2>Una experiencia <span class="acento">para disfrutar</span></h2>
-        <p class="descripcion">Cada momento está pensado para conversar, saborear y celebrar.</p>
-        <ul class="lista">
-          <li><span class="lista-icono">I</span><span>Recepción y copa de bienvenida</span></li>
-          <li><span class="lista-icono">II</span><span>Cena servida a la mesa</span></li>
-          <li><span class="lista-icono">III</span><span>Brindis y sobremesa</span></li>
-        </ul>
-        <button class="boton siguiente" type="button">Descubrir el menú <span>→</span></button>
-      </div></article>
+      <div class="velo"></div>
+      <div class="resplandor"></div>
+      <div class="capa-assets"><img class="elemento" src="assets/elementos/elemento06.png" alt=""
+          data-elemento="elemento-itinerario"></div>
+      <article class="tarjeta">
+        <div class="tarjeta-interior">
+          <span class="sello">El orden de la noche</span>
+          <h2>Una experiencia <span class="acento">para disfrutar</span></h2>
+          <p class="descripcion">Cada momento está pensado para conversar, saborear y celebrar.</p>
+          <ul class="lista">
+            <li><span class="lista-icono">I</span><span>Recepción y copa de bienvenida</span></li>
+            <li><span class="lista-icono">II</span><span>Cena servida a la mesa</span></li>
+            <li><span class="lista-icono">III</span><span>Brindis y sobremesa</span></li>
+          </ul>
+          <button class="boton siguiente" type="button">Descubrir el menú <span>→</span></button>
+        </div>
+      </article>
     </section>
-
     <section class="escena" id="menu">
       <img class="fondo" src="assets/fondos/fondo05.webp" alt="" loading="lazy">
-      <div class="velo"></div><div class="resplandor"></div>
-      <div class="capa-assets"><img class="elemento" src="assets/elementos/elemento04.png" alt="" style="--x:83%; --y:80%; --tamano:clamp(195px,24vw,370px); --giro:2deg;"></div>
-      <article class="tarjeta"><div class="tarjeta-interior">
-        <span class="sello">Selección del chef</span>
-        <h2>Sabores dignos <span class="acento">de la ocasión</span></h2>
-        <p class="descripcion">Disfrutaremos una cena cuidadosamente preparada para compartir.</p>
-        <div class="menu">
-          <span>Entrada de temporada</span><span>Plato principal</span><span>Selección de vinos</span><span>Postre de gala</span>
+      <div class="velo"></div>
+      <div class="resplandor"></div>
+      <div class="capa-assets"><img class="elemento" src="assets/elementos/elemento04.png" alt=""
+          data-elemento="elemento-menu"></div>
+      <article class="tarjeta">
+        <div class="tarjeta-interior">
+          <span class="sello">Selección del chef</span>
+          <h2>Sabores dignos <span class="acento">de la ocasión</span></h2>
+          <p class="descripcion">Disfrutaremos una cena cuidadosamente preparada para compartir.</p>
+          <div class="menu">
+            <span>Entrada de temporada</span><span>Plato principal</span><span>Selección de vinos</span><span>Postre de
+              gala</span>
+          </div>
+          <button class="boton siguiente" type="button">Código de vestimenta <span>→</span></button>
         </div>
-        <button class="boton siguiente" type="button">Código de vestimenta <span>→</span></button>
-      </div></article>
+      </article>
     </section>
-
     <section class="escena" id="etiqueta">
       <img class="fondo" src="assets/fondos/fondo06.webp" alt="" loading="lazy">
-      <div class="velo"></div><div class="resplandor"></div>
-      <div class="capa-assets"><img class="elemento" src="assets/elementos/elemento05.png" alt="" style="--x:17%; --y:79%; --tamano:clamp(170px,20vw,310px);"></div>
-      <article class="tarjeta"><div class="tarjeta-interior">
-        <span class="sello">Para la ocasión</span>
-        <h2>Una noche <span class="acento">de etiqueta</span></h2>
-        <p class="descripcion">Queremos darle a la velada un ambiente especial y elegante.</p>
-        <ul class="lista">
-          <li><span class="lista-icono">◇</span><span>Vestimenta formal</span></li>
-          <li><span class="lista-icono">◇</span><span>Llegar con puntualidad</span></li>
-          <li><span class="lista-icono">◇</span><span>Confirmar asistencia</span></li>
-        </ul>
-        <button class="boton siguiente" type="button">Ir al cierre <span>→</span></button>
-      </div></article>
+      <div class="velo"></div>
+      <div class="resplandor"></div>
+      <div class="capa-assets"><img class="elemento" src="assets/elementos/elemento05.png" alt=""
+          data-elemento="elemento-etiqueta"></div>
+      <article class="tarjeta">
+        <div class="tarjeta-interior">
+          <span class="sello">Para la ocasión</span>
+          <h2>Una noche <span class="acento">de etiqueta</span></h2>
+          <p class="descripcion">Queremos darle a la velada un ambiente especial y elegante.</p>
+          <ul class="lista">
+            <li><span class="lista-icono">◇</span><span>Vestimenta formal</span></li>
+            <li><span class="lista-icono">◇</span><span>Llegar con puntualidad</span></li>
+            <li><span class="lista-icono">◇</span><span>Confirmar asistencia</span></li>
+          </ul>
+          <button class="boton siguiente" type="button">Ir al cierre <span>→</span></button>
+        </div>
+      </article>
     </section>
-
     <section class="escena" id="final">
       <img class="fondo" src="assets/fondos/fondo07.webp" alt="" loading="lazy">
-      <div class="velo"></div><div class="resplandor"></div>
-      <div class="capa-assets"><img class="elemento" src="assets/elementos/elemento07.png" alt="" style="--x:50%; --y:20%; --tamano:clamp(185px,23vw,350px);"></div>
-      <article class="tarjeta"><div class="tarjeta-interior">
-        <span class="sello">La mesa te espera</span>
-        <h2>Será un placer <span class="acento">compartir contigo</span></h2>
-        <p class="descripcion">Tu presencia hará que esta cena se convierta en un recuerdo verdaderamente especial.</p>
-        <p class="anfitrion">Con cariño, <span data-nombre>Victoria</span></p>
-        <div class="acciones-finales">
-          <a class="boton-ubicacion" data-ubicacion target="_blank" rel="noopener noreferrer">Ver ubicación <span>↗</span></a>
-          <button class="boton" id="volver-inicio" type="button">Volver al inicio <span>↺</span></button>
+      <div class="velo"></div>
+      <div class="resplandor"></div>
+      <div class="capa-assets"><img class="elemento" src="assets/elementos/elemento07.png" alt=""
+          data-elemento="elemento-final"></div>
+      <article class="tarjeta">
+        <div class="tarjeta-interior">
+          <span class="sello">La mesa te espera</span>
+          <h2>Será un placer <span class="acento">compartir contigo</span></h2>
+          <p class="descripcion">Tu presencia hará que esta cena se convierta en un recuerdo verdaderamente especial.
+          </p>
+          <p class="anfitrion">Con cariño, <span data-nombre>Victoria</span></p>
+          <div class="acciones-finales">
+            <a class="boton-ubicacion" data-ubicacion target="_blank" rel="noopener noreferrer">Ver ubicación
+              <span>↗</span></a>
+            <button class="boton" id="volver-inicio" type="button">Volver al inicio <span>↺</span></button>
+          </div>
         </div>
-      </div></article>
+      </article>
     </section>
   </main>
-
   <div class="particulas" id="particulas" aria-hidden="true"></div>
-
   <script>
+    // DATOS EDITABLES: información del cliente y enlaces.
     const CONFIG = {
       nombre: "Victoria",
       fechaTexto: "Sábado 18 de julio",
@@ -798,19 +1074,126 @@
       lugar: "Salón Imperial",
       ciudad: "Monterrey, Nuevo León",
       fechaEvento: "2027-07-18T20:00:00-06:00",
-      ubicacionUrl: "https://maps.google.com/"
+      ubicacionUrl: "https://maps.google.com/",
+      salida: "../../../#fiestas-reuniones"
     };
-
+    // POSICIONES EDITABLES: x, y y tamano son porcentajes de pantalla.
+    // Un número por valor. Web y móvil independientes; giro en grados.
+    const POSICIONES = {
+      "cuenta": {
+        "elemento-cuenta": {
+          "web": {
+            "x": 17,
+            "y": 79,
+            "tamano": 19
+          },
+          "movil": {
+            "x": 17,
+            "y": 79,
+            "tamano": 31
+          },
+          "giro": -3
+        }
+      },
+      "detalles": {
+        "elemento-detalles": {
+          "web": {
+            "x": 83,
+            "y": 79,
+            "tamano": 19
+          },
+          "movil": {
+            "x": 83,
+            "y": 79,
+            "tamano": 32
+          },
+          "giro": 0
+        }
+      },
+      "itinerario": {
+        "elemento-itinerario": {
+          "web": {
+            "x": 17,
+            "y": 31,
+            "tamano": 21
+          },
+          "movil": {
+            "x": 18,
+            "y": 80,
+            "tamano": 34
+          },
+          "giro": -3
+        }
+      },
+      "menu": {
+        "elemento-menu": {
+          "web": {
+            "x": 83,
+            "y": 80,
+            "tamano": 24
+          },
+          "movil": {
+            "x": 82,
+            "y": 79,
+            "tamano": 34
+          },
+          "giro": 2
+        }
+      },
+      "etiqueta": {
+        "elemento-etiqueta": {
+          "web": {
+            "x": 17,
+            "y": 79,
+            "tamano": 20
+          },
+          "movil": {
+            "x": 18,
+            "y": 80,
+            "tamano": 34
+          },
+          "giro": 0
+        }
+      },
+      "final": {
+        "elemento-final": {
+          "web": {
+            "x": 50,
+            "y": 16,
+            "tamano": 20
+          },
+          "movil": {
+            "x": 50,
+            "y": 20,
+            "tamano": 45
+          },
+          "giro": 0
+        }
+      }
+    };
+    // FIN DE DATOS EDITABLES.
     const $ = (selector, contexto = document) => contexto.querySelector(selector);
     const $$ = (selector, contexto = document) => [...contexto.querySelectorAll(selector)];
     const escenas = $$(".escena");
+    escenas.forEach(escena => {
+      escena.querySelectorAll(".elemento[data-elemento]").forEach(imagen => {
+        const datos = POSICIONES[escena.id][imagen.dataset.elemento];
+        for (const [nombre, valor] of Object.entries(datos.web)) {
+          imagen.style.setProperty("--" + nombre, valor);
+        }
+        for (const [nombre, valor] of Object.entries(datos.movil)) {
+          imagen.style.setProperty("--" + nombre + "-movil", valor);
+        }
+        imagen.style.setProperty("--giro", datos.giro);
+      });
+    });
+    $(".salir").href = CONFIG.salida;
     const invitacion = $("#invitacion");
     const audio = $("#audio");
     const botonMusica = $("#musica");
     let indiceActivo = 0;
     let temporizadorVista;
     let ultimoEfecto = 0;
-
     function aplicarDatos() {
       $$('[data-nombre]').forEach(elemento => elemento.textContent = CONFIG.nombre);
       $$('[data-fecha]').forEach(elemento => elemento.textContent = CONFIG.fechaTexto);
@@ -820,7 +1203,6 @@
       $$('[data-ubicacion]').forEach(enlace => enlace.href = CONFIG.ubicacionUrl);
       document.title = `${CONFIG.nombre} | Cena de Gala`;
     }
-
     function ajustarVista(inmediato = false) {
       clearTimeout(temporizadorVista);
       const aplicar = () => {
@@ -830,34 +1212,28 @@
       };
       if (inmediato) aplicar(); else temporizadorVista = setTimeout(aplicar, 80);
     }
-
     function irA(indice, suave = true) {
       const destino = Math.max(0, Math.min(indice, escenas.length - 1));
       invitacion.scrollTo({ left: destino * invitacion.clientWidth, top: 0, behavior: suave ? "smooth" : "auto" });
     }
-
     function activar(indice) {
       if (indice === indiceActivo && escenas[indice].classList.contains("activa")) return;
       indiceActivo = indice;
       escenas.forEach((escena, posicion) => escena.classList.toggle("activa", posicion === indice));
       crearDestellos();
     }
-
     const observador = new IntersectionObserver(entradas => {
-      const visible = entradas.filter(entrada => entrada.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      const visible = entradas.filter(entrada => entrada.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
       if (visible) activar(escenas.indexOf(visible.target));
     }, { root: invitacion, threshold: [.58, .72] });
-
     escenas.forEach(escena => observador.observe(escena));
     $$(".siguiente").forEach((boton, indice) => boton.addEventListener("click", () => irA(indice + 1)));
     $("#volver-inicio").addEventListener("click", () => irA(0));
-
     function estadoMusica(reproduciendo) {
       botonMusica.textContent = reproduciendo ? "Ⅱ" : "▶";
       botonMusica.setAttribute("aria-label", reproduciendo ? "Pausar música" : "Reproducir música");
       botonMusica.setAttribute("aria-pressed", String(reproduciendo));
     }
-
     $("#entrar").addEventListener("click", async () => {
       document.body.classList.add("invitacion-abierta");
       irA(0, false);
@@ -870,25 +1246,22 @@
       crearDestellos();
       try { await audio.play(); estadoMusica(true); } catch { estadoMusica(false); }
     });
-
     botonMusica.addEventListener("click", async () => {
       if (audio.paused) {
         try { await audio.play(); estadoMusica(true); } catch { estadoMusica(false); }
       } else { audio.pause(); estadoMusica(false); }
     });
-
     function actualizarCuenta() {
       const restante = Math.max(0, new Date(CONFIG.fechaEvento).getTime() - Date.now());
       const dias = Math.floor(restante / 86400000);
       const horas = Math.floor((restante % 86400000) / 3600000);
       const minutos = Math.floor((restante % 3600000) / 60000);
       const segundos = Math.floor((restante % 60000) / 1000);
-      $("#dias").textContent = String(dias).padStart(2,"0");
-      $("#horas").textContent = String(horas).padStart(2,"0");
-      $("#minutos").textContent = String(minutos).padStart(2,"0");
-      $("#segundos").textContent = String(segundos).padStart(2,"0");
+      $("#dias").textContent = String(dias).padStart(2, "0");
+      $("#horas").textContent = String(horas).padStart(2, "0");
+      $("#minutos").textContent = String(minutos).padStart(2, "0");
+      $("#segundos").textContent = String(segundos).padStart(2, "0");
     }
-
     function crearDestellos() {
       const ahora = performance.now();
       if (document.hidden || !document.body.classList.contains("invitacion-abierta") || ahora - ultimoEfecto < 430) return;
@@ -898,61 +1271,56 @@
       for (let indice = 0; indice < cantidad; indice++) {
         const destello = document.createElement("span");
         destello.className = "destello";
-        destello.style.setProperty("--x", `${27 + Math.random()*46}%`);
-        destello.style.setProperty("--y", `${73 + Math.random()*17}%`);
-        destello.style.setProperty("--s", `${3 + Math.random()*4}px`);
-        destello.style.setProperty("--dx", `${-40 + Math.random()*80}px`);
-        destello.style.setProperty("--d", `${700 + Math.random()*400}ms`);
+        destello.style.setProperty("--x", `${27 + Math.random() * 46}%`);
+        destello.style.setProperty("--y", `${73 + Math.random() * 17}%`);
+        destello.style.setProperty("--s", `${3 + Math.random() * 4}px`);
+        destello.style.setProperty("--dx", `${-40 + Math.random() * 80}px`);
+        destello.style.setProperty("--d", `${700 + Math.random() * 400}ms`);
         contenedor.appendChild(destello);
-        destello.addEventListener("animationend", () => destello.remove(), { once:true });
+        destello.addEventListener("animationend", () => destello.remove(), { once: true });
       }
     }
-
     function precargarFondos() {
       $$(".fondo").slice(1).forEach(fondo => {
         const imagen = new Image();
         imagen.src = fondo.src;
-        if (typeof imagen.decode === "function") imagen.decode().catch(() => {});
+        if (typeof imagen.decode === "function") imagen.decode().catch(() => { });
       });
     }
-
     invitacion.addEventListener("wheel", evento => {
       if (Math.abs(evento.deltaY) <= Math.abs(evento.deltaX)) return;
       evento.preventDefault();
-      invitacion.scrollBy({ left:evento.deltaY, top:0, behavior:"auto" });
-    }, { passive:false });
-
+      invitacion.scrollBy({ left: evento.deltaY, top: 0, behavior: "auto" });
+    }, { passive: false });
     document.addEventListener("visibilitychange", () => {
       if (document.hidden && !audio.paused) { audio.pause(); estadoMusica(false); }
     });
-
     const fondoEntrada = new Image();
     fondoEntrada.src = "assets/fondos/fondo01.webp";
     const mostrarEntrada = () => {
       document.body.classList.add("fondo-listo");
-      if ("requestIdleCallback" in window) requestIdleCallback(precargarFondos, { timeout:1200 });
+      if ("requestIdleCallback" in window) requestIdleCallback(precargarFondos, { timeout: 1200 });
       else setTimeout(precargarFondos, 300);
     };
     if (fondoEntrada.complete) mostrarEntrada();
     else {
-      fondoEntrada.addEventListener("load", mostrarEntrada, { once:true });
-      fondoEntrada.addEventListener("error", mostrarEntrada, { once:true });
+      fondoEntrada.addEventListener("load", mostrarEntrada, { once: true });
+      fondoEntrada.addEventListener("error", mostrarEntrada, { once: true });
     }
-
     aplicarDatos();
     ajustarVista(true);
     actualizarCuenta();
     estadoMusica(false);
     irA(0, false);
     setInterval(actualizarCuenta, 1000);
-
-    window.addEventListener("resize", () => ajustarVista(), { passive:true });
-    window.visualViewport?.addEventListener("resize", () => ajustarVista(), { passive:true });
-    window.addEventListener("orientationchange", () => ajustarVista(), { passive:true });
+    window.addEventListener("resize", () => ajustarVista(), { passive: true });
+    window.visualViewport?.addEventListener("resize", () => ajustarVista(), { passive: true });
+    window.addEventListener("orientationchange", () => ajustarVista(), { passive: true });
     window.addEventListener("pageshow", () => {
       ajustarVista(true);
       if (!document.body.classList.contains("invitacion-abierta")) irA(0, false);
     });
   </script>
 </body>
+
 </html>
