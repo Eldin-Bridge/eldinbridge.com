@@ -13,7 +13,6 @@
   <meta name="theme-color" content="#090b15">
   <meta name="description" content="Invitación digital para una noche de bar.">
   <title>Noche de Bar | Invitación</title>
-
   <style>
     :root {
       --alto: 100svh;
@@ -210,12 +209,12 @@
 
     .elemento {
       position: absolute;
-      left: var(--x);
-      top: var(--y);
-      width: var(--tamano);
+      left: calc(var(--x) * 1%);
+      top: calc(var(--y) * 1%);
+      width: calc(var(--tamano) * 1%);
       max-width: none;
       user-select: none;
-      transform: translate(-50%, -50%) rotate(var(--giro, 0deg));
+      transform: translate(-50%, -50%) rotate(calc(var(--giro, 0) * 1deg));
       transform-origin: center;
       filter: drop-shadow(0 18px 24px rgba(0, 0, 0, .62));
       animation: flotar 4.6s ease-in-out infinite;
@@ -677,7 +676,7 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       cursor: pointer;
-      transition: opacity .3s ease, transform .2s ease, background .2s ease;
+      transition: opacity .3s ease, transform .2s ease, *background* .2s ease;
     }
 
     .control:hover {
@@ -897,46 +896,15 @@
       }
 
       .elemento {
-        max-width: 45vw;
-        max-height: 25vh;
+        left: calc(var(--x-movil) * 1%);
+        top: calc(var(--y-movil) * 1%);
+        width: calc(var(--tamano-movil) * 1%);
       }
 
-      #cuenta .elemento {
-        --x: 17% !important;
-        --y: 85% !important;
-        --tamano: min(34vw, 170px) !important;
-      }
 
-      #detalles .elemento {
-        --x: 83% !important;
-        --y: 85% !important;
-        --tamano: min(34vw, 170px) !important;
-      }
 
-      #plan .elemento {
-        --x: 18% !important;
-        --y: 29% !important;
-        --tamano: min(34vw, 170px) !important;
-      }
 
-      #mesa .elemento {
-        --x: 82% !important;
-        --y: 86% !important;
-        --tamano: min(38vw, 190px) !important;
-      }
 
-      #recomendaciones .elemento {
-        --x: 18% !important;
-        --y: 86% !important;
-        --tamano: min(29vw, 145px) !important;
-      }
-
-      #final .elemento {
-        --x: 50% !important;
-        --y: 20% !important;
-        --tamano: min(32vw, 165px) !important;
-        max-height: 20vh;
-      }
 
       .control {
         top: max(14px, env(safe-area-inset-top));
@@ -1010,7 +978,6 @@
 
 <body>
   <audio id="audio" src="assets/audio/audio01.mp3" loop preload="metadata"></audio>
-
   <div class="entrada" id="entrada">
     <div class="entrada-contenido">
       <img class="entrada-icono" src="assets/elementos/elemento01.png" alt="">
@@ -1020,18 +987,14 @@
       <button class="boton" id="entrar" type="button">Abrir invitación <span>↓</span></button>
     </div>
   </div>
-
   <a class="control salir" href="../../../#fiestas-reuniones" aria-label="Salir de la invitación">Salir</a>
-
   <button class="control musica" id="musica" type="button" aria-label="Reproducir música"
     aria-pressed="false">▶</button>
-
   <main id="invitacion">
     <section class="escena activa" id="inicio">
       <img class="fondo" src="assets/fondos/fondo01.webp" alt="">
       <div class="velo"></div>
       <div class="halo"></div>
-
       <article class="tarjeta">
         <span class="etiqueta">Invitación nocturna</span>
         <h1>Nos vemos <span class="acento">en el bar</span></h1>
@@ -1045,16 +1008,13 @@
         <button class="boton siguiente" type="button">Entrar en ambiente <span>↓</span></button>
       </article>
     </section>
-
     <section class="escena" id="cuenta">
       <img class="fondo" src="assets/fondos/fondo02.webp" alt="" loading="lazy">
       <div class="velo"></div>
       <div class="halo"></div>
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento02.png" alt=""
-          style="--x: 17%; --y: 79%; --tamano: clamp(170px, 20vw, 310px); --giro: -3deg;">
+        <img class="elemento" src="assets/elementos/elemento02.png" alt="" data-elemento="elemento-cuenta">
       </div>
-
       <article class="tarjeta">
         <span class="etiqueta">La primera ronda</span>
         <h2>La primera ronda <span class="acento">se acerca</span></h2>
@@ -1068,16 +1028,13 @@
         <button class="boton siguiente" type="button">Ver los detalles <span>↓</span></button>
       </article>
     </section>
-
     <section class="escena" id="detalles">
       <img class="fondo" src="assets/fondos/fondo03.webp" alt="" loading="lazy">
       <div class="velo"></div>
       <div class="halo"></div>
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento06.png" alt=""
-          style="--x: 83%; --y: 80%; --tamano: clamp(175px, 21vw, 320px);">
+        <img class="elemento" src="assets/elementos/elemento06.png" alt="" data-elemento="elemento-detalles">
       </div>
-
       <article class="tarjeta">
         <span class="etiqueta">Punto de encuentro</span>
         <h2>Reserva <span class="acento">la noche</span></h2>
@@ -1090,16 +1047,13 @@
         <button class="boton siguiente" type="button">Conocer el plan <span>↓</span></button>
       </article>
     </section>
-
     <section class="escena" id="plan">
       <img class="fondo" src="assets/fondos/fondo04.webp" alt="" loading="lazy">
       <div class="velo"></div>
       <div class="halo"></div>
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento03.png" alt=""
-          style="--x: 17%; --y: 30%; --tamano: clamp(175px, 21vw, 325px); --giro: -4deg;">
+        <img class="elemento" src="assets/elementos/elemento03.png" alt="" data-elemento="elemento-plan">
       </div>
-
       <article class="tarjeta">
         <span class="etiqueta">El ritmo de la noche</span>
         <h2>Sube el volumen <span class="acento">de la noche</span></h2>
@@ -1112,16 +1066,13 @@
         <button class="boton siguiente" type="button">Ver qué habrá <span>↓</span></button>
       </article>
     </section>
-
     <section class="escena" id="mesa">
       <img class="fondo" src="assets/fondos/fondo05.webp" alt="" loading="lazy">
       <div class="velo"></div>
       <div class="halo"></div>
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento05.png" alt=""
-          style="--x: 83%; --y: 80%; --tamano: clamp(185px, 23vw, 350px); --giro: 2deg;">
+        <img class="elemento" src="assets/elementos/elemento05.png" alt="" data-elemento="elemento-mesa">
       </div>
-
       <article class="tarjeta">
         <span class="etiqueta">Entre copas</span>
         <h2>Algo para <span class="acento">picar y brindar</span></h2>
@@ -1135,16 +1086,13 @@
         <button class="boton siguiente" type="button">Antes de venir <span>↓</span></button>
       </article>
     </section>
-
     <section class="escena" id="recomendaciones">
       <img class="fondo" src="assets/fondos/fondo06.webp" alt="" loading="lazy">
       <div class="velo"></div>
       <div class="halo"></div>
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento04.png" alt=""
-          style="--x: 17%; --y: 79%; --tamano: clamp(155px, 18vw, 280px);">
+        <img class="elemento" src="assets/elementos/elemento04.png" alt="" data-elemento="elemento-recomendaciones">
       </div>
-
       <article class="tarjeta">
         <span class="etiqueta">Código nocturno</span>
         <h2>Ven con ganas <span class="acento">de pasarla bien</span></h2>
@@ -1157,16 +1105,13 @@
         <button class="boton siguiente" type="button">Ir al último brindis <span>↓</span></button>
       </article>
     </section>
-
     <section class="escena" id="final">
       <img class="fondo" src="assets/fondos/fondo07.webp" alt="" loading="lazy">
       <div class="velo"></div>
       <div class="halo"></div>
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento07.png" alt=""
-          style="--x: 50%; --y: 20%; --tamano: clamp(180px, 22vw, 340px);">
+        <img class="elemento" src="assets/elementos/elemento07.png" alt="" data-elemento="elemento-final">
       </div>
-
       <article class="tarjeta">
         <span class="etiqueta">Última llamada</span>
         <h2>Que esta noche <span class="acento">se vuelva historia</span></h2>
@@ -1180,10 +1125,9 @@
       </article>
     </section>
   </main>
-
   <div class="particulas" id="particulas" aria-hidden="true"></div>
-
   <script>
+    // DATOS EDITABLES: información del cliente y enlaces.
     const CONFIG = {
       nombre: "Alex",
       fechaTexto: "Sábado 18 de julio",
@@ -1191,20 +1135,127 @@
       lugar: "Bar Medianoche",
       ciudad: "Monterrey, Nuevo León",
       fechaEvento: "2027-07-18T21:00:00-06:00",
-      ubicacionUrl: "https://maps.google.com/"
+      ubicacionUrl: "https://maps.google.com/",
+      salida: "../../../#fiestas-reuniones"
     };
-
+    // POSICIONES EDITABLES: X e Y en porcentajes de la pantalla.
+    // tamano: un solo número para el ancho en porcentaje, sin límites adicionales.
+    // Web y móvil independientes. giro: un solo número en grados.
+    const POSICIONES = {
+      "cuenta": {
+        "elemento-cuenta": {
+          "web": {
+            "x": 17,
+            "y": 79,
+            "tamano": 20
+          },
+          "movil": {
+            "x": 17,
+            "y": 85,
+            "tamano": 34
+          },
+          "giro": -3.0
+        }
+      },
+      "detalles": {
+        "elemento-detalles": {
+          "web": {
+            "x": 83,
+            "y": 80,
+            "tamano": 21
+          },
+          "movil": {
+            "x": 83,
+            "y": 88,
+            "tamano": 34
+          },
+          "giro": 0.0
+        }
+      },
+      "plan": {
+        "elemento-plan": {
+          "web": {
+            "x": 17,
+            "y": 30,
+            "tamano": 21
+          },
+          "movil": {
+            "x": 18,
+            "y": 29,
+            "tamano": 34
+          },
+          "giro": -4.0
+        }
+      },
+      "mesa": {
+        "elemento-mesa": {
+          "web": {
+            "x": 83,
+            "y": 80,
+            "tamano": 23
+          },
+          "movil": {
+            "x": 82,
+            "y": 86,
+            "tamano": 36
+          },
+          "giro": 2.0
+        }
+      },
+      "recomendaciones": {
+        "elemento-recomendaciones": {
+          "web": {
+            "x": 17,
+            "y": 74,
+            "tamano": 18
+          },
+          "movil": {
+            "x": 16,
+            "y": 86,
+            "tamano": 28
+          },
+          "giro": 0.0
+        }
+      },
+      "final": {
+        "elemento-final": {
+          "web": {
+            "x": 50,
+            "y": 20,
+            "tamano": 14
+          },
+          "movil": {
+            "x": 50,
+            "y": 20,
+            "tamano": 36
+          },
+          "giro": 0.0
+        }
+      }
+    };
+    // FIN DE DATOS EDITABLES.
     const $ = (selector, contexto = document) => contexto.querySelector(selector);
     const $$ = (selector, contexto = document) => [...contexto.querySelectorAll(selector)];
     const escenas = $$(".escena");
+    escenas.forEach(escena => {
+      escena.querySelectorAll(".elemento[data-elemento]").forEach(imagen => {
+        const datos = POSICIONES[escena.id][imagen.dataset.elemento];
+        for (const [nombre, valor] of Object.entries(datos.web)) {
+          imagen.style.setProperty("--" + nombre, valor);
+        }
+        for (const [nombre, valor] of Object.entries(datos.movil)) {
+          imagen.style.setProperty("--" + nombre + "-movil", valor);
+        }
+        imagen.style.setProperty("--giro", datos.giro);
+      });
+    });
+    $(".salir").href = CONFIG.salida;
     const invitacion = $("#invitacion");
     const audio = $("#audio");
     const botonMusica = $("#musica");
-
     let indiceActivo = 0;
     let temporizadorVista;
     let ultimoEfecto = 0;
-
     function aplicarDatos() {
       $$('[data-nombre]').forEach(elemento => elemento.textContent = CONFIG.nombre);
       $$('[data-fecha]').forEach(elemento => elemento.textContent = CONFIG.fechaTexto);
@@ -1214,78 +1265,61 @@
       $$('[data-ubicacion]').forEach(enlace => enlace.href = CONFIG.ubicacionUrl);
       document.title = `${CONFIG.nombre} | Noche de Bar`;
     }
-
     function ajustarVista(inmediato = false) {
       clearTimeout(temporizadorVista);
-
       const aplicar = () => {
         const alto = window.visualViewport?.height || window.innerHeight;
         document.documentElement.style.setProperty("--alto", `${Math.round(alto)}px`);
-
         if (document.body.classList.contains("invitacion-abierta")) {
           irA(indiceActivo, false);
         }
       };
-
       if (inmediato) aplicar();
       else temporizadorVista = setTimeout(aplicar, 80);
     }
-
     function irA(indice, suave = true) {
       const destino = Math.max(0, Math.min(indice, escenas.length - 1));
-
       invitacion.scrollTo({
         left: 0,
         top: destino * invitacion.clientHeight,
         behavior: suave ? "smooth" : "auto"
       });
     }
-
     function activar(indice) {
       if (indice === indiceActivo && escenas[indice].classList.contains("activa")) return;
-
       indiceActivo = indice;
       escenas.forEach((escena, posicion) => escena.classList.toggle("activa", posicion === indice));
       crearLuces();
     }
-
     const observador = new IntersectionObserver(entradas => {
       const visible = entradas
         .filter(entrada => entrada.isIntersecting)
         .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
       if (visible) activar(escenas.indexOf(visible.target));
     }, {
       root: invitacion,
       threshold: [.58, .72]
     });
-
     escenas.forEach(escena => observador.observe(escena));
-
     $$(".siguiente").forEach((boton, indice) => {
       boton.addEventListener("click", () => irA(indice + 1));
     });
-
     $("#volver-inicio").addEventListener("click", () => irA(0));
-
     function estadoMusica(reproduciendo) {
       botonMusica.textContent = reproduciendo ? "Ⅱ" : "▶";
       botonMusica.setAttribute("aria-label", reproduciendo ? "Pausar música" : "Reproducir música");
       botonMusica.setAttribute("aria-pressed", String(reproduciendo));
     }
-
     $("#entrar").addEventListener("click", async () => {
       document.body.classList.add("invitacion-abierta");
       irA(0, false);
       indiceActivo = 0;
       $("#entrada").classList.add("oculta");
-
       escenas.forEach((escena, indice) => escena.classList.toggle("activa", indice === 0));
       escenas[0].classList.remove("activa");
       void escenas[0].offsetWidth;
       escenas[0].classList.add("activa");
       crearLuces();
-
       try {
         await audio.play();
         estadoMusica(true);
@@ -1293,7 +1327,6 @@
         estadoMusica(false);
       }
     });
-
     botonMusica.addEventListener("click", async () => {
       if (audio.paused) {
         try {
@@ -1307,29 +1340,23 @@
         estadoMusica(false);
       }
     });
-
     function actualizarCuenta() {
       const restante = Math.max(0, new Date(CONFIG.fechaEvento).getTime() - Date.now());
       const dias = Math.floor(restante / 86400000);
       const horas = Math.floor((restante % 86400000) / 3600000);
       const minutos = Math.floor((restante % 3600000) / 60000);
       const segundos = Math.floor((restante % 60000) / 1000);
-
       $("#dias").textContent = String(dias).padStart(2, "0");
       $("#horas").textContent = String(horas).padStart(2, "0");
       $("#minutos").textContent = String(minutos).padStart(2, "0");
       $("#segundos").textContent = String(segundos).padStart(2, "0");
     }
-
     function crearLuces() {
       const ahora = performance.now();
-
       if (document.hidden || !document.body.classList.contains("invitacion-abierta") || ahora - ultimoEfecto < 420) return;
-
       ultimoEfecto = ahora;
       const contenedor = $("#particulas");
       const cantidad = innerWidth <= 600 ? 4 : 6;
-
       for (let indice = 0; indice < cantidad; indice++) {
         const luz = document.createElement("span");
         luz.className = "luz";
@@ -1342,7 +1369,6 @@
         luz.addEventListener("animationend", () => luz.remove(), { once: true });
       }
     }
-
     function precargarFondos() {
       $$(".fondo").slice(1).forEach(fondo => {
         const imagen = new Image();
@@ -1350,45 +1376,36 @@
         if (typeof imagen.decode === "function") imagen.decode().catch(() => { });
       });
     }
-
     document.addEventListener("visibilitychange", () => {
       if (document.hidden && !audio.paused) {
         audio.pause();
         estadoMusica(false);
       }
     });
-
     const fondoEntrada = new Image();
     fondoEntrada.src = "assets/fondos/fondo01.webp";
-
     const mostrarEntrada = () => {
       document.body.classList.add("fondo-listo");
-
       if ("requestIdleCallback" in window) {
         requestIdleCallback(precargarFondos, { timeout: 1200 });
       } else {
         setTimeout(precargarFondos, 300);
       }
     };
-
     if (fondoEntrada.complete) mostrarEntrada();
     else {
       fondoEntrada.addEventListener("load", mostrarEntrada, { once: true });
       fondoEntrada.addEventListener("error", mostrarEntrada, { once: true });
     }
-
     aplicarDatos();
     ajustarVista(true);
     actualizarCuenta();
     estadoMusica(false);
     irA(0, false);
-
     setInterval(actualizarCuenta, 1000);
-
     window.addEventListener("resize", () => ajustarVista(), { passive: true });
     window.visualViewport?.addEventListener("resize", () => ajustarVista(), { passive: true });
     window.addEventListener("orientationchange", () => ajustarVista(), { passive: true });
-
     window.addEventListener("pageshow", () => {
       ajustarVista(true);
       if (!document.body.classList.contains("invitacion-abierta")) irA(0, false);
