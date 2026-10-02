@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -8,7 +7,6 @@
     <meta name="theme-color" content="#047da3">
     <meta name="description" content="Invitación digital infantil para una fiesta acuática.">
     <title>Fiesta Acuática</title>
-
     <style>
         :root {
             --azul-profundo: #03506d;
@@ -21,13 +19,11 @@
             --tinta: #073c50;
             --alto-pantalla: 100svh;
         }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-
         html,
         body {
             width: 100%;
@@ -35,32 +31,26 @@
             overflow: hidden;
             overscroll-behavior: none;
         }
-
         html {
             background: var(--azul-profundo);
         }
-
         body {
             min-width: 320px;
             color: var(--blanco);
             background: var(--azul-profundo);
             font-family: Inter, "Segoe UI", Arial, sans-serif;
         }
-
         button,
         a {
             color: inherit;
             font: inherit;
         }
-
         button {
             border: 0;
         }
-
         a {
             text-decoration: none;
         }
-
         main {
             width: 100%;
             height: var(--alto-pantalla);
@@ -73,11 +63,9 @@
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
         }
-
         main::-webkit-scrollbar {
             display: none;
         }
-
         .escena {
             position: relative;
             display: grid;
@@ -92,7 +80,6 @@
             scroll-snap-stop: always;
             isolation: isolate;
         }
-
         .fondo {
             position: absolute;
             inset: 0;
@@ -108,12 +95,10 @@
                 filter 1s ease;
             will-change: transform;
         }
-
         .escena.activa .fondo {
             filter: saturate(1.08) brightness(.72);
             transform: scale(1.03);
         }
-
         .velo {
             position: absolute;
             inset: 0;
@@ -122,7 +107,6 @@
                 linear-gradient(180deg, rgba(0, 58, 85, .08), rgba(0, 60, 90, .22) 48%, rgba(0, 32, 52, .68)),
                 radial-gradient(circle at 50% 42%, transparent 20%, rgba(0, 45, 70, .17));
         }
-
         .destello-agua {
             position: absolute;
             inset: auto -20% -30% -20%;
@@ -134,60 +118,50 @@
             transform: perspective(400px) rotateX(63deg);
             pointer-events: none;
         }
-
         .capa-assets {
             position: absolute;
             inset: 0;
             z-index: 7;
             pointer-events: none;
         }
-
         .asset {
             position: absolute;
-            left: var(--x);
-            top: var(--y);
+            left: calc(var(--x) * 1%);
+            top: calc(var(--y) * 1%);
             z-index: var(--z, 1);
-            width: var(--tamano);
+            width: calc(var(--tamano) * 1%);
             max-width: none;
             transform: translate(-50%, -50%) scaleX(var(--voltear, 1));
             transform-origin: center;
             user-select: none;
             filter: drop-shadow(0 13px 15px rgba(0, 30, 45, .32));
         }
-
         .personaje {
             animation: flotar-personaje 4.4s ease-in-out infinite;
         }
-
         .adorno {
             animation: boya 3.7s ease-in-out infinite;
         }
-
         .escena:not(.activa) .asset {
             animation-play-state: paused;
         }
-
         @keyframes flotar-personaje {
             50% {
                 translate: 0 -7px;
                 rotate: 1deg;
             }
         }
-
         @keyframes boya {
-
             0%,
             100% {
                 translate: 0 0;
                 rotate: -2deg;
             }
-
             50% {
                 translate: 0 -12px;
                 rotate: 3deg;
             }
         }
-
         .tarjeta-agua {
             position: relative;
             z-index: 5;
@@ -214,7 +188,6 @@
                 transform .7s cubic-bezier(.22, .8, .32, 1);
             will-change: transform, opacity;
         }
-
         .tarjeta-agua::before {
             content: "";
             position: absolute;
@@ -225,7 +198,6 @@
             border-radius: 48%;
             background: rgba(255, 255, 255, .35);
         }
-
         .tarjeta-agua::after {
             content: "";
             position: absolute;
@@ -236,12 +208,10 @@
             border: 22px solid rgba(255, 255, 255, .15);
             border-radius: 50%;
         }
-
         .escena.activa .tarjeta-agua {
             opacity: 1;
             transform: none;
         }
-
         .etiqueta-agua {
             position: relative;
             z-index: 2;
@@ -259,7 +229,6 @@
             letter-spacing: .12em;
             text-transform: uppercase;
         }
-
         .etiqueta-agua::before {
             content: "";
             width: 9px;
@@ -268,7 +237,6 @@
             background: var(--coral);
             box-shadow: 0 0 0 5px rgba(255, 111, 97, .13);
         }
-
         h1,
         h2 {
             position: relative;
@@ -276,21 +244,17 @@
             text-wrap: balance;
             letter-spacing: -.045em;
         }
-
         h1 {
             font-size: clamp(2.6rem, 7vw, 5.1rem);
             line-height: .95;
         }
-
         h2 {
             font-size: clamp(2rem, 5vw, 3.6rem);
             line-height: 1;
         }
-
         .coral {
             color: #e94e45;
         }
-
         .nombre {
             position: relative;
             z-index: 2;
@@ -299,7 +263,6 @@
             font-size: clamp(1.25rem, 3vw, 1.75rem);
             font-weight: 900;
         }
-
         .texto {
             position: relative;
             z-index: 2;
@@ -309,7 +272,6 @@
             font-size: 1rem;
             line-height: 1.55;
         }
-
         .burbuja-separador {
             position: relative;
             z-index: 2;
@@ -318,25 +280,21 @@
             gap: 8px;
             margin: 20px 0;
         }
-
         .burbuja-separador span {
             width: 8px;
             height: 8px;
             border-radius: 50%;
             background: var(--turquesa);
         }
-
         .burbuja-separador span:nth-child(2) {
             width: 13px;
             height: 13px;
             margin-top: -5px;
             background: var(--amarillo);
         }
-
         .burbuja-separador span:nth-child(3) {
             background: var(--coral);
         }
-
         .edad {
             position: relative;
             z-index: 2;
@@ -344,7 +302,6 @@
             font-size: 1.2rem;
             font-weight: 900;
         }
-
         .boton-agua,
         .boton-ubicacion {
             position: relative;
@@ -363,12 +320,10 @@
             cursor: pointer;
             transition: transform .18s ease, box-shadow .18s ease;
         }
-
         .boton-agua:active {
             transform: translateY(5px);
             box-shadow: 0 2px 0 var(--azul-profundo);
         }
-
         .datos-evento {
             position: relative;
             z-index: 2;
@@ -377,7 +332,6 @@
             gap: 11px;
             margin-top: 20px;
         }
-
         .dato {
             display: grid;
             min-height: 86px;
@@ -387,25 +341,21 @@
             border-radius: 22px;
             background: rgba(255, 255, 255, .45);
         }
-
         .dato-icono {
             margin-bottom: 4px;
             font-size: 1.25rem;
         }
-
         .dato strong {
             color: var(--azul-profundo);
             font-size: .75rem;
             letter-spacing: .08em;
             text-transform: uppercase;
         }
-
         .dato span:last-child {
             margin-top: 3px;
             color: #326579;
             font-size: .9rem;
         }
-
         .contador {
             position: relative;
             z-index: 2;
@@ -414,7 +364,6 @@
             gap: 9px;
             margin-top: 21px;
         }
-
         .tiempo {
             display: grid;
             min-width: 0;
@@ -424,19 +373,16 @@
             background: linear-gradient(145deg, var(--azul), #42cee3);
             box-shadow: inset 0 2px rgba(255, 255, 255, .35);
         }
-
         .numero {
             font-size: clamp(1.25rem, 4vw, 2rem);
             font-weight: 950;
         }
-
         .unidad {
             font-size: .58rem;
             font-weight: 800;
             letter-spacing: .06em;
             text-transform: uppercase;
         }
-
         .kit-acuatico {
             position: relative;
             z-index: 2;
@@ -447,7 +393,6 @@
             margin: 22px auto 0;
             list-style: none;
         }
-
         .kit-acuatico li {
             display: flex;
             align-items: center;
@@ -456,7 +401,6 @@
             font-weight: 800;
             text-align: left;
         }
-
         .kit-icono {
             display: grid;
             flex: 0 0 43px;
@@ -468,18 +412,15 @@
             font-size: 1.35rem;
             animation: burbuja-icono 2.8s ease-in-out infinite;
         }
-
         .kit-acuatico li:nth-child(even) .kit-icono {
             animation-delay: -.9s;
         }
-
         @keyframes burbuja-icono {
             50% {
                 translate: 0 -5px;
                 scale: 1.06;
             }
         }
-
         .programa {
             position: relative;
             z-index: 2;
@@ -489,7 +430,6 @@
             margin: 21px auto 0;
             list-style: none;
         }
-
         .programa li {
             display: grid;
             grid-template-columns: 38px 1fr;
@@ -498,7 +438,6 @@
             color: #245b6c;
             text-align: left;
         }
-
         .programa-numero {
             display: grid;
             width: 38px;
@@ -509,16 +448,13 @@
             background: var(--coral);
             font-weight: 950;
         }
-
         .programa li:nth-child(2) .programa-numero {
             background: var(--azul);
         }
-
         .programa li:nth-child(3) .programa-numero {
             color: var(--tinta);
             background: var(--amarillo);
         }
-
         .antojos {
             position: relative;
             z-index: 2;
@@ -528,7 +464,6 @@
             gap: 11px;
             margin-top: 22px;
         }
-
         .antojo {
             display: inline-flex;
             align-items: center;
@@ -539,7 +474,6 @@
             background: rgba(255, 255, 255, .54);
             font-weight: 850;
         }
-
         .salir,
         .musica {
             position: fixed;
@@ -555,7 +489,6 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
         }
-
         .salir {
             top: max(14px, env(safe-area-inset-top));
             right: max(14px, env(safe-area-inset-right));
@@ -564,7 +497,6 @@
             font-size: .82rem;
             font-weight: 850;
         }
-
         .musica {
             right: max(16px, env(safe-area-inset-right));
             bottom: max(16px, env(safe-area-inset-bottom));
@@ -574,7 +506,6 @@
             cursor: pointer;
             font-size: 1.05rem;
         }
-
         .entrada {
             position: fixed;
             inset: 0;
@@ -588,22 +519,18 @@
                 linear-gradient(rgba(0, 72, 100, .16), rgba(0, 42, 65, .62)),
                 url("assets/fondos/fondo01.webp") center/cover no-repeat;
         }
-
         body:not(.invitacion-abierta) main {
             visibility: hidden;
             overflow: hidden;
             pointer-events: none;
             touch-action: none;
         }
-
         body:not(.invitacion-abierta) .musica {
             display: none;
         }
-
         .entrada.oculta {
             display: none;
         }
-
         .entrada-contenido {
             width: min(88vw, 500px);
             padding: 32px 25px 30px;
@@ -619,19 +546,16 @@
                 inset 0 2px rgba(255, 255, 255, .78);
             backdrop-filter: blur(13px);
             -webkit-backdrop-filter: blur(13px);
-
             opacity: 0;
             transform: translateY(18px) scale(.97);
             transition:
                 opacity .45s ease-out,
                 transform .65s cubic-bezier(.22, .8, .32, 1);
         }
-
         body.fondo-listo .entrada-contenido {
             opacity: 1;
             transform: none;
         }
-
         .entrada-icono {
             width: clamp(82px, 22vw, 122px);
             max-height: 116px;
@@ -640,29 +564,23 @@
             filter: drop-shadow(0 10px 12px rgba(0, 60, 85, .20));
             animation: chapoteo-icono 2.2s ease-in-out infinite;
         }
-
         @keyframes chapoteo-icono {
-
             0%,
             100% {
                 transform: translateY(0);
             }
-
             50% {
                 transform: translateY(-10px);
             }
         }
-
         .entrada h2 {
             font-size: clamp(2.15rem, 7vw, 3.8rem);
         }
-
         .entrada p {
             margin-top: 13px;
             color: #245b6c;
             line-height: 1.5;
         }
-
         .particulas {
             position: fixed;
             inset: 0;
@@ -670,7 +588,6 @@
             overflow: hidden;
             pointer-events: none;
         }
-
         .gota {
             position: absolute;
             left: var(--x);
@@ -684,138 +601,100 @@
             transform: rotate(38deg);
             animation: salpicar var(--duracion) cubic-bezier(.16, .72, .32, 1) forwards;
         }
-
         @keyframes salpicar {
             0% {
                 opacity: 0;
                 translate: 0 30px;
                 scale: .4;
             }
-
             22% {
                 opacity: .9;
             }
-
             70% {
                 opacity: .72;
                 translate: var(--desvio) -70px;
                 scale: 1;
             }
-
             100% {
                 opacity: 0;
                 translate: var(--desvio) -100px;
                 scale: .65;
             }
         }
-
         @media (max-width: 600px) {
             .escena {
                 padding-inline: 14px;
             }
-
             .tarjeta-agua {
                 width: min(89vw, 650px);
                 padding: 27px 18px 25px;
                 overflow: visible;
                 border-radius: 30px 30px 44px 44px;
             }
-
             h1 {
                 font-size: clamp(2.25rem, 10.5vw, 3.35rem);
             }
-
             h2 {
                 font-size: clamp(1.85rem, 8.4vw, 2.8rem);
             }
-
             .texto {
                 font-size: .92rem;
                 line-height: 1.48;
             }
-
             .etiqueta-agua {
                 margin-bottom: 13px;
                 padding: 7px 12px;
                 font-size: .65rem;
             }
-
             .capa-assets {
                 z-index: 8;
             }
-
-            .asset.personaje {
-                width: min(var(--tamano), 42vw);
+            .asset {
+                left: calc(var(--x-movil) * 1%);
+                top: calc(var(--y-movil) * 1%);
+                width: calc(var(--tamano-movil) * 1%);
             }
-
-            .asset.adorno {
-                width: min(var(--tamano), 24vw);
-            }
-
-            .personaje-derecha {
-                left: 86% !important;
-            }
-
-            .personaje-izquierda {
-                left: 14% !important;
-            }
-
-            #inicio .asset.personaje {
-                top: 83% !important;
-            }
-
             .datos-evento {
                 gap: 8px;
                 margin-top: 17px;
             }
-
             .dato {
                 min-height: 75px;
                 padding: 9px 7px;
                 border-radius: 18px;
             }
-
             .dato span:last-child {
                 font-size: .77rem;
             }
-
             .contador {
                 gap: 6px;
             }
-
             .tiempo {
                 padding: 11px 2px;
             }
-
             .unidad {
                 font-size: .49rem;
                 letter-spacing: .02em;
             }
-
             .kit-acuatico {
                 gap: 11px 9px;
             }
-
             .kit-acuatico li {
                 gap: 7px;
                 font-size: .8rem;
             }
-
             .kit-icono {
                 flex-basis: 37px;
                 width: 37px;
                 height: 37px;
                 font-size: 1.15rem;
             }
-
             .programa {
                 gap: 7px;
             }
-
             .programa li {
                 font-size: .86rem;
             }
-
             .salir {
                 top: max(11px, env(safe-area-inset-top));
                 right: max(11px, env(safe-area-inset-right));
@@ -823,7 +702,6 @@
                 padding: 7px 13px;
                 font-size: .75rem;
             }
-
             .musica {
                 right: max(13px, env(safe-area-inset-right));
                 bottom: max(13px, env(safe-area-inset-bottom));
@@ -832,27 +710,40 @@
                 min-height: 47px;
             }
         }
-
         @media (max-width: 370px) {
             .tarjeta-agua {
                 padding-inline: 14px;
             }
-
             .kit-acuatico li {
                 font-size: .74rem;
             }
-
             .antojo {
                 padding: 8px 11px;
                 font-size: .8rem;
             }
         }
+        .navegacion-escena {
+            position: absolute;
+            z-index: 20;
+            left: 50%;
+            bottom: max(18px, env(safe-area-inset-bottom));
+            transform: translateX(-50%);
+            margin: 0;
+            max-width: calc(100% - 36px);
+        }
+        .navegacion-escena:hover {
+            transform: translate(-50%, -2px);
+        }
+        .tarjeta-agua .boton-ubicacion {
+            display: flex;
+            width: max-content;
+            max-width: 100%;
+            margin: 20px auto 0;
+        }
     </style>
 </head>
-
 <body>
     <audio id="audio" src="assets/audio/audio01.mp3" loop preload="metadata"></audio>
-
     <div class="entrada" id="entrada">
         <div class="entrada-contenido">
             <img class="entrada-icono" src="assets/elementos/elemento01.webp" alt="">
@@ -861,19 +752,16 @@
             <button class="boton-agua" id="entrar" type="button">Entrar a la fiesta →</button>
         </div>
     </div>
-
     <a class="salir" href="../../../#fiestas-infantiles" aria-label="Salir de la invitación">Salir</a>
     <button class="musica" id="musica" type="button" aria-label="Pausar música" aria-pressed="true">Ⅱ</button>
     <div class="particulas" id="particulas" aria-hidden="true"></div>
-
     <main id="invitacion">
         <section class="escena activa" id="inicio">
             <img class="fondo" src="assets/fondos/fondo01.webp" alt="">
             <div class="velo"></div>
             <div class="destello-agua"></div>
             <div class="capa-assets">
-                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje01.webp" alt=""
-                    style="--x:82%;--y:82%;--tamano:27vw;--z:7">
+                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje01.webp" alt="" data-asset="personaje-inicio">
             </div>
             <div class="tarjeta-agua">
                 <span class="etiqueta-agua">Fiesta de verano</span>
@@ -882,19 +770,16 @@
                 <p class="texto">Trae toda tu alegría: nos espera una tarde de alberca, juegos y muchas risas.</p>
                 <div class="burbuja-separador"><span></span><span></span><span></span></div>
                 <p class="edad">Cumple <span data-edad>7</span> años</p>
-                <button class="boton-agua siguiente" type="button">Dar el primer chapuzón ↓</button>
             </div>
+            <button class="boton-agua navegacion-escena siguiente" type="button">Dar el primer chapuzón ↓</button>
         </section>
-
         <section class="escena" id="cuenta">
             <img class="fondo" src="assets/fondos/fondo02.webp" alt="">
             <div class="velo"></div>
             <div class="destello-agua"></div>
             <div class="capa-assets">
-                <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje02.webp" alt=""
-                    style="--x:18%;--y:80%;--tamano:25vw;--z:7;--voltear:-1">
-                <img class="asset adorno" src="assets/elementos/elemento02.webp" alt=""
-                    style="--x:87%;--y:30%;--tamano:clamp(90px,11vw,150px);--z:6">
+                <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje02.webp" alt="" data-asset="personaje-cuenta">
+                <img class="asset adorno" src="assets/elementos/elemento02.webp" alt="" data-asset="elemento-cuenta">
             </div>
             <div class="tarjeta-agua">
                 <span class="etiqueta-agua">Cuenta regresiva</span>
@@ -908,19 +793,16 @@
                     <div class="tiempo"><span class="numero" id="segundos">00</span><span class="unidad">Segundos</span>
                     </div>
                 </div>
-                <button class="boton-agua siguiente" type="button">Conocer los detalles ↓</button>
             </div>
+            <button class="boton-agua navegacion-escena siguiente" type="button">Conocer los detalles ↓</button>
         </section>
-
         <section class="escena" id="detalles">
             <img class="fondo" src="assets/fondos/fondo03.webp" alt="">
             <div class="velo"></div>
             <div class="destello-agua"></div>
             <div class="capa-assets">
-                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje03.webp" alt=""
-                    style="--x:83%;--y:82%;--tamano:25vw;--z:7">
-                <img class="asset adorno" src="assets/elementos/elemento03.webp" alt=""
-                    style="--x:13%;--y:30%;--tamano:clamp(90px,11vw,150px);--z:6">
+                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje03.webp" alt="" data-asset="personaje-detalles">
+                <img class="asset adorno" src="assets/elementos/elemento03.webp" alt="" data-asset="elemento-detalles">
             </div>
             <div class="tarjeta-agua">
                 <span class="etiqueta-agua">La cita acuática</span>
@@ -935,19 +817,16 @@
                     <div class="dato"><span class="dato-icono">📍</span><strong>Ciudad</strong><span
                             data-ciudad>Cadereyta, Nuevo León</span></div>
                 </div>
-                <button class="boton-agua siguiente" type="button">Preparar mi kit ↓</button>
             </div>
+            <button class="boton-agua navegacion-escena siguiente" type="button">Preparar mi kit ↓</button>
         </section>
-
         <section class="escena" id="kit">
             <img class="fondo" src="assets/fondos/fondo04.webp" alt="">
             <div class="velo"></div>
             <div class="destello-agua"></div>
             <div class="capa-assets">
-                <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje04.webp" alt=""
-                    style="--x:17%;--y:82%;--tamano:25vw;--z:7">
-                <img class="asset adorno" src="assets/elementos/elemento04.webp" alt=""
-                    style="--x:87%;--y:29%;--tamano:clamp(94px,12vw,158px);--z:6">
+                <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje04.webp" alt="" data-asset="personaje-kit">
+                <img class="asset adorno" src="assets/elementos/elemento04.webp" alt="" data-asset="elemento-kit">
             </div>
             <div class="tarjeta-agua">
                 <span class="etiqueta-agua">Kit de alberca</span>
@@ -959,19 +838,16 @@
                     <li><span class="kit-icono">🏖️</span><span>Toalla</span></li>
                     <li><span class="kit-icono">🩴</span><span>Sandalias</span></li>
                 </ul>
-                <button class="boton-agua siguiente" type="button">Ver el plan acuático ↓</button>
             </div>
+            <button class="boton-agua navegacion-escena siguiente" type="button">Ver el plan acuático ↓</button>
         </section>
-
         <section class="escena" id="plan">
             <img class="fondo" src="assets/fondos/fondo05.webp" alt="">
             <div class="velo"></div>
             <div class="destello-agua"></div>
             <div class="capa-assets">
-                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje05.webp" alt=""
-                    style="--x:83%;--y:82%;--tamano:25vw;--z:7">
-                <img class="asset adorno" src="assets/elementos/elemento05.webp" alt=""
-                    style="--x:13%;--y:30%;--tamano:clamp(94px,12vw,158px);--z:6">
+                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje05.webp" alt="" data-asset="personaje-plan">
+                <img class="asset adorno" src="assets/elementos/elemento05.webp" alt="" data-asset="elemento-plan">
             </div>
             <div class="tarjeta-agua">
                 <span class="etiqueta-agua">Plan del día</span>
@@ -982,19 +858,16 @@
                     <li><span class="programa-numero">2</span><strong>Retos con cubetas y pistolas de agua</strong></li>
                     <li><span class="programa-numero">3</span><strong>Pastel, regalos y foto de cumpleaños</strong></li>
                 </ol>
-                <button class="boton-agua siguiente" type="button">Llegar a los antojos ↓</button>
             </div>
+            <button class="boton-agua navegacion-escena siguiente" type="button">Llegar a los antojos ↓</button>
         </section>
-
         <section class="escena" id="antojos">
             <img class="fondo" src="assets/fondos/fondo06.webp" alt="">
             <div class="velo"></div>
             <div class="destello-agua"></div>
             <div class="capa-assets">
-                <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje06.webp" alt=""
-                    style="--x:17%;--y:80%;--tamano:25vw;--z:7;--voltear:-1">
-                <img class="asset adorno" src="assets/elementos/elemento06.webp" alt=""
-                    style="--x:87%;--y:29%;--tamano:clamp(94px,12vw,158px);--z:6">
+                <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje06.webp" alt="" data-asset="personaje-antojos">
+                <img class="asset adorno" src="assets/elementos/elemento06.webp" alt="" data-asset="elemento-antojos">
             </div>
             <div class="tarjeta-agua">
                 <span class="etiqueta-agua">Zona refrescante</span>
@@ -1006,19 +879,16 @@
                     <span class="antojo">🍦 Paletas heladas</span>
                     <span class="antojo">🧃 Bebidas</span>
                 </div>
-                <button class="boton-agua siguiente" type="button">Ir a la gran celebración ↓</button>
             </div>
+            <button class="boton-agua navegacion-escena siguiente" type="button">Ir a la gran celebración ↓</button>
         </section>
-
         <section class="escena" id="final">
             <img class="fondo" src="assets/fondos/fondo07.webp" alt="">
             <div class="velo"></div>
             <div class="destello-agua"></div>
             <div class="capa-assets">
-                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje07.webp" alt=""
-                    style="--x:83%;--y:80%;--tamano:26vw;--z:7">
-                <img class="asset adorno" src="assets/elementos/elemento07.webp" alt=""
-                    style="--x:14%;--y:72%;--tamano:clamp(100px,13vw,170px);--z:6">
+                <img class="asset personaje personaje-derecha" src="assets/personajes/personaje07.webp" alt="" data-asset="personaje-final">
+                <img class="asset adorno" src="assets/elementos/elemento07.webp" alt="" data-asset="elemento-final">
             </div>
             <div class="tarjeta-agua">
                 <span class="etiqueta-agua">Te esperamos</span>
@@ -1027,13 +897,11 @@
                     hagamos de este día una fiesta inolvidable.</p>
                 <div class="burbuja-separador"><span></span><span></span><span></span></div>
                 <p class="nombre">Con cariño, <span data-nombre>María</span> 💦</p>
-                <span class="boton-ubicacion" aria-disabled="true">Ver ubicación</span>
-                <br>
-                <button class="boton-agua" id="volver-inicio" type="button">↑ Volver al inicio</button>
+                <a class="boton-ubicacion" id="ver-ubicacion" aria-disabled="true" target="_blank" rel="noopener noreferrer">Ver ubicación</a>
             </div>
+            <button class="boton-agua navegacion-escena" id="volver-inicio" type="button">↑ Volver al inicio</button>
         </section>
     </main>
-
     <script>
         /* ================================================================
            DATOS EDITABLES DE LA INVITACIÓN
@@ -1046,18 +914,242 @@
             horaTexto: "4:00 p. m.",
             lugar: "Quinta Las Palmas",
             ciudad: "Cadereyta, Nuevo León",
-            fechaEvento: "2027-07-18T16:00:00-06:00"
+            fechaEvento: "2027-07-18T16:00:00-06:00",
+            mapa: "",
+            salida: "../../../#fiestas-infantiles"
         };
-
+        /* POSICIONES EDITABLES: X e Y en porcentajes.
+           tamano: un solo número como porcentaje del ancho de pantalla.
+           Web y móvil independientes; capa y voltear compartidos. */
+        const POSICIONES = {
+    "inicio": {
+        "personaje-inicio": {
+            "web": {
+                "x": 82.0,
+                "y": 82.0,
+                "tamano": 27
+            },
+            "movil": {
+                "x": 86,
+                "y": 80,
+                "tamano": 27
+            },
+            "capa": 7,
+            "voltear": false
+        }
+    },
+    "cuenta": {
+        "personaje-cuenta": {
+            "web": {
+                "x": 18,
+                "y": 80,
+                "tamano": 25
+            },
+            "movil": {
+                "x": 14,
+                "y": 80,
+                "tamano": 25
+            },
+            "capa": 7,
+            "voltear": false
+        },
+        "elemento-cuenta": {
+            "web": {
+                "x": 87,
+                "y": 30,
+                "tamano": 11
+            },
+            "movil": {
+                "x": 87,
+                "y": 35,
+                "tamano": 18
+            },
+            "capa": 6,
+            "voltear": false
+        }
+    },
+    "detalles": {
+        "personaje-detalles": {
+            "web": {
+                "x": 83,
+                "y": 82,
+                "tamano": 25
+            },
+            "movil": {
+                "x": 86,
+                "y": 83,
+                "tamano": 25
+            },
+            "capa": 7,
+            "voltear": false
+        },
+        "elemento-detalles": {
+            "web": {
+                "x": 13,
+                "y": 30,
+                "tamano": 11
+            },
+            "movil": {
+                "x": 13,
+                "y": 30,
+                "tamano": 18
+            },
+            "capa": 6,
+            "voltear": false
+        }
+    },
+    "kit": {
+        "personaje-kit": {
+            "web": {
+                "x": 17,
+                "y": 82,
+                "tamano": 25
+            },
+            "movil": {
+                "x": 14,
+                "y": 82,
+                "tamano": 25
+            },
+            "capa": 7,
+            "voltear": false
+        },
+        "elemento-kit": {
+            "web": {
+                "x": 87,
+                "y": 29,
+                "tamano": 12
+            },
+            "movil": {
+                "x": 87,
+                "y": 32,
+                "tamano": 18
+            },
+            "capa": 6,
+            "voltear": false
+        }
+    },
+    "plan": {
+        "personaje-plan": {
+            "web": {
+                "x": 83,
+                "y": 82,
+                "tamano": 25
+            },
+            "movil": {
+                "x": 86,
+                "y": 80,
+                "tamano": 25
+            },
+            "capa": 7,
+            "voltear": false
+        },
+        "elemento-plan": {
+            "web": {
+                "x": 13,
+                "y": 30,
+                "tamano": 12
+            },
+            "movil": {
+                "x": 14,
+                "y": 31,
+                "tamano": 20
+            },
+            "capa": 6,
+            "voltear": false
+        }
+    },
+    "antojos": {
+        "personaje-antojos": {
+            "web": {
+                "x": 17,
+                "y": 80,
+                "tamano": 25
+            },
+            "movil": {
+                "x": 14,
+                "y": 80,
+                "tamano": 25
+            },
+            "capa": 7,
+            "voltear": false
+        },
+        "elemento-antojos": {
+            "web": {
+                "x": 87,
+                "y": 29,
+                "tamano": 12
+            },
+            "movil": {
+                "x": 87,
+                "y": 31,
+                "tamano": 14
+            },
+            "capa": 6,
+            "voltear": false
+        }
+    },
+    "final": {
+        "personaje-final": {
+            "web": {
+                "x": 83,
+                "y": 80,
+                "tamano": 26
+            },
+            "movil": {
+                "x": 83,
+                "y": 74,
+                "tamano": 26
+            },
+            "capa": 7,
+            "voltear": false
+        },
+        "elemento-final": {
+            "web": {
+                "x": 14,
+                "y": 72,
+                "tamano": 13
+            },
+            "movil": {
+                "x": 14,
+                "y": 72,
+                "tamano": 20
+            },
+            "capa": 6,
+            "voltear": false
+        }
+    }
+};
+        // FIN DE DATOS EDITABLES.
         const $ = (selector, contexto = document) => contexto.querySelector(selector);
         const $$ = (selector, contexto = document) => [...contexto.querySelectorAll(selector)];
         const escenas = $$(".escena");
+        escenas.forEach(escena => {
+            escena.querySelectorAll(".asset[data-asset]").forEach(imagen => {
+                const datos = POSICIONES[escena.id][imagen.dataset.asset];
+                for (const [nombre, valor] of Object.entries(datos.web)) {
+                    imagen.style.setProperty("--" + nombre, valor);
+                }
+                for (const [nombre, valor] of Object.entries(datos.movil)) {
+                    imagen.style.setProperty("--" + nombre + "-movil", valor);
+                }
+                imagen.style.setProperty("--z", datos.capa);
+                imagen.style.setProperty("--voltear", datos.voltear ? -1 : 1);
+            });
+        });
+        $(".salir").href = CONFIG.salida;
+        const mapa = $("#ver-ubicacion");
+        if (CONFIG.mapa.trim()) {
+            mapa.href = CONFIG.mapa.trim();
+            mapa.removeAttribute("aria-disabled");
+        } else {
+            mapa.removeAttribute("href");
+            mapa.tabIndex = -1;
+        }
         const invitacion = $("#invitacion");
         const audio = $("#audio");
         const botonMusica = $("#musica");
         const fondoEntrada = new Image();
         fondoEntrada.src = "assets/fondos/fondo01.webp";
-
         fondoEntrada.decode()
             .catch(() => { })
             .finally(() => {
@@ -1066,7 +1158,6 @@
         let indiceActivo = 0;
         let musicaActiva = false;
         let temporizadorAlto;
-
         function aplicarDatos() {
             $$('[data-nombre]').forEach(elemento => elemento.textContent = CONFIG.nombre);
             $$('[data-edad]').forEach(elemento => elemento.textContent = CONFIG.edad);
@@ -1076,19 +1167,16 @@
             $$('[data-ciudad]').forEach(elemento => elemento.textContent = CONFIG.ciudad);
             document.title = `${CONFIG.nombre} | Fiesta Acuática`;
         }
-
         function actualizarAltoPantalla() {
             clearTimeout(temporizadorAlto);
             temporizadorAlto = setTimeout(() => {
                 const alto = window.visualViewport?.height || window.innerHeight;
                 document.documentElement.style.setProperty("--alto-pantalla", `${Math.round(alto)}px`);
-
                 if (document.body.classList.contains("invitacion-abierta")) {
                     irA(indiceActivo, false);
                 }
             }, 80);
         }
-
         function irA(indice, suave = true) {
             const destino = Math.max(0, Math.min(indice, escenas.length - 1));
             invitacion.scrollTo({
@@ -1097,50 +1185,50 @@
                 behavior: suave ? "smooth" : "auto"
             });
         }
-
         function actualizarEscena(indice) {
             if (indice === indiceActivo && escenas[indice].classList.contains("activa")) return;
-
             indiceActivo = indice;
             escenas.forEach((escena, posicion) => {
                 escena.classList.toggle("activa", posicion === indice);
             });
-
             crearSplash();
         }
-
         const observador = new IntersectionObserver((entradas) => {
             const visible = entradas
                 .filter(entrada => entrada.isIntersecting)
                 .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
             if (visible) actualizarEscena(escenas.indexOf(visible.target));
         }, {
             root: invitacion,
             threshold: [.58, .72]
         });
-
         escenas.forEach(escena => observador.observe(escena));
-
         $$(".siguiente").forEach((boton, indice) => {
             boton.addEventListener("click", () => irA(indice + 1));
         });
-
-        $("#volver-inicio").addEventListener("click", () => irA(0));
-
+        $("#volver-inicio").addEventListener("click", () => {
+            clearTimeout(temporizadorAlto);
+            invitacion.style.scrollSnapType = "none";
+            invitacion.style.scrollBehavior = "auto";
+            escenas.forEach(escena => escena.style.scrollSnapStop = "normal");
+            invitacion.scrollTo({ left: 0, top: 0, behavior: "instant" });
+            actualizarEscena(0);
+            requestAnimationFrame(() => {
+                invitacion.scrollTop = 0;
+                escenas.forEach(escena => escena.style.scrollSnapStop = "");
+                invitacion.style.scrollSnapType = "";
+                invitacion.style.scrollBehavior = "";
+            });
+        });
         $("#entrar").addEventListener("click", async () => {
             document.body.classList.add("invitacion-abierta");
             irA(0, false);
             indiceActivo = 0;
             $("#entrada").classList.add("oculta");
-
             escenas.forEach((escena) => escena.classList.remove("activa"));
-
             void escenas[0].offsetWidth;
-
             escenas[0].classList.add("activa");
             crearSplash();
-
             try {
                 await audio.play();
                 musicaActiva = true;
@@ -1154,7 +1242,6 @@
                 botonMusica.setAttribute("aria-pressed", "false");
             }
         });
-
         botonMusica.addEventListener("click", async () => {
             if (audio.paused) {
                 try {
@@ -1171,10 +1258,8 @@
                 botonMusica.textContent = "▶";
                 botonMusica.setAttribute("aria-label", "Reproducir música");
             }
-
             botonMusica.setAttribute("aria-pressed", String(musicaActiva));
         });
-
         function actualizarCuenta() {
             const diferencia = new Date(CONFIG.fechaEvento).getTime() - Date.now();
             const restante = Math.max(0, diferencia);
@@ -1182,19 +1267,15 @@
             const horas = Math.floor((restante % 86400000) / 3600000);
             const minutos = Math.floor((restante % 3600000) / 60000);
             const segundos = Math.floor((restante % 60000) / 1000);
-
             $("#dias").textContent = String(dias).padStart(2, "0");
             $("#horas").textContent = String(horas).padStart(2, "0");
             $("#minutos").textContent = String(minutos).padStart(2, "0");
             $("#segundos").textContent = String(segundos).padStart(2, "0");
         }
-
         function crearSplash() {
             if (document.hidden || !document.body.classList.contains("invitacion-abierta")) return;
-
             const contenedor = $("#particulas");
             const cantidad = window.innerWidth <= 600 ? 8 : 12;
-
             for (let i = 0; i < cantidad; i += 1) {
                 const gota = document.createElement("span");
                 gota.className = "gota";
@@ -1207,7 +1288,6 @@
                 gota.addEventListener("animationend", () => gota.remove(), { once: true });
             }
         }
-
         document.addEventListener("visibilitychange", () => {
             if (document.hidden && !audio.paused) {
                 audio.pause();
@@ -1217,7 +1297,6 @@
                 botonMusica.setAttribute("aria-pressed", "false");
             }
         });
-
         window.addEventListener("resize", actualizarAltoPantalla, { passive: true });
         window.visualViewport?.addEventListener("resize", actualizarAltoPantalla, { passive: true });
         window.addEventListener("orientationchange", actualizarAltoPantalla, { passive: true });
@@ -1225,7 +1304,6 @@
             actualizarAltoPantalla();
             if (!document.body.classList.contains("invitacion-abierta")) irA(0, false);
         });
-
         aplicarDatos();
         actualizarCuenta();
         setInterval(actualizarCuenta, 1000);
@@ -1233,5 +1311,4 @@
         irA(0, false);
     </script>
 </body>
-
 </html>
