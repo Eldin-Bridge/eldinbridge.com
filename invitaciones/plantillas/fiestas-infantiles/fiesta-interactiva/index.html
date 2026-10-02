@@ -8,7 +8,6 @@
     <meta name="theme-color" content="#1268d7">
     <meta name="description" content="Invitación digital infantil para celebrar jugando.">
     <title>Mundo de Juegos | Fiesta Interactiva</title>
-
     <style>
         :root {
             --azul: #1268d7;
@@ -685,7 +684,6 @@
                 0 28px 80px rgba(0, 0, 0, .42),
                 8px 8px 0 rgba(255, 129, 45, .44),
                 -8px -8px 0 rgba(255, 212, 71, .30);
-
             opacity: 0;
             transform: translateY(18px) scale(.97);
             transition:
@@ -822,11 +820,9 @@
                 pointer-events: none;
             }
 
-
             .tarjeta-juego::after {
                 display: none;
             }
-
 
             .tarjeta-juego>* {
                 position: relative;
@@ -837,32 +833,10 @@
                 z-index: 11;
             }
 
-            .asset.personaje {
-                width: min(var(--tamano), 43vw);
-            }
-
-            .asset.adorno {
-                width: min(var(--tamano), 25vw);
-            }
-
-            #cuenta .asset.adorno,
-            #ubicacion .asset.adorno,
-            #mision .asset.adorno,
-            #atuendo .asset.adorno,
-            #regalo .asset.adorno {
-                width: min(var(--tamano), 24vw);
-            }
-
-            .personaje-derecha {
-                left: 88% !important;
-            }
-
-            #inicio .personaje-derecha {
-                left: 84% !important;
-            }
-
-            .personaje-izquierda {
-                left: 12% !important;
+            .asset {
+                left: var(--x-movil);
+                top: var(--y-movil);
+                width: var(--tamano-movil);
             }
 
             h1 {
@@ -900,10 +874,6 @@
                 letter-spacing: .02em;
             }
 
-            #inicio .asset.personaje {
-                top: 82% !important;
-            }
-
             #mision .lista-juegos {
                 display: flex !important;
                 width: 100% !important;
@@ -936,17 +906,37 @@
         }
 
         @media (max-width: 380px) {
-
             .dato span:last-child {
                 font-size: .77rem;
             }
+        }
+
+        /* Navegación centrada fuera de las tarjetas, en móvil y web. */
+        .navegacion-escena {
+            position: absolute;
+            z-index: 20;
+            left: 50%;
+            bottom: max(18px, env(safe-area-inset-bottom));
+            transform: translateX(-50%);
+            margin: 0;
+            max-width: calc(100% - 36px);
+        }
+
+        .navegacion-escena:hover {
+            transform: translate(-50%, -2px) scale(1.02);
+        }
+
+        .tarjeta-juego .boton-mapa {
+            display: flex;
+            width: max-content;
+            max-width: 100%;
+            margin: 20px auto 0;
         }
     </style>
 </head>
 
 <body>
     <audio id="audio" src="assets/audio/audio01.mp3" loop preload="metadata"></audio>
-
     <div class="entrada" id="entrada">
         <div class="entrada-contenido">
             <img class="entrada-icono" src="assets/elementos/elemento02.webp" alt="">
@@ -955,19 +945,16 @@
             <button class="boton-juego" id="entrar" type="button">Entrar a jugar →</button>
         </div>
     </div>
-
     <a class="salir" href="../../../#fiestas-infantiles" aria-label="Salir de la invitación">Salir</a>
-
     <button class="musica" id="musica" type="button" aria-label="Pausar música" aria-pressed="true">Ⅱ</button>
     <div class="particulas" id="particulas" aria-hidden="true"></div>
-
     <main>
         <section class="escena activa" id="inicio">
             <img class="fondo" src="assets/fondos/fondo01.webp" alt="">
             <div class="velo"></div>
             <div class="capa-assets">
                 <img class="asset personaje personaje-derecha" src="assets/personajes/personaje01.webp" alt=""
-                    style="--x:81.5%;--y:84%;--tamano:27vw;--z:6">
+                    data-asset="personaje-inicio">
             </div>
             <div class="tarjeta-juego">
                 <span class="insignia-nivel">Diversión desbloqueada</span>
@@ -976,18 +963,16 @@
                 <p class="texto">Brincolines, pelotas, toboganes y muchas sorpresas nos esperan.</p>
                 <div class="separador-color">●</div>
                 <p class="edad">Cumple <span data-edad>6</span> años</p>
-                <button class="boton-juego siguiente" type="button">Comenzar la diversión →</button>
             </div>
+            <button class="boton-juego navegacion-escena siguiente" type="button">Comenzar la diversión →</button>
         </section>
-
         <section class="escena" id="cuenta">
             <img class="fondo" src="assets/fondos/fondo02.webp" alt="">
             <div class="velo"></div>
             <div class="capa-assets">
                 <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje02.webp" alt=""
-                    style="--x:18%;--y:78%;--tamano:25vw;--z:6;--voltear:-1">
-                <img class="asset adorno" src="assets/elementos/elemento01.webp" alt=""
-                    style="--x:87%;--y:31%;--tamano:clamp(88px,11vw,145px);--z:6">
+                    data-asset="personaje-cuenta">
+                <img class="asset adorno" src="assets/elementos/elemento01.webp" alt="" data-asset="elemento-cuenta">
             </div>
             <div class="tarjeta-juego">
                 <span class="insignia-nivel">Nivel 01 · Cuenta regresiva</span>
@@ -1001,18 +986,16 @@
                     <div class="tiempo"><span class="numero" id="segundos">00</span><span class="unidad">Segundos</span>
                     </div>
                 </div>
-                <button class="boton-juego siguiente" type="button">Siguiente nivel →</button>
             </div>
+            <button class="boton-juego navegacion-escena siguiente" type="button">Siguiente nivel →</button>
         </section>
-
         <section class="escena" id="ubicacion">
             <img class="fondo" src="assets/fondos/fondo03.webp" alt="">
             <div class="velo"></div>
             <div class="capa-assets">
                 <img class="asset personaje personaje-derecha" src="assets/personajes/personaje03.webp" alt=""
-                    style="--x:83%;--y:83%;--tamano:25vw;--z:6">
-                <img class="asset adorno" src="assets/elementos/elemento03.webp" alt=""
-                    style="--x:13%;--y:32%;--tamano:clamp(88px,11vw,145px);--z:6">
+                    data-asset="personaje-ubicacion">
+                <img class="asset adorno" src="assets/elementos/elemento03.webp" alt="" data-asset="elemento-ubicacion">
             </div>
             <div class="tarjeta-juego">
                 <span class="insignia-nivel">Nivel 02 · La cita</span>
@@ -1027,18 +1010,16 @@
                     <div class="dato"><span class="dato-icono">🎈</span><strong>Zona</strong><span
                             data-ciudad>Cadereyta, Nuevo León</span></div>
                 </div>
-                <button class="boton-juego siguiente" type="button">Entrar a la zona de juegos →</button>
             </div>
+            <button class="boton-juego navegacion-escena siguiente" type="button">Entrar a la zona de juegos →</button>
         </section>
-
         <section class="escena" id="mision">
             <img class="fondo" src="assets/fondos/fondo04.webp" alt="">
             <div class="velo"></div>
             <div class="capa-assets">
                 <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje04.webp" alt=""
-                    style="--x:18%;--y:83%;--tamano:25vw;--z:6">
-                <img class="asset adorno" src="assets/elementos/elemento04.webp" alt=""
-                    style="--x:87%;--y:32%;--tamano:clamp(88px,11vw,145px);--z:6">
+                    data-asset="personaje-mision">
+                <img class="asset adorno" src="assets/elementos/elemento04.webp" alt="" data-asset="elemento-mision">
             </div>
             <div class="tarjeta-juego">
                 <span class="insignia-nivel">Nivel 03 · Zona interactiva</span>
@@ -1050,18 +1031,16 @@
                     <li>Explorar túneles y obstáculos</li>
                     <li>Lanzarnos por los toboganes</li>
                 </ul>
-                <button class="boton-juego siguiente" type="button">Seguir jugando →</button>
             </div>
+            <button class="boton-juego navegacion-escena siguiente" type="button">Seguir jugando →</button>
         </section>
-
         <section class="escena" id="atuendo">
             <img class="fondo" src="assets/fondos/fondo05.webp" alt="">
             <div class="velo"></div>
             <div class="capa-assets">
                 <img class="asset personaje personaje-derecha" src="assets/personajes/personaje05.webp" alt=""
-                    style="--x:82%;--y:83%;--tamano:25vw;--z:6">
-                <img class="asset adorno" src="assets/elementos/elemento05.webp" alt=""
-                    style="--x:13%;--y:32%;--tamano:clamp(88px,11vw,145px);--z:6">
+                    data-asset="personaje-atuendo">
+                <img class="asset adorno" src="assets/elementos/elemento05.webp" alt="" data-asset="elemento-atuendo">
             </div>
             <div class="tarjeta-juego">
                 <span class="insignia-nivel">Nivel 04 · Prepárate</span>
@@ -1072,29 +1051,25 @@
                         <span class="icono-atuendo" aria-hidden="true">👕</span>
                         <span>Ropa fresca y cómoda</span>
                     </li>
-
                     <li>
                         <span class="icono-atuendo" aria-hidden="true">🧦</span>
                         <span>Calcetines antiderrapantes</span>
                     </li>
-
                     <li>
                         <span class="icono-atuendo" aria-hidden="true">⚡</span>
                         <span>Toda tu energía para jugar</span>
                     </li>
                 </ul>
-                <button class="boton-juego siguiente" type="button">Ir por un descanso →</button>
             </div>
+            <button class="boton-juego navegacion-escena siguiente" type="button">Ir por un descanso →</button>
         </section>
-
         <section class="escena" id="regalo">
             <img class="fondo" src="assets/fondos/fondo06.webp" alt="">
             <div class="velo"></div>
             <div class="capa-assets">
                 <img class="asset personaje personaje-izquierda" src="assets/personajes/personaje06.webp" alt=""
-                    style="--x:18%;--y:72%;--tamano:25vw;--z:6;--voltear:-1">
-                <img class="asset adorno" src="assets/elementos/elemento06.webp" alt=""
-                    style="--x:87%;--y:31%;--tamano:clamp(92px,12vw,155px);--z:6">
+                    data-asset="personaje-regalo">
+                <img class="asset adorno" src="assets/elementos/elemento06.webp" alt="" data-asset="elemento-regalo">
             </div>
             <div class="tarjeta-juego">
                 <span class="insignia-nivel">Nivel 05 · Recarga de energía</span>
@@ -1103,18 +1078,16 @@
                     fiesta.</p>
                 <div class="separador-color">★</div>
                 <p class="nombre">¡Todavía queda más diversión!</p>
-                <button class="boton-juego siguiente" type="button">Llegar a la celebración →</button>
             </div>
+            <button class="boton-juego navegacion-escena siguiente" type="button">Llegar a la celebración →</button>
         </section>
-
         <section class="escena" id="final">
             <img class="fondo" src="assets/fondos/fondo07.webp" alt="">
             <div class="velo"></div>
             <div class="capa-assets">
                 <img class="asset personaje personaje-derecha" src="assets/personajes/personaje07.webp" alt=""
-                    style="--x:82%;--y:72%;--tamano:26vw;--z:6">
-                <img class="asset adorno" src="assets/elementos/elemento07.webp" alt=""
-                    style="--x:14%;--y:73%;--tamano:13vw;--z:5">
+                    data-asset="personaje-final">
+                <img class="asset adorno" src="assets/elementos/elemento07.webp" alt="" data-asset="elemento-final">
             </div>
             <div class="tarjeta-juego">
                 <span class="insignia-nivel">Nivel final · Celebración</span>
@@ -1125,15 +1098,13 @@
                     Con cariño, <span data-nombre>Leo</span>
                     <span class="icono-confeti" aria-hidden="true">🎉</span>
                 </p>
-                <span class="boton-mapa" aria-disabled="true">
+                <a class="boton-mapa" id="ver-ubicacion" aria-disabled="true" target="_blank" rel="noopener noreferrer">
                     Ver ubicación →
-                </span>
-                <br>
-                <button class="boton-juego" id="volver-inicio" type="button">← Volver al inicio</button>
+                </a>
             </div>
+            <button class="boton-juego navegacion-escena" id="volver-inicio" type="button">← Volver al inicio</button>
         </section>
     </main>
-
     <script>
         /* ================================================================
            DATOS EDITABLES DE LA INVITACIÓN
@@ -1147,17 +1118,242 @@
             lugar: "Play Zone Kids",
             ciudad: "Cadereyta, Nuevo León",
             fechaEvento: "2027-10-24T16:00:00-06:00",
+            mapa: "",
+            salida: "../../../#fiestas-infantiles",
         };
+        /* POSICIONES EDITABLES: valores CSS exactos del diseño original.
+           x / y: posición. tamano: ancho; admite vw, px, min() y clamp().
+           Web y móvil son independientes. capa y voltear se comparten. */
+        const POSICIONES = {
+            "inicio": {
+                "personaje-inicio": {
+                    "web": {
+                        "x": "81.5%",
+                        "y": "84%",
+                        "tamano": "27vw"
+                    },
+                    "movil": {
+                        "x": "84%",
+                        "y": "82%",
+                        "tamano": "min(27vw, 43vw)"
+                    },
+                    "capa": 6,
+                    "voltear": false
+                }
+            },
+            "cuenta": {
+                "personaje-cuenta": {
+                    "web": {
+                        "x": "18%",
+                        "y": "78%",
+                        "tamano": "25vw"
+                    },
+                    "movil": {
+                        "x": "12%",
+                        "y": "78%",
+                        "tamano": "min(25vw, 43vw)"
+                    },
+                    "capa": 6,
+                    "voltear": true
+                },
+                "elemento-cuenta": {
+                    "web": {
+                        "x": "87%",
+                        "y": "31%",
+                        "tamano": "clamp(88px,11vw,145px)"
+                    },
+                    "movil": {
+                        "x": "87%",
+                        "y": "31%",
+                        "tamano": "min(clamp(88px,11vw,145px), 24vw)"
+                    },
+                    "capa": 6,
+                    "voltear": false
+                }
+            },
+            "ubicacion": {
+                "personaje-ubicacion": {
+                    "web": {
+                        "x": "83%",
+                        "y": "83%",
+                        "tamano": "25vw"
+                    },
+                    "movil": {
+                        "x": "88%",
+                        "y": "83%",
+                        "tamano": "min(25vw, 43vw)"
+                    },
+                    "capa": 6,
+                    "voltear": false
+                },
+                "elemento-ubicacion": {
+                    "web": {
+                        "x": "13%",
+                        "y": "32%",
+                        "tamano": "clamp(88px,11vw,145px)"
+                    },
+                    "movil": {
+                        "x": "13%",
+                        "y": "32%",
+                        "tamano": "min(clamp(88px,11vw,145px), 24vw)"
+                    },
+                    "capa": 6,
+                    "voltear": false
+                }
+            },
+            "mision": {
+                "personaje-mision": {
+                    "web": {
+                        "x": "18%",
+                        "y": "83%",
+                        "tamano": "25vw"
+                    },
+                    "movil": {
+                        "x": "12%",
+                        "y": "83%",
+                        "tamano": "min(25vw, 43vw)"
+                    },
+                    "capa": 6,
+                    "voltear": false
+                },
+                "elemento-mision": {
+                    "web": {
+                        "x": "87%",
+                        "y": "32%",
+                        "tamano": "clamp(88px,11vw,145px)"
+                    },
+                    "movil": {
+                        "x": "87%",
+                        "y": "32%",
+                        "tamano": "min(clamp(88px,11vw,145px), 24vw)"
+                    },
+                    "capa": 6,
+                    "voltear": false
+                }
+            },
+            "atuendo": {
+                "personaje-atuendo": {
+                    "web": {
+                        "x": "82%",
+                        "y": "83%",
+                        "tamano": "25vw"
+                    },
+                    "movil": {
+                        "x": "88%",
+                        "y": "83%",
+                        "tamano": "min(25vw, 43vw)"
+                    },
+                    "capa": 6,
+                    "voltear": false
+                },
+                "elemento-atuendo": {
+                    "web": {
+                        "x": "13%",
+                        "y": "32%",
+                        "tamano": "clamp(88px,11vw,145px)"
+                    },
+                    "movil": {
+                        "x": "13%",
+                        "y": "32%",
+                        "tamano": "min(clamp(88px,11vw,145px), 24vw)"
+                    },
+                    "capa": 6,
+                    "voltear": false
+                }
+            },
+            "regalo": {
+                "personaje-regalo": {
+                    "web": {
+                        "x": "18%",
+                        "y": "72%",
+                        "tamano": "25vw"
+                    },
+                    "movil": {
+                        "x": "12%",
+                        "y": "72%",
+                        "tamano": "min(25vw, 43vw)"
+                    },
+                    "capa": 6,
+                    "voltear": true
+                },
+                "elemento-regalo": {
+                    "web": {
+                        "x": "87%",
+                        "y": "31%",
+                        "tamano": "clamp(92px,12vw,155px)"
+                    },
+                    "movil": {
+                        "x": "87%",
+                        "y": "31%",
+                        "tamano": "min(clamp(92px,12vw,155px), 24vw)"
+                    },
+                    "capa": 6,
+                    "voltear": false
+                }
+            },
+            "final": {
+                "personaje-final": {
+                    "web": {
+                        "x": "82%",
+                        "y": "72%",
+                        "tamano": "26vw"
+                    },
+                    "movil": {
+                        "x": "88%",
+                        "y": "72%",
+                        "tamano": "min(26vw, 43vw)"
+                    },
+                    "capa": 6,
+                    "voltear": false
+                },
+                "elemento-final": {
+                    "web": {
+                        "x": "14%",
+                        "y": "73%",
+                        "tamano": "13vw"
+                    },
+                    "movil": {
+                        "x": "14%",
+                        "y": "73%",
+                        "tamano": "min(13vw, 25vw)"
+                    },
+                    "capa": 5,
+                    "voltear": false
+                }
+            }
+        };
+        // FIN DE DATOS EDITABLES. No es necesario cambiar el código inferior.
 
         const $ = (selector, contexto = document) => contexto.querySelector(selector);
         const $$ = (selector, contexto = document) => [...contexto.querySelectorAll(selector)];
         const escenas = $$(".escena");
+        escenas.forEach(escena => {
+            escena.querySelectorAll(".asset[data-asset]").forEach(imagen => {
+                const datos = POSICIONES[escena.id][imagen.dataset.asset];
+                for (const [nombre, valor] of Object.entries(datos.web)) {
+                    imagen.style.setProperty("--" + nombre, valor);
+                }
+                for (const [nombre, valor] of Object.entries(datos.movil)) {
+                    imagen.style.setProperty("--" + nombre + "-movil", valor);
+                }
+                imagen.style.setProperty("--z", datos.capa);
+                imagen.style.setProperty("--voltear", datos.voltear ? -1 : 1);
+            });
+        });
+        $(".salir").href = CONFIG.salida;
+        const mapa = $("#ver-ubicacion");
+        if (CONFIG.mapa.trim()) {
+            mapa.href = CONFIG.mapa.trim();
+            mapa.removeAttribute("aria-disabled");
+        } else {
+            mapa.removeAttribute("href");
+            mapa.tabIndex = -1;
+        }
         const carrusel = $("main");
         const audio = $("#audio");
         const botonMusica = $("#musica");
         const fondoEntrada = new Image();
         fondoEntrada.src = "assets/fondos/fondo01.webp";
-
         fondoEntrada.decode()
             .catch(() => { })
             .finally(() => {
@@ -1166,7 +1362,6 @@
         let indiceActivo = 0;
         let temporizadorAjuste;
         let musicaActiva = false;
-
         function aplicarDatos() {
             $$('[data-nombre]').forEach(el => el.textContent = CONFIG.nombre);
             $$('[data-edad]').forEach(el => el.textContent = CONFIG.edad);
@@ -1176,64 +1371,63 @@
             $$('[data-ciudad]').forEach(el => el.textContent = CONFIG.ciudad);
             document.title = `${CONFIG.nombre} | Fiesta Interactiva`;
         }
-
         function actualizarAltoPantalla() {
             const alto = window.visualViewport?.height || window.innerHeight;
             document.documentElement.style.setProperty("--alto-pantalla", `${Math.round(alto)}px`);
         }
-
         function irA(indice, suave = true) {
             const posicion = Math.max(
                 0,
                 Math.min(indice, escenas.length - 1)
             );
-
             carrusel.scrollTo({
                 left: posicion * carrusel.clientWidth,
                 top: 0,
                 behavior: suave ? "smooth" : "auto"
             });
         }
-
         function actualizarRuta(indice) {
             indiceActivo = indice;
-
             escenas.forEach((escena, i) => {
                 escena.classList.toggle("activa", i === indice);
             });
         }
-
         const observador = new IntersectionObserver((entradas) => {
             const visible = entradas
                 .filter(entrada => entrada.isIntersecting)
                 .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
             if (visible) actualizarRuta(escenas.indexOf(visible.target));
         }, {
             root: carrusel,
             threshold: [.55, .72]
         });
-
         escenas.forEach(escena => observador.observe(escena));
-
         $$(".siguiente").forEach((boton, indice) => {
             boton.addEventListener("click", () => irA(indice + 1));
         });
-
-        $("#volver-inicio").addEventListener("click", () => irA(0));
-
+        $("#volver-inicio").addEventListener("click", () => {
+            clearTimeout(temporizadorAjuste);
+            carrusel.style.scrollSnapType = "none";
+            carrusel.style.scrollBehavior = "auto";
+            escenas.forEach(escena => escena.style.scrollSnapStop = "normal");
+            carrusel.scrollTo({ left: 0, top: 0, behavior: "instant" });
+            actualizarRuta(0);
+            requestAnimationFrame(() => {
+                carrusel.scrollLeft = 0;
+                escenas.forEach(escena => escena.style.scrollSnapStop = "");
+                carrusel.style.scrollSnapType = "";
+                carrusel.style.scrollBehavior = "";
+            });
+        });
         $("#entrar").addEventListener("click", async () => {
             document.body.classList.add("invitacion-abierta");
             irA(0, false);
             actualizarRuta(0);
-
             $("#entrada").classList.add("oculta");
             document.body.style.overflow = "";
-
             escenas[0].classList.remove("activa");
             void escenas[0].offsetWidth;
             escenas[0].classList.add("activa");
-
             try {
                 await audio.play();
                 musicaActiva = true;
@@ -1247,7 +1441,6 @@
                 botonMusica.setAttribute("aria-pressed", "false");
             }
         });
-
         botonMusica.addEventListener("click", async () => {
             if (audio.paused) {
                 try {
@@ -1264,10 +1457,8 @@
                 botonMusica.textContent = "▶";
                 botonMusica.setAttribute("aria-label", "Reproducir música");
             }
-
             botonMusica.setAttribute("aria-pressed", String(musicaActiva));
         });
-
         function actualizarCuenta() {
             const diferencia = new Date(CONFIG.fechaEvento).getTime() - Date.now();
             const restante = Math.max(0, diferencia);
@@ -1275,25 +1466,20 @@
             const horas = Math.floor((restante % 86400000) / 3600000);
             const minutos = Math.floor((restante % 3600000) / 60000);
             const segundos = Math.floor((restante % 60000) / 1000);
-
             $("#dias").textContent = String(dias).padStart(2, "0");
             $("#horas").textContent = String(horas).padStart(2, "0");
             $("#minutos").textContent = String(minutos).padStart(2, "0");
             $("#segundos").textContent = String(segundos).padStart(2, "0");
         }
-
         function crearParticula() {
             const contenedor = $("#particulas");
-
             if (
                 document.hidden ||
                 contenedor.childElementCount >= 12
             ) {
                 return;
             }
-
             const pelota = document.createElement("span");
-
             const colores = [
                 ["#4ca8ff", "#1268d7"],
                 ["#ffae50", "#f06b1b"],
@@ -1301,89 +1487,68 @@
                 ["#65d88b", "#209750"],
                 ["#ff7474", "#dc3f49"]
             ];
-
             const color = colores[
                 Math.floor(Math.random() * colores.length)
             ];
-
             pelota.className = "pelota-cayendo";
             pelota.style.left = `${Math.random() * 100}%`;
-
             pelota.style.setProperty(
                 "--ancho",
                 `${8 + Math.random() * 9}px`
             );
-
             pelota.style.setProperty(
                 "--duracion",
                 `${6.5 + Math.random() * 3.5}s`
             );
-
             pelota.style.setProperty(
                 "--desvio",
                 `${-45 + Math.random() * 90}px`
             );
-
             pelota.style.setProperty("--color-claro", color[0]);
             pelota.style.setProperty("--color-oscuro", color[1]);
-
             contenedor.appendChild(pelota);
-
             pelota.addEventListener(
                 "animationend",
                 () => pelota.remove(),
                 { once: true }
             );
         }
-
         function ajustarEscenaCercana() {
             clearTimeout(temporizadorAjuste);
-
             temporizadorAjuste = setTimeout(() => {
                 const ancho = carrusel.clientWidth;
-
                 if (!ancho) return;
-
                 const indice = Math.round(
                     carrusel.scrollLeft / ancho
                 );
-
                 irA(indice, false);
             }, 150);
         }
-
         carrusel.addEventListener("wheel", evento => {
             if (Math.abs(evento.deltaY) <= Math.abs(evento.deltaX)) {
                 return;
             }
-
             evento.preventDefault();
-
             carrusel.scrollBy({
                 left: evento.deltaY,
                 top: 0,
                 behavior: "auto"
             });
         }, { passive: false });
-
         aplicarDatos();
         actualizarAltoPantalla();
         actualizarCuenta();
         actualizarRuta(0);
         document.body.style.overflow = "hidden";
-
         setInterval(actualizarCuenta, 1000);
         setInterval(crearParticula, 620);
-
         window.addEventListener("resize", () => {
             actualizarAltoPantalla();
             ajustarEscenaCercana();
         }, { passive: true });
-
         window.visualViewport?.addEventListener("resize", () => {
             actualizarAltoPantalla();
         }, { passive: true });
-
         window.addEventListener("pageshow", actualizarAltoPantalla);
     </script>
 </body>
