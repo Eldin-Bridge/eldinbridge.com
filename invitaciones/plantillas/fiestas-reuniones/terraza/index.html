@@ -1,21 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#b86f82">
   <title>Una tarde en casa</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
-
   <link rel="preload" as="image" href="assets/fondos/fondo01.webp">
-
   <style>
     :root {
       --alto: 100vh;
@@ -28,13 +23,11 @@
       --salvia-claro: #f3dfe4;
       --sombra: 0 24px 65px rgba(65, 43, 48, .3);
     }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-
     html,
     body {
       width: 100%;
@@ -43,26 +36,21 @@
       overflow: hidden;
       background: #151b18;
     }
-
     body {
       color: #fffaf0;
       font-family: Manrope, "Segoe UI", sans-serif;
     }
-
     button,
     a {
       color: inherit;
       font: inherit;
     }
-
     button {
       border: 0;
     }
-
     a {
       text-decoration: none;
     }
-
     main {
       display: flex;
       width: 100%;
@@ -76,16 +64,13 @@
       touch-action: pan-x;
       -webkit-overflow-scrolling: touch;
     }
-
     main::-webkit-scrollbar {
       display: none;
     }
-
     body:not(.invitacion-abierta) main {
       visibility: hidden;
       pointer-events: none;
     }
-
     .escena {
       position: relative;
       display: grid;
@@ -102,7 +87,6 @@
       scroll-snap-stop: always;
       isolation: isolate;
     }
-
     .fondo {
       position: absolute;
       inset: 0;
@@ -118,12 +102,10 @@
         filter 1.1s ease;
       will-change: transform;
     }
-
     .escena.activa .fondo {
       filter: saturate(.94) brightness(.73);
       transform: scale(1.025);
     }
-
     .velo {
       position: absolute;
       inset: 0;
@@ -137,82 +119,67 @@
           transparent 15%,
           rgba(21, 29, 25, .18));
     }
-
     .capa-assets {
       position: absolute;
       inset: 0;
       z-index: 7;
       pointer-events: none;
     }
-
     .elemento {
       position: absolute;
-      left: var(--x);
-      top: var(--y);
-      width: var(--tamano);
+      left: calc(var(--x) * 1%);
+      top: calc(var(--y) * 1%);
+      width: calc(var(--tamano) * 1%);
       max-width: none;
       user-select: none;
       transform:
-        translate(-50%, -50%) rotate(var(--giro, 0deg));
+        translate(-50%, -50%) rotate(calc(var(--giro, 0) * 1deg));
       transform-origin: center;
       filter: drop-shadow(0 15px 17px rgba(25, 24, 18, .34));
       animation: flotar 4.5s ease-in-out infinite;
     }
-
     .escena:not(.activa) .elemento {
       animation-play-state: paused;
     }
-
     @keyframes flotar {
-
       0%,
       100% {
         translate: 0 0;
         rotate: 0deg;
       }
-
       50% {
         translate: 0 -11px;
         rotate: 2deg;
       }
     }
-
     @keyframes balancear {
-
       0%,
       100% {
         translate: 0 0;
         rotate: -2deg;
       }
-
       50% {
         translate: 0 -10px;
         rotate: 3deg;
       }
     }
-
     @keyframes pulso {
-
       0%,
       100% {
         translate: 0 0;
         scale: 1;
       }
-
       50% {
         translate: 0 -8px;
         scale: 1.025;
       }
     }
-
     #cuenta .elemento {
       animation-name: balancear;
     }
-
     #plan .elemento {
       animation-name: pulso;
     }
-
     .tarjeta {
       position: relative;
       z-index: 9;
@@ -233,7 +200,6 @@
         transform .72s cubic-bezier(.22, .8, .32, 1);
       will-change: transform, opacity;
     }
-
     .tarjeta::before {
       content: "";
       position: absolute;
@@ -245,7 +211,6 @@
       transform: rotate(-1.2deg);
       pointer-events: none;
     }
-
     .tarjeta::after {
       content: "";
       position: absolute;
@@ -260,12 +225,10 @@
           transparent 4px) 0 0 / 12px 12px;
       pointer-events: none;
     }
-
     .escena.activa .tarjeta {
       opacity: 1;
       transform: none;
     }
-
     .etiqueta {
       display: block;
       margin-bottom: 14px;
@@ -276,7 +239,6 @@
       text-align: center;
       text-transform: uppercase;
     }
-
     h1,
     h2 {
       font-family: "DM Serif Display", Georgia, serif;
@@ -285,15 +247,12 @@
       letter-spacing: -.025em;
       text-align: center;
     }
-
     h1 {
       font-size: clamp(3rem, 7.5vw, 5.8rem);
     }
-
     h2 {
       font-size: clamp(2.35rem, 5.8vw, 4.25rem);
     }
-
     .acento {
       position: relative;
       display: inline-block;
@@ -301,7 +260,6 @@
       font-style: normal;
       z-index: 0;
     }
-
     .acento::after {
       content: "";
       position: absolute;
@@ -314,7 +272,6 @@
       background: rgba(229, 166, 181, .58);
       transform: rotate(-1.5deg);
     }
-
     .anfitrion {
       margin-top: 15px;
       color: var(--terracota-oscuro);
@@ -322,7 +279,6 @@
       font-weight: 800;
       text-align: center;
     }
-
     .descripcion {
       max-width: 525px;
       margin: 18px auto 0;
@@ -331,14 +287,12 @@
       line-height: 1.65;
       text-align: center;
     }
-
     .separador {
       margin: 19px auto 0;
       color: var(--salvia);
       font-size: 1.25rem;
       text-align: center;
     }
-
     .boton,
     .boton-ubicacion {
       display: inline-flex;
@@ -361,7 +315,6 @@
         background .2s ease,
         box-shadow .2s ease;
     }
-
     .boton:hover,
     .boton-ubicacion:hover {
       color: #fffaf5;
@@ -370,26 +323,22 @@
       box-shadow:
         0 14px 27px rgba(164, 80, 105, .25);
     }
-
     .boton:active,
     .boton-ubicacion:active {
       transform: translateY(1px);
     }
-
     .contador {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 9px;
       margin-top: 24px;
     }
-
     .tiempo {
       padding: 14px 5px 11px;
       text-align: center;
       background: rgba(247, 225, 218, .82);
       border-radius: 18px;
     }
-
     .tiempo strong {
       display: block;
       color: var(--terracota-oscuro);
@@ -398,7 +347,6 @@
       font-weight: 400;
       line-height: 1;
     }
-
     .tiempo span {
       display: block;
       margin-top: 5px;
@@ -408,14 +356,12 @@
       letter-spacing: .08em;
       text-transform: uppercase;
     }
-
     .datos {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
       margin-top: 23px;
     }
-
     .dato {
       display: grid;
       min-height: 104px;
@@ -426,7 +372,6 @@
       border: 1px solid rgba(201, 130, 150, .25);
       border-radius: 22px;
     }
-
     .dato i {
       display: grid;
       width: 34px;
@@ -438,7 +383,6 @@
       background: var(--salvia-claro);
       border-radius: 50%;
     }
-
     .dato small {
       display: block;
       margin-bottom: 3px;
@@ -448,13 +392,11 @@
       letter-spacing: .12em;
       text-transform: uppercase;
     }
-
     .dato strong {
       display: block;
       font-size: .84rem;
       line-height: 1.35;
     }
-
     .acciones-datos {
       display: flex;
       flex-wrap: wrap;
@@ -462,23 +404,19 @@
       gap: 9px;
       margin-top: 4px;
     }
-
     .acciones-datos .boton,
     .acciones-datos .boton-ubicacion {
       margin-top: 16px;
     }
-
     .boton-ubicacion {
       color: #95566a;
       background: #f8e7e2;
       border: 1px solid rgba(176, 94, 116, .42);
       box-shadow: none;
     }
-
     .boton-ubicacion:hover {
       color: #fffaf1;
     }
-
     .lista,
     .menu {
       display: flex;
@@ -489,7 +427,6 @@
       margin: 23px auto 0;
       text-align: center;
     }
-
     .lista li,
     .menu span {
       width: fit-content;
@@ -504,13 +441,11 @@
       background: rgba(243, 215, 221, .7);
       border-radius: 999px;
     }
-
     .lista-icono {
       display: inline-block;
       margin-right: 6px;
       font-style: normal;
     }
-
     .control {
       position: fixed;
       top: max(16px, env(safe-area-inset-top));
@@ -525,7 +460,6 @@
       backdrop-filter: blur(9px);
       -webkit-backdrop-filter: blur(9px);
     }
-
     .salir {
       left: max(16px, env(safe-area-inset-left));
       padding: 0 16px;
@@ -533,19 +467,16 @@
       font-size: .75rem;
       font-weight: 800;
     }
-
     .musica {
       right: max(16px, env(safe-area-inset-right));
       width: 44px;
       border-radius: 50%;
       cursor: pointer;
     }
-
     body:not(.invitacion-abierta) .musica {
       opacity: 0;
       pointer-events: none;
     }
-
     .entrada {
       position: fixed;
       inset: 0;
@@ -564,17 +495,14 @@
         visibility .65s ease;
       touch-action: none;
     }
-
     body.fondo-listo .entrada {
       opacity: 1;
     }
-
     body.fondo-listo .entrada.oculta {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
     }
-
     .entrada-contenido {
       position: relative;
       width: min(88vw, 470px);
@@ -592,7 +520,6 @@
         opacity .5s .16s ease-out,
         transform .7s .16s cubic-bezier(.22, .8, .32, 1);
     }
-
     .entrada-contenido::before {
       content: "";
       position: absolute;
@@ -602,12 +529,10 @@
       background: rgba(224, 151, 170, .58);
       transform: rotate(1.3deg);
     }
-
     body.fondo-listo .entrada-contenido {
       opacity: 1;
       transform: none;
     }
-
     .entrada-icono {
       width: min(46vw, 190px);
       max-height: 145px;
@@ -617,11 +542,9 @@
         drop-shadow(0 10px 12px rgba(52, 39, 25, .22));
       animation: flotar 4.5s ease-in-out infinite;
     }
-
     .entrada h2 {
       font-size: clamp(2.2rem, 7vw, 3.65rem);
     }
-
     .entrada p {
       max-width: 380px;
       margin: 13px auto 0;
@@ -629,7 +552,6 @@
       line-height: 1.55;
       text-align: center;
     }
-
     .particulas {
       position: fixed;
       inset: 0;
@@ -637,7 +559,6 @@
       overflow: hidden;
       pointer-events: none;
     }
-
     .luz {
       position: absolute;
       left: var(--x);
@@ -651,7 +572,6 @@
       animation:
         subir-luz var(--d) ease-out forwards;
     }
-
     @keyframes subir-luz {
       to {
         opacity: 0;
@@ -659,99 +579,80 @@
           translate(var(--dx), -105px) scale(.2);
       }
     }
-
     @media (max-width: 600px) {
       .escena {
         padding: 72px 17px 22px;
       }
-
       .tarjeta {
         z-index: 9;
         width: min(86vw, 510px);
         padding: 27px 18px 24px;
         border-radius: 27px;
       }
-
       .tarjeta::before {
         border-radius: 27px;
       }
-
       .capa-assets {
         z-index: 11;
       }
-
       .elemento {
         z-index: 11 !important;
-        max-width: 47vw;
-        max-height: 27vh;
+        left: calc(var(--x-movil) * 1%);
+        top: calc(var(--y-movil) * 1%);
+        width: calc(var(--tamano-movil) * 1%);
       }
-
       .tarjeta>* {
         position: relative;
         z-index: 12;
       }
-
       h1 {
         font-size: clamp(2.7rem, 13vw, 4.15rem);
       }
-
       h2 {
         font-size: clamp(2.05rem, 10vw, 3.2rem);
       }
-
       .descripcion {
         font-size: .9rem;
         line-height: 1.5;
       }
-
       .contador {
         gap: 6px;
       }
-
       .tiempo {
         padding: 11px 2px 9px;
         border-radius: 14px;
       }
-
       .tiempo strong {
         font-size: clamp(1.4rem, 7vw, 1.95rem);
       }
-
       .tiempo span {
         font-size: .52rem;
       }
-
       .datos {
         gap: 7px;
       }
-
       .dato {
         min-height: 87px;
         padding: 9px 6px;
         border-radius: 16px;
       }
-
       .dato i {
         width: 29px;
         height: 29px;
         font-size: .88rem;
       }
-
       .dato strong {
         font-size: .76rem;
       }
-
       .lista,
       .menu {
         gap: 7px;
       }
-
       .lista li,
       .menu span {
         padding: 8px 11px;
         font-size: .76rem;
       }
-
       .boton,
       .boton-ubicacion {
         min-height: 44px;
@@ -760,84 +661,42 @@
         font-size: .76rem;
       }
 
-      #cuenta .elemento {
-        --x: 15% !important;
-        --y: 77% !important;
-        --tamano: min(27vw, 138px) !important;
-      }
 
-      #detalles .elemento {
-        --x: 85% !important;
-        --y: 82% !important;
-        --tamano: min(28vw, 140px) !important;
-      }
 
-      #plan .elemento {
-        --x: 15% !important;
-        --y: 29% !important;
-        --tamano: min(27vw, 138px) !important;
-      }
 
-      #mesa .elemento {
-        --x: 84% !important;
-        --y: 82% !important;
-        --tamano: min(30vw, 150px) !important;
-      }
 
-      #recomendaciones .elemento {
-        --x: 16% !important;
-        --y: 82% !important;
-        --tamano: min(36vw, 180px) !important;
-        max-width: 36vw;
-        max-height: 22vh;
-      }
 
-      #final .elemento {
-        --x: 50% !important;
-        --y: 21% !important;
-        --tamano: min(40vw, 205px) !important;
-        max-width: 40vw;
-        max-height: 23vh;
-      }
     }
-
     @media (max-height: 700px) {
       .tarjeta {
         padding-block: 21px;
       }
-
       .descripcion {
         margin-top: 12px;
         line-height: 1.42;
       }
-
       .contador,
       .datos,
       .lista,
       .menu {
         margin-top: 15px;
       }
-
       .separador {
         margin-top: 12px;
       }
-
       .boton,
       .boton-ubicacion {
         margin-top: 13px;
       }
     }
-
     @media (max-width: 370px) {
       .tarjeta {
         width: 88vw;
         padding-inline: 13px;
       }
-
       .etiqueta {
         font-size: .58rem;
       }
-
       .lista li,
       .menu span {
         font-size: .71rem;
@@ -845,155 +704,113 @@
     }
   </style>
 </head>
-
 <body>
   <audio id="audio" src="assets/audio/audio01.mp3" loop preload="metadata"></audio>
-
   <div class="entrada" id="entrada">
     <div class="entrada-contenido">
       <img class="entrada-icono" src="assets/elementos/elemento01.png" alt="">
-
       <span class="etiqueta">
         La casa está lista
       </span>
-
       <h2>
         Pasa, estás
         <span class="acento">en confianza</span>
       </h2>
-
       <p>
         Una tarde tranquila para compartir la mesa,
         la música y una buena conversación.
       </p>
-
       <button class="boton" id="entrar" type="button">
         Abrir invitación <span>→</span>
       </button>
     </div>
   </div>
-
   <a class="control salir" href="../../../#fiestas-reuniones" aria-label="Salir de la invitación">
     Salir
   </a>
-
   <button class="control musica" id="musica" type="button" aria-label="Pausar música" aria-pressed="true">
     Ⅱ
   </button>
-
   <main id="invitacion">
     <section class="escena activa" id="inicio">
       <img class="fondo" src="assets/fondos/fondo01.webp" alt="">
-
       <div class="velo"></div>
-
       <article class="tarjeta">
         <span class="etiqueta">
           01 / Bienvenida
         </span>
-
         <h1>
           Una tarde
           <span class="acento">en casa</span>
         </h1>
-
         <p class="anfitrion">
           <span data-nombre>Paty</span> te invita
         </p>
-
         <p class="descripcion">
           Un encuentro íntimo, algo rico para compartir
           y tiempo para disfrutar sin prisas.
         </p>
-
         <div class="separador">✦</div>
-
         <button class="boton siguiente" type="button">
           Conocer los detalles <span>→</span>
         </button>
       </article>
     </section>
-
     <section class="escena" id="cuenta">
       <img class="fondo" src="assets/fondos/fondo02.webp" alt="" loading="lazy">
-
       <div class="velo"></div>
-
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento02.png" alt="" style="
-            --x: 17%;
-            --y: 80%;
-            --tamano: clamp(145px, 16vw, 245px);
-            --giro: -3deg;
-          ">
+        <img class="elemento" src="assets/elementos/elemento02.png" alt="" data-elemento="elemento-cuenta">
       </div>
-
       <article class="tarjeta">
         <span class="etiqueta">
           02 / Nos falta poco
         </span>
-
         <h2>
           Empieza la
           <span class="acento">cuenta</span>
         </h2>
-
         <p class="descripcion">
           Aparta la tarde; aquí ya estamos
           preparando todo.
         </p>
-
         <div class="contador" aria-label="Cuenta regresiva">
           <div class="tiempo">
             <strong id="dias">00</strong>
             <span>Días</span>
           </div>
-
           <div class="tiempo">
             <strong id="horas">00</strong>
             <span>Horas</span>
           </div>
-
           <div class="tiempo">
             <strong id="minutos">00</strong>
             <span>Minutos</span>
           </div>
-
           <div class="tiempo">
             <strong id="segundos">00</strong>
             <span>Segundos</span>
           </div>
         </div>
-
         <button class="boton siguiente" type="button">
           Dónde nos vemos <span>→</span>
         </button>
       </article>
     </section>
-
     <section class="escena" id="detalles">
       <img class="fondo" src="assets/fondos/fondo03.webp" alt="" loading="lazy">
-
       <div class="velo"></div>
-
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento06.png" alt="" style="
-            --x: 83%;
-            --y: 80%;
-            --tamano: clamp(155px, 18vw, 275px);
-          ">
+        <img class="elemento" src="assets/elementos/elemento06.png" alt="" data-elemento="elemento-detalles">
       </div>
-
       <article class="tarjeta">
         <span class="etiqueta">
           03 / Dónde y cuándo
         </span>
-
         <h2>
           Apunta la
           <span class="acento">fecha</span>
         </h2>
-
         <div class="datos">
           <div class="dato">
             <i>📅</i>
@@ -1002,7 +819,6 @@
               Sábado 18 de julio
             </strong>
           </div>
-
           <div class="dato">
             <i>🕓</i>
             <small>Hora</small>
@@ -1010,7 +826,6 @@
               5:00 p. m.
             </strong>
           </div>
-
           <div class="dato">
             <i>🏡</i>
             <small>Lugar</small>
@@ -1018,7 +833,6 @@
               Casa de Paty
             </strong>
           </div>
-
           <div class="dato">
             <i>📍</i>
             <small>Ciudad</small>
@@ -1027,7 +841,6 @@
             </strong>
           </div>
         </div>
-
         <div class="acciones-datos">
           <button class="boton siguiente" type="button">
             Ver el plan <span>→</span>
@@ -1035,213 +848,153 @@
         </div>
       </article>
     </section>
-
     <section class="escena" id="plan">
       <img class="fondo" src="assets/fondos/fondo04.webp" alt="" loading="lazy">
-
       <div class="velo"></div>
-
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento03.png" alt="" style="
-            --x: 17%;
-            --y: 28%;
-            --tamano: clamp(155px, 18vw, 280px);
-            --giro: -4deg;
-          ">
+        <img class="elemento" src="assets/elementos/elemento03.png" alt="" data-elemento="elemento-plan">
       </div>
-
       <article class="tarjeta">
         <span class="etiqueta">
           04 / El plan
         </span>
-
         <h2>
           Disfrutar lo
           <span class="acento">sencillo</span>
         </h2>
-
         <p class="descripcion">
           Sin itinerarios complicados:
           solo una tarde agradable entre amigos.
         </p>
-
         <ul class="lista">
           <li>
             <span class="lista-icono">🍹</span>
             Algo fresco al llegar
           </li>
-
           <li>
             <span class="lista-icono">🎶</span>
             Música para acompañar
           </li>
-
           <li>
             <span class="lista-icono">💬</span>
             Plática sin prisas
           </li>
-
           <li>
             <span class="lista-icono">🌙</span>
             Quedarnos hasta la noche
           </li>
         </ul>
-
         <button class="boton siguiente" type="button">
           Pasar a la mesa <span>→</span>
         </button>
       </article>
     </section>
-
     <section class="escena" id="mesa">
       <img class="fondo" src="assets/fondos/fondo05.webp" alt="" loading="lazy">
-
       <div class="velo"></div>
-
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento05.png" alt="" style="
-            --x: 83%;
-            --y: 81%;
-            --tamano: clamp(175px, 20vw, 315px);
-            --giro: 2deg;
-          ">
+        <img class="elemento" src="assets/elementos/elemento05.png" alt="" data-elemento="elemento-mesa">
       </div>
-
       <article class="tarjeta">
         <span class="etiqueta">
           05 / Para compartir
         </span>
-
         <h2>
           La mesa nos
           <span class="acento">reúne</span>
         </h2>
-
         <p class="descripcion">
           Habrá algo para picar, bebidas
           y sabores preparados para compartir.
         </p>
-
         <div class="menu">
           <span>🥔 Botanas</span>
           <span>🥪 Bocadillos</span>
           <span>🍋 Bebidas frescas</span>
           <span>🍰 Algo dulce</span>
         </div>
-
         <button class="boton siguiente" type="button">
           Antes de venir <span>→</span>
         </button>
       </article>
     </section>
-
     <section class="escena" id="recomendaciones">
       <img class="fondo" src="assets/fondos/fondo06.webp" alt="" loading="lazy">
-
       <div class="velo"></div>
-
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento04.png" alt="" style="
-            --x: 17%;
-            --y: 81%;
-            --tamano: clamp(175px, 22vw, 335px);
-          ">
+        <img class="elemento" src="assets/elementos/elemento04.png" alt="" data-elemento="elemento-recomendaciones">
       </div>
-
       <article class="tarjeta">
         <span class="etiqueta">
           06 / Para disfrutar mejor
         </span>
-
         <h2>
           Ven muy
           <span class="acento">cómodo</span>
         </h2>
-
         <p class="descripcion">
           Queremos que te sientas
           como en tu propia casa.
         </p>
-
         <ul class="lista">
           <li>
             <span class="lista-icono">👕</span>
             Ropa casual y fresca
           </li>
-
           <li>
             <span class="lista-icono">🧥</span>
             Algo ligero para la noche
           </li>
-
           <li>
             <span class="lista-icono">🚗</span>
             Avísanos si necesitas ayuda
           </li>
-
           <li>
             <span class="lista-icono">✨</span>
             Lo importante es que vengas
           </li>
         </ul>
-
         <button class="boton siguiente" type="button">
           Ir al brindis <span>→</span>
         </button>
       </article>
     </section>
-
     <section class="escena" id="final">
       <img class="fondo" src="assets/fondos/fondo07.webp" alt="" loading="lazy">
-
       <div class="velo"></div>
-
       <div class="capa-assets">
-        <img class="elemento" src="assets/elementos/elemento07.png" alt="" style="
-            --x: 50%;
-            --y: 21%;
-            --tamano: clamp(175px, 22vw, 335px);
-          ">
+        <img class="elemento" src="assets/elementos/elemento07.png" alt="" data-elemento="elemento-final">
       </div>
-
       <article class="tarjeta">
         <span class="etiqueta">
           07 / Te esperamos
         </span>
-
         <h2>
           Brindemos
           <span class="acento">juntos</span>
         </h2>
-
         <p class="descripcion">
           La casa está lista. Solo falta tu compañía
           para convertir la tarde en un bonito recuerdo.
         </p>
-
         <p class="anfitrion">
           Nos vemos,
           <span data-nombre>Paty</span>
         </p>
-
         <div class="separador">✦</div>
-
         <a class="boton-ubicacion" data-ubicacion target="_blank" rel="noopener noreferrer">
           Ver ubicación <span>↗</span>
         </a>
-
         <br>
-
         <button class="boton" id="volver-inicio" type="button">
           Volver al inicio <span>↺</span>
         </button>
       </article>
     </section>
   </main>
-
   <div class="particulas" id="particulas" aria-hidden="true"></div>
-
   <script>
+    // DATOS EDITABLES: información del cliente y enlaces.
     const CONFIG = {
       nombre: "Paty",
       fechaTexto: "Sábado 18 de julio",
@@ -1249,72 +1002,166 @@
       lugar: "Casa de Paty",
       ciudad: "Cadereyta, Nuevo León",
       fechaEvento: "2027-07-18T17:00:00-06:00",
-      ubicacionUrl: "https://maps.google.com/"
+      ubicacionUrl: "https://maps.google.com/",
+      salida: "../../../#fiestas-reuniones"
     };
-
+    // POSICIONES EDITABLES: x, y y tamano son porcentajes de pantalla.
+    // Un número por valor. Web y móvil independientes; giro en grados.
+    const POSICIONES = {
+    "cuenta": {
+        "elemento-cuenta": {
+            "web": {
+                "x": 17,
+                "y": 80,
+                "tamano": 16
+            },
+            "movil": {
+                "x": 15,
+                "y": 76,
+                "tamano": 27
+            },
+            "giro": -3
+        }
+    },
+    "detalles": {
+        "elemento-detalles": {
+            "web": {
+                "x": 83,
+                "y": 80,
+                "tamano": 18
+            },
+            "movil": {
+                "x": 82,
+                "y": 80,
+                "tamano": 30
+            },
+            "giro": 0
+        }
+    },
+    "plan": {
+        "elemento-plan": {
+            "web": {
+                "x": 17,
+                "y": 28,
+                "tamano": 22
+            },
+            "movil": {
+                "x": 12,
+                "y": 29,
+                "tamano": 36
+            },
+            "giro": -4
+        }
+    },
+    "mesa": {
+        "elemento-mesa": {
+            "web": {
+                "x": 83,
+                "y": 81,
+                "tamano": 20
+            },
+            "movil": {
+                "x": 84,
+                "y": 76,
+                "tamano": 30
+            },
+            "giro": 2
+        }
+    },
+    "recomendaciones": {
+        "elemento-recomendaciones": {
+            "web": {
+                "x": 17,
+                "y": 81,
+                "tamano": 22
+            },
+            "movil": {
+                "x": 18,
+                "y": 78,
+                "tamano": 35
+            },
+            "giro": 0
+        }
+    },
+    "final": {
+        "elemento-final": {
+            "web": {
+                "x": 50,
+                "y": 14,
+                "tamano": 12
+            },
+            "movil": {
+                "x": 50,
+                "y": 21,
+                "tamano": 40
+            },
+            "giro": 0
+        }
+    }
+};
+    // FIN DE DATOS EDITABLES.
     const $ = (selector, contexto = document) =>
       contexto.querySelector(selector);
-
     const $$ = (selector, contexto = document) =>
       [...contexto.querySelectorAll(selector)];
-
     const escenas = $$(".escena");
+    escenas.forEach(escena => {
+      escena.querySelectorAll(".elemento[data-elemento]").forEach(imagen => {
+        const datos = POSICIONES[escena.id][imagen.dataset.elemento];
+        for (const [nombre, valor] of Object.entries(datos.web)) {
+          imagen.style.setProperty("--" + nombre, valor);
+        }
+        for (const [nombre, valor] of Object.entries(datos.movil)) {
+          imagen.style.setProperty("--" + nombre + "-movil", valor);
+        }
+        imagen.style.setProperty("--giro", datos.giro);
+      });
+    });
+    $(".salir").href = CONFIG.salida;
     const invitacion = $("#invitacion");
     const audio = $("#audio");
     const botonMusica = $("#musica");
-
     let indiceActivo = 0;
     let temporizadorVista;
     let ultimoEfecto = 0;
-
     function aplicarDatos() {
       $$("[data-nombre]").forEach(
         elemento =>
           elemento.textContent = CONFIG.nombre
       );
-
       $$("[data-fecha]").forEach(
         elemento =>
           elemento.textContent = CONFIG.fechaTexto
       );
-
       $$("[data-hora]").forEach(
         elemento =>
           elemento.textContent = CONFIG.horaTexto
       );
-
       $$("[data-lugar]").forEach(
         elemento =>
           elemento.textContent = CONFIG.lugar
       );
-
       $$("[data-ciudad]").forEach(
         elemento =>
           elemento.textContent = CONFIG.ciudad
       );
-
       $$("[data-ubicacion]").forEach(
         enlace =>
           enlace.href = CONFIG.ubicacionUrl
       );
-
       document.title =
         `${CONFIG.nombre} | Una tarde en casa`;
     }
-
     function ajustarVista(inmediato = false) {
       clearTimeout(temporizadorVista);
-
       const aplicar = () => {
         const alto =
           window.visualViewport?.height ||
           window.innerHeight;
-
         document.documentElement.style.setProperty(
           "--alto",
           `${Math.round(alto)}px`
         );
-
         if (
           document.body.classList.contains(
             "invitacion-abierta"
@@ -1323,7 +1170,6 @@
           irA(indiceActivo, false);
         }
       };
-
       if (inmediato) {
         aplicar();
       } else {
@@ -1331,13 +1177,11 @@
           setTimeout(aplicar, 80);
       }
     }
-
     function irA(indice, suave = true) {
       const destino = Math.max(
         0,
         Math.min(indice, escenas.length - 1)
       );
-
       invitacion.scrollTo({
         left:
           destino * invitacion.clientWidth,
@@ -1346,7 +1190,6 @@
           suave ? "smooth" : "auto"
       });
     }
-
     function activar(indice) {
       if (
         indice === indiceActivo &&
@@ -1354,19 +1197,15 @@
       ) {
         return;
       }
-
       indiceActivo = indice;
-
       escenas.forEach((escena, posicion) => {
         escena.classList.toggle(
           "activa",
           posicion === indice
         );
       });
-
       crearLuces();
     }
-
     const observador =
       new IntersectionObserver(
         entradas => {
@@ -1380,7 +1219,6 @@
                 b.intersectionRatio -
                 a.intersectionRatio
             )[0];
-
           if (visible) {
             activar(
               escenas.indexOf(visible.target)
@@ -1392,11 +1230,9 @@
           threshold: [.58, .72]
         }
       );
-
     escenas.forEach(
       escena => observador.observe(escena)
     );
-
     $$(".siguiente").forEach(
       (boton, indice) => {
         boton.addEventListener(
@@ -1405,54 +1241,43 @@
         );
       }
     );
-
     $("#volver-inicio").addEventListener(
       "click",
       () => irA(0)
     );
-
     function estadoMusica(reproduciendo) {
       botonMusica.textContent =
         reproduciendo ? "Ⅱ" : "▶";
-
       botonMusica.setAttribute(
         "aria-label",
         reproduciendo
           ? "Pausar música"
           : "Reproducir música"
       );
-
       botonMusica.setAttribute(
         "aria-pressed",
         String(reproduciendo)
       );
     }
-
     $("#entrar").addEventListener(
       "click",
       async () => {
         document.body.classList.add(
           "invitacion-abierta"
         );
-
         irA(0, false);
         indiceActivo = 0;
-
         $("#entrada").classList.add("oculta");
-
         escenas.forEach((escena, indice) => {
           escena.classList.toggle(
             "activa",
             indice === 0
           );
         });
-
         escenas[0].classList.remove("activa");
         void escenas[0].offsetWidth;
         escenas[0].classList.add("activa");
-
         crearLuces();
-
         try {
           await audio.play();
           estadoMusica(true);
@@ -1461,7 +1286,6 @@
         }
       }
     );
-
     botonMusica.addEventListener(
       "click",
       async () => {
@@ -1478,7 +1302,6 @@
         }
       }
     );
-
     function cuenta() {
       const restante = Math.max(
         0,
@@ -1486,44 +1309,34 @@
           CONFIG.fechaEvento
         ).getTime() - Date.now()
       );
-
       const dias =
         Math.floor(restante / 86400000);
-
       const horas =
         Math.floor(
           (restante % 86400000) /
           3600000
         );
-
       const minutos =
         Math.floor(
           (restante % 3600000) /
           60000
         );
-
       const segundos =
         Math.floor(
           (restante % 60000) /
           1000
         );
-
       $("#dias").textContent =
         String(dias).padStart(2, "0");
-
       $("#horas").textContent =
         String(horas).padStart(2, "0");
-
       $("#minutos").textContent =
         String(minutos).padStart(2, "0");
-
       $("#segundos").textContent =
         String(segundos).padStart(2, "0");
     }
-
     function crearLuces() {
       const ahora = performance.now();
-
       if (
         document.hidden ||
         !document.body.classList.contains(
@@ -1533,15 +1346,11 @@
       ) {
         return;
       }
-
       ultimoEfecto = ahora;
-
       const contenedor =
         $("#particulas");
-
       const cantidad =
         innerWidth <= 600 ? 4 : 6;
-
       for (
         let indice = 0;
         indice < cantidad;
@@ -1549,36 +1358,28 @@
       ) {
         const luz =
           document.createElement("span");
-
         luz.className = "luz";
-
         luz.style.setProperty(
           "--x",
           `${25 + Math.random() * 50}%`
         );
-
         luz.style.setProperty(
           "--y",
           `${72 + Math.random() * 18}%`
         );
-
         luz.style.setProperty(
           "--s",
           `${3 + Math.random() * 5}px`
         );
-
         luz.style.setProperty(
           "--dx",
           `${-45 + Math.random() * 90}px`
         );
-
         luz.style.setProperty(
           "--d",
           `${650 + Math.random() * 400}ms`
         );
-
         contenedor.appendChild(luz);
-
         luz.addEventListener(
           "animationend",
           () => luz.remove(),
@@ -1586,14 +1387,12 @@
         );
       }
     }
-
     function precargarFondos() {
       $$(".fondo")
         .slice(1)
         .forEach(fondo => {
           const imagen = new Image();
           imagen.src = fondo.src;
-
           if (
             typeof imagen.decode ===
             "function"
@@ -1604,7 +1403,6 @@
           }
         });
     }
-
     invitacion.addEventListener(
       "wheel",
       evento => {
@@ -1614,9 +1412,7 @@
         ) {
           return;
         }
-
         evento.preventDefault();
-
         invitacion.scrollBy({
           left: evento.deltaY,
           top: 0,
@@ -1627,7 +1423,6 @@
         passive: false
       }
     );
-
     document.addEventListener(
       "visibilitychange",
       () => {
@@ -1640,17 +1435,13 @@
         }
       }
     );
-
     const fondoEntrada = new Image();
-
     fondoEntrada.src =
       "assets/fondos/fondo01.webp";
-
     const mostrarEntrada = () => {
       document.body.classList.add(
         "fondo-listo"
       );
-
       if (
         "requestIdleCallback" in window
       ) {
@@ -1667,7 +1458,6 @@
         );
       }
     };
-
     if (fondoEntrada.complete) {
       mostrarEntrada();
     } else {
@@ -1678,7 +1468,6 @@
           once: true
         }
       );
-
       fondoEntrada.addEventListener(
         "error",
         mostrarEntrada,
@@ -1687,15 +1476,12 @@
         }
       );
     }
-
     aplicarDatos();
     ajustarVista(true);
     cuenta();
     estadoMusica(false);
     irA(0, false);
-
     setInterval(cuenta, 1000);
-
     window.addEventListener(
       "resize",
       () => ajustarVista(),
@@ -1703,7 +1489,6 @@
         passive: true
       }
     );
-
     window.visualViewport?.addEventListener(
       "resize",
       () => ajustarVista(),
@@ -1711,7 +1496,6 @@
         passive: true
       }
     );
-
     window.addEventListener(
       "orientationchange",
       () => ajustarVista(),
@@ -1719,12 +1503,10 @@
         passive: true
       }
     );
-
     window.addEventListener(
       "pageshow",
       () => {
         ajustarVista(true);
-
         if (
           !document.body.classList.contains(
             "invitacion-abierta"
@@ -1736,5 +1518,4 @@
     );
   </script>
 </body>
-
 </html>
