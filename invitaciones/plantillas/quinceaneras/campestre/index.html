@@ -562,6 +562,24 @@
         display: none;
       }
     }
+    /* WEB: fotos completas ajustadas a la altura disponible, sin recorte. */
+    @media (min-width: 760px) {
+      .entrada-foto,
+      .foto-pantalla img {
+        object-fit: contain;
+        object-position: center;
+        transform: none;
+      }
+      .foto-pantalla.visible img,
+      .foto-pantalla:nth-of-type(even).visible img {
+        animation: none;
+        transform: none;
+      }
+      .foto-marco,
+      .foto-pantalla.visible .foto-marco {
+        transform: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -704,7 +722,7 @@
     </section>
   </main>
   <div class="controles" aria-label="Controles de invitación">
-    <button class="control" id="boton-salir" type="button" aria-label="Volver a la portada" title="Salir">×</button>
+    <button class="control" id="boton-salir" type="button" aria-label="Salir de la invitación" title="Salir">×</button>
     <button class="control" id="boton-musica" type="button" aria-label="Pausar música" title="Música">♫</button>
   </div>
   <div class="particulas" id="particulas" aria-hidden="true"></div>
@@ -743,7 +761,7 @@
       telefonoWhatsApp: "528112345678",
       mensajeWhatsApp: "Hola, confirmo mi asistencia a los XV años de Sofía.",
       despedida: "Gracias por ser parte de mi historia.",
-      urlSalida: "../../../index.html",
+      urlSalida: "../../../index.html#quinceaneras",
       audio: "assets/audio/musica.mp3",
       fotos: {
         portada: "assets/fotos/foto06.webp",
@@ -960,15 +978,8 @@
     });
     $("#boton-salir").addEventListener("click", () => {
       musica.pause();
-      musica.currentTime = 0;
-      musicaActiva = false;
-      document.body.classList.remove("iniciada");
-      entrada.classList.remove("oculta");
-      $("#boton-musica").textContent = "♫";
-      indiceActivo = 0;
-      irA(0, false);
       clearInterval(intervaloParticulas);
-      $("#particulas").replaceChildren();
+      window.location.href = DATOS_INVITACION.urlSalida;
     });
     invitacion.addEventListener("scroll", () => {
       clearTimeout(temporizadorAjuste);
