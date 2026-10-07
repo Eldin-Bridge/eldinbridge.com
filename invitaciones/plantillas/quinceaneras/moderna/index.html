@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -10,7 +9,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
-
   <style>
     :root {
       --azul-noche: #071426;
@@ -24,18 +22,15 @@
       --alto: 100svh;
       --sombra: 0 26px 70px rgba(4, 18, 42, .22);
     }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-
     html {
       background: var(--azul-noche);
       scroll-behavior: smooth;
     }
-
     body {
       min-width: 280px;
       overflow: hidden;
@@ -44,22 +39,18 @@
       font-family: "Manrope", Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
-
     button,
     a {
       font: inherit;
       -webkit-tap-highlight-color: transparent;
     }
-
     button {
       border: 0;
     }
-
     img {
       display: block;
       max-width: 100%;
     }
-
     /* ======================== PORTADA ======================== */
     .entrada {
       position: fixed;
@@ -74,13 +65,11 @@
       background: var(--azul-noche);
       transition: opacity .65s ease, visibility .65s ease;
     }
-
     .entrada.oculta {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
     }
-
     .entrada-foto,
     .foto-pantalla img {
       position: absolute;
@@ -89,13 +78,11 @@
       height: 100%;
       object-fit: cover;
     }
-
     .entrada-foto {
       object-position: center center;
       transform: scale(1.015);
       animation: portadaZoom 14s ease-out both;
     }
-
     .entrada::before {
       content: "";
       position: absolute;
@@ -105,7 +92,6 @@
         linear-gradient(90deg, rgba(7, 20, 38, .48), transparent 42%),
         linear-gradient(180deg, rgba(7, 20, 38, .08) 22%, rgba(7, 20, 38, .22) 49%, rgba(7, 20, 38, .95) 100%);
     }
-
     .entrada::after {
       content: "";
       position: absolute;
@@ -117,7 +103,6 @@
       background: linear-gradient(transparent, rgba(81, 214, 255, .9));
       box-shadow: 11px 0 0 rgba(255, 255, 255, .16);
     }
-
     .boton-salir-portada,
     .control {
       display: grid;
@@ -132,7 +117,6 @@
       cursor: pointer;
       backdrop-filter: blur(12px);
     }
-
     .boton-salir-portada {
       position: absolute;
       z-index: 5;
@@ -140,7 +124,6 @@
       left: max(14px, env(safe-area-inset-left));
       font-size: 1.45rem;
     }
-
     .entrada-contenido {
       position: relative;
       z-index: 2;
@@ -149,7 +132,6 @@
       text-align: left;
       animation: subirEntrada 1s .12s both;
     }
-
     .entrada-linea {
       display: flex;
       align-items: center;
@@ -160,14 +142,12 @@
       letter-spacing: .31em;
       text-transform: uppercase;
     }
-
     .entrada-linea::before {
       content: "";
       width: 44px;
       height: 2px;
       background: var(--cian);
     }
-
     .monograma {
       display: inline-flex;
       align-items: flex-end;
@@ -181,7 +161,6 @@
       color: transparent;
       -webkit-text-stroke: 1.3px rgba(255, 255, 255, .95);
     }
-
     .entrada-nombre {
       max-width: 100%;
       font-family: "Syne", sans-serif;
@@ -191,7 +170,6 @@
       line-height: .83;
       overflow-wrap: anywhere;
     }
-
     .entrada-frase {
       width: min(100%, 430px);
       margin: 17px 0 22px;
@@ -201,7 +179,6 @@
       font-size: clamp(.93rem, 3.8vw, 1.08rem);
       line-height: 1.55;
     }
-
     .boton-principal,
     .boton-demo,
     .boton-continuar {
@@ -216,19 +193,16 @@
       letter-spacing: .06em;
       cursor: pointer;
     }
-
     .boton-principal {
       color: var(--azul-noche);
       background: var(--blanco);
       box-shadow: 8px 8px 0 var(--azul);
       transition: transform .2s ease, box-shadow .2s ease;
     }
-
     .boton-principal:active {
       transform: translate(4px, 4px);
       box-shadow: 4px 4px 0 var(--azul);
     }
-
     /* ======================== NAVEGACIÓN ======================== */
     main {
       position: relative;
@@ -244,11 +218,9 @@
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
     }
-
     main::-webkit-scrollbar {
       display: none;
     }
-
     .seccion {
       position: relative;
       display: grid;
@@ -261,12 +233,10 @@
       scroll-snap-stop: always;
       isolation: isolate;
     }
-
     .tarjeta-seccion {
       padding: 70px 18px 88px;
       background: var(--plata);
     }
-
     .fondo-tarjeta {
       position: absolute;
       inset: 0;
@@ -275,7 +245,6 @@
       height: 100%;
       object-fit: cover;
     }
-
     .tarjeta-seccion::before {
       content: "";
       position: absolute;
@@ -283,7 +252,6 @@
       z-index: -2;
       background: linear-gradient(135deg, rgba(7, 20, 38, .06), transparent 46%, rgba(20, 93, 255, .08));
     }
-
     .tarjeta-seccion::after {
       content: "";
       position: absolute;
@@ -293,7 +261,6 @@
       transform: skewY(-3deg);
       pointer-events: none;
     }
-
     .tarjeta {
       position: relative;
       width: min(100%, 650px);
@@ -306,7 +273,6 @@
       text-align: left;
       backdrop-filter: blur(15px) saturate(1.15);
     }
-
     .tarjeta::before {
       content: "";
       position: absolute;
@@ -316,7 +282,6 @@
       height: 100%;
       background: linear-gradient(var(--cian), var(--azul));
     }
-
     .tarjeta::after {
       content: "";
       position: absolute;
@@ -327,7 +292,6 @@
       border: 25px solid rgba(20, 93, 255, .08);
       border-radius: 50%;
     }
-
     .numero-tarjeta {
       position: relative;
       z-index: 1;
@@ -340,20 +304,17 @@
       letter-spacing: .25em;
       text-transform: uppercase;
     }
-
     .numero-tarjeta strong {
       font-family: "Syne", sans-serif;
       font-size: 1.55rem;
       letter-spacing: -.06em;
     }
-
     .numero-tarjeta::after {
       content: "";
       width: 48px;
       height: 1px;
       background: currentColor;
     }
-
     .sobrelinea {
       position: relative;
       z-index: 1;
@@ -364,7 +325,6 @@
       letter-spacing: .22em;
       text-transform: uppercase;
     }
-
     .titulo {
       position: relative;
       z-index: 1;
@@ -376,7 +336,6 @@
       letter-spacing: -.065em;
       line-height: .94;
     }
-
     .texto {
       position: relative;
       z-index: 1;
@@ -385,7 +344,6 @@
       font-size: clamp(.98rem, 3.7vw, 1.15rem);
       line-height: 1.65;
     }
-
     .linea-dato {
       position: relative;
       z-index: 1;
@@ -394,7 +352,6 @@
       margin: 22px 0;
       background: var(--azul);
     }
-
     .dato-destacado,
     .nombres-padres {
       position: relative;
@@ -405,11 +362,9 @@
       font-weight: 700;
       line-height: 1.3;
     }
-
     .nombres-padres {
       margin-top: 14px;
     }
-
     .dato-secundario {
       position: relative;
       z-index: 1;
@@ -418,7 +373,6 @@
       font-size: .93rem;
       line-height: 1.45;
     }
-
     .boton-demo {
       position: relative;
       z-index: 1;
@@ -429,7 +383,6 @@
       box-shadow: 6px 6px 0 rgba(20, 93, 255, .22);
       cursor: default;
     }
-
     .detalles {
       position: relative;
       z-index: 1;
@@ -438,31 +391,26 @@
       gap: 10px;
       margin-top: 22px;
     }
-
     .detalle {
       padding: 14px 12px;
       border-top: 3px solid var(--azul);
       background: rgba(223, 232, 244, .58);
     }
-
     .detalle strong,
     .detalle span {
       display: block;
     }
-
     .detalle strong {
       color: var(--azul-noche);
       font-size: .72rem;
       letter-spacing: .1em;
       text-transform: uppercase;
     }
-
     .detalle span {
       margin-top: 5px;
       color: var(--muted);
       font-size: .9rem;
     }
-
     .contador {
       position: relative;
       z-index: 1;
@@ -471,7 +419,6 @@
       gap: 7px;
       margin-top: 23px;
     }
-
     .tiempo {
       min-width: 0;
       padding: 13px 3px 10px;
@@ -479,7 +426,6 @@
       background: rgba(255, 255, 255, .52);
       text-align: center;
     }
-
     .tiempo strong {
       display: block;
       color: var(--azul-noche);
@@ -487,7 +433,6 @@
       font-size: clamp(1.25rem, 6vw, 2.1rem);
       line-height: 1;
     }
-
     .tiempo span {
       display: block;
       margin-top: 5px;
@@ -497,12 +442,10 @@
       letter-spacing: .08em;
       text-transform: uppercase;
     }
-
     /* ======================== FOTOGRAFÍAS ======================== */
     .foto-pantalla {
       background: #061225;
     }
-
     .foto-marco {
       position: absolute;
       inset: 0;
@@ -511,26 +454,21 @@
       transform: scale(1.035);
       transition: opacity .9s ease, transform 1.1s ease;
     }
-
     .foto-pantalla.visible .foto-marco {
       opacity: 1;
       transform: scale(1);
     }
-
     .foto-pantalla img {
       object-position: center center;
       transform: scale(1.055);
       will-change: transform;
     }
-
     .foto-pantalla.visible img {
       animation: fotoMovimiento 12s ease-out both;
     }
-
     .foto-pantalla:nth-of-type(4n).visible img {
       animation-name: fotoMovimientoInverso;
     }
-
     .foto-pantalla::before {
       content: "";
       position: absolute;
@@ -539,7 +477,6 @@
       background: linear-gradient(180deg, rgba(7, 20, 38, .04) 45%, rgba(7, 20, 38, .82) 100%);
       pointer-events: none;
     }
-
     .foto-pantalla::after {
       content: attr(data-indice);
       position: absolute;
@@ -553,7 +490,6 @@
       letter-spacing: .18em;
       writing-mode: vertical-rl;
     }
-
     .foto-leyenda {
       position: absolute;
       z-index: 3;
@@ -570,23 +506,19 @@
       text-shadow: 0 3px 18px rgba(0, 0, 0, .55);
       transform: translateX(-50%);
     }
-
     /* ======================== ANIMACIONES ======================== */
     .revelar {
       opacity: 0;
       transform: translateY(24px);
       transition: opacity .72s ease, transform .72s cubic-bezier(.2, .72, .22, 1);
     }
-
     .revelar.visible {
       opacity: 1;
       transform: translateY(0);
     }
-
     .revelar[data-demora="1"] { transition-delay: .1s; }
     .revelar[data-demora="2"] { transition-delay: .2s; }
     .revelar[data-demora="3"] { transition-delay: .3s; }
-
     .controles {
       position: fixed;
       z-index: 80;
@@ -600,16 +532,13 @@
       pointer-events: none;
       transition: opacity .3s ease;
     }
-
     body.iniciada .controles {
       opacity: 1;
       visibility: visible;
     }
-
     .control {
       pointer-events: auto;
     }
-
     .boton-continuar {
       position: absolute;
       z-index: 12;
@@ -623,12 +552,10 @@
       transform: translateX(-50%);
       backdrop-filter: blur(10px);
     }
-
     .boton-continuar:active {
       transform: translateX(-50%) translate(3px, 3px);
       box-shadow: 3px 3px 0 rgba(20, 93, 255, .35);
     }
-
     .particulas {
       position: fixed;
       inset: 0;
@@ -636,7 +563,6 @@
       overflow: hidden;
       pointer-events: none;
     }
-
     .destello {
       position: absolute;
       width: 3px;
@@ -646,39 +572,32 @@
       opacity: 0;
       animation: subirDestello var(--duracion) linear forwards;
     }
-
     @keyframes portadaZoom {
       from { transform: scale(1.08); }
       to { transform: scale(1.015); }
     }
-
     @keyframes subirEntrada {
       from { opacity: 0; transform: translateY(24px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes fotoMovimiento {
       from { transform: scale(1.09) translate3d(-1%, 0, 0); }
       to { transform: scale(1.02) translate3d(1%, 0, 0); }
     }
-
     @keyframes fotoMovimientoInverso {
       from { transform: scale(1.03) translate3d(1%, 0, 0); }
       to { transform: scale(1.09) translate3d(-1%, 0, 0); }
     }
-
     @keyframes subirDestello {
       0% { opacity: 0; transform: translateY(20px); }
       20% { opacity: .68; }
       100% { opacity: 0; transform: translateY(-110vh) translateX(var(--deriva)); }
     }
-
     @media (min-width: 760px) {
       .tarjeta-seccion { padding: 86px 42px 100px; }
       .entrada-contenido { padding-bottom: 36px; }
       .tarjeta { border-radius: 24px 3px 24px 3px; }
     }
-
     @media (max-width: 390px) {
       .tarjeta-seccion { padding-inline: 13px; }
       .tarjeta { padding-inline: 19px; }
@@ -686,7 +605,6 @@
       .entrada-nombre { font-size: 3.25rem; }
       .contador { gap: 4px; }
     }
-
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .revelar, .foto-marco { transition-duration: .01ms; }
@@ -694,14 +612,41 @@
       .foto-pantalla.visible img { transform: scale(1.02); }
       .particulas { display: none; }
     }
+    /* Fotos completas en web; móvil conserva su ajuste original. */
+    @media (min-width: 760px) {
+      .entrada-foto, .foto-pantalla img {
+        object-fit: contain;
+        object-position: center;
+        animation: none;
+        transform: none;
+      }
+      .foto-pantalla.visible img,
+      .foto-pantalla:nth-of-type(even).visible img {
+        animation: none;
+        transform: none;
+      }
+      .foto-marco, .foto-pantalla.visible .foto-marco { transform: none; }
+    }
+    /* En web, el contenido usa el ancho real de la foto contenida. */
+    @media (min-width: 760px) {
+      .entrada-contenido {
+        width: var(--ancho-foto-portada, 100%);
+        max-width: 100%;
+        padding-inline: 24px;
+      }
+      .entrada-nombre {
+        font-size: clamp(2rem, calc(var(--ancho-foto-portada, 450px) * .16), 7rem);
+      }
+      .monograma {
+        font-size: clamp(1.8rem, calc(var(--ancho-foto-portada, 450px) * .11), 4.6rem);
+      }
+    }
   </style>
 </head>
-
 <body>
   <section class="entrada" id="entrada" aria-label="Portada de la invitación">
     <img class="entrada-foto" id="foto-portada" src="assets/fotos/foto01.webp" alt="Quinceañera con estilo moderno en la ciudad">
     <button class="boton-salir-portada" id="boton-salir-portada" type="button" aria-label="Salir de la invitación" title="Salir">×</button>
-
     <div class="entrada-contenido">
       <p class="entrada-linea">Mis quince años</p>
       <div class="monograma" id="monograma-portada">VR</div>
@@ -710,7 +655,6 @@
       <button class="boton-principal" id="boton-entrar" type="button">Ver invitación <span aria-hidden="true">↓</span></button>
     </div>
   </section>
-
   <main id="invitacion">
     <section class="seccion tarjeta-seccion">
       <img class="fondo-tarjeta" src="assets/fondos/fondo01.webp" alt="" loading="eager">
@@ -724,12 +668,10 @@
         <p class="nombres-padres revelar" data-demora="3" id="padres"></p>
       </article>
     </section>
-
     <section class="seccion foto-pantalla" data-indice="PORTRAIT / 02">
       <div class="foto-marco"><img src="assets/fotos/foto02.webp" alt="Retrato moderno de la quinceañera" loading="lazy"></div>
       <p class="foto-leyenda" id="leyenda-foto1">Una nueva versión de mí</p>
     </section>
-
     <section class="seccion tarjeta-seccion">
       <img class="fondo-tarjeta" src="assets/fondos/fondo02.webp" alt="" loading="lazy">
       <article class="tarjeta">
@@ -744,12 +686,10 @@
         <button class="boton-demo revelar" data-demora="3" type="button" aria-disabled="true">Ver ubicación</button>
       </article>
     </section>
-
     <section class="seccion foto-pantalla" data-indice="PORTRAIT / 03">
       <div class="foto-marco"><img src="assets/fotos/foto03.webp" alt="Quinceañera con atuendo contemporáneo" loading="lazy"></div>
       <p class="foto-leyenda">El futuro comienza hoy</p>
     </section>
-
     <section class="seccion tarjeta-seccion">
       <img class="fondo-tarjeta" src="assets/fondos/fondo03.webp" alt="" loading="lazy">
       <article class="tarjeta">
@@ -766,34 +706,24 @@
         <button class="boton-demo revelar" data-demora="3" type="button" aria-disabled="true">Agregar al calendario</button>
       </article>
     </section>
-
     <section class="seccion foto-pantalla" data-indice="PORTRAIT / 04">
       <div class="foto-marco"><img src="assets/fotos/foto04.webp" alt="Retrato urbano nocturno de la quinceañera" loading="lazy"></div>
       <p class="foto-leyenda">Brilla a tu manera</p>
     </section>
-
     <section class="seccion tarjeta-seccion">
       <img class="fondo-tarjeta" src="assets/fondos/fondo04.webp" alt="" loading="lazy">
       <article class="tarjeta">
-        <p class="numero-tarjeta revelar"><strong>04</strong> La celebración</p>
-        <p class="sobrelinea revelar" data-demora="1">Después de la ceremonia</p>
-        <h2 class="titulo revelar" data-demora="1">Nos vemos aquí</h2>
-        <p class="dato-destacado revelar" data-demora="2" id="salon"></p>
-        <p class="dato-secundario revelar" data-demora="2" id="direccion-salon"></p>
-        <p class="dato-destacado revelar" data-demora="2" id="hora-recepcion"></p>
-        <div class="detalles revelar" data-demora="3">
-          <div class="detalle"><strong>Dress code</strong><span id="vestimenta"></span></div>
-          <div class="detalle"><strong>Detalle sugerido</strong><span id="regalo"></span></div>
-        </div>
-        <button class="boton-demo revelar" data-demora="3" type="button" aria-disabled="true">Ver ubicación</button>
+        <p class="numero-tarjeta revelar"><strong>04</strong> Dress code</p>
+        <p class="sobrelinea revelar" data-demora="1">🤵 👗</p>
+        <h2 class="titulo revelar" data-demora="1" id="titulo-vestimenta"></h2>
+        <p class="texto revelar" data-demora="2" id="mensaje-vestimenta"></p>
+        <p class="dato-destacado revelar" data-demora="2" id="vestimenta"></p>
       </article>
     </section>
-
     <section class="seccion foto-pantalla" data-indice="PORTRAIT / 05">
       <div class="foto-marco"><img src="assets/fotos/foto05.webp" alt="Quinceañera en una azotea de la ciudad" loading="lazy"></div>
       <p class="foto-leyenda">La noche será nuestra</p>
     </section>
-
     <section class="seccion tarjeta-seccion">
       <img class="fondo-tarjeta" src="assets/fondos/fondo05.webp" alt="" loading="lazy">
       <article class="tarjeta">
@@ -807,21 +737,47 @@
         <p class="texto revelar" data-demora="3" id="despedida"></p>
       </article>
     </section>
-
     <section class="seccion foto-pantalla" data-indice="PORTRAIT / 06">
       <div class="foto-marco"><img src="assets/fotos/foto06.webp" alt="Retrato final de la quinceañera" loading="lazy"></div>
-      <p class="foto-leyenda" id="firma-final">Nos vemos pronto · Victoria</p>
+      <p class="foto-leyenda" id="leyenda-foto6">Nos vemos pronto · Victoria</p>
+    </section>
+    <section class="seccion tarjeta-seccion" id="regalos">
+      <img class="fondo-tarjeta" src="assets/fondos/fondo06.webp" alt="" loading="lazy">
+      <article class="tarjeta">
+        <p class="numero-tarjeta revelar"><strong>06</strong> Regalos</p>
+        <p class="sobrelinea revelar" data-demora="1">🎁 ✉️</p>
+        <h2 class="titulo revelar" data-demora="1" id="titulo-regalos"></h2>
+        <p class="texto revelar" data-demora="2" id="mensaje-regalos"></p>
+        <p class="dato-destacado revelar" data-demora="2" id="regalo"></p>
+      </article>
+    </section>
+    <section class="seccion foto-pantalla" data-indice="PORTRAIT / 07">
+      <div class="foto-marco"><img src="assets/fotos/foto07.webp" alt="Retrato moderno de la quinceañera" loading="lazy"></div>
+      <p class="foto-leyenda" id="leyenda-foto7"></p>
+    </section>
+    <section class="seccion tarjeta-seccion" id="recepcion">
+      <img class="fondo-tarjeta" src="assets/fondos/fondo07.webp" alt="" loading="lazy">
+      <article class="tarjeta">
+        <p class="numero-tarjeta revelar"><strong>07</strong> La celebración</p>
+        <p class="sobrelinea revelar" data-demora="1">Después de la ceremonia</p>
+        <h2 class="titulo revelar" data-demora="1">Nos vemos aquí</h2>
+        <p class="dato-destacado revelar" data-demora="2" id="salon"></p>
+        <p class="dato-secundario revelar" data-demora="2" id="direccion-salon"></p>
+        <p class="dato-destacado revelar" data-demora="2" id="hora-recepcion"></p>
+        <button class="boton-demo revelar" data-demora="3" type="button" aria-disabled="true">Ver ubicación</button>
+      </article>
+    </section>
+    <section class="seccion foto-pantalla" data-indice="PORTRAIT / 08">
+      <div class="foto-marco"><img src="assets/fotos/foto08.webp" alt="Retrato final de la quinceañera" loading="lazy"></div>
+      <p class="foto-leyenda" id="firma-final"></p>
     </section>
   </main>
-
   <div class="controles" aria-label="Controles de invitación">
-    <button class="control" id="boton-salir" type="button" aria-label="Volver a la portada" title="Salir">×</button>
+    <button class="control" id="boton-salir" type="button" aria-label="Salir de la invitación" title="Salir">×</button>
     <button class="control" id="boton-musica" type="button" aria-label="Reproducir música" title="Música">♫</button>
   </div>
-
   <div class="particulas" id="particulas" aria-hidden="true"></div>
   <audio id="musica" loop preload="none"></audio>
-
   <script>
     /* =========================================================
        DATOS EDITABLES DE LA INVITACIÓN
@@ -850,9 +806,13 @@
       },
       vestimenta: "Formal contemporánea",
       regalo: "Lluvia de sobres",
+      tituloVestimenta: "Tu mejor estilo",
+      mensajeVestimenta: "Acompáñame con traje o vestido formal para celebrar esta noche juntos.",
+      tituloRegalos: "Tu presencia es mi mejor regalo",
+      mensajeRegalos: "Si deseas obsequiarme un detalle, puedes hacerlo con una lluvia de sobres. Gracias por acompañarme en este día tan especial.",
       limiteConfirmacion: "1 de agosto de 2027",
       despedida: "Gracias por formar parte de este momento.",
-      urlSalida: "../../../index.html",
+      urlSalida: "../../../index.html#quinceaneras",
       audio: "assets/audio/musica.mp3",
       fotos: {
         portada: "assets/fotos/foto01.webp",
@@ -861,7 +821,9 @@
           "assets/fotos/foto03.webp",
           "assets/fotos/foto04.webp",
           "assets/fotos/foto05.webp",
-          "assets/fotos/foto06.webp"
+          "assets/fotos/foto06.webp",
+          "assets/fotos/foto07.webp",
+          "assets/fotos/foto08.webp"
         ]
       },
       fondos: [
@@ -869,39 +831,42 @@
         "assets/fondos/fondo02.webp",
         "assets/fondos/fondo03.webp",
         "assets/fondos/fondo04.webp",
-        "assets/fondos/fondo05.webp"
+        "assets/fondos/fondo05.webp",
+        "assets/fondos/fondo06.webp",
+        "assets/fondos/fondo07.webp"
       ]
     };
-
     const $ = selector => document.querySelector(selector);
     const $$ = selector => [...document.querySelectorAll(selector)];
     const entrada = $("#entrada");
     const invitacion = $("#invitacion");
     const musica = $("#musica");
     const secciones = $$(".seccion");
-
     let indiceActivo = 0;
     let musicaActiva = false;
     let temporizadorVista;
     let temporizadorAjuste;
     let intervaloParticulas;
-
+    function ajustarAnchoPortada() {
+      const foto = $("#foto-portada");
+      if (!foto.naturalWidth || !foto.naturalHeight) return;
+      const ancho = Math.min(foto.clientWidth, foto.clientHeight * foto.naturalWidth / foto.naturalHeight);
+      entrada.style.setProperty("--ancho-foto-portada", `${ancho}px`);
+    }
+    $("#foto-portada").addEventListener("load", ajustarAnchoPortada);
     function ajustarAltura(inmediato = false) {
       clearTimeout(temporizadorVista);
-
       const aplicar = () => {
         const alto = window.visualViewport?.height || window.innerHeight;
         document.documentElement.style.setProperty("--alto", `${Math.round(alto)}px`);
-
+        ajustarAnchoPortada();
         if (document.body.classList.contains("iniciada")) {
           irA(indiceActivo, false);
         }
       };
-
       if (inmediato) aplicar();
       else temporizadorVista = setTimeout(aplicar, 90);
     }
-
     function irA(indice, suave = true) {
       indiceActivo = Math.max(0, Math.min(indice, secciones.length - 1));
       invitacion.scrollTo({
@@ -910,26 +875,21 @@
         behavior: suave ? "smooth" : "auto"
       });
     }
-
     function crearBotonesContinuar() {
       secciones.forEach((seccion, indice) => {
         const boton = document.createElement("button");
         const esUltima = indice === secciones.length - 1;
-
         boton.className = "boton-continuar";
         boton.type = "button";
         boton.innerHTML = esUltima
           ? 'Volver al inicio <span aria-hidden="true">↑</span>'
           : 'Continuar <span aria-hidden="true">↓</span>';
-
         boton.addEventListener("click", () => {
           irA(esUltima ? 0 : indice + 1);
         });
-
         seccion.appendChild(boton);
       });
     }
-
     function cargarDatos() {
       document.title = `${DATOS_INVITACION.nombre} | Mis XV años`;
       $("#nombre-portada").textContent = DATOS_INVITACION.nombreCorto;
@@ -947,22 +907,25 @@
       $("#hora-recepcion").textContent = DATOS_INVITACION.recepcion.hora;
       $("#vestimenta").textContent = DATOS_INVITACION.vestimenta;
       $("#regalo").textContent = DATOS_INVITACION.regalo;
+      $("#titulo-vestimenta").textContent = DATOS_INVITACION.tituloVestimenta;
+      $("#mensaje-vestimenta").textContent = DATOS_INVITACION.mensajeVestimenta;
+      $("#titulo-regalos").textContent = DATOS_INVITACION.tituloRegalos;
+      $("#mensaje-regalos").textContent = DATOS_INVITACION.mensajeRegalos;
+      $("#leyenda-foto6").textContent = `Modela con estilo`;
+      $("#leyenda-foto7").textContent = `Relájate y disfruta`;
       $("#limite-confirmacion").textContent = DATOS_INVITACION.limiteConfirmacion;
       $("#despedida").textContent = DATOS_INVITACION.despedida;
       $("#leyenda-foto1").textContent = `${DATOS_INVITACION.nombreCorto} · Nueva era`;
-      $("#firma-final").textContent = `Nos vemos pronto · ${DATOS_INVITACION.nombreCorto}`;
+      $("#firma-final").textContent = `Mis XV · ${DATOS_INVITACION.nombreCorto}`;
       musica.src = DATOS_INVITACION.audio;
       $("#foto-portada").src = DATOS_INVITACION.fotos.portada;
-
       $$(".foto-pantalla img").forEach((imagen, i) => {
         imagen.src = DATOS_INVITACION.fotos.secciones[i];
       });
-
       $$(".fondo-tarjeta").forEach((imagen, i) => {
         imagen.src = DATOS_INVITACION.fondos[i];
       });
     }
-
     function actualizarContador() {
       const diferencia = new Date(DATOS_INVITACION.fechaISO).getTime() - Date.now();
       const restante = Math.max(0, diferencia);
@@ -970,23 +933,19 @@
       const horas = Math.floor((restante % 86400000) / 3600000);
       const minutos = Math.floor((restante % 3600000) / 60000);
       const segundos = Math.floor((restante % 60000) / 1000);
-
       $("#dias").textContent = String(dias).padStart(2, "0");
       $("#horas").textContent = String(horas).padStart(2, "0");
       $("#minutos").textContent = String(minutos).padStart(2, "0");
       $("#segundos").textContent = String(segundos).padStart(2, "0");
     }
-
     function iniciarObservador() {
       const observador = new IntersectionObserver(entradas => {
         const visible = entradas
           .filter(item => item.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
         entradas.forEach(item => {
           item.target.classList.toggle("visible", item.isIntersecting);
         });
-
         if (visible) {
           indiceActivo = secciones.indexOf(visible.target);
           visible.target.querySelectorAll(".revelar").forEach(elemento => {
@@ -997,10 +956,8 @@
         root: invitacion,
         threshold: [.58, .72]
       });
-
       secciones.forEach(seccion => observador.observe(seccion));
     }
-
     async function reproducirMusica() {
       try {
         await musica.play();
@@ -1012,10 +969,8 @@
         $("#boton-musica").textContent = "♫";
       }
     }
-
     function crearDestello() {
       if (!document.body.classList.contains("iniciada")) return;
-
       const destello = document.createElement("span");
       destello.className = "destello";
       destello.style.left = `${5 + Math.random() * 90}%`;
@@ -1025,7 +980,6 @@
       $("#particulas").appendChild(destello);
       destello.addEventListener("animationend", () => destello.remove());
     }
-
     $("#boton-entrar").addEventListener("click", () => {
       document.body.classList.add("iniciada");
       entrada.classList.add("oculta");
@@ -1036,11 +990,9 @@
       clearInterval(intervaloParticulas);
       intervaloParticulas = setInterval(crearDestello, 1200);
     });
-
     $("#boton-salir-portada").addEventListener("click", () => {
       window.location.href = DATOS_INVITACION.urlSalida;
     });
-
     $("#boton-musica").addEventListener("click", () => {
       if (musicaActiva) {
         musica.pause();
@@ -1051,20 +1003,9 @@
         reproducirMusica();
       }
     });
-
     $("#boton-salir").addEventListener("click", () => {
-      musica.pause();
-      musica.currentTime = 0;
-      musicaActiva = false;
-      document.body.classList.remove("iniciada");
-      entrada.classList.remove("oculta");
-      $("#boton-musica").textContent = "♫";
-      indiceActivo = 0;
-      irA(0, false);
-      clearInterval(intervaloParticulas);
-      $("#particulas").replaceChildren();
+      window.location.href = DATOS_INVITACION.urlSalida;
     });
-
     invitacion.addEventListener("scroll", () => {
       clearTimeout(temporizadorAjuste);
       temporizadorAjuste = setTimeout(() => {
@@ -1073,17 +1014,15 @@
         if (Math.abs(invitacion.scrollTop - posicionExacta) > 2) irA(indice);
       }, 130);
     }, { passive: true });
-
     window.addEventListener("resize", () => ajustarAltura());
     window.visualViewport?.addEventListener("resize", () => ajustarAltura());
-
     ajustarAltura(true);
     crearBotonesContinuar();
     cargarDatos();
+    ajustarAnchoPortada();
     actualizarContador();
     setInterval(actualizarContador, 1000);
     iniciarObservador();
   </script>
 </body>
-
 </html>
