@@ -1122,6 +1122,12 @@
         calc(50% + var(--medio-titulo, 90px)) 0,
         100% 0, 100% 100%, 0 100%);
     }
+    /* Cerramos la portada fuera de pantalla para preparar la siguiente apertura. */
+    .tarjeta-seccion:not(.visible) .portada-libro {
+      transition: none;
+      transform: rotateY(0deg);
+      filter: none;
+    }
   </style>
 </head>
 <body>
@@ -1510,13 +1516,16 @@
           .filter(item => item.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         entradas.forEach(item => {
-          /*
-            Cada pantalla se activa solamente la primera vez.
-            Al salir no quitamos "visible", evitando que el libro
-            se cierre y vuelva a abrir al regresar.
-          */
-          if (item.isIntersecting) {
-            item.target.classList.add("visible");
+          const seccion = item.target;
+          if (item.isIntersecting && item.intersectionRatio >= .58) {
+            seccion.classList.add("visible");
+          } else if (item.intersectionRatio < .58 && seccion.classList.contains("tarjeta-seccion")) {
+            // Reiniciamos al dejar de ser la tarjeta principal, también al deslizar hacia atrás.
+            clearTimeout(seccion.temporizadorTexto);
+            seccion.classList.remove("visible", "libro-abierto");
+            seccion.querySelectorAll(".revelar").forEach(elemento => {
+              elemento.classList.remove("visible");
+            });
           }
         });
         if (visible) {
@@ -1527,7 +1536,7 @@
         }
       }, {
         root: invitacion,
-        threshold: [.58, .72]
+        threshold: [0, .58, .72]
       });
       secciones.forEach(seccion => observador.observe(seccion));
     }
