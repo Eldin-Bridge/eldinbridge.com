@@ -356,7 +356,7 @@
       line-height: 1.3;
     }
     .nombres-padres {
-      margin-top: 14px;
+      margin-top: 24px;
     }
     .dato-secundario {
       position: relative;
@@ -644,25 +644,6 @@
       }
       .contador {
         gap: 4px;
-      }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-      .revelar,
-      .foto-marco {
-        transition-duration: .01ms;
-      }
-      .entrada-foto,
-      .foto-pantalla.visible img {
-        animation: none;
-      }
-      .foto-pantalla.visible img {
-        transform: scale(1.02);
-      }
-      .particulas {
-        display: none;
       }
     }
     /* =========================================================
@@ -1102,8 +1083,8 @@
       transition-delay: 0s !important;
     }
     @media (min-width: 760px) {
-      .entrada-foto, .foto-pantalla img { object-fit: contain; object-position: center; animation: none; transform: none; }
-      .foto-pantalla.visible img, .foto-pantalla:nth-of-type(4n).visible img { animation: none; transform: none; }
+      .entrada-foto, .foto-pantalla img { object-fit: contain; object-position: center; }
+      .entrada-foto { animation: none; transform: none; }
       .foto-marco, .foto-pantalla.visible .foto-marco { transform: none; }
       .entrada-contenido { width: var(--ancho-foto-portada, 100%); max-width: 100%; padding-inline: 24px; }
       .entrada-nombre { font-size: clamp(2rem, calc(var(--ancho-foto-portada, 450px) * .15), 6rem); }
@@ -1114,19 +1095,32 @@
     .foto-capitulo-arco {
       position: absolute;
       z-index: 3;
-      top: 14px;
+      top: 24px;
       left: 50%;
       width: min(78%, 420px);
       height: auto;
       transform: translateX(-50%);
       overflow: visible;
       pointer-events: none;
-      fill: #e6cb81;
+      fill: #fff;
       font-family: "Cinzel", serif;
-      font-size: 15px;
-      font-weight: 600;
+      font-size: 17px;
+      font-weight: 900;
+      stroke: rgba(4, 18, 12, .9);
+      stroke-width: 2px;
+      paint-order: stroke fill;
       letter-spacing: 3px;
       filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .8));
+    }
+
+    /* Hueco real en el marco: no se tapa la fotografía. */
+    .foto-marco::after {
+      clip-path: polygon(0 0,
+        calc(50% - var(--medio-titulo, 90px)) 0,
+        calc(50% - var(--medio-titulo, 90px)) 48px,
+        calc(50% + var(--medio-titulo, 90px)) 48px,
+        calc(50% + var(--medio-titulo, 90px)) 0,
+        100% 0, 100% 100%, 0 100%);
     }
   </style>
 </head>
@@ -1160,7 +1154,7 @@
     </section>
     <section class="seccion foto-pantalla" data-indice="CAPÍTULO / II">
       <div class="foto-marco"><img src="assets/fotos/foto02.webp" alt="Meredith junto a un arroyo en el bosque"
-          loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / II"><defs><path id="arco-capitulo-1" d="M 20 78 Q 210 4 400 78" /></defs><text><textPath href="#arco-capitulo-1" startOffset="50%" text-anchor="middle">CAPÍTULO / II</textPath></text></svg></div>
+          loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / II"><defs><path id="arco-capitulo-1" d="M 20 20 Q 210 -20 400 20" /></defs><text><textPath href="#arco-capitulo-1" startOffset="50%" text-anchor="middle">CAPÍTULO / II</textPath></text></svg></div>
       <p class="foto-leyenda" id="leyenda-foto1">Donde nacen los sueños</p>
     </section>
     <section class="seccion tarjeta-seccion">
@@ -1179,7 +1173,7 @@
     </section>
     <section class="seccion foto-pantalla" data-indice="CAPÍTULO / III">
       <div class="foto-marco"><img src="assets/fotos/foto03.webp" alt="Meredith entre antiguas ruinas cubiertas de hiedra"
-          loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / III"><defs><path id="arco-capitulo-2" d="M 20 78 Q 210 4 400 78" /></defs><text><textPath href="#arco-capitulo-2" startOffset="50%" text-anchor="middle">CAPÍTULO / III</textPath></text></svg></div>
+          loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / III"><defs><path id="arco-capitulo-2" d="M 20 20 Q 210 -20 400 20" /></defs><text><textPath href="#arco-capitulo-2" startOffset="50%" text-anchor="middle">CAPÍTULO / III</textPath></text></svg></div>
       <p class="foto-leyenda">Cada piedra guarda un secreto</p>
     </section>
     <section class="seccion tarjeta-seccion">
@@ -1201,7 +1195,7 @@
     </section>
     <section class="seccion foto-pantalla" data-indice="CAPÍTULO / IV">
       <div class="foto-marco"><img src="assets/fotos/foto04.webp" alt="Meredith contemplando un lago entre montañas"
-          loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / IV"><defs><path id="arco-capitulo-3" d="M 20 78 Q 210 4 400 78" /></defs><text><textPath href="#arco-capitulo-3" startOffset="50%" text-anchor="middle">CAPÍTULO / IV</textPath></text></svg></div>
+          loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / IV"><defs><path id="arco-capitulo-3" d="M 20 20 Q 210 -20 400 20" /></defs><text><textPath href="#arco-capitulo-3" startOffset="50%" text-anchor="middle">CAPÍTULO / IV</textPath></text></svg></div>
       <p class="foto-leyenda">El horizonte llama mi nombre</p>
     </section>
     <section class="seccion tarjeta-seccion">
@@ -1216,7 +1210,7 @@
     </section>
     <section class="seccion foto-pantalla" data-indice="CAPÍTULO / V">
       <div class="foto-marco"><img src="assets/fotos/foto05.webp" alt="Meredith danzando en un salón de castillo"
-          loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / V"><defs><path id="arco-capitulo-4" d="M 20 78 Q 210 4 400 78" /></defs><text><textPath href="#arco-capitulo-4" startOffset="50%" text-anchor="middle">CAPÍTULO / V</textPath></text></svg></div>
+          loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / V"><defs><path id="arco-capitulo-4" d="M 20 20 Q 210 -20 400 20" /></defs><text><textPath href="#arco-capitulo-4" startOffset="50%" text-anchor="middle">CAPÍTULO / V</textPath></text></svg></div>
       <p class="foto-leyenda">Esta noche escribiré mi propia leyenda</p>
     </section>
     <section class="seccion tarjeta-seccion">
@@ -1236,7 +1230,7 @@
     </section>
     <section class="seccion foto-pantalla" data-indice="CAPÍTULO / VI">
       <div class="foto-marco"><img src="assets/fotos/foto06.webp" alt="Meredith bajo la luna en un círculo de piedras"
-          loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / VI"><defs><path id="arco-capitulo-5" d="M 20 78 Q 210 4 400 78" /></defs><text><textPath href="#arco-capitulo-5" startOffset="50%" text-anchor="middle">CAPÍTULO / VI</textPath></text></svg></div>
+          loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / VI"><defs><path id="arco-capitulo-5" d="M 20 20 Q 210 -20 400 20" /></defs><text><textPath href="#arco-capitulo-5" startOffset="50%" text-anchor="middle">CAPÍTULO / VI</textPath></text></svg></div>
       <p class="foto-leyenda" id="leyenda-foto6">La aventura continúa · Meredith</p>
     </section>
     <section class="seccion tarjeta-seccion">
@@ -1250,7 +1244,7 @@
       </article>
     </section>
     <section class="seccion foto-pantalla" data-indice="CAPÍTULO / VII">
-      <div class="foto-marco"><img src="assets/fotos/foto07.webp" alt="Quinceañera en un campo abierto" loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / VII"><defs><path id="arco-capitulo-6" d="M 20 78 Q 210 4 400 78" /></defs><text><textPath href="#arco-capitulo-6" startOffset="50%" text-anchor="middle">CAPÍTULO / VII</textPath></text></svg></div>
+      <div class="foto-marco"><img src="assets/fotos/foto07.webp" alt="Quinceañera en un campo abierto" loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / VII"><defs><path id="arco-capitulo-6" d="M 20 20 Q 210 -20 400 20" /></defs><text><textPath href="#arco-capitulo-6" startOffset="50%" text-anchor="middle">CAPÍTULO / VII</textPath></text></svg></div>
       <p class="foto-leyenda" id="leyenda-foto7"></p>
     </section>
     <section class="seccion tarjeta-seccion">
@@ -1266,7 +1260,7 @@
       </article>
     </section>
     <section class="seccion foto-pantalla" data-indice="EPÍLOGO / VIII">
-      <div class="foto-marco"><img src="assets/fotos/foto08.webp" alt="Quinceañera junto a un castillo" loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="EPÍLOGO / VIII"><defs><path id="arco-capitulo-7" d="M 20 78 Q 210 4 400 78" /></defs><text><textPath href="#arco-capitulo-7" startOffset="50%" text-anchor="middle">EPÍLOGO / VIII</textPath></text></svg></div>
+      <div class="foto-marco"><img src="assets/fotos/foto08.webp" alt="Quinceañera junto a un castillo" loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="EPÍLOGO / VIII"><defs><path id="arco-capitulo-7" d="M 20 20 Q 210 -20 400 20" /></defs><text><textPath href="#arco-capitulo-7" startOffset="50%" text-anchor="middle">EPÍLOGO / VIII</textPath></text></svg></div>
       <p class="foto-leyenda" id="firma-final"></p>
     </section>
   </main>
@@ -1595,6 +1589,17 @@
     actualizarContador();
     setInterval(actualizarContador, 1000);
     iniciarObservador();
+
+    function ajustarHuecosCapitulos() {
+      $$(".foto-capitulo-arco").forEach(arco => {
+        const ancho = arco.querySelector("text").getBoundingClientRect().width;
+        arco.parentElement.style.setProperty("--medio-titulo", `${Math.ceil(ancho / 2 + 12)}px`);
+      });
+    }
+    window.addEventListener("resize", ajustarHuecosCapitulos);
+    document.fonts.ready.then(ajustarHuecosCapitulos);
+    ajustarHuecosCapitulos();
+
   </script>
 </body>
 </html>
