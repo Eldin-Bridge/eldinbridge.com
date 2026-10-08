@@ -1128,6 +1128,8 @@
       transform: rotateY(0deg);
       filter: none;
     }
+    .iconos-vestimenta { display: flex; justify-content: center; align-items: center; gap: 16px; }
+    .iconos-vestimenta img { width: var(--tamano-icono-vestimenta, 52px); height: var(--tamano-icono-vestimenta, 52px); object-fit: contain; }
   </style>
 </head>
 <body>
@@ -1208,7 +1210,7 @@
       <img class="fondo-tarjeta" src="assets/fondos/fondo04.webp" alt="" loading="lazy">
       <article class="tarjeta">
         <p class="numero-tarjeta revelar"><strong>IV</strong> Vestimenta</p>
-        <p class="sobrelinea revelar" data-demora="1">🤵 👗</p>
+        <div class="sobrelinea revelar iconos-vestimenta" data-demora="1" aria-hidden="true"><img id="icono-formal1" alt=""><img id="icono-formal2" alt=""></div>
         <h2 class="titulo revelar" data-demora="1" id="titulo-vestimenta"></h2>
         <p class="texto revelar" data-demora="2" id="mensaje-vestimenta"></p>
         <p class="dato-destacado revelar" data-demora="2" id="vestimenta"></p>
@@ -1303,6 +1305,11 @@
         hora: "8:00 p. m."
       },
       vestimenta: "Formal · Tonos de bosque",
+      iconosVestimenta: {
+        traje: "../../../assets/iconos/formal_b01.webp",
+        vestido: "../../../assets/iconos/formal_b02.webp",
+        tamano: 52
+      },
       regalo: "Lluvia de sobres",
       tituloVestimenta: "Una noche de elegancia",
       mensajeVestimenta: "Acompáñame con traje o vestido formal para celebrar juntos este capítulo.",
@@ -1478,6 +1485,9 @@
       $("#direccion-salon").textContent = DATOS_INVITACION.recepcion.direccion;
       $("#hora-recepcion").textContent = DATOS_INVITACION.recepcion.hora;
       $("#vestimenta").textContent = DATOS_INVITACION.vestimenta;
+      $("#icono-formal1").src = DATOS_INVITACION.iconosVestimenta.traje;
+      $("#icono-formal2").src = DATOS_INVITACION.iconosVestimenta.vestido;
+      document.documentElement.style.setProperty("--tamano-icono-vestimenta", `${DATOS_INVITACION.iconosVestimenta.tamano}px`);
       $("#regalo").textContent = DATOS_INVITACION.regalo;
       $("#titulo-vestimenta").textContent = DATOS_INVITACION.tituloVestimenta;
       $("#mensaje-vestimenta").textContent = DATOS_INVITACION.mensajeVestimenta;
