@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#10271e">
-  <meta name="description" content="Invitación temática de quince años de Melisa">
-  <title>Melisa | Mis XV años</title>
+  <meta name="description" content="Invitación temática de quince años de Meredith">
+  <title>Meredith | Mis XV años</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&display=swap"
     rel="stylesheet">
-
   <style>
     :root {
       --azul-noche: #071426;
@@ -26,18 +24,15 @@
       --alto: 100svh;
       --sombra: 0 26px 70px rgba(4, 18, 42, .22);
     }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-
     html {
       background: var(--azul-noche);
       scroll-behavior: smooth;
     }
-
     body {
       min-width: 280px;
       overflow: hidden;
@@ -46,22 +41,18 @@
       font-family: "Manrope", Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
-
     button,
     a {
       font: inherit;
       -webkit-tap-highlight-color: transparent;
     }
-
     button {
       border: 0;
     }
-
     img {
       display: block;
       max-width: 100%;
     }
-
     /* ======================== PORTADA ======================== */
     .entrada {
       position: fixed;
@@ -76,13 +67,11 @@
       background: var(--azul-noche);
       transition: opacity .65s ease, visibility .65s ease;
     }
-
     .entrada.oculta {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
     }
-
     .entrada-foto,
     .foto-pantalla img {
       position: absolute;
@@ -91,13 +80,11 @@
       height: 100%;
       object-fit: cover;
     }
-
     .entrada-foto {
       object-position: center center;
       transform: scale(1.015);
       animation: portadaZoom 14s ease-out both;
     }
-
     .entrada::before {
       content: "";
       position: absolute;
@@ -107,7 +94,6 @@
         linear-gradient(90deg, rgba(7, 20, 38, .48), transparent 42%),
         linear-gradient(180deg, rgba(7, 20, 38, .08) 22%, rgba(7, 20, 38, .22) 49%, rgba(7, 20, 38, .95) 100%);
     }
-
     .entrada::after {
       content: "";
       position: absolute;
@@ -119,7 +105,6 @@
       background: linear-gradient(transparent, rgba(81, 214, 255, .9));
       box-shadow: 11px 0 0 rgba(255, 255, 255, .16);
     }
-
     .boton-salir-portada,
     .control {
       display: grid;
@@ -134,7 +119,6 @@
       cursor: pointer;
       backdrop-filter: blur(12px);
     }
-
     .boton-salir-portada {
       position: absolute;
       z-index: 5;
@@ -142,7 +126,6 @@
       left: max(14px, env(safe-area-inset-left));
       font-size: 1.45rem;
     }
-
     .entrada-contenido {
       position: relative;
       z-index: 2;
@@ -151,7 +134,6 @@
       text-align: left;
       animation: subirEntrada 1s .12s both;
     }
-
     .entrada-linea {
       display: flex;
       align-items: center;
@@ -162,14 +144,12 @@
       letter-spacing: .31em;
       text-transform: uppercase;
     }
-
     .entrada-linea::before {
       content: "";
       width: 44px;
       height: 2px;
       background: var(--cian);
     }
-
     .monograma {
       display: inline-flex;
       align-items: flex-end;
@@ -183,7 +163,6 @@
       color: transparent;
       -webkit-text-stroke: 1.3px rgba(255, 255, 255, .95);
     }
-
     .entrada-nombre {
       max-width: 100%;
       font-family: "Syne", sans-serif;
@@ -193,7 +172,6 @@
       line-height: .83;
       overflow-wrap: anywhere;
     }
-
     .entrada-frase {
       width: min(100%, 430px);
       margin: 17px 0 22px;
@@ -203,7 +181,6 @@
       font-size: clamp(.93rem, 3.8vw, 1.08rem);
       line-height: 1.55;
     }
-
     .boton-principal,
     .boton-demo,
     .boton-continuar {
@@ -218,19 +195,16 @@
       letter-spacing: .06em;
       cursor: pointer;
     }
-
     .boton-principal {
       color: var(--azul-noche);
       background: var(--blanco);
       box-shadow: 8px 8px 0 var(--azul);
       transition: transform .2s ease, box-shadow .2s ease;
     }
-
     .boton-principal:active {
       transform: translate(4px, 4px);
       box-shadow: 4px 4px 0 var(--azul);
     }
-
     /* ======================== NAVEGACIÓN ======================== */
     main {
       position: relative;
@@ -246,11 +220,9 @@
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
     }
-
     main::-webkit-scrollbar {
       display: none;
     }
-
     .seccion {
       position: relative;
       display: grid;
@@ -263,12 +235,10 @@
       scroll-snap-stop: always;
       isolation: isolate;
     }
-
     .tarjeta-seccion {
       padding: 70px 18px 88px;
       background: var(--plata);
     }
-
     .fondo-tarjeta {
       position: absolute;
       inset: 0;
@@ -277,7 +247,6 @@
       height: 100%;
       object-fit: cover;
     }
-
     .tarjeta-seccion::before {
       content: "";
       position: absolute;
@@ -285,7 +254,6 @@
       z-index: -2;
       background: linear-gradient(135deg, rgba(7, 20, 38, .06), transparent 46%, rgba(20, 93, 255, .08));
     }
-
     .tarjeta-seccion::after {
       content: "";
       position: absolute;
@@ -295,7 +263,6 @@
       transform: skewY(-3deg);
       pointer-events: none;
     }
-
     .tarjeta {
       position: relative;
       width: min(100%, 650px);
@@ -308,7 +275,6 @@
       text-align: left;
       backdrop-filter: blur(15px) saturate(1.15);
     }
-
     .tarjeta::after {
       content: "";
       position: absolute;
@@ -319,7 +285,6 @@
       border: 25px solid rgba(20, 93, 255, .08);
       border-radius: 50%;
     }
-
     .numero-tarjeta {
       position: relative;
       z-index: 1;
@@ -332,20 +297,17 @@
       letter-spacing: .25em;
       text-transform: uppercase;
     }
-
     .numero-tarjeta strong {
       font-family: "Syne", sans-serif;
       font-size: 1.55rem;
       letter-spacing: -.06em;
     }
-
     .numero-tarjeta::after {
       content: "";
       width: 48px;
       height: 1px;
       background: currentColor;
     }
-
     .sobrelinea {
       position: relative;
       z-index: 1;
@@ -356,7 +318,6 @@
       letter-spacing: .22em;
       text-transform: uppercase;
     }
-
     .titulo {
       position: relative;
       z-index: 1;
@@ -368,7 +329,6 @@
       letter-spacing: -.065em;
       line-height: .94;
     }
-
     .texto {
       position: relative;
       z-index: 1;
@@ -377,7 +337,6 @@
       font-size: clamp(.98rem, 3.7vw, 1.15rem);
       line-height: 1.65;
     }
-
     .linea-dato {
       position: relative;
       z-index: 1;
@@ -386,7 +345,6 @@
       margin: 22px 0;
       background: var(--azul);
     }
-
     .dato-destacado,
     .nombres-padres {
       position: relative;
@@ -397,11 +355,9 @@
       font-weight: 700;
       line-height: 1.3;
     }
-
     .nombres-padres {
       margin-top: 14px;
     }
-
     .dato-secundario {
       position: relative;
       z-index: 1;
@@ -410,7 +366,6 @@
       font-size: .93rem;
       line-height: 1.45;
     }
-
     .boton-demo {
       position: relative;
       z-index: 1;
@@ -421,7 +376,6 @@
       box-shadow: 6px 6px 0 rgba(20, 93, 255, .22);
       cursor: default;
     }
-
     .detalles {
       position: relative;
       z-index: 1;
@@ -430,31 +384,26 @@
       gap: 10px;
       margin-top: 22px;
     }
-
     .detalle {
       padding: 14px 12px;
       border-top: 3px solid var(--azul);
       background: rgba(223, 232, 244, .58);
     }
-
     .detalle strong,
     .detalle span {
       display: block;
     }
-
     .detalle strong {
       color: var(--azul-noche);
       font-size: .72rem;
       letter-spacing: .1em;
       text-transform: uppercase;
     }
-
     .detalle span {
       margin-top: 5px;
       color: var(--muted);
       font-size: .9rem;
     }
-
     .contador {
       position: relative;
       z-index: 1;
@@ -463,7 +412,6 @@
       gap: 7px;
       margin-top: 23px;
     }
-
     .tiempo {
       min-width: 0;
       padding: 13px 3px 10px;
@@ -471,7 +419,6 @@
       background: rgba(255, 255, 255, .52);
       text-align: center;
     }
-
     .tiempo strong {
       display: block;
       color: var(--azul-noche);
@@ -479,7 +426,6 @@
       font-size: clamp(1.25rem, 6vw, 2.1rem);
       line-height: 1;
     }
-
     .tiempo span {
       display: block;
       margin-top: 5px;
@@ -489,12 +435,10 @@
       letter-spacing: .08em;
       text-transform: uppercase;
     }
-
     /* ======================== FOTOGRAFÍAS ======================== */
     .foto-pantalla {
       background: #061225;
     }
-
     .foto-marco {
       position: absolute;
       inset: 0;
@@ -503,26 +447,21 @@
       transform: scale(1.035);
       transition: opacity .9s ease, transform 1.1s ease;
     }
-
     .foto-pantalla.visible .foto-marco {
       opacity: 1;
       transform: scale(1);
     }
-
     .foto-pantalla img {
       object-position: center center;
       transform: scale(1.055);
       will-change: transform;
     }
-
     .foto-pantalla.visible img {
       animation: fotoMovimiento 12s ease-out both;
     }
-
     .foto-pantalla:nth-of-type(4n).visible img {
       animation-name: fotoMovimientoInverso;
     }
-
     .foto-pantalla::before {
       content: "";
       position: absolute;
@@ -531,7 +470,6 @@
       background: linear-gradient(180deg, rgba(7, 20, 38, .04) 45%, rgba(7, 20, 38, .82) 100%);
       pointer-events: none;
     }
-
     .foto-pantalla::after {
       content: attr(data-indice);
       position: absolute;
@@ -545,7 +483,6 @@
       letter-spacing: .18em;
       writing-mode: vertical-rl;
     }
-
     .foto-leyenda {
       position: absolute;
       z-index: 3;
@@ -562,31 +499,25 @@
       text-shadow: 0 3px 18px rgba(0, 0, 0, .55);
       transform: translateX(-50%);
     }
-
     /* ======================== ANIMACIONES ======================== */
     .revelar {
       opacity: 0;
       transform: translateY(24px);
       transition: opacity .72s ease, transform .72s cubic-bezier(.2, .72, .22, 1);
     }
-
     .revelar.visible {
       opacity: 1;
       transform: translateY(0);
     }
-
     .revelar[data-demora="1"] {
       transition-delay: .1s;
     }
-
     .revelar[data-demora="2"] {
       transition-delay: .2s;
     }
-
     .revelar[data-demora="3"] {
       transition-delay: .3s;
     }
-
     .controles {
       position: fixed;
       z-index: 80;
@@ -600,16 +531,13 @@
       pointer-events: none;
       transition: opacity .3s ease;
     }
-
     body.iniciada .controles {
       opacity: 1;
       visibility: visible;
     }
-
     .control {
       pointer-events: auto;
     }
-
     .boton-continuar {
       position: absolute;
       z-index: 12;
@@ -623,12 +551,10 @@
       transform: translateX(-50%);
       backdrop-filter: blur(10px);
     }
-
     .boton-continuar:active {
       transform: translateX(-50%) translate(3px, 3px);
       box-shadow: 3px 3px 0 rgba(20, 93, 255, .35);
     }
-
     .particulas {
       position: fixed;
       inset: 0;
@@ -636,7 +562,6 @@
       overflow: hidden;
       pointer-events: none;
     }
-
     .destello {
       position: absolute;
       width: 3px;
@@ -646,125 +571,100 @@
       opacity: 0;
       animation: subirDestello var(--duracion) linear forwards;
     }
-
     @keyframes portadaZoom {
       from {
         transform: scale(1.08);
       }
-
       to {
         transform: scale(1.015);
       }
     }
-
     @keyframes subirEntrada {
       from {
         opacity: 0;
         transform: translateY(24px);
       }
-
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
-
     @keyframes fotoMovimiento {
       from {
         transform: scale(1.09) translate3d(-1%, 0, 0);
       }
-
       to {
         transform: scale(1.02) translate3d(1%, 0, 0);
       }
     }
-
     @keyframes fotoMovimientoInverso {
       from {
         transform: scale(1.03) translate3d(1%, 0, 0);
       }
-
       to {
         transform: scale(1.09) translate3d(-1%, 0, 0);
       }
     }
-
     @keyframes subirDestello {
       0% {
         opacity: 0;
         transform: translateY(20px);
       }
-
       20% {
         opacity: .68;
       }
-
       100% {
         opacity: 0;
         transform: translateY(-110vh) translateX(var(--deriva));
       }
     }
-
     @media (min-width: 760px) {
       .tarjeta-seccion {
         padding: 86px 42px 100px;
       }
-
       .entrada-contenido {
         padding-bottom: 36px;
       }
-
       .tarjeta {
         border-radius: 24px 3px 24px 3px;
       }
     }
-
     @media (max-width: 390px) {
       .tarjeta-seccion {
         padding-inline: 13px;
       }
-
       .tarjeta {
         padding-inline: 19px;
       }
-
       .detalles {
         grid-template-columns: 1fr;
       }
-
       .entrada-nombre {
         font-size: 3.25rem;
       }
-
       .contador {
         gap: 4px;
       }
     }
-
     @media (prefers-reduced-motion: reduce) {
       html {
         scroll-behavior: auto;
       }
-
       .revelar,
       .foto-marco {
         transition-duration: .01ms;
       }
-
       .entrada-foto,
       .foto-pantalla.visible img {
         animation: none;
       }
-
       .foto-pantalla.visible img {
         transform: scale(1.02);
       }
-
       .particulas {
         display: none;
       }
     }
-
     /* =========================================================
        IDENTIDAD TEMÁTICA · BOSQUE ENCANTADO
        Sobrescribe la geometría urbana sin alterar la navegación.
@@ -780,28 +680,23 @@
       --muted: #69766e;
       --sombra: 0 28px 70px rgba(7, 28, 20, .32);
     }
-
     body {
       font-family: "Cormorant Garamond", Georgia, serif;
     }
-
     .entrada {
       place-items: end center;
       padding: max(68px, env(safe-area-inset-top)) 22px max(30px, env(safe-area-inset-bottom));
       background: #0b1c16;
     }
-
     .entrada-foto {
       object-position: center 35%;
       filter: saturate(.93) contrast(1.03);
     }
-
     .entrada::before {
       background:
         radial-gradient(circle at 50% 36%, transparent 20%, rgba(5, 21, 14, .1) 55%, rgba(5, 18, 13, .78) 100%),
         linear-gradient(180deg, rgba(4, 20, 13, .08) 20%, rgba(4, 20, 13, .2) 48%, rgba(4, 20, 13, .95) 100%);
     }
-
     .entrada::after {
       top: 16px;
       right: 16px;
@@ -815,7 +710,6 @@
       box-shadow: inset 0 0 0 5px rgba(8, 28, 20, .12);
       pointer-events: none;
     }
-
     .boton-salir-portada,
     .control {
       border-color: rgba(226, 197, 121, .55);
@@ -823,20 +717,17 @@
       color: #fff8df;
       background: rgba(12, 39, 28, .7);
     }
-
     .entrada-contenido {
       width: min(100%, 560px);
       padding: 28px 20px 10px;
       text-align: center;
     }
-
     .entrada-linea {
       justify-content: center;
       font-family: "Cinzel", serif;
       font-size: .67rem;
       letter-spacing: .38em;
     }
-
     .entrada-linea::before,
     .entrada-linea::after {
       content: "";
@@ -844,7 +735,6 @@
       height: 1px;
       background: #d7b96d;
     }
-
     .monograma {
       position: relative;
       display: flex;
@@ -853,35 +743,29 @@
       margin: 0 auto 17px;
       align-items: center;
       justify-content: center;
-
       color: #f1d48a;
       font-family: Georgia, serif;
       font-size: 3.2rem;
       line-height: 1;
-
       text-shadow:
         0 0 12px rgba(239, 204, 116, .42),
         0 3px 18px rgba(0, 0, 0, .45);
     }
-
     .monograma::before,
     .monograma::after {
       content: "";
       width: 56px;
       height: 1px;
       margin: 0 13px;
-
       background: linear-gradient(90deg,
           transparent,
           rgba(239, 207, 124, .85));
     }
-
     .monograma::after {
       background: linear-gradient(90deg,
           rgba(239, 207, 124, .85),
           transparent);
     }
-
     .entrada-nombre {
       font-family: "Cormorant Garamond", Georgia, serif;
       font-size: clamp(4rem, 18vw, 7.5rem);
@@ -891,7 +775,6 @@
       line-height: .8;
       text-shadow: 0 3px 28px rgba(0, 0, 0, .35);
     }
-
     .entrada-frase {
       margin: 20px auto 24px;
       padding: 0;
@@ -901,7 +784,6 @@
       font-style: italic;
       line-height: 1.45;
     }
-
     .boton-principal,
     .boton-demo,
     .boton-continuar {
@@ -912,22 +794,18 @@
       font-weight: 600;
       letter-spacing: .16em;
     }
-
     .boton-principal {
       color: #183125;
       background: linear-gradient(135deg, #fff9e7, #dcc586);
       box-shadow: 0 10px 30px rgba(6, 20, 13, .3);
     }
-
     .tarjeta-seccion::before {
       background: linear-gradient(180deg, rgba(8, 28, 19, .38), rgba(8, 28, 19, .62));
     }
-
     .fondo-tarjeta {
       filter: saturate(.78) brightness(.72);
       transform: scale(1.04);
     }
-
     .tarjeta {
       width: min(88%, 520px);
       padding: clamp(30px, 7vh, 58px) clamp(24px, 7vw, 48px);
@@ -939,32 +817,25 @@
         radial-gradient(circle at top, #fffdf2, #e8ddb7);
       box-shadow: 0 26px 75px rgba(3, 18, 11, .42), inset 0 0 0 6px rgba(142, 107, 42, .08);
     }
-
     .tarjeta::before {
       content: "✦";
       position: absolute;
       top: 13px;
       left: 50%;
-
       width: auto;
       height: auto;
-
       color: #9a742e;
       background: none;
-
       font-size: 1rem;
       line-height: 1;
-
       transform: translateX(-50%);
     }
-
     .numero-tarjeta,
     .sobrelinea {
       color: #775a25;
       font-family: "Cinzel", serif;
       letter-spacing: .2em;
     }
-
     .titulo {
       color: #173629;
       font-family: "Cormorant Garamond", serif;
@@ -974,68 +845,54 @@
       letter-spacing: -.035em;
       line-height: .88;
     }
-
     .texto,
     .dato-secundario {
       color: #4d5a52;
       font-size: clamp(1rem, 4.1vw, 1.18rem);
     }
-
     .nombres-padres,
     .dato-destacado {
       color: #284c39;
       font-family: "Cormorant Garamond", serif;
     }
-
     .linea-dato {
       background: linear-gradient(90deg, transparent, #ad873d, transparent);
     }
-
     .tiempo {
       border-color: rgba(134, 96, 33, .28);
       background: rgba(255, 252, 238, .58);
     }
-
     .tiempo strong {
       color: #234b38;
       font-family: "Cinzel", serif;
     }
-
     .foto-pantalla::before {
       background: linear-gradient(180deg, rgba(4, 18, 12, .08) 28%, rgba(4, 18, 12, .8) 100%);
     }
-
     /* Marco decorativo de las fotografías */
     .foto-marco::after {
       content: "";
       position: absolute;
       z-index: 2;
       inset: 18px;
-
       border: 1px solid rgba(230, 203, 129, .46);
       border-radius: 45% 45% 8px 8px / 9% 9% 8px 8px;
-
       pointer-events: none;
     }
-
     /* Texto vertical del capítulo */
     .foto-pantalla::after {
       top: max(100px,
           calc(env(safe-area-inset-top) + 82px));
-
       right: 24px;
       bottom: auto;
       left: auto;
-
       width: auto;
       height: auto;
-
       border: 0;
       border-radius: 0;
       background: none;
       box-shadow: none;
     }
-
     .foto-leyenda {
       left: 50%;
       bottom: 88px;
@@ -1048,22 +905,18 @@
       text-align: center;
       transform: translateX(-50%);
     }
-
     .boton-continuar {
       color: #fff8dc;
       background: rgba(13, 47, 33, .82);
       backdrop-filter: blur(10px);
     }
-
     .tarjeta-seccion .boton-continuar {
       color: #f8efd4;
       background: #244a37;
     }
-
     .controles {
       top: max(14px, env(safe-area-inset-top));
     }
-
     .destello {
       width: 5px;
       height: 5px;
@@ -1071,37 +924,30 @@
       background: #e6ca79;
       box-shadow: 0 0 12px #e6ca79, 0 0 24px rgba(230, 202, 121, .6);
     }
-
     /* =========================================================
    LIBRO CON PORTADA QUE ABRE HACIA LA IZQUIERDA
    ========================================================= */
-
     .tarjeta-seccion {
       perspective: 1800px;
     }
-
     /* Esta es la hoja interior del libro */
     .tarjeta {
       overflow: visible;
       transform-style: preserve-3d;
     }
-
     /* Ocultamos el contenido mientras el libro está cerrado */
     .tarjeta> :not(.portada-libro) {
       opacity: 0;
       transform: translateY(4px);
-
       transition:
         opacity .12s ease,
         transform .12s ease;
     }
-
     /* Mostramos el contenido después de abrir la portada */
     .tarjeta-seccion.libro-abierto .tarjeta> :not(.portada-libro) {
       opacity: 1;
       transform: translateY(0);
     }
-
     /* Portada completa del libro */
     .portada-libro {
       position: absolute;
@@ -1111,12 +957,10 @@
       transform-origin: left center;
       transform-style: preserve-3d;
       will-change: transform;
-
       transition:
         transform 2.8s cubic-bezier(.16, .72, .18, 1),
         filter 2.2s ease;
     }
-
     /* La portada se abre hacia la izquierda */
     /* Solamente abre libros después de entrar a la invitación */
     body.iniciada .tarjeta-seccion.visible .portada-libro {
@@ -1124,7 +968,6 @@
       filter: drop-shadow(12px 10px 14px rgba(4, 18, 11, .35));
       transition-delay: 1.2s;
     }
-
     /* Frente y reverso de la portada */
     .portada-frente,
     .portada-reverso {
@@ -1135,16 +978,13 @@
       border-radius: 48% 48% 18px 18px / 10% 10% 18px 18px;
       backface-visibility: hidden;
     }
-
     /* Frente del libro cerrado */
     .portada-frente {
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 26px;
-
       color: #f9edc5;
-
       background:
         radial-gradient(circle at center,
           rgba(217, 182, 99, .19),
@@ -1153,31 +993,25 @@
           #315e46 0%,
           #173b2b 45%,
           #0c281d 100%);
-
       box-shadow:
         inset 0 0 0 6px rgba(229, 196, 115, .13),
         inset 0 0 35px rgba(0, 0, 0, .38),
         0 25px 65px rgba(3, 17, 10, .48);
     }
-
     /* Marco dorado de la portada */
     .portada-frente::before {
       content: "";
       position: absolute;
       inset: 15px;
-
       border: 1px solid rgba(226, 191, 103, .72);
       border-radius: 46% 46% 12px 12px / 9% 9% 12px 12px;
-
       box-shadow:
         inset 0 0 0 4px rgba(213, 174, 83, .08),
         0 0 20px rgba(220, 184, 91, .08);
     }
-
     /* Parte interior de la portada */
     .portada-reverso {
       transform: rotateY(180deg);
-
       background:
         linear-gradient(90deg,
           rgba(75, 50, 15, .18),
@@ -1185,25 +1019,20 @@
         linear-gradient(145deg,
           #eee0b8,
           #d9c38a);
-
       box-shadow:
         inset -10px 0 28px rgba(63, 42, 12, .17),
         inset 0 0 0 7px rgba(108, 74, 20, .09);
     }
-
     /* Adorno interior del reverso */
     .portada-reverso::before {
       content: "❦";
       position: absolute;
       top: 50%;
       left: 50%;
-
       color: rgba(102, 72, 25, .38);
       font-size: 3rem;
-
       transform: translate(-50%, -50%);
     }
-
     /* Contenido central de la portada */
     .portada-contenido {
       position: relative;
@@ -1211,7 +1040,6 @@
       width: 100%;
       text-align: center;
     }
-
     /* Símbolo superior */
     .portada-simbolo {
       display: grid;
@@ -1219,22 +1047,17 @@
       height: 70px;
       margin: 0 auto 23px;
       place-items: center;
-
       border: 1px solid rgba(231, 201, 122, .75);
       border-radius: 50%;
-
       color: #efd38b;
       font-size: 1.65rem;
-
       box-shadow:
         0 0 0 5px rgba(226, 190, 99, .07),
         0 0 25px rgba(226, 190, 99, .12);
     }
-
     /* Número del capítulo */
     .portada-capitulo {
       margin-bottom: 13px;
-
       color: #d9b96e;
       font-family: "Cinzel", serif;
       font-size: .66rem;
@@ -1242,7 +1065,6 @@
       letter-spacing: .29em;
       text-transform: uppercase;
     }
-
     /* Título principal */
     .portada-titulo {
       color: #fff4ce;
@@ -1251,46 +1073,27 @@
       font-weight: 500;
       font-style: italic;
       line-height: .9;
-
       text-shadow: 0 3px 18px rgba(0, 0, 0, .35);
     }
-
     /* Indicación inferior */
     .portada-indicacion {
       margin-top: 25px;
-
       color: rgba(247, 232, 190, .72);
       font-family: "Cinzel", serif;
       font-size: .58rem;
       letter-spacing: .22em;
       text-transform: uppercase;
     }
-
     /* En pantallas angostas abrimos un poco menos la portada */
     @media (max-width: 480px) {
       body.iniciada .tarjeta-seccion.visible .portada-libro {
         transform: rotateY(-132deg);
       }
     }
-
-    /* Accesibilidad */
-    @media (prefers-reduced-motion: reduce) {
-      .portada-libro {
-        display: none;
-      }
-
-      .tarjeta> :not(.portada-libro) {
-        opacity: 1;
-        transform: none;
-        transition: none;
-      }
-    }
-
     .portada-frente::after {
       content: none !important;
       display: none !important;
     }
-
     /* El texto aparece inmediatamente después de abrir el libro */
     .tarjeta-seccion.libro-abierto .revelar,
     .tarjeta-seccion.libro-abierto .revelar[data-demora="1"],
@@ -1298,46 +1101,68 @@
     .tarjeta-seccion.libro-abierto .revelar[data-demora="3"] {
       transition-delay: 0s !important;
     }
+    @media (min-width: 760px) {
+      .entrada-foto, .foto-pantalla img { object-fit: contain; object-position: center; animation: none; transform: none; }
+      .foto-pantalla.visible img, .foto-pantalla:nth-of-type(4n).visible img { animation: none; transform: none; }
+      .foto-marco, .foto-pantalla.visible .foto-marco { transform: none; }
+      .entrada-contenido { width: var(--ancho-foto-portada, 100%); max-width: 100%; padding-inline: 24px; }
+      .entrada-nombre { font-size: clamp(2rem, calc(var(--ancho-foto-portada, 450px) * .15), 6rem); }
+    }
+
+    /* Capítulo arqueado dentro del marco dorado. */
+    .foto-pantalla::after { content: none; }
+    .foto-capitulo-arco {
+      position: absolute;
+      z-index: 3;
+      top: 14px;
+      left: 50%;
+      width: min(78%, 420px);
+      height: auto;
+      transform: translateX(-50%);
+      overflow: visible;
+      pointer-events: none;
+      fill: #e6cb81;
+      font-family: "Cinzel", serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .8));
+    }
   </style>
 </head>
-
 <body>
   <section class="entrada" id="entrada" aria-label="Portada de la invitación">
     <img class="entrada-foto" id="foto-portada" src="assets/fotos/foto01.webp"
-      alt="Melisa en un paisaje de fantasía celta">
+      alt="Meredith en un paisaje de fantasía celta">
     <button class="boton-salir-portada" id="boton-salir-portada" type="button" aria-label="Salir de la invitación"
       title="Salir">×</button>
-
     <div class="entrada-contenido">
       <p class="entrada-linea">Érase una vez mis quince años</p>
       <div class="monograma" id="monograma-portada" aria-hidden="true">❦</div>
-      <h1 class="entrada-nombre" id="nombre-portada">Melisa</h1>
+      <h1 class="entrada-nombre" id="nombre-portada">Meredith</h1>
       <p class="entrada-frase" id="frase-portada">Entre bosques y estrellas comienza una historia inolvidable.</p>
       <button class="boton-principal" id="boton-entrar" type="button">Ver invitación <span
           aria-hidden="true">↓</span></button>
     </div>
   </section>
-
   <main id="invitacion">
     <section class="seccion tarjeta-seccion">
       <img class="fondo-tarjeta" src="assets/fondos/fondo01.webp" alt="" loading="eager">
       <article class="tarjeta">
         <p class="numero-tarjeta revelar"><strong>I</strong> El prólogo</p>
         <p class="sobrelinea revelar" data-demora="1">La aventura está por comenzar</p>
-        <h2 class="titulo revelar" data-demora="1" id="nombre-presentacion">Melisa</h2>
+        <h2 class="titulo revelar" data-demora="1" id="nombre-presentacion">Meredith</h2>
         <p class="texto revelar" data-demora="2" id="mensaje-presentacion"></p>
         <div class="linea-dato revelar" data-demora="2"></div>
         <p class="texto revelar" data-demora="3">Con el amor de quienes han guiado cada uno de mis pasos</p>
         <p class="nombres-padres revelar" data-demora="3" id="padres"></p>
       </article>
     </section>
-
     <section class="seccion foto-pantalla" data-indice="CAPÍTULO / II">
-      <div class="foto-marco"><img src="assets/fotos/foto02.webp" alt="Melisa junto a un arroyo en el bosque"
-          loading="lazy"></div>
+      <div class="foto-marco"><img src="assets/fotos/foto02.webp" alt="Meredith junto a un arroyo en el bosque"
+          loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / II"><defs><path id="arco-capitulo-1" d="M 20 78 Q 210 4 400 78" /></defs><text><textPath href="#arco-capitulo-1" startOffset="50%" text-anchor="middle">CAPÍTULO / II</textPath></text></svg></div>
       <p class="foto-leyenda" id="leyenda-foto1">Donde nacen los sueños</p>
     </section>
-
     <section class="seccion tarjeta-seccion">
       <img class="fondo-tarjeta" src="assets/fondos/fondo02.webp" alt="" loading="lazy">
       <article class="tarjeta">
@@ -1352,13 +1177,11 @@
         <button class="boton-demo revelar" data-demora="3" type="button" aria-disabled="true">Ver ubicación</button>
       </article>
     </section>
-
     <section class="seccion foto-pantalla" data-indice="CAPÍTULO / III">
-      <div class="foto-marco"><img src="assets/fotos/foto03.webp" alt="Melisa entre antiguas ruinas cubiertas de hiedra"
-          loading="lazy"></div>
+      <div class="foto-marco"><img src="assets/fotos/foto03.webp" alt="Meredith entre antiguas ruinas cubiertas de hiedra"
+          loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / III"><defs><path id="arco-capitulo-2" d="M 20 78 Q 210 4 400 78" /></defs><text><textPath href="#arco-capitulo-2" startOffset="50%" text-anchor="middle">CAPÍTULO / III</textPath></text></svg></div>
       <p class="foto-leyenda">Cada piedra guarda un secreto</p>
     </section>
-
     <section class="seccion tarjeta-seccion">
       <img class="fondo-tarjeta" src="assets/fondos/fondo03.webp" alt="" loading="lazy">
       <article class="tarjeta">
@@ -1376,40 +1199,30 @@
           calendario</button>
       </article>
     </section>
-
     <section class="seccion foto-pantalla" data-indice="CAPÍTULO / IV">
-      <div class="foto-marco"><img src="assets/fotos/foto04.webp" alt="Melisa contemplando un lago entre montañas"
-          loading="lazy"></div>
+      <div class="foto-marco"><img src="assets/fotos/foto04.webp" alt="Meredith contemplando un lago entre montañas"
+          loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / IV"><defs><path id="arco-capitulo-3" d="M 20 78 Q 210 4 400 78" /></defs><text><textPath href="#arco-capitulo-3" startOffset="50%" text-anchor="middle">CAPÍTULO / IV</textPath></text></svg></div>
       <p class="foto-leyenda">El horizonte llama mi nombre</p>
     </section>
-
     <section class="seccion tarjeta-seccion">
       <img class="fondo-tarjeta" src="assets/fondos/fondo04.webp" alt="" loading="lazy">
       <article class="tarjeta">
-        <p class="numero-tarjeta revelar"><strong>IV</strong> El gran festejo</p>
-        <p class="sobrelinea revelar" data-demora="1">Después de la bendición</p>
-        <h2 class="titulo revelar" data-demora="1">El reino nos espera</h2>
-        <p class="dato-destacado revelar" data-demora="2" id="salon"></p>
-        <p class="dato-secundario revelar" data-demora="2" id="direccion-salon"></p>
-        <p class="dato-destacado revelar" data-demora="2" id="hora-recepcion"></p>
-        <div class="detalles revelar" data-demora="3">
-          <div class="detalle"><strong>Vestimenta</strong><span id="vestimenta"></span></div>
-          <div class="detalle"><strong>Obsequio</strong><span id="regalo"></span></div>
-        </div>
-        <button class="boton-demo revelar" data-demora="3" type="button" aria-disabled="true">Ver ubicación</button>
+        <p class="numero-tarjeta revelar"><strong>IV</strong> Vestimenta</p>
+        <p class="sobrelinea revelar" data-demora="1">🤵 👗</p>
+        <h2 class="titulo revelar" data-demora="1" id="titulo-vestimenta"></h2>
+        <p class="texto revelar" data-demora="2" id="mensaje-vestimenta"></p>
+        <p class="dato-destacado revelar" data-demora="2" id="vestimenta"></p>
       </article>
     </section>
-
     <section class="seccion foto-pantalla" data-indice="CAPÍTULO / V">
-      <div class="foto-marco"><img src="assets/fotos/foto05.webp" alt="Melisa danzando en un salón de castillo"
-          loading="lazy"></div>
+      <div class="foto-marco"><img src="assets/fotos/foto05.webp" alt="Meredith danzando en un salón de castillo"
+          loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / V"><defs><path id="arco-capitulo-4" d="M 20 78 Q 210 4 400 78" /></defs><text><textPath href="#arco-capitulo-4" startOffset="50%" text-anchor="middle">CAPÍTULO / V</textPath></text></svg></div>
       <p class="foto-leyenda">Esta noche escribiré mi propia leyenda</p>
     </section>
-
     <section class="seccion tarjeta-seccion">
       <img class="fondo-tarjeta" src="assets/fondos/fondo05.webp" alt="" loading="lazy">
       <article class="tarjeta">
-        <p class="numero-tarjeta revelar"><strong>V</strong> El pacto</p>
+        <p class="numero-tarjeta revelar"><strong>V</strong> El llamado</p>
         <p class="sobrelinea revelar" data-demora="1">Tu presencia hará la magia completa</p>
         <h2 class="titulo revelar" data-demora="1">¿Vendrás?</h2>
         <p class="texto revelar" data-demora="2">Quiero compartir esta aventura contigo. Confirma tu asistencia antes
@@ -1421,22 +1234,48 @@
         <p class="texto revelar" data-demora="3" id="despedida"></p>
       </article>
     </section>
-
-    <section class="seccion foto-pantalla" data-indice="EPÍLOGO / VI">
-      <div class="foto-marco"><img src="assets/fotos/foto06.webp" alt="Melisa bajo la luna en un círculo de piedras"
-          loading="lazy"></div>
-      <p class="foto-leyenda" id="firma-final">La aventura continúa · Melisa</p>
+    <section class="seccion foto-pantalla" data-indice="CAPÍTULO / VI">
+      <div class="foto-marco"><img src="assets/fotos/foto06.webp" alt="Meredith bajo la luna en un círculo de piedras"
+          loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / VI"><defs><path id="arco-capitulo-5" d="M 20 78 Q 210 4 400 78" /></defs><text><textPath href="#arco-capitulo-5" startOffset="50%" text-anchor="middle">CAPÍTULO / VI</textPath></text></svg></div>
+      <p class="foto-leyenda" id="leyenda-foto6">La aventura continúa · Meredith</p>
+    </section>
+    <section class="seccion tarjeta-seccion">
+      <img class="fondo-tarjeta" src="assets/fondos/fondo06.webp" alt="" loading="lazy">
+      <article class="tarjeta">
+        <p class="numero-tarjeta revelar"><strong>VI</strong> Regalos</p>
+        <p class="sobrelinea revelar" data-demora="1">🎁 ✉️</p>
+        <h2 class="titulo revelar" data-demora="1" id="titulo-regalos"></h2>
+        <p class="texto revelar" data-demora="2" id="mensaje-regalos"></p>
+        <p class="dato-destacado revelar" data-demora="2" id="regalo"></p>
+      </article>
+    </section>
+    <section class="seccion foto-pantalla" data-indice="CAPÍTULO / VII">
+      <div class="foto-marco"><img src="assets/fotos/foto07.webp" alt="Quinceañera en un campo abierto" loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / VII"><defs><path id="arco-capitulo-6" d="M 20 78 Q 210 4 400 78" /></defs><text><textPath href="#arco-capitulo-6" startOffset="50%" text-anchor="middle">CAPÍTULO / VII</textPath></text></svg></div>
+      <p class="foto-leyenda" id="leyenda-foto7"></p>
+    </section>
+    <section class="seccion tarjeta-seccion">
+      <img class="fondo-tarjeta" src="assets/fondos/fondo07.webp" alt="" loading="lazy">
+      <article class="tarjeta">
+        <p class="numero-tarjeta revelar"><strong>VII</strong> El gran festejo</p>
+        <p class="sobrelinea revelar" data-demora="1">Después de la bendición</p>
+        <h2 class="titulo revelar" data-demora="1">El reino nos espera</h2>
+        <p class="dato-destacado revelar" data-demora="2" id="salon"></p>
+        <p class="dato-secundario revelar" data-demora="2" id="direccion-salon"></p>
+        <p class="dato-destacado revelar" data-demora="2" id="hora-recepcion"></p>
+        <button class="boton-demo revelar" data-demora="3" type="button" aria-disabled="true">Ver ubicación</button>
+      </article>
+    </section>
+    <section class="seccion foto-pantalla" data-indice="EPÍLOGO / VIII">
+      <div class="foto-marco"><img src="assets/fotos/foto08.webp" alt="Quinceañera junto a un castillo" loading="lazy"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="EPÍLOGO / VIII"><defs><path id="arco-capitulo-7" d="M 20 78 Q 210 4 400 78" /></defs><text><textPath href="#arco-capitulo-7" startOffset="50%" text-anchor="middle">EPÍLOGO / VIII</textPath></text></svg></div>
+      <p class="foto-leyenda" id="firma-final"></p>
     </section>
   </main>
-
   <div class="controles" aria-label="Controles de invitación">
-    <button class="control" id="boton-salir" type="button" aria-label="Volver a la portada" title="Salir">×</button>
+    <button class="control" id="boton-salir" type="button" aria-label="Salir de la invitación" title="Salir">×</button>
     <button class="control" id="boton-musica" type="button" aria-label="Reproducir música" title="Música">♫</button>
   </div>
-
   <div class="particulas" id="particulas" aria-hidden="true"></div>
   <audio id="musica" loop preload="none"></audio>
-
   <script>
     /* =========================================================
        DATOS EDITABLES DE LA INVITACIÓN
@@ -1445,8 +1284,8 @@
        únicamente demostrativos y no abren enlaces.
        ========================================================= */
     const DATOS_INVITACION = {
-      nombre: "Melisa Campbell",
-      nombreCorto: "Melisa",
+      nombre: "Meredith Campbell",
+      nombreCorto: "Meredith",
       monograma: "❦",
       frasePortada: "Entre bosques y estrellas comienza una historia inolvidable.",
       mensaje: "He esperado este día como quien espera una aventura. Hoy abro las puertas de mi historia para celebrar contigo el valor de crecer, soñar y elegir mi propio camino.",
@@ -1465,69 +1304,15 @@
       },
       vestimenta: "Formal · Tonos de bosque",
       regalo: "Lluvia de sobres",
+      tituloVestimenta: "Una noche de elegancia",
+      mensajeVestimenta: "Acompáñame con traje o vestido formal para celebrar juntos este capítulo.",
+      tituloRegalos: "Tu presencia es mi mejor regalo",
+      mensajeRegalos: "Si deseas obsequiarme un detalle, puedes hacerlo con una lluvia de sobres. Gracias por acompañarme en este día tan especial.",
       limiteConfirmacion: "9 de octubre de 2027",
       despedida: "Gracias por acompañarme a escribir este capítulo.",
-      urlSalida: "../../../index.html",
+      urlSalida: "../../../index.html#quinceaneras",
       audio: "assets/audio/musica.mp3",
-      fotos: {
-        portada: "assets/fotos/foto01.webp",
-        secciones: [
-          "assets/fotos/foto02.webp",
-          "assets/fotos/foto03.webp",
-          "assets/fotos/foto04.webp",
-          "assets/fotos/foto05.webp",
-          "assets/fotos/foto06.webp"
-        ]
-      },
-      fondos: [
-        "assets/fondos/fondo01.webp",
-        "assets/fondos/fondo02.webp",
-        "assets/fondos/fondo03.webp",
-        "assets/fondos/fondo04.webp",
-        "assets/fondos/fondo05.webp"
-      ]
-    };
-
-    const $ = selector => document.querySelector(selector);
-    const $$ = selector => [...document.querySelectorAll(selector)];
-    const entrada = $("#entrada");
-    const invitacion = $("#invitacion");
-    const musica = $("#musica");
-    const secciones = $$(".seccion");
-
-    let indiceActivo = 0;
-    let musicaActiva = false;
-    let temporizadorVista;
-    let temporizadorAjuste;
-    let intervaloParticulas;
-
-    function ajustarAltura(inmediato = false) {
-      clearTimeout(temporizadorVista);
-
-      const aplicar = () => {
-        const alto = window.visualViewport?.height || window.innerHeight;
-        document.documentElement.style.setProperty("--alto", `${Math.round(alto)}px`);
-
-        if (document.body.classList.contains("iniciada")) {
-          irA(indiceActivo, false);
-        }
-      };
-
-      if (inmediato) aplicar();
-      else temporizadorVista = setTimeout(aplicar, 90);
-    }
-
-    function irA(indice, suave = true) {
-      indiceActivo = Math.max(0, Math.min(indice, secciones.length - 1));
-      invitacion.scrollTo({
-        left: 0,
-        top: indiceActivo * invitacion.clientHeight,
-        behavior: suave ? "smooth" : "auto"
-      });
-    }
-
-    function crearPortadasLibro() {
-      const titulosPortadas = [
+      portadasLibro: [
         {
           capitulo: "Capítulo I",
           titulo: "El prólogo",
@@ -1545,27 +1330,88 @@
         },
         {
           capitulo: "Capítulo IV",
-          titulo: "El gran festejo",
+          titulo: "La elegancia",
           simbolo: "♛"
         },
         {
           capitulo: "Capítulo V",
-          titulo: "El pacto",
+          titulo: "El llamado",
           simbolo: "❦"
         }
-      ];
-
+      ,
+        { capitulo: "Capítulo VI", titulo: "Los obsequios", simbolo: "❧" },
+        { capitulo: "Capítulo VII", titulo: "El gran festejo", simbolo: "♛" }
+      ],
+      fotos: {
+        portada: "assets/fotos/foto01.webp",
+        secciones: [
+          "assets/fotos/foto02.webp",
+          "assets/fotos/foto03.webp",
+          "assets/fotos/foto04.webp",
+          "assets/fotos/foto05.webp",
+          "assets/fotos/foto06.webp",
+          "assets/fotos/foto07.webp",
+          "assets/fotos/foto08.webp"
+        ]
+      },
+      fondos: [
+        "assets/fondos/fondo01.webp",
+        "assets/fondos/fondo02.webp",
+        "assets/fondos/fondo03.webp",
+        "assets/fondos/fondo04.webp",
+        "assets/fondos/fondo05.webp",
+        "assets/fondos/fondo06.webp",
+        "assets/fondos/fondo07.webp"
+      ]
+    };
+    const $ = selector => document.querySelector(selector);
+    const $$ = selector => [...document.querySelectorAll(selector)];
+    const entrada = $("#entrada");
+    const invitacion = $("#invitacion");
+    const musica = $("#musica");
+    const secciones = $$(".seccion");
+    let indiceActivo = 0;
+    let musicaActiva = false;
+    let temporizadorVista;
+    let temporizadorAjuste;
+    let intervaloParticulas;
+    function ajustarAnchoPortada() {
+      const foto = $("#foto-portada");
+      if (!foto.naturalWidth || !foto.naturalHeight) return;
+      entrada.style.setProperty("--ancho-foto-portada", `${Math.min(foto.clientWidth, foto.clientHeight * foto.naturalWidth / foto.naturalHeight)}px`);
+    }
+    $("#foto-portada").addEventListener("load", ajustarAnchoPortada);
+    function ajustarAltura(inmediato = false) {
+      clearTimeout(temporizadorVista);
+      const aplicar = () => {
+        const alto = window.visualViewport?.height || window.innerHeight;
+        document.documentElement.style.setProperty("--alto", `${Math.round(alto)}px`);
+        ajustarAnchoPortada();
+        if (document.body.classList.contains("iniciada")) {
+          irA(indiceActivo, false);
+        }
+      };
+      if (inmediato) aplicar();
+      else temporizadorVista = setTimeout(aplicar, 90);
+    }
+    function irA(indice, suave = true) {
+      indiceActivo = Math.max(0, Math.min(indice, secciones.length - 1));
+      invitacion.scrollTo({
+        left: 0,
+        top: indiceActivo * invitacion.clientHeight,
+        behavior: suave ? "smooth" : "auto"
+      });
+    }
+    function crearPortadasLibro() {
+      const titulosPortadas = DATOS_INVITACION.portadasLibro;
       $$(".tarjeta-seccion .tarjeta").forEach((tarjeta, indice) => {
         const datos = titulosPortadas[indice];
-
         if (!datos || tarjeta.querySelector(".portada-libro")) {
           return;
         }
-
         const portada = document.createElement("div");
         portada.className = "portada-libro";
         portada.setAttribute("aria-hidden", "true");
-
         portada.innerHTML = `
       <div class="portada-frente">
         <div class="portada-contenido">
@@ -1575,26 +1421,20 @@
           <p class="portada-indicacion">La historia continúa</p>
         </div>
       </div>
-
       <div class="portada-reverso"></div>
     `;
-
         portada.addEventListener("transitionstart", evento => {
           if (evento.propertyName !== "transform") {
             return;
           }
-
           const seccion = tarjeta.closest(".tarjeta-seccion");
-
           if (
             !document.body.classList.contains("iniciada") ||
             !seccion.classList.contains("visible")
           ) {
             return;
           }
-
           clearTimeout(seccion.temporizadorTexto);
-
           seccion.temporizadorTexto = setTimeout(() => {
             if (
               document.body.classList.contains("iniciada") &&
@@ -1604,30 +1444,24 @@
             }
           }, 350);
         });
-
         tarjeta.prepend(portada);
       });
     }
-
     function crearBotonesContinuar() {
       secciones.forEach((seccion, indice) => {
         const boton = document.createElement("button");
         const esUltima = indice === secciones.length - 1;
-
         boton.className = "boton-continuar";
         boton.type = "button";
         boton.innerHTML = esUltima
           ? 'Volver al inicio <span aria-hidden="true">↑</span>'
           : 'Continuar <span aria-hidden="true">↓</span>';
-
         boton.addEventListener("click", () => {
           irA(esUltima ? 0 : indice + 1);
         });
-
         seccion.appendChild(boton);
       });
     }
-
     function cargarDatos() {
       document.title = `${DATOS_INVITACION.nombre} | Mis XV años`;
       $("#nombre-portada").textContent = DATOS_INVITACION.nombreCorto;
@@ -1645,22 +1479,25 @@
       $("#hora-recepcion").textContent = DATOS_INVITACION.recepcion.hora;
       $("#vestimenta").textContent = DATOS_INVITACION.vestimenta;
       $("#regalo").textContent = DATOS_INVITACION.regalo;
+      $("#titulo-vestimenta").textContent = DATOS_INVITACION.tituloVestimenta;
+      $("#mensaje-vestimenta").textContent = DATOS_INVITACION.mensajeVestimenta;
+      $("#titulo-regalos").textContent = DATOS_INVITACION.tituloRegalos;
+      $("#mensaje-regalos").textContent = DATOS_INVITACION.mensajeRegalos;
+      $("#leyenda-foto6").textContent = `Un nuevo capítulo · ${DATOS_INVITACION.nombreCorto}`;
+      $("#leyenda-foto7").textContent = `Mis XV · ${DATOS_INVITACION.nombreCorto}`;
       $("#limite-confirmacion").textContent = DATOS_INVITACION.limiteConfirmacion;
       $("#despedida").textContent = DATOS_INVITACION.despedida;
       $("#leyenda-foto1").textContent = `${DATOS_INVITACION.nombreCorto} · Donde nacen los sueños`;
       $("#firma-final").textContent = `La aventura continúa · ${DATOS_INVITACION.nombreCorto}`;
       musica.src = DATOS_INVITACION.audio;
       $("#foto-portada").src = DATOS_INVITACION.fotos.portada;
-
       $$(".foto-pantalla img").forEach((imagen, i) => {
         imagen.src = DATOS_INVITACION.fotos.secciones[i];
       });
-
       $$(".fondo-tarjeta").forEach((imagen, i) => {
         imagen.src = DATOS_INVITACION.fondos[i];
       });
     }
-
     function actualizarContador() {
       const diferencia = new Date(DATOS_INVITACION.fechaISO).getTime() - Date.now();
       const restante = Math.max(0, diferencia);
@@ -1668,19 +1505,16 @@
       const horas = Math.floor((restante % 86400000) / 3600000);
       const minutos = Math.floor((restante % 3600000) / 60000);
       const segundos = Math.floor((restante % 60000) / 1000);
-
       $("#dias").textContent = String(dias).padStart(2, "0");
       $("#horas").textContent = String(horas).padStart(2, "0");
       $("#minutos").textContent = String(minutos).padStart(2, "0");
       $("#segundos").textContent = String(segundos).padStart(2, "0");
     }
-
     function iniciarObservador() {
       const observador = new IntersectionObserver(entradas => {
         const visible = entradas
           .filter(item => item.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
         entradas.forEach(item => {
           /*
             Cada pantalla se activa solamente la primera vez.
@@ -1691,7 +1525,6 @@
             item.target.classList.add("visible");
           }
         });
-
         if (visible) {
           indiceActivo = secciones.indexOf(visible.target);
           visible.target.querySelectorAll(".revelar").forEach(elemento => {
@@ -1702,10 +1535,8 @@
         root: invitacion,
         threshold: [.58, .72]
       });
-
       secciones.forEach(seccion => observador.observe(seccion));
     }
-
     async function reproducirMusica() {
       try {
         await musica.play();
@@ -1717,10 +1548,8 @@
         $("#boton-musica").textContent = "♫";
       }
     }
-
     function crearDestello() {
       if (!document.body.classList.contains("iniciada")) return;
-
       const destello = document.createElement("span");
       destello.className = "destello";
       destello.style.left = `${5 + Math.random() * 90}%`;
@@ -1730,7 +1559,6 @@
       $("#particulas").appendChild(destello);
       destello.addEventListener("animationend", () => destello.remove());
     }
-
     $("#boton-entrar").addEventListener("click", () => {
       document.body.classList.add("iniciada");
       entrada.classList.add("oculta");
@@ -1741,11 +1569,9 @@
       clearInterval(intervaloParticulas);
       intervaloParticulas = setInterval(crearDestello, 1200);
     });
-
     $("#boton-salir-portada").addEventListener("click", () => {
       window.location.href = DATOS_INVITACION.urlSalida;
     });
-
     $("#boton-musica").addEventListener("click", () => {
       if (musicaActiva) {
         musica.pause();
@@ -1756,31 +1582,19 @@
         reproducirMusica();
       }
     });
-
     $("#boton-salir").addEventListener("click", () => {
-      musica.pause();
-      musica.currentTime = 0;
-      musicaActiva = false;
-      document.body.classList.remove("iniciada");
-      entrada.classList.remove("oculta");
-      $("#boton-musica").textContent = "♫";
-      indiceActivo = 0;
-      irA(0, false);
-      clearInterval(intervaloParticulas);
-      $("#particulas").replaceChildren();
+      window.location.href = DATOS_INVITACION.urlSalida;
     });
-
     window.addEventListener("resize", () => ajustarAltura());
     window.visualViewport?.addEventListener("resize", () => ajustarAltura());
-
     ajustarAltura(true);
     crearPortadasLibro();
     crearBotonesContinuar();
     cargarDatos();
+    ajustarAnchoPortada();
     actualizarContador();
     setInterval(actualizarContador, 1000);
     iniciarObservador();
   </script>
 </body>
-
 </html>
