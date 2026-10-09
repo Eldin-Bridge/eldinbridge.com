@@ -1,942 +1,3814 @@
 <!DOCTYPE html>
 
+
+
+
+
+
+
 <html lang="es">
 
+
+
+
+
+
+
 <head>
+
+
+
   <meta charset="utf-8" />
+
+
+
   <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport" />
+
+
+
   <meta content="#eee9e1" name="theme-color" />
+
+
+
   <title>Boda civil | Invitación</title>
+
+
+
   <link href="https://fonts.googleapis.com" rel="preconnect" />
+
+
+
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+
+
+
   <link
+
+
+
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap"
+
+
+
     rel="stylesheet" />
+
+
+
   <style>
+
+
+
     :root {
+
+
+
       --alto: 100dvh;
+
+
+
       --tinta: #263747;
+
+
+
       --azul: #627b8c;
+
+
+
       --papel: #f9f6f0;
+
+
+
       --borde: #c6cfd0;
+
+
+
     }
+
+
+
+
+
+
 
     * {
+
+
+
       box-sizing: border-box;
+
+
+
     }
+
+
+
+
+
+
 
     html,
-    body {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-    }
+
+
 
     body {
-      font-family: 'DM Sans', Arial, sans-serif;
-      color: var(--tinta);
-      background: #e9e5de;
+
+
+
+      margin: 0;
+
+
+
+      width: 100%;
+
+
+
+      height: 100%;
+
+
+
+      overflow: hidden;
+
+
+
     }
+
+
+
+
+
+
+
+    body {
+
+
+
+      font-family: 'DM Sans', Arial, sans-serif;
+
+
+
+      color: var(--tinta);
+
+
+
+      background: #e9e5de;
+
+
+
+    }
+
+
+
+
+
+
 
     button {
+
+
+
       font: inherit;
+
+
+
       cursor: pointer;
+
+
+
     }
+
+
+
+
+
+
 
     button:focus-visible {
+
+
+
       outline: 3px solid #94b6ca;
+
+
+
       outline-offset: 4px;
+
+
+
     }
+
+
+
+
+
+
 
     .entrada,
+
+
+
     .pantalla {
+
+
+
       position: relative;
+
+
+
       height: var(--alto);
+
+
+
       min-height: 0;
+
+
+
       overflow: hidden;
+
+
+
     }
+
+
+
+
+
+
 
     .entrada {
+
+
+
       position: fixed;
+
+
+
       inset: 0;
+
+
+
       z-index: 20;
+
+
+
       background: #46525b;
+
+
+
       transition: opacity .55s ease, visibility .55s ease;
+
+
+
     }
+
+
+
+
+
+
 
     .entrada.oculta {
+
+
+
       opacity: 0;
+
+
+
       visibility: hidden;
+
+
+
       pointer-events: none;
+
+
+
     }
+
+
+
+
+
+
 
     .entrada img,
+
+
+
     .fondo,
+
+
+
     .foto img {
+
+
+
       display: block;
+
+
+
       width: 100%;
+
+
+
       height: 100%;
+
+
+
       object-fit: cover;
+
+
+
     }
+
+
+
+
+
+
 
     .entrada img {
+
+
+
       object-position: center 48%;
+
+
+
     }
+
+
+
+
+
+
 
     .entrada::after {
+
+
+
       content: "";
+
+
+
       position: absolute;
+
+
+
       inset: 0;
+
+
+
       background: linear-gradient(180deg, rgba(15, 30, 42, .17) 0%, rgba(15, 30, 42, .03) 35%, rgba(15, 30, 42, .71) 100%);
+
+
+
       pointer-events: none;
+
+
+
     }
+
+
+
+
+
+
 
     .portada-contenido {
+
+
+
       position: absolute;
+
+
+
       z-index: 1;
+
+
+
       bottom: max(9%, calc(env(safe-area-inset-bottom) + 62px));
+
+
+
       left: 7%;
+
+
+
       width: 86%;
+
+
+
       color: white;
+
+
+
       text-align: center;
+
+
+
       text-shadow: 0 2px 15px #18242c85;
+
+
+
     }
+
+
+
+
+
+
 
     .portada-kicker,
+
+
+
     .kicker,
+
+
+
     .folio,
+
+
+
     .leyenda,
+
+
+
     .foto-numero {
+
+
+
       text-transform: uppercase;
+
+
+
       font-family: Manrope, Arial, sans-serif;
+
+
+
       font-weight: 700;
+
+
+
       letter-spacing: .22em;
+
+
+
       font-size: clamp(.59rem, 2.3vw, .75rem);
+
+
+
     }
+
+
+
+
+
+
 
     .portada-nombres {
+
+
+
       font-family: Manrope, Arial, sans-serif;
+
+
+
       font-size: clamp(2.3rem, 9vw, 4.5rem);
+
+
+
       letter-spacing: -.065em;
+
+
+
       line-height: 1.06;
+
+
+
       margin: 18px 0 12px;
+
+
+
       font-weight: 500;
+
+
+
     }
+
+
+
+
+
+
 
     .portada-frase {
+
+
+
       margin: 0 auto 23px;
+
+
+
       max-width: 32ch;
+
+
+
       line-height: 1.5;
+
+
+
       font-size: clamp(.9rem, 3vw, 1.1rem);
+
+
+
     }
+
+
+
+
+
+
 
     .entrar,
+
+
+
     .continuar,
+
+
+
     .boton-demo {
+
+
+
       min-height: 46px;
+
+
+
       border: 1px solid currentColor;
+
+
+
       border-radius: 2px;
+
+
+
       padding: 12px 24px;
+
+
+
       font-family: Manrope, Arial, sans-serif;
+
+
+
       font-size: .73rem;
+
+
+
       font-weight: 700;
+
+
+
       letter-spacing: .12em;
+
+
+
       text-transform: uppercase;
+
+
+
       transition: background .2s, transform .2s;
+
+
+
     }
+
+
+
+
+
+
 
     .entrar {
+
+
+
       color: #203546;
+
+
+
       background: #faf7f1;
+
+
+
       border-color: #faf7f1;
+
+
+
       text-shadow: none;
+
+
+
     }
+
+
+
+
+
+
 
     .entrar:hover,
+
+
+
     .continuar:hover {
+
+
+
       transform: translateY(-2px);
+
+
+
     }
+
+
+
+
+
+
 
     .salir-portada,
+
+
+
     .control {
+
+
+
       border: 1px solid #ffffff9c;
+
+
+
       color: white;
+
+
+
       background: #172b3899;
+
+
+
       backdrop-filter: blur(8px);
+
+
+
       border-radius: 50%;
+
+
+
       width: 43px;
+
+
+
       height: 43px;
+
+
+
       display: grid;
+
+
+
       place-items: center;
+
+
+
       font-size: 1.35rem;
+
+
+
       line-height: 1;
+
+
+
     }
+
+
+
+
+
+
 
     .salir-portada {
+
+
+
       position: absolute;
+
+
+
       z-index: 3;
+
+
+
       top: max(18px, env(safe-area-inset-top));
+
+
+
       left: 18px;
+
+
+
     }
+
+
+
+
+
+
 
     .invitacion {
+
+
+
       height: var(--alto);
+
+
+
       overflow-y: auto;
+
+
+
       overflow-x: hidden;
+
+
+
       scroll-snap-type: y mandatory;
+
+
+
       overscroll-behavior: contain;
+
+
+
       scrollbar-width: none;
+
+
+
     }
+
+
+
+
+
+
 
     .invitacion::-webkit-scrollbar {
+
+
+
       display: none;
+
+
+
     }
+
+
+
+
+
+
 
     .pantalla {
+
+
+
       scroll-snap-align: start;
+
+
+
       scroll-snap-stop: always;
+
+
+
       display: grid;
+
+
+
       place-items: center;
+
+
+
     }
+
+
+
+
+
+
 
     .fondo {
+
+
+
       position: absolute;
+
+
+
       inset: 0;
+
+
+
       object-position: center;
+
+
+
     }
+
+
+
+
+
+
 
     .tarjeta-pantalla::after {
+
+
+
       content: "";
+
+
+
       position: absolute;
+
+
+
       inset: 0;
+
+
+
       background: #f2eee822;
+
+
+
       pointer-events: none;
+
+
+
     }
+
+
+
+
+
+
 
     .tarjeta {
+
+
+
       position: relative;
+
+
+
       z-index: 1;
+
+
+
       width: min(86vw, 480px);
+
+
+
       max-height: calc(var(--alto) - 130px);
+
+
+
       overflow: auto;
+
+
+
       scrollbar-width: thin;
+
+
+
       background: rgba(249, 247, 242, .96);
+
+
+
       border: 1px solid #ffffffc7;
+
+
+
       box-shadow: 0 20px 65px #26374730;
+
+
+
       padding: clamp(22px, 5.2vh, 44px) clamp(22px, 6vw, 43px);
+
+
+
       text-align: center;
+
+
+
     }
+
+
+
+
+
+
 
     .tarjeta::before {
+
+
+
       content: "";
+
+
+
       position: absolute;
+
+
+
       inset: 9px;
+
+
+
       border: 1px solid #b6c2c066;
+
+
+
       pointer-events: none;
+
+
+
     }
+
+
+
+
+
+
 
     .folio {
+
+
+
       color: var(--azul);
+
+
+
       margin: 0 0 25px;
+
+
+
     }
+
+
+
+
+
+
 
     .folio::after {
+
+
+
       content: "";
+
+
+
       display: block;
+
+
+
       width: 33px;
+
+
+
       height: 1px;
+
+
+
       background: #9db1b8;
+
+
+
       margin: 15px auto 0;
+
+
+
     }
+
+
+
+
+
+
 
     .kicker {
+
+
+
       color: var(--azul);
+
+
+
       margin: 0 0 10px;
+
+
+
     }
+
+
+
+
+
+
 
     h2 {
+
+
+
       font-family: Manrope, Arial, sans-serif;
+
+
+
       font-size: clamp(1.55rem, 5.8vw, 2.45rem);
+
+
+
       font-weight: 500;
+
+
+
       line-height: 1.19;
+
+
+
       letter-spacing: -.055em;
+
+
+
       margin: 0 0 17px;
+
+
+
     }
+
+
+
+
+
+
 
     .texto {
+
+
+
       font-size: clamp(.88rem, 2.7vw, 1rem);
+
+
+
       line-height: 1.7;
+
+
+
       margin: 12px auto;
+
+
+
       max-width: 34ch;
+
+
+
     }
+
+
+
+
+
+
 
     .dato {
+
+
+
       font-size: clamp(1.02rem, 3.6vw, 1.28rem);
+
+
+
       line-height: 1.4;
+
+
+
       font-weight: 700;
+
+
+
       margin: 10px 0 3px;
+
+
+
     }
+
+
+
+
+
+
 
     .secundario {
+
+
+
       font-size: .84rem;
+
+
+
       color: #5d6b70;
+
+
+
       line-height: 1.5;
+
+
+
       margin: 5px 0;
+
+
+
     }
+
+
+
+
+
+
 
     .linea {
+
+
+
       display: block;
+
+
+
       width: 48px;
+
+
+
       height: 1px;
+
+
+
       background: #adc0c3;
+
+
+
       margin: 22px auto;
+
+
+
     }
+
+
+
+
+
+
 
     .detalle {
+
+
+
       padding: 8px 0;
+
+
+
       border-top: 1px solid #cfd7d5;
+
+
+
       font-size: .83rem;
+
+
+
       line-height: 1.5;
+
+
+
     }
+
+
+
+
+
+
 
     .detalle strong {
+
+
+
       display: block;
+
+
+
       color: #607d8e;
+
+
+
       font-family: Manrope, Arial, sans-serif;
+
+
+
       font-size: .64rem;
+
+
+
       letter-spacing: .14em;
+
+
+
       text-transform: uppercase;
+
+
+
       margin-bottom: 4px;
+
+
+
     }
+
+
+
+
+
+
 
     .contador {
+
+
+
       display: grid;
+
+
+
       grid-template-columns: repeat(4, 1fr);
+
+
+
       gap: 5px;
+
+
+
       margin: 22px 0 16px;
+
+
+
     }
+
+
+
+
+
+
 
     .contador div {
+
+
+
       border: 1px solid #b7c5c6;
+
+
+
       padding: 10px 2px;
+
+
+
     }
+
+
+
+
+
+
 
     .contador strong {
+
+
+
       display: block;
+
+
+
       font-size: 1.3rem;
+
+
+
       font-weight: 500;
+
+
+
     }
+
+
+
+
+
+
 
     .contador small {
+
+
+
       text-transform: uppercase;
+
+
+
       letter-spacing: .08em;
+
+
+
       font-size: .57rem;
+
+
+
     }
+
+
+
+
+
+
 
     .boton-demo {
+
+
+
       background: transparent;
+
+
+
       color: #72828a;
+
+
+
       border-color: #a9b5b6;
+
+
+
       cursor: default;
+
+
+
       margin-top: 12px;
+
+
+
     }
+
+
+
+
+
+
 
     .foto {
+
+
+
       background: #243544;
+
+
+
     }
+
+
+
+
+
+
 
     .foto img {
+
+
+
       position: absolute;
+
+
+
       inset: 0;
+
+
+
       object-position: center 45%;
+
+
+
     }
+
+
+
+
+
+
 
     .foto::after {
+
+
+
       content: "";
+
+
+
       position: absolute;
+
+
+
       inset: 0;
+
+
+
       background: linear-gradient(180deg, #182a3645 0%, transparent 30%, transparent 55%, #1427349c 100%);
+
+
+
       pointer-events: none;
+
+
+
     }
+
+
+
+
+
+
 
     .foto-numero,
+
+
+
     .leyenda {
+
+
+
       position: absolute;
+
+
+
       z-index: 1;
+
+
+
       color: white;
+
+
+
       text-shadow: 0 2px 12px #102532ae;
+
+
+
     }
+
+
+
+
+
+
 
     .foto-numero {
+
+
+
       top: max(75px, calc(env(safe-area-inset-top) + 66px));
+
+
+
       left: 7%;
+
+
+
     }
+
+
+
+
+
+
 
     .leyenda {
+
+
+
       bottom: 112px;
+
+
+
       left: 9%;
+
+
+
       right: 9%;
+
+
+
       text-align: center;
+
+
+
       line-height: 1.6;
+
+
+
     }
+
+
+
+
+
+
 
     .continuar {
+
+
+
       position: absolute;
+
+
+
       z-index: 5;
+
+
+
       left: 50%;
+
+
+
       bottom: max(20px, calc(env(safe-area-inset-bottom) + 15px));
+
+
+
       transform: translateX(-50%);
+
+
+
       width: max-content;
+
+
+
       max-width: 84%;
+
+
+
       color: #263747;
+
+
+
       background: #f8f7f1ef;
+
+
+
       border-color: #c1cdcf;
+
+
+
       box-shadow: 0 5px 20px #12263824;
+
+
+
     }
+
+
+
+
+
+
 
     .continuar:hover {
+
+
+
       transform: translate(-50%, -2px);
+
+
+
     }
+
+
+
+
+
+
 
     .controles {
+
+
+
       position: fixed;
+
+
+
       z-index: 12;
+
+
+
       inset: max(18px, env(safe-area-inset-top)) 18px auto;
+
+
+
       pointer-events: none;
+
+
+
       display: flex;
+
+
+
       justify-content: space-between;
+
+
+
       opacity: 0;
+
+
+
       transition: opacity .35s;
+
+
+
     }
+
+
+
+
+
+
 
     body.iniciada .controles {
+
+
+
       opacity: 1;
+
+
+
     }
+
+
+
+
+
+
 
     .controles .control {
+
+
+
       pointer-events: auto;
+
+
+
     }
+
+
+
+
+
+
 
     .control.musica {
+
+
+
       font-size: 1.1rem;
+
+
+
     }
+
+
+
+
+
+
 
     .pantalla .tarjeta,
+
+
+
     .pantalla .leyenda {
+
+
+
       opacity: 0;
+
+
+
       transform: translateY(18px);
+
+
+
       transition: opacity .55s ease, transform .55s ease;
+
+
+
     }
+
+
+
+
+
+
 
     .pantalla.visible .tarjeta,
+
+
+
     .pantalla.visible .leyenda {
+
+
+
       opacity: 1;
+
+
+
       transform: none;
+
+
+
     }
+
+
+
+
+
+
 
     @media(max-height:650px) {
+
+
+
       .tarjeta {
+
+
+
         max-height: calc(var(--alto) - 105px);
+
+
+
         padding: 17px 22px;
+
+
+
       }
+
+
+
+
+
+
 
       .folio {
+
+
+
         margin-bottom: 10px;
+
+
+
       }
+
+
+
+
+
+
 
       .linea {
+
+
+
         margin: 12px auto;
+
+
+
       }
+
+
+
+
+
+
 
       .texto {
+
+
+
         line-height: 1.45;
+
+
+
         margin: 7px auto;
+
+
+
       }
 
+
+
+
+
+
+
       .leyenda {
+
+
+
         bottom: 88px;
+
+
+
       }
+
+
+
     }
+
+
+
+
+
+
 
     @media(min-width:700px) {
 
+
+
+
+
+
+
       .entrada,
+
+
+
       .pantalla,
+
+
+
       .invitacion {
+
+
+
         max-width: 520px;
+
+
+
         margin-inline: auto;
+
+
+
       }
+
+
+
+
+
+
 
       .entrada {
+
+
+
         left: 50%;
+
+
+
         right: auto;
+
+
+
         width: 520px;
+
+
+
         transform: translateX(-50%);
+
+
+
       }
 
+
+
+
+
+
+
       .controles {
+
+
+
         left: 50%;
+
+
+
         right: auto;
+
+
+
         width: min(520px, 100%);
+
+
+
         transform: translateX(-50%);
+
+
+
       }
+
+
+
     }
+
+
+
+
+
+
 
     @media(prefers-reduced-motion:reduce) {
 
+
+
+
+
+
+
       *,
+
+
+
       *::before,
+
+
+
       *::after {
+
+
+
         scroll-behavior: auto !important;
+
+
+
         animation-duration: .01ms !important;
+
+
+
         transition-duration: .01ms !important;
+
+
+
       }
+
+
+
+
+
+
 
       .pantalla .tarjeta,
+
+
+
       .pantalla .leyenda {
+
+
+
         opacity: 1;
+
+
+
         transform: none;
+
+
+
       }
+
+
+
     }
+
+
+
+
+
+
 
     .iconos {
+
+
+
       display: flex;
+
+
+
       justify-content: center;
+
+
+
       align-items: center;
+
+
+
       gap: 16px;
+
+
+
       margin: 18px 0;
+
+
+
     }
+
+
+
+
+
+
 
     .iconos img {
+
+
+
       width: var(--icono-tamano, 52px);
+
+
+
       height: var(--icono-tamano, 52px);
+
+
+
       object-fit: contain;
+
+
+
     }
+
+
+
+
+
+
 
     .boton-demo:not(:disabled) {
+
+
+
       cursor: pointer;
+
+
+
     }
+
+
+
+
+
+
 
     @media(min-width:700px) {
+
+
+
       :root {
+
+
+
         --ancho-foto: min(100vw, calc(var(--alto) * 2 / 3));
+
+
+
       }
+
+
+
+
+
+
 
       .entrada,
+
+
+
       .pantalla,
+
+
+
       .invitacion {
+
+
+
         max-width: var(--ancho-foto);
+
+
+
       }
+
+
+
+
+
+
 
       .entrada {
+
+
+
         width: var(--ancho-foto);
+
+
+
       }
+
+
+
+
+
+
 
       .controles {
+
+
+
         width: var(--ancho-foto);
+
+
+
         padding-inline: 18px;
+
+
+
       }
+
+
+
+
+
+
 
       .entrada img,
+
+
+
       .foto img {
+
+
+
         object-fit: contain;
+
+
+
         object-position: center;
+
+
+
       }
+
+
+
+
+
+
 
       .portada-contenido {
+
+
+
         left: 7%;
+
+
+
         width: 86%;
+
+
+
       }
+
+
+
+
+
+
 
       .portada-nombres {
+
+
+
         font-size: clamp(2rem, calc(var(--alto) * .065), 4.5rem);
+
+
+
       }
+
+
+
+
+
+
 
       .tarjeta {
+
+
+
         width: min(86%, 480px);
+
+
+
       }
+
+
+
     }
+
+
+
+
+
+
 
     #selector-calendarios {
+
+
+
       padding: 0;
+
+
+
       border: 1px solid #b9a47a;
+
+
+
       border-radius: 22px;
+
+
+
       position: fixed;
+
+
+
       top: auto;
+
+
+
       bottom: 0;
+
+
+
       left: 0;
+
+
+
       right: 0;
+
+
+
       margin: 0 auto;
+
+
+
       box-sizing: border-box;
+
+
+
       width: min(100%, 480px);
+
+
+
       max-width: 100%;
+
+
+
       max-height: 85vh;
+
+
+
       max-height: 85dvh;
+
+
+
       overflow-y: auto;
+
+
+
       border-radius: 22px 22px 0 0;
+
+
+
       color: #333;
+
+
+
       background: #fffaf1;
+
+
+
     }
+
+
+
+
+
+
 
     #selector-calendarios .panel-calendarios {
+
+
+
       padding-bottom: max(24px, env(safe-area-inset-bottom));
+
+
+
     }
+
+
+
+
+
+
 
     #selector-calendarios::backdrop {
+
+
+
       background: rgba(0, 0, 0, .65);
+
+
+
     }
+
+
+
+
+
+
 
     .panel-calendarios {
+
+
+
       position: relative;
+
+
+
       padding: 32px 24px 24px;
+
+
+
     }
+
+
+
+
+
+
 
     .panel-calendarios h2 {
+
+
+
       margin: 12px 0;
+
+
+
       font: inherit;
+
+
+
       font-size: 24px;
+
+
+
     }
+
+
+
+
+
+
 
     .panel-calendarios p {
+
+
+
       font-size: 15px;
+
+
+
       line-height: 1.5;
+
+
+
     }
+
+
+
+
+
+
 
     .panel-calendarios [data-calendario] {
+
+
+
       width: 100%;
+
+
+
       margin-top: 12px;
+
+
+
       padding: 16px;
+
+
+
       border: 1px solid #b9a47a;
+
+
+
       border-radius: 12px;
+
+
+
       background: #f3ead8;
+
+
+
       color: #333;
+
+
+
       font: inherit;
+
+
+
       cursor: pointer;
+
+
+
     }
+
+
+
+
+
+
 
     .panel-calendarios small {
+
+
+
       display: block;
+
+
+
       margin-top: 5px;
+
+
+
       font-size: 12px;
+
+
+
     }
+
+
+
+
+
+
 
     #cerrar-calendarios {
+
+
+
       position: absolute;
+
+
+
       right: 12px;
+
+
+
       top: 8px;
+
+
+
       background: transparent;
+
+
+
       border: 0;
+
+
+
       padding: 6px 12px;
+
+
+
       font-size: 26px;
+
+
+
       cursor: pointer;
+
+
+
     }
+
+
+
+
+
+
 
     [data-control][aria-disabled="true"],
+
+
+
     .panel-calendarios button:disabled {
+
+
+
       cursor: default;
+
+
+
     }
-  </style>
+
+
+
+
+
+    /* Nombres arriba, dentro de la foto, en composición diagonal. */
+
+    .entrada > .portada-nombres {
+
+      position:absolute; z-index:2;
+
+      top:max(82px,var(--nombres-arriba,10%)); left:19%; width:62%;
+
+      margin:0; color:#fff; line-height:.95;
+
+      font-size:clamp(2rem,min(9vw,calc(var(--alto) * .075)),4.5rem);
+
+      transform:rotate(var(--nombres-inclinacion,-8deg));
+
+      transform-origin:center; text-shadow:0 2px 15px #18242c85;
+      display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); column-gap:.35em;
+
+    }
+
+    .portada-nombres span { display:block; }
+
+    .portada-nombres .nombre-izq { grid-column:1; grid-row:1; justify-self:end; text-align:right; white-space:nowrap; }
+
+    .portada-nombres .union { grid-column:2; grid-row:2; justify-self:center; text-align:center; font-size:.65em; margin:-2px 0; }
+
+    .portada-nombres .nombre-der { grid-column:3; grid-row:3; justify-self:start; text-align:left; white-space:nowrap; }
+
+
+
+</style>
+
+
+
 </head>
 
+
+
+
+
+
+
 <body>
+
+
+
   <section aria-label="Portada de la boda civil" class="entrada" id="entrada">
+
+
+
     <img alt="La pareja después de su boda civil" fetchpriority="high" src="assets/fotos/foto06.webp" />
+
+
+
     <button aria-label="Salir" class="salir-portada" id="salir-portada" title="Salir" type="button">×</button>
+
+
+
+<h1 class="portada-nombres" id="portada-nombres"></h1>
+
     <div class="portada-contenido">
+
+
+
       <p class="portada-kicker" data-texto="texto1">Nuestra boda civil</p>
-      <h1 class="portada-nombres" id="portada-nombres"></h1>
+
+
+
+
+
+
+
       <p class="portada-frase" id="portada-frase"></p>
+
+
+
       <button class="entrar" id="entrar" type="button">Ver invitación ↓</button>
+
+
+
     </div>
+
+
+
   </section>
+
+
+
   <main aria-label="Invitación de boda civil" class="invitacion" id="invitacion">
+
+
+
     <section class="pantalla tarjeta-pantalla"><img alt="" class="fondo" fetchpriority="high"
+
+
+
         src="assets/fondos/fondo01.webp" />
+
+
+
       <article class="tarjeta">
+
+
+
         <p class="folio" data-texto="texto2">Acta 01 / La decisión</p>
+
+
+
         <p class="kicker" data-texto="texto3">Un día para nosotros</p>
+
+
+
         <h2 id="nombres-presentacion"></h2>
+
+
+
         <p class="texto" id="mensaje"></p><span class="linea"></span>
+
+
+
         <p class="texto" data-texto="texto4">Un momento pequeño, compartido con las personas que hacen grande nuestra
+
+
+
           historia.</p>
+
+
+
       </article>
+
+
+
     </section>
+
+
+
     <section class="pantalla foto"><img alt="La pareja firma el acta ante sus cuatro testigos" loading="lazy"
+
+
+
         src="assets/fotos/foto01.webp" />
+
+
+
       <p class="foto-numero">01 / La firma</p>
+
+
+
       <p class="leyenda" data-texto="texto5">Un sí escrito entre dos</p>
+
+
+
     </section>
+
+
+
     <section class="pantalla tarjeta-pantalla"><img alt="" class="fondo" loading="lazy"
+
+
+
         src="assets/fondos/fondo02.webp" />
+
+
+
       <article class="tarjeta">
+
+
+
         <p class="folio" data-texto="texto6">Acta 02 / La ceremonia</p>
+
+
+
         <p class="kicker" data-texto="texto7">Nos acompañas</p>
+
+
+
         <h2 data-texto="texto8">El momento del sí</h2>
+
+
+
         <p class="texto" data-texto="texto9">Nos reuniremos para celebrar nuestra unión en una ceremonia civil íntima.
+
+
+
         </p><span class="linea"></span>
+
+
+
         <p class="dato" id="registro"></p>
+
+
+
         <p class="secundario" id="direccion"></p>
+
+
+
         <p class="dato" id="hora"></p><button class="boton-demo" id="mapa-ceremonia" type="button">Ubicación de la
+
+
+
           ceremonia</button>
+
+
+
       </article>
+
+
+
     </section>
+
+
+
     <section class="pantalla foto"><img alt="La pareja sale del registro civil" loading="lazy"
+
+
+
         src="assets/fotos/foto02.webp" />
+
+
+
       <p class="foto-numero">02 / Juntos</p>
+
+
+
       <p class="leyenda" data-texto="texto10">El primer paso de esta nueva etapa</p>
+
+
+
     </section>
+
+
+
     <section class="pantalla tarjeta-pantalla"><img alt="" class="fondo" loading="lazy"
+
+
+
         src="assets/fondos/fondo03.webp" />
+
+
+
       <article class="tarjeta">
+
+
+
         <p class="folio" data-texto="texto11">Acta 03 / La fecha</p>
+
+
+
         <p class="kicker" data-texto="texto12">Reserva este día</p>
+
+
+
         <h2 id="fecha-texto"></h2>
+
+
+
         <p class="texto" data-texto="texto13">Falta poco para encontrarnos y celebrar contigo.</p>
+
+
+
         <div aria-label="Cuenta regresiva" class="contador">
+
+
+
           <div><strong id="dias">00</strong><small>Días</small></div>
+
+
+
           <div><strong id="horas">00</strong><small>Horas</small></div>
+
+
+
           <div><strong id="minutos">00</strong><small>Min</small></div>
+
+
+
           <div><strong id="segundos">00</strong><small>Seg</small></div>
+
+
+
         </div><button class="boton-demo" id="agregar-calendario" type="button">Agregar al calendario</button>
+
+
+
       </article>
+
+
+
     </section>
+
+
+
     <section class="pantalla foto"><img alt="La pareja intercambia los anillos" loading="lazy"
+
+
+
         src="assets/fotos/foto03.webp" />
+
+
+
       <p class="foto-numero">03 / La promesa</p>
+
+
+
       <p class="leyenda" data-texto="texto14">Elegirnos cada día</p>
+
+
+
     </section>
+
+
+
     <section class="pantalla tarjeta-pantalla"><img alt="" class="fondo" loading="lazy"
+
+
+
         src="assets/fondos/fondo04.webp" />
+
+
+
       <article class="tarjeta">
+
+
+
         <p class="folio" data-texto="texto15">Acta 04 / Los detalles</p>
+
+
+
         <p class="kicker" data-texto="texto16">Para celebrar cómodos</p>
+
+
+
         <h2 data-texto="texto17">Código de vestimenta</h2>
+
+
+
         <p class="texto" data-texto="texto18">Queremos que disfrutes este momento con nosotros. Te sugerimos venir con:
+
+
+
         </p><span class="linea"></span>
+
+
+
         <div class="iconos" id="iconos-vestimenta"></div>
+
+
+
         <p class="dato" id="vestimenta"></p>
+
+
+
       </article>
+
+
+
     </section>
+
+
+
     <section class="pantalla foto"><img alt="La pareja sonríe con sus cuatro amigos" loading="lazy"
+
+
+
         src="assets/fotos/foto04.webp" />
+
+
+
       <p class="foto-numero">04 / Los nuestros</p>
+
+
+
       <p class="leyenda" data-texto="texto19">Con quienes siempre han estado cerca</p>
+
+
+
     </section>
+
+
+
     <section class="pantalla tarjeta-pantalla"><img alt="" class="fondo" loading="lazy"
+
+
+
         src="assets/fondos/fondo05.webp" />
+
+
+
       <article class="tarjeta">
+
+
+
         <p class="folio" data-texto="texto20">Acta 05 / Tu respuesta</p>
+
+
+
         <p class="kicker" data-texto="texto21">Nos hará ilusión verte</p>
+
+
+
         <h2 data-texto="texto22">¿Nos acompañas?</h2>
+
+
+
         <p class="texto" data-texto="texto23">Confirma tu asistencia antes del</p>
+
+
+
         <p class="dato" id="limite"></p><button class="boton-demo" id="confirmar-whatsapp" type="button">Confirmar
+
+
+
           asistencia</button><span class="linea"></span>
+
+
+
         <p class="texto" id="despedida"></p>
+
+
+
       </article>
+
+
+
     </section>
+
+
+
     <section class="pantalla foto"><img alt="La pareja camina de la mano" loading="lazy"
+
+
+
         src="assets/fotos/foto05.webp" />
+
+
+
       <p class="foto-numero">05 / Lo que sigue</p>
+
+
+
       <p class="leyenda" id="firma"></p>
+
+
+
     </section>
+
+
+
     <section class="pantalla tarjeta-pantalla"><img alt="" class="fondo" loading="lazy"
+
+
+
         src="assets/fondos/fondo06.webp" />
+
+
+
       <article class="tarjeta">
+
+
+
         <p class="folio" data-texto="texto24">Acta 06 / Un detalle</p>
+
+
+
         <p class="kicker" data-texto="texto25">Con todo nuestro cariño</p>
+
+
+
         <h2 data-texto="texto26">Regalo sugerido</h2>
+
+
+
         <div class="iconos" id="iconos-regalos"></div>
+
+
+
         <p class="dato" id="regalo"></p>
+
+
+
         <p class="texto" id="mensaje-regalo"></p>
+
+
+
       </article>
+
+
+
     </section>
+
+
+
     <section class="pantalla foto"><img alt="La pareja celebra su unión" loading="lazy"
+
+
+
         src="assets/fotos/foto08.webp" />
+
+
+
       <p class="foto-numero">06 / Compartir</p>
+
+
+
       <p class="leyenda" data-texto="texto27">Los pequeños detalles hacen grande este día</p>
+
+
+
     </section>
+
+
+
     <section class="pantalla tarjeta-pantalla"><img alt="" class="fondo" loading="lazy"
+
+
+
         src="assets/fondos/fondo07.webp" />
+
+
+
       <article class="tarjeta">
+
+
+
         <p class="folio" data-texto="texto28">Acta 07 / La celebración</p>
+
+
+
         <p class="kicker" data-texto="texto29">Sigamos celebrando</p>
+
+
+
         <h2 data-texto="texto30">Ubicación del evento</h2>
+
+
+
         <p class="texto" id="mensaje-evento"></p><span class="linea"></span>
+
+
+
         <p class="dato" id="evento-lugar"></p>
+
+
+
         <p class="secundario" id="evento-direccion"></p>
+
+
+
         <p class="dato" id="evento-hora"></p><button class="boton-demo" id="mapa-evento" type="button">Ubicación del
+
+
+
           evento</button>
+
+
+
       </article>
+
+
+
     </section>
+
+
+
     <section class="pantalla foto"><img alt="La pareja comparte un momento de su boda civil" loading="lazy"
+
+
+
         src="assets/fotos/foto07.webp" />
+
+
+
       <p class="foto-numero">07 / Nuestra historia</p>
+
+
+
       <p class="leyenda" data-texto="texto31">Gracias por celebrar este comienzo con nosotros</p>
+
+
+
     </section>
+
+
+
   </main>
+
+
+
   <div aria-label="Controles de invitación" class="controles"><button aria-label="Salir al listado de bodas"
+
+
+
       class="control" id="salir" title="Salir" type="button">×</button><button aria-label="Reproducir música"
+
+
+
       class="control musica" id="musica-boton" title="Música" type="button">♫</button></div>
+
+
+
   <dialog aria-labelledby="titulo-calendarios" id="selector-calendarios">
+
+
+
     <div class="panel-calendarios">
+
+
+
       <button aria-label="Cerrar calendarios" id="cerrar-calendarios" type="button">×</button>
+
+
+
       <h2 id="titulo-calendarios">Agrega el evento a tu calendario</h2>
+
+
+
       <p id="aviso-calendario" role="status"></p>
+
+
+
       <button data-calendario="google" type="button"><span aria-hidden="true">📅</span> Calendario Google</button>
+
+
+
       <button data-calendario="outlook" type="button"><span aria-hidden="true">📆</span> Outlook / Office 365
+
+
+
         <small>Importar archivo de calendario</small></button>
+
+
+
       <button data-calendario="apple" type="button"><span aria-hidden="true">🍎</span> Calendario Apple <small>Importar
+
+
+
           archivo de calendario</small></button>
+
+
+
     </div>
+
+
+
   </dialog>
+
+
+
   <audio id="musica" loop="" preload="none"></audio>
+
+
+
   <script>
+
+
+
     /* DATOS EDITABLES: cambia únicamente este bloque.
+
+
+
        true permite la acción; false conserva el botón visible.
+
+
+
        Completa lugar/horario del evento, WhatsApp e iconos antes de activar. */
+
+
+
     const DATOS_INVITACION = {
+
+
+
       "botones": {
+
+
+
         "abrirInvitacion": true,
+
+
+
         "salir": true,
+
+
+
         "musica": true,
+
+
+
         "continuar": true,
+
+
+
         "volverInicio": true,
+
+
+
         "ubicacionCeremonia": false,
+
+
+
         "ubicacionEvento": false,
+
+
+
         "confirmacionWhatsApp": false,
+
+
+
         "selectorCalendarios": true,
+
+
+
         "agregarCalendario": false
+
+
+
       },
+
+
+
       "pareja": "Lucía & Mateo",
+
+      "nombresPortada": { "inclinacion": -8, "arriba": 10 },
+
+
+
       "frasePortada": "Un sí sencillo, rodeados de quienes queremos.",
+
+
+
       "mensaje": "Decidimos unir nuestras vidas en una ceremonia cercana, honesta y llena de cariño. Queremos compartir contigo este día especial.",
+
+
+
       "fechaISO": "2027-04-24T12:00:00-06:00",
+
+
+
       "fechaTexto": "24 · ABRIL · 2027",
+
+
+
       "ceremonia": {
+
+
+
         "lugar": "Oficialía del Registro Civil",
+
+
+
         "direccion": "Centro, Monterrey, Nuevo León",
+
+
+
         "hora": "12:00 p. m.",
+
+
+
         "mapa": "https://maps.google.com/"
+
+
+
       },
+
+
+
       "evento": {
+
+
+
         "lugar": "Lugar de la celebración",
+
+
+
         "direccion": "Dirección del evento",
+
+
+
         "hora": "Horario por confirmar",
+
+
+
         "mapa": "https://maps.google.com/"
+
+
+
       },
+
+
+
       "vestimenta": "Semi formal · Tonos claros",
+
+
+
       "iconosVestimenta": {
+
+
+
         "traje": "../../../assets/iconos/semiformal_b01.webp",
+
+
+
         "vestido": "../../../assets/iconos/semiformal_b02.webp",
+
+
+
         "tamano": 52
+
+
+
       },
+
+
+
       "regalo": "Lluvia de sobres",
+
+
+
       "mensajeRegalo": "Tu compañía es nuestro mejor regalo. Si deseas tener un detalle con nosotros, te sugerimos un sobre.",
+
+
+
       "mensajeEvento": "Después de la ceremonia, compartiremos un momento para celebrar juntos.",
+
+
+
       "iconosRegalos": {
+
+
+
         "regalo": "../../../assets/iconos/regalo.webp",
+
+
+
         "sobre": "../../../assets/iconos/sobre_w.webp",
+
+
+
         "tamano": 52
+
+
+
       },
+
+
+
       "limiteConfirmacion": "10 de abril de 2027",
+
+
+
       "despedida": "Gracias por ser parte de nuestra historia.",
+
+
+
       "whatsapp": {
+
+
+
         "numero": "5210000000000",
+
+
+
         "mensaje": "Hola, quiero confirmar mi asistencia a la boda de Lucía y Mateo."
+
+
+
       },
+
+
+
       "calendario": {
+
+
+
         "inicio": "2027-04-24T12:00:00-06:00",
+
+
+
         "fin": "2027-04-24T13:00:00-06:00"
+
+
+
       },
+
+
+
       "urlSalida": "../../../index.html#bodas",
+
+
+
       "audio": "assets/audio/musica.mp3",
+
+
+
       "textos": {
+
+
+
         "texto1": "Nuestra boda civil",
+
+
+
         "texto2": "Acta 01 / La decisión",
+
+
+
         "texto3": "Un día para nosotros",
+
+
+
         "texto4": "Un momento pequeño, compartido con las personas que hacen grande nuestra historia.",
+
+
+
         "texto5": "Un sí escrito entre dos",
+
+
+
         "texto6": "Acta 02 / La ceremonia",
+
+
+
         "texto7": "Nos acompañas",
+
+
+
         "texto8": "El momento del sí",
+
+
+
         "texto9": "Nos reuniremos para celebrar nuestra unión en una ceremonia civil íntima.",
+
+
+
         "texto10": "El primer paso de esta nueva etapa",
+
+
+
         "texto11": "Acta 03 / La fecha",
+
+
+
         "texto12": "Reserva este día",
+
+
+
         "texto13": "Falta poco para encontrarnos y celebrar contigo.",
+
+
+
         "texto14": "Elegirnos cada día",
+
+
+
         "texto15": "Acta 04 / Los detalles",
+
+
+
         "texto16": "Para celebrar cómodos",
+
+
+
         "texto17": "Código de vestimenta",
+
+
+
         "texto18": "Queremos que disfrutes este momento con nosotros. Te sugerimos venir con:",
+
+
+
         "texto19": "Con quienes siempre han estado cerca",
+
+
+
         "texto20": "Acta 05 / Tu respuesta",
+
+
+
         "texto21": "Nos hará ilusión verte",
+
+
+
         "texto22": "¿Nos acompañas?",
+
+
+
         "texto23": "Confirma tu asistencia antes del",
+
+
+
         "texto24": "Acta 06 / Un detalle",
+
+
+
         "texto25": "Con todo nuestro cariño",
+
+
+
         "texto26": "Regalo sugerido",
+
+
+
         "texto27": "Los pequeños detalles hacen grande este día",
+
+
+
         "texto28": "Acta 07 / La celebración",
+
+
+
         "texto29": "Sigamos celebrando",
+
+
+
         "texto30": "Ubicación del evento",
+
+
+
         "texto31": "Gracias por celebrar este comienzo con nosotros"
+
+
+
       },
+
+
+
       "fotos": {
+
+
+
         "portada": "assets/fotos/foto06.webp",
+
+
+
         "secciones": [
+
+
+
           "assets/fotos/foto01.webp",
+
+
+
           "assets/fotos/foto02.webp",
+
+
+
           "assets/fotos/foto03.webp",
+
+
+
           "assets/fotos/foto04.webp",
+
+
+
           "assets/fotos/foto05.webp",
+
+
+
           "assets/fotos/foto08.webp",
+
+
+
           "assets/fotos/foto07.webp"
+
+
+
         ]
+
+
+
       },
+
+
+
       "fondos": [
+
+
+
         "assets/fondos/fondo01.webp",
+
+
+
         "assets/fondos/fondo02.webp",
+
+
+
         "assets/fondos/fondo03.webp",
+
+
+
         "assets/fondos/fondo04.webp",
+
+
+
         "assets/fondos/fondo05.webp",
+
+
+
         "assets/fondos/fondo06.webp",
+
+
+
         "assets/fondos/fondo07.webp"
+
+
+
       ]
+
+
+
     };
+
+
+
     const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+
+
+
     const visor = $('#invitacion'), pantallas = $$('.pantalla'), audio = $('#musica');
+
+
+
     let indice = 0, iniciado = false, ajustando = false;
+
+
+
     const campos = { '#portada-nombres': 'pareja', '#portada-frase': 'frasePortada', '#nombres-presentacion': 'pareja', '#mensaje': 'mensaje', '#fecha-texto': 'fechaTexto', '#registro': 'ceremonia.lugar', '#direccion': 'ceremonia.direccion', '#hora': 'ceremonia.hora', '#vestimenta': 'vestimenta', '#limite': 'limiteConfirmacion', '#despedida': 'despedida' };
+
+
+
     for (const [selector, ruta] of Object.entries(campos)) $(selector).textContent = ruta.split('.').reduce((obj, clave) => obj[clave], DATOS_INVITACION);
+
+
+
+    const tituloPortada=$('#portada-nombres');
+
+    const nombresPortada=DATOS_INVITACION.pareja.split(/\s*&\s*/);
+
+    tituloPortada.replaceChildren();
+
+    tituloPortada.setAttribute('aria-label',DATOS_INVITACION.pareja);
+
+    [nombresPortada[0],'&',nombresPortada.slice(1).join(' & ')].forEach((nombre,i)=>{
+
+      const span=document.createElement('span');span.className=['nombre-izq','union','nombre-der'][i];
+
+      span.textContent=nombre;tituloPortada.append(span);
+
+    });
+
+    tituloPortada.style.setProperty('--nombres-inclinacion',DATOS_INVITACION.nombresPortada.inclinacion+'deg');
+
+    tituloPortada.style.setProperty('--nombres-arriba',DATOS_INVITACION.nombresPortada.arriba+'%');
+
     $('#firma').textContent = `Todo comienza aquí · ${DATOS_INVITACION.pareja}`;
+
+
+
     document.title = `${DATOS_INVITACION.pareja} | Boda civil`;
+
+
+
     audio.src = DATOS_INVITACION.audio;
+
+
+
     function irA(n, suave = true) { indice = Math.max(0, Math.min(n, pantallas.length - 1)); visor.scrollTo({ top: pantallas[indice].offsetTop, behavior: suave && !matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'instant' }); pantallas[indice].classList.add('visible'); }
+
+
+
     pantallas.forEach((pantalla, n) => { const boton = document.createElement('button'); boton.className = 'continuar'; boton.type = 'button'; boton.textContent = n === pantallas.length - 1 ? 'Volver al inicio ↑' : 'Continuar ↓'; boton.dataset.control = n === pantallas.length - 1 ? 'volverInicio' : 'continuar'; boton.addEventListener('click', () => irA(n === pantallas.length - 1 ? 0 : n + 1)); pantalla.append(boton); });
+
+
+
     const observador = new IntersectionObserver(entradas => { for (const e of entradas) { e.target.classList.toggle('visible', e.isIntersecting); if (e.isIntersecting) { if (e.intersectionRatio > .5) indice = pantallas.indexOf(e.target); } } }, { root: visor, threshold: [.1, .55] });
+
+
+
     pantallas.forEach(p => observador.observe(p));
+
+
+
     function ajustar() { const alto = Math.round(window.visualViewport?.height || window.innerHeight); document.documentElement.style.setProperty('--alto', `${alto}px`); if (iniciado && !ajustando) { ajustando = true; requestAnimationFrame(() => { irA(indice, false); ajustando = false; }); } }
+
+
+
     ajustar(); window.addEventListener('resize', ajustar); window.visualViewport?.addEventListener('resize', ajustar);
+
+
+
     $('#entrar').addEventListener('click', () => { iniciado = true; document.body.classList.add('iniciada'); $('#entrada').classList.add('oculta'); irA(0, false); });
+
+
+
     function salir() { audio.pause(); window.location.href = DATOS_INVITACION.urlSalida; }
+
+
+
     $('#salir').addEventListener('click', salir); $('#salir-portada').addEventListener('click', salir);
+
+
+
     $('#musica-boton').addEventListener('click', async () => { if (!audio.paused) { audio.pause(); $('#musica-boton').textContent = '♫'; $('#musica-boton').setAttribute('aria-label', 'Reproducir música'); return; } try { await audio.play(); $('#musica-boton').textContent = 'Ⅱ'; $('#musica-boton').setAttribute('aria-label', 'Pausar música'); } catch { $('#musica-boton').textContent = '♫'; } });
+
+
+
     function contador() { const segundos = Math.max(0, Math.floor((new Date(DATOS_INVITACION.fechaISO).getTime() - Date.now()) / 1000)); const valores = [Math.floor(segundos / 86400), Math.floor(segundos / 3600) % 24, Math.floor(segundos / 60) % 60, segundos % 60];['dias', 'horas', 'minutos', 'segundos'].forEach((id, i) => $('#' + id).textContent = String(valores[i]).padStart(2, '0')); } contador(); setInterval(contador, 1000);
+
+
+
     function datosCalendario() {
+
+
+
       const inicio = new Date(DATOS_INVITACION.calendario.inicio);
+
+
+
       const fin = new Date(DATOS_INVITACION.calendario.fin);
+
+
+
       if (!Number.isFinite(inicio.getTime()) || !Number.isFinite(fin.getTime()) || fin <= inicio) {
+
+
+
         throw new Error("Revisa inicio y fin en DATOS_INVITACION.calendario.");
+
+
+
       }
+
+
+
       return {
+
+
+
         inicio, fin, titulo: `Boda civil de ${DATOS_INVITACION.pareja}`,
+
+
+
         descripcion: DATOS_INVITACION.frasePortada,
+
+
+
         lugar: `${DATOS_INVITACION.ceremonia.lugar}, ${DATOS_INVITACION.ceremonia.direccion}`
+
+
+
       };
+
+
+
     }
+
+
+
     function fechaCalendario(fecha) {
       return fecha.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
     }
@@ -962,75 +3834,291 @@
         "END:VEVENT", "END:VCALENDAR"].map(plegar).join("\r\n") + "\r\n";
     }
     function prepararCalendario() {
+
+
+
       const boton = $("#agregar-calendario");
+
+
+
       boton.removeAttribute("href");
+
+
+
       boton.removeAttribute("target");
+
+
+
       boton.removeAttribute("rel");
+
+
+
       boton.setAttribute("role", "button");
+
+
+
       boton.tabIndex = 0;
+
+
+
       boton.setAttribute("aria-haspopup", "dialog");
+
+
+
       const dialogo = $("#selector-calendarios");
+
+
+
       const abrir = () => {
+
+
+
         const activo = DATOS_INVITACION.botones.agregarCalendario === true;
+
+
+
         $("#aviso-calendario").textContent = activo
+
+
+
           ? "Elige dónde guardar el evento. Confirma los datos en tu calendario."
+
+
+
           : "Vista de demostración: agregar el evento está desactivado.";
+
+
+
         $$("[data-calendario]").forEach(opcion => { opcion.disabled = !activo; });
+
+
+
         if (!dialogo.open) dialogo.showModal();
+
+
+
       };
+
+
+
       boton.addEventListener("click", evento => { evento.preventDefault(); abrir(); });
+
+
+
       boton.addEventListener("keydown", evento => {
+
+
+
         if (evento.key === "Enter" || evento.key === " ") {
+
+
+
           evento.preventDefault();
+
+
+
           if (DATOS_INVITACION.botones.selectorCalendarios === true) abrir();
+
+
+
         }
+
+
+
       });
+
+
+
       $("#cerrar-calendarios").addEventListener("click", () => dialogo.close());
+
+
+
       dialogo.addEventListener("click", evento => { if (evento.target === dialogo) dialogo.close(); });
+
+
+
       $$("[data-calendario]").forEach(opcion => opcion.addEventListener("click", () => {
+
+
+
         if (DATOS_INVITACION.botones.agregarCalendario !== true) return;
+
+
+
         try {
+
+
+
           const datos = datosCalendario();
+
+
+
           if (opcion.dataset.calendario === "google") {
+
+
+
             const parametros = new URLSearchParams({
+
+
+
               action: "TEMPLATE", text: datos.titulo,
+
+
+
               dates: `${fechaCalendario(datos.inicio)}/${fechaCalendario(datos.fin)}`,
+
+
+
               details: datos.descripcion, location: datos.lugar
+
+
+
             });
+
+
+
             window.open(`https://calendar.google.com/calendar/render?${parametros}`, "_blank", "noopener,noreferrer");
+
+
+
           } else {
+
+
+
             // Apple y Outlook: archivo estándar para importar y confirmar el evento.
+
+
+
             const url = URL.createObjectURL(new Blob([crearICS(datos)], { type: "text/calendar;charset=utf-8" }));
+
+
+
             const enlace = document.createElement("a");
+
+
+
             enlace.href = url; enlace.download = "invitacion.ics";
+
+
+
             document.body.appendChild(enlace); enlace.click(); enlace.remove();
+
+
+
             setTimeout(() => URL.revokeObjectURL(url), 60000);
+
+
+
             $("#aviso-calendario").textContent = "Abre invitacion.ics en tu calendario e importa el evento. En iPhone también puedes abrirlo desde Mail.";
+
+
+
           }
+
+
+
         } catch (error) { $("#aviso-calendario").textContent = error.message; }
+
+
+
       }));
+
+
+
     }
 
+
+
+
+
+
+
     // Imágenes centralizadas, igual que en las plantillas de quinceañera.
+
+
+
     $('.entrada > img').src = DATOS_INVITACION.fotos.portada;
+
+
+
     $$('.foto > img').forEach((imagen, i) => imagen.src = DATOS_INVITACION.fotos.secciones[i]);
+
+
+
     $$('.fondo').forEach((imagen, i) => imagen.src = DATOS_INVITACION.fondos[i]);
+
+
+
     Object.entries(DATOS_INVITACION.textos).forEach(([clave, texto]) => document.querySelector(`[data-texto="${clave}"]`).textContent = texto);
+
+
+
     const extras = { '#regalo': 'regalo', '#mensaje-regalo': 'mensajeRegalo', '#mensaje-evento': 'mensajeEvento', '#evento-lugar': 'evento.lugar', '#evento-direccion': 'evento.direccion', '#evento-hora': 'evento.hora' };
+
+
+
     Object.entries(extras).forEach(([selector, ruta]) => $(selector).textContent = ruta.split('.').reduce((o, k) => o[k], DATOS_INVITACION));
+
+
+
     for (const [id, datos, claves, alts] of [['iconos-vestimenta', DATOS_INVITACION.iconosVestimenta, ['traje', 'vestido'], ['Vestimenta semiformal para hombre', 'Vestimenta semiformal para mujer']], ['iconos-regalos', DATOS_INVITACION.iconosRegalos, ['regalo', 'sobre'], ['Regalo', 'Sobre']]]) {
+
+
+
       const grupo = document.getElementById(id); grupo.style.setProperty('--icono-tamano', datos.tamano + 'px');
+
+
+
       claves.forEach((clave, i) => { const img = document.createElement('img'); img.src = datos[clave]; img.alt = alts[i]; grupo.append(img); });
+
+
+
     }
+
+
+
     const controles = { 'entrar': 'abrirInvitacion', 'salir': 'salir', 'salir-portada': 'salir', 'musica-boton': 'musica', 'mapa-ceremonia': 'ubicacionCeremonia', 'mapa-evento': 'ubicacionEvento', 'confirmar-whatsapp': 'confirmacionWhatsApp', 'agregar-calendario': 'selectorCalendarios', 'cerrar-calendarios': 'selectorCalendarios' };
+
+
+
     Object.entries(controles).forEach(([id, clave]) => document.getElementById(id).dataset.control = clave);
+
+
+
     $$('[data-control]').forEach(b => { b.disabled = DATOS_INVITACION.botones[b.dataset.control] !== true; b.setAttribute('aria-disabled', String(b.disabled)); });
+
+
+
     document.addEventListener('click', e => { const b = e.target.closest('[data-control]'); if (b && DATOS_INVITACION.botones[b.dataset.control] !== true) { e.preventDefault(); e.stopImmediatePropagation(); } }, true);
+
+
+
     $('#mapa-ceremonia').addEventListener('click', () => window.open(DATOS_INVITACION.ceremonia.mapa, '_blank', 'noopener,noreferrer'));
+
+
+
     $('#mapa-evento').addEventListener('click', () => window.open(DATOS_INVITACION.evento.mapa, '_blank', 'noopener,noreferrer'));
+
+
+
     $('#confirmar-whatsapp').addEventListener('click', () => window.open(`https://wa.me/${DATOS_INVITACION.whatsapp.numero.replace(/\D/g, '')}?text=${encodeURIComponent(DATOS_INVITACION.whatsapp.mensaje)}`, '_blank', 'noopener,noreferrer'));
+
+
+
     prepararCalendario();
+
+
+
   </script>
+
+
+
 </body>
+
+
+
+
+
+
 
 </html>
