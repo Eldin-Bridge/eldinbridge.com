@@ -645,6 +645,25 @@
     .iconos-vestimenta img { width: var(--tamano-icono-vestimenta, 52px); height: var(--tamano-icono-vestimenta, 52px); object-fit: contain; }
     .iconos-regalos { display: flex; justify-content: center; align-items: center; gap: 16px; }
     .iconos-regalos img { width: var(--tamano-icono-regalos, 52px); height: var(--tamano-icono-regalos, 52px); object-fit: contain; }
+    #selector-calendarios { padding: 0; border: 1px solid #b9a47a; border-radius: 22px;
+      position: fixed; top: auto; bottom: 0; left: 0; right: 0;
+      margin: 0 auto; box-sizing: border-box;
+      width: min(100%, 480px); max-width: 100%; max-height: 85vh; max-height: 85dvh;
+      overflow-y: auto; border-radius: 22px 22px 0 0;
+      color: #333; background: #fffaf1; }
+    #selector-calendarios .panel-calendarios {
+      padding-bottom: max(24px, env(safe-area-inset-bottom));
+    }
+    #selector-calendarios::backdrop { background: rgba(0,0,0,.65); }
+    .panel-calendarios { position: relative; padding: 32px 24px 24px; }
+    .panel-calendarios h2 { margin: 12px 0; font: inherit; font-size: 24px; }
+    .panel-calendarios p { font-size: 15px; line-height: 1.5; }
+    .panel-calendarios [data-calendario] { width: 100%; margin-top: 12px; padding: 16px;
+      border: 1px solid #b9a47a; border-radius: 12px; background: #f3ead8; color: #333; font: inherit; cursor: pointer; }
+    .panel-calendarios small { display: block; margin-top: 5px; font-size: 12px; }
+    #cerrar-calendarios { position: absolute; right: 12px; top: 8px; background: transparent;
+      border: 0; padding: 6px 12px; font-size: 26px; cursor: pointer; }
+    [data-control][aria-disabled="true"], .panel-calendarios button:disabled { cursor: default; }
   </style>
 </head>
 <body>
@@ -687,7 +706,7 @@
         <p class="dato-destacado revelar" data-demora="2" id="iglesia"></p>
         <p class="dato-secundario revelar" data-demora="2" id="direccion-iglesia"></p>
         <p class="dato-destacado revelar" data-demora="3" id="hora-ceremonia"></p>
-        <button class="boton-demo revelar" data-demora="3" type="button" aria-disabled="true">Ubicación de la iglesia</button>
+        <button class="boton-demo revelar" data-demora="3" type="button" id="mapa-iglesia">Ubicación de la iglesia</button>
       </article>
     </section>
     <section class="seccion foto-pantalla" data-indice="PORTRAIT / 03">
@@ -707,7 +726,7 @@
           <div class="tiempo"><strong id="minutos">00</strong><span>Min</span></div>
           <div class="tiempo"><strong id="segundos">00</strong><span>Seg</span></div>
         </div>
-        <button class="boton-demo revelar" data-demora="3" type="button" aria-disabled="true">Agregar al calendario</button>
+        <button class="boton-demo revelar" data-demora="3" type="button" id="agregar-calendario">Agregar al calendario</button>
       </article>
     </section>
     <section class="seccion foto-pantalla" data-indice="PORTRAIT / 04">
@@ -736,7 +755,7 @@
         <h2 class="titulo revelar" data-demora="1">Te espero</h2>
         <p class="texto revelar" data-demora="2">Será una noche inolvidable y quiero compartirla contigo. Confirma tu asistencia antes del</p>
         <p class="nombres-padres revelar" data-demora="2" id="limite-confirmacion"></p>
-        <button class="boton-demo revelar" data-demora="3" type="button" aria-disabled="true">Confirmar asistencia</button>
+        <button class="boton-demo revelar" data-demora="3" type="button" id="confirmar-whatsapp">Confirmar asistencia</button>
         <div class="linea-dato revelar" data-demora="3"></div>
         <p class="texto revelar" data-demora="3" id="despedida"></p>
       </article>
@@ -768,7 +787,7 @@
         <p class="dato-destacado revelar" data-demora="2" id="salon"></p>
         <p class="dato-secundario revelar" data-demora="2" id="direccion-salon"></p>
         <p class="dato-destacado revelar" data-demora="2" id="hora-recepcion"></p>
-        <button class="boton-demo revelar" data-demora="3" type="button" aria-disabled="true">Ubicación del evento</button>
+        <button class="boton-demo revelar" data-demora="3" type="button" id="mapa-salon">Ubicación del evento</button>
       </article>
     </section>
     <section class="seccion foto-pantalla" data-indice="PORTRAIT / 08">
@@ -781,6 +800,16 @@
     <button class="control" id="boton-musica" type="button" aria-label="Reproducir música" title="Música">♫</button>
   </div>
   <div class="particulas" id="particulas" aria-hidden="true"></div>
+  <dialog id="selector-calendarios" aria-labelledby="titulo-calendarios">
+    <div class="panel-calendarios">
+      <button type="button" id="cerrar-calendarios" aria-label="Cerrar calendarios">×</button>
+      <h2 id="titulo-calendarios">Agrega el evento a tu calendario</h2>
+      <p id="aviso-calendario" role="status"></p>
+      <button type="button" data-calendario="google"><span aria-hidden="true">📅</span> Calendario Google</button>
+      <button type="button" data-calendario="outlook"><span aria-hidden="true">📆</span> Outlook / Office 365 <small>Importar archivo de calendario</small></button>
+      <button type="button" data-calendario="apple"><span aria-hidden="true">🍎</span> Calendario Apple <small>Importar archivo de calendario</small></button>
+    </div>
+  </dialog>
   <audio id="musica" loop preload="none"></audio>
   <script>
     /* =========================================================
@@ -790,6 +819,27 @@
        únicamente demostrativos y no abren enlaces.
        ========================================================= */
     const DATOS_INVITACION = {
+      // true: permite la acción; false: mantiene el botón visible sin ejecutar.
+      botones: {
+        abrirInvitacion: true,
+        salir: true,
+        musica: true,
+        continuar: true,
+        volverInicio: true,
+        ubicacionIglesia: false,
+        ubicacionEvento: false,
+        confirmacionWhatsApp: false,
+        selectorCalendarios: true,
+        agregarCalendario: false // Demo: muestra el selector, sin guardar eventos.
+      },
+      calendario: {
+        // Horario del evento en el salón, independiente del contador de la ceremonia.
+        inicio: "2027-08-14T20:00:00-06:00",
+        fin: "2027-08-15T01:00:00-06:00"
+        // Nombre, descripción y ubicación se toman de los datos de abajo.
+      },
+
+
       nombre: "Victoria Reyes",
       nombreCorto: "Victoria",
       monograma: "VR",
@@ -801,12 +851,14 @@
       ceremonia: {
         lugar: "Parroquia del Sagrado Corazón",
         direccion: "Monterrey, Nuevo León",
-        hora: "5:00 p. m."
+        hora: "5:00 p. m.",
+        mapa: "https://maps.google.com/"
       },
       recepcion: {
         lugar: "Skyline Events",
         direccion: "Monterrey, Nuevo León",
-        hora: "8:00 p. m."
+        hora: "8:00 p. m.",
+        mapa: "https://maps.google.com/"
       },
       vestimenta: "Formal contemporánea",
       iconosVestimenta: {
@@ -824,6 +876,8 @@
       mensajeVestimenta: "Acompáñame con traje o vestido formal para celebrar esta noche juntos.",
       tituloRegalos: "Tu presencia es mi mejor regalo",
       mensajeRegalos: "Si deseas obsequiarme un detalle, puedes hacerlo con una lluvia de sobres. Gracias por acompañarme en este día tan especial.",
+      telefonoWhatsApp: "528112345678",
+      mensajeWhatsApp: "Hola, confirmo mi asistencia a los XV años de Victoria.",
       limiteConfirmacion: "1 de agosto de 2027",
       despedida: "Gracias por formar parte de este momento.",
       urlSalida: "../../../index.html#quinceaneras",
@@ -895,6 +949,7 @@
         const esUltima = indice === secciones.length - 1;
         boton.className = "boton-continuar";
         boton.type = "button";
+        boton.dataset.control = esUltima ? "volverInicio" : "continuar";
         boton.innerHTML = esUltima
           ? 'Volver al inicio <span aria-hidden="true">↑</span>'
           : 'Continuar <span aria-hidden="true">↓</span>';
@@ -945,6 +1000,129 @@
       $$(".fondo-tarjeta").forEach((imagen, i) => {
         imagen.src = DATOS_INVITACION.fondos[i];
       });
+      prepararCalendario();
+      configurarBotones();
+      [
+        ["#mapa-iglesia", () => DATOS_INVITACION.ceremonia.mapa],
+        ["#mapa-salon", () => DATOS_INVITACION.recepcion.mapa],
+        ["#confirmar-whatsapp", () => `https://wa.me/${DATOS_INVITACION.telefonoWhatsApp}?text=${encodeURIComponent(DATOS_INVITACION.mensajeWhatsApp)}`]
+      ].forEach(([selector, url]) => $(selector).addEventListener("click", () => {
+        window.open(url(), "_blank", "noopener,noreferrer");
+      }));
+    }
+    function configurarBotones() {
+      const controles = {
+        "boton-entrar": "abrirInvitacion",
+        "boton-salir-portada": "salir",
+        "boton-salir": "salir",
+        "boton-musica": "musica",
+        "mapa-iglesia": "ubicacionIglesia",
+        "mapa-salon": "ubicacionEvento",
+        "confirmar-whatsapp": "confirmacionWhatsApp",
+        "agregar-calendario": "selectorCalendarios"
+      };
+      Object.entries(controles).forEach(([id, clave]) => {
+        document.getElementById(id).dataset.control = clave;
+      });
+      $$('[data-control]').forEach(boton => {
+        const activo = DATOS_INVITACION.botones[boton.dataset.control] === true;
+        boton.setAttribute("aria-disabled", String(!activo));
+        if (boton.tagName === "BUTTON") boton.disabled = !activo;
+        if (!activo && boton.tagName === "A") {
+          boton.removeAttribute("href");
+          boton.removeAttribute("target");
+          boton.removeAttribute("rel");
+        }
+      });
+    }
+    // Bloquea también enlaces con teclado; las acciones internas conservan sus funciones.
+    document.addEventListener("click", evento => {
+      const boton = evento.target.closest('[data-control]');
+      if (boton && DATOS_INVITACION.botones[boton.dataset.control] !== true) {
+        evento.preventDefault();
+        evento.stopImmediatePropagation();
+      }
+    }, true);
+    function datosCalendario() {
+      const inicio = new Date(DATOS_INVITACION.calendario.inicio);
+      const fin = new Date(DATOS_INVITACION.calendario.fin);
+      if (!Number.isFinite(inicio.getTime()) || !Number.isFinite(fin.getTime()) || fin <= inicio) {
+        throw new Error("Revisa inicio y fin en DATOS_INVITACION.calendario.");
+      }
+      return { inicio, fin, titulo: `XV años de ${DATOS_INVITACION.nombre}`,
+        descripcion: DATOS_INVITACION.frasePortada,
+        lugar: `${DATOS_INVITACION.recepcion.lugar}, ${DATOS_INVITACION.recepcion.direccion}` };
+    }
+    function fechaCalendario(fecha) {
+      return fecha.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
+    }
+    function crearICS(datos) {
+      const escapar = valor => String(valor).replace(/\\/g, "\\\\")
+        .replace(/\r?\n/g, "\\n").replace(/;/g, "\\;").replace(/,/g, "\\,");
+      // Pliega por bytes, sin dividir caracteres UTF-8.
+      const plegar = linea => {
+        let salida = "", actual = "", bytes = 0;
+        for (const caracter of linea) {
+          const longitud = new TextEncoder().encode(caracter).length;
+          if (bytes + longitud > 75) { salida += actual + "\r\n"; actual = " "; bytes = 1; }
+          actual += caracter; bytes += longitud;
+        }
+        return salida + actual;
+      };
+      return ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Eldinbridge//Invitaciones//ES",
+        "CALSCALE:GREGORIAN", "BEGIN:VEVENT",
+        `UID:${fechaCalendario(datos.inicio)}-${encodeURIComponent(DATOS_INVITACION.nombre)}@eldinbridge.com`,
+        `DTSTAMP:${fechaCalendario(new Date())}`, `DTSTART:${fechaCalendario(datos.inicio)}`,
+        `DTEND:${fechaCalendario(datos.fin)}`, `SUMMARY:${escapar(datos.titulo)}`,
+        `DESCRIPTION:${escapar(datos.descripcion)}`, `LOCATION:${escapar(datos.lugar)}`,
+        "END:VEVENT", "END:VCALENDAR"].map(plegar).join("\r\n") + "\r\n";
+    }
+    function prepararCalendario() {
+      const boton = $("#agregar-calendario");
+      boton.removeAttribute("href");
+      boton.removeAttribute("target");
+      boton.removeAttribute("rel");
+      boton.setAttribute("role", "button");
+      boton.tabIndex = 0;
+      boton.setAttribute("aria-haspopup", "dialog");
+      const dialogo = $("#selector-calendarios");
+      const abrir = () => {
+        const activo = DATOS_INVITACION.botones.agregarCalendario === true;
+        $("#aviso-calendario").textContent = activo
+          ? "Elige dónde guardar el evento. Confirma los datos en tu calendario."
+          : "Vista de demostración: agregar el evento está desactivado.";
+        $$("[data-calendario]").forEach(opcion => { opcion.disabled = !activo; });
+        if (!dialogo.open) dialogo.showModal();
+      };
+      boton.addEventListener("click", evento => { evento.preventDefault(); abrir(); });
+      boton.addEventListener("keydown", evento => {
+        if (evento.key === "Enter" || evento.key === " ") {
+          evento.preventDefault();
+          if (DATOS_INVITACION.botones.selectorCalendarios === true) abrir();
+        }
+      });
+      $("#cerrar-calendarios").addEventListener("click", () => dialogo.close());
+      dialogo.addEventListener("click", evento => { if (evento.target === dialogo) dialogo.close(); });
+      $$("[data-calendario]").forEach(opcion => opcion.addEventListener("click", () => {
+        if (DATOS_INVITACION.botones.agregarCalendario !== true) return;
+        try {
+          const datos = datosCalendario();
+          if (opcion.dataset.calendario === "google") {
+            const parametros = new URLSearchParams({ action: "TEMPLATE", text: datos.titulo,
+              dates: `${fechaCalendario(datos.inicio)}/${fechaCalendario(datos.fin)}`,
+              details: datos.descripcion, location: datos.lugar });
+            window.open(`https://calendar.google.com/calendar/render?${parametros}`, "_blank", "noopener,noreferrer");
+          } else {
+            // Apple y Outlook: archivo estándar para importar y confirmar el evento.
+            const url = URL.createObjectURL(new Blob([crearICS(datos)], { type: "text/calendar;charset=utf-8" }));
+            const enlace = document.createElement("a");
+            enlace.href = url; enlace.download = "invitacion.ics";
+            document.body.appendChild(enlace); enlace.click(); enlace.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 60000);
+            $("#aviso-calendario").textContent = "Abre invitacion.ics en tu calendario e importa el evento. En iPhone también puedes abrirlo desde Mail.";
+          }
+        } catch (error) { $("#aviso-calendario").textContent = error.message; }
+      }));
     }
     function actualizarContador() {
       const diferencia = new Date(DATOS_INVITACION.fechaISO).getTime() - Date.now();
@@ -979,6 +1157,7 @@
       secciones.forEach(seccion => observador.observe(seccion));
     }
     async function reproducirMusica() {
+      if (DATOS_INVITACION.botones.musica !== true) return;
       try {
         await musica.play();
         musicaActiva = true;
