@@ -1,115 +1,1030 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="es">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#f4ece1">
+  <meta charset="utf-8" />
+  <meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport" />
+  <meta content="#f4ece1" name="theme-color" />
   <title>Boda clásica | Invitación</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&amp;family=Jost:wght@300;400;500;600&amp;display=swap"
+    rel="stylesheet" />
   <style>
-    :root{--alto:100dvh;--oro:#a77e4b;--tinta:#493c37;--marfil:#fffaf2}
-    *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}
-    body{background:#e9dccb;color:var(--tinta);font-family:Jost,Arial,sans-serif}
-    button{font:inherit;cursor:pointer}button:focus-visible{outline:3px solid #a77e4b;outline-offset:4px}
-    .entrada,.pantalla{position:relative;height:var(--alto);overflow:hidden}
-    .entrada{position:fixed;inset:0;z-index:20;background:#45352e;transition:opacity .6s,visibility .6s}
-    .entrada.oculta{opacity:0;visibility:hidden;pointer-events:none}
-    .entrada>img,.fondo,.foto>img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover}
-    .entrada>img{object-position:center 45%}.entrada::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#221a1833 0%,transparent 35%,#20171599 100%);pointer-events:none}
-    .portada{position:absolute;z-index:1;left:7%;right:7%;bottom:max(8%,calc(env(safe-area-inset-bottom) + 62px));color:#fff;text-align:center;text-shadow:0 2px 18px #221915a3}
-    .portada .adorno{margin:0 auto 12px;color:#f6dfba}.portada .subtitulo,.folio,.etiqueta,.foto-numero{font-size:.66rem;letter-spacing:.27em;text-transform:uppercase;font-weight:500}
-    .portada h1{font:500 clamp(2.5rem,10vw,4.5rem)/.98 'Cormorant Garamond',Georgia,serif;margin:13px 0 9px}
-    .portada h1 span{display:block}
-    .portada h1 .amp{font-size:.62em;line-height:.8;margin:.08em 0}
-    .portada .frase{font-size:.93rem;line-height:1.5;margin:0 auto 21px;max-width:32ch}
-    .boton-entrada,.continuar,.demo{border:1px solid #d6bd93;background:#fffaf0;color:#5f4836;min-height:46px;padding:12px 23px;letter-spacing:.15em;text-transform:uppercase;font-size:.67rem;font-weight:600;transition:transform .25s,background .25s}
-    .boton-entrada:hover,.continuar:hover{background:white;transform:translateY(-2px)}
-    .salir-entrada,.control{width:44px;height:44px;border:1px solid #f9efdfb8;border-radius:50%;color:white;background:#3e302ab3;backdrop-filter:blur(8px);font-size:1.36rem;display:grid;place-items:center;line-height:1}
-    .salir-entrada{position:absolute;top:max(18px,env(safe-area-inset-top));left:18px;z-index:3}
-    .invitacion{height:var(--alto);overflow-y:auto;overflow-x:hidden;scroll-snap-type:y mandatory;overscroll-behavior:contain;scrollbar-width:none}.invitacion::-webkit-scrollbar{display:none}
-    .pantalla{scroll-snap-align:start;scroll-snap-stop:always;display:grid;place-items:center}
-    .tarjeta-pantalla::after{content:"";position:absolute;inset:0;background:#f7eee42b;pointer-events:none}
-    .tarjeta{position:relative;z-index:1;width:min(87vw,470px);max-height:calc(var(--alto) - 126px);overflow:auto;scrollbar-width:thin;padding:clamp(26px,5vh,46px) clamp(24px,6vw,46px);background:#fffaf2f5;border:1px solid #b68c56;box-shadow:0 18px 54px #3a261c42;text-align:center}
-    .tarjeta::before{content:"";position:absolute;inset:8px;border:1px solid #b9925d91;pointer-events:none}
-    .tarjeta::after{content:"✦";position:absolute;top:1px;left:50%;transform:translateX(-50%);padding:0 11px;background:var(--marfil);color:var(--oro);font-size:14px}
-    .folio{color:var(--oro);margin:3px 0 22px}.ornamento{display:block;color:var(--oro);font:400 1.25rem Georgia,serif;letter-spacing:.25em;margin:13px auto}
-    .etiqueta{color:#997b60;margin:0 0 5px}.tarjeta h2{font:500 clamp(2.05rem,7vw,3.1rem)/1.04 'Cormorant Garamond',Georgia,serif;margin:0 0 15px;color:#564136}
-    .texto{font-size:clamp(.87rem,2.8vw,1rem);line-height:1.65;margin:10px auto;max-width:34ch}.destacado{font:500 clamp(1.4rem,5vw,2rem)/1.16 'Cormorant Garamond',Georgia,serif;margin:12px 0;color:#775634}
-    .linea{display:block;width:72px;height:1px;background:var(--oro);margin:20px auto}.lugar{padding:10px 0;border-top:1px solid #b7986b70}.lugar:first-of-type{border:0}
-    .lugar strong{display:block;font:.67rem Jost,Arial,sans-serif;text-transform:uppercase;letter-spacing:.2em;color:#9a7449}.lugar .nombre{font:500 1.55rem 'Cormorant Garamond',Georgia,serif;display:block;margin:3px 0}.lugar small{display:block;line-height:1.4;font-size:.81rem}
-    .contador{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:18px 0}.contador div{border-top:1px solid #c2a77e;border-bottom:1px solid #c2a77e;padding:8px 2px}.contador strong{display:block;font:500 1.5rem 'Cormorant Garamond',Georgia,serif}.contador small{display:block;text-transform:uppercase;font-size:.55rem;letter-spacing:.08em}
-    .demo{background:transparent;color:#816f5c;cursor:default;margin-top:9px}
-    .foto{background:#392b23}.foto>img{object-position:center 47%}.foto::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#24191255,transparent 30%,transparent 55%,#201713b8);pointer-events:none}
-    .foto-numero,.leyenda{position:absolute;z-index:1;color:#fff;text-shadow:0 2px 13px #211812bf}.foto-numero{top:max(78px,calc(env(safe-area-inset-top) + 66px));left:7%}.leyenda{bottom:108px;left:8%;right:8%;text-align:center;font:500 clamp(1.55rem,5.3vw,2.3rem)/1.2 'Cormorant Garamond',Georgia,serif}
-    .continuar{position:absolute;z-index:5;left:50%;bottom:max(17px,calc(env(safe-area-inset-bottom) + 12px));transform:translateX(-50%);width:max-content;max-width:88%;background:#fffaf1ef;box-shadow:0 5px 18px #231a1538}.continuar:hover{transform:translate(-50%,-2px)}
-    .controles{position:fixed;z-index:12;top:max(18px,env(safe-area-inset-top));left:18px;right:18px;display:flex;justify-content:space-between;pointer-events:none;opacity:0;transition:opacity .35s}body.iniciada .controles{opacity:1}.controles button{pointer-events:auto}
-    .pantalla .tarjeta,.pantalla .leyenda{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}.pantalla.visible .tarjeta,.pantalla.visible .leyenda{opacity:1;transform:none}
-    @media(max-height:650px){.tarjeta{max-height:calc(var(--alto) - 105px);padding:18px 24px}.folio{margin-bottom:10px}.linea{margin:10px auto}.texto{line-height:1.45}.leyenda{bottom:88px}}
-    @media(min-width:700px){.entrada,.pantalla,.invitacion{max-width:520px;margin-inline:auto}.entrada{left:50%;right:auto;width:520px;transform:translateX(-50%)}.controles{left:50%;right:auto;width:min(520px,100%);transform:translateX(-50%)}}
-    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.pantalla .tarjeta,.pantalla .leyenda{opacity:1;transform:none}}
+    :root {
+      --alto: 100dvh;
+      --oro: #a77e4b;
+      --tinta: #493c37;
+      --marfil: #fffaf2
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden
+    }
+
+    body {
+      background: #e9dccb;
+      color: var(--tinta);
+      font-family: Jost, Arial, sans-serif
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer
+    }
+
+    button:focus-visible {
+      outline: 3px solid #a77e4b;
+      outline-offset: 4px
+    }
+
+    .entrada,
+    .pantalla {
+      position: relative;
+      height: var(--alto);
+      overflow: hidden
+    }
+
+    .entrada {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      background: #45352e;
+      transition: opacity .6s, visibility .6s
+    }
+
+    .entrada.oculta {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none
+    }
+
+    .entrada>img,
+    .fondo,
+    .foto>img {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .entrada>img {
+      object-position: center 45%
+    }
+
+    .entrada::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, #221a1833 0%, transparent 35%, #20171599 100%);
+      pointer-events: none
+    }
+
+    .portada {
+      position: absolute;
+      z-index: 1;
+      left: 7%;
+      right: 7%;
+      bottom: max(8%, calc(env(safe-area-inset-bottom) + 62px));
+      color: #fff;
+      text-align: center;
+      text-shadow: 0 2px 18px #221915a3
+    }
+
+    .portada .adorno {
+      margin: 0 auto 12px;
+      color: #f6dfba
+    }
+
+    .portada .subtitulo,
+    .folio,
+    .etiqueta,
+    .foto-numero {
+      font-size: .66rem;
+      letter-spacing: .27em;
+      text-transform: uppercase;
+      font-weight: 500
+    }
+
+    .portada h1 {
+      font: 500 clamp(2.5rem, 10vw, 4.5rem)/.98 'Cormorant Garamond', Georgia, serif;
+      margin: 13px 0 9px
+    }
+
+    .portada h1 span {
+      display: block
+    }
+
+    .portada h1 .amp {
+      font-size: .62em;
+      line-height: .8;
+      margin: .08em 0
+    }
+
+    .portada .frase {
+      font-size: .93rem;
+      line-height: 1.5;
+      margin: 0 auto 21px;
+      max-width: 32ch
+    }
+
+    .boton-entrada,
+    .continuar,
+    .demo {
+      border: 1px solid #d6bd93;
+      background: #fffaf0;
+      color: #5f4836;
+      min-height: 46px;
+      padding: 12px 23px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      font-size: .67rem;
+      font-weight: 600;
+      transition: transform .25s, background .25s
+    }
+
+    .boton-entrada:hover,
+    .continuar:hover {
+      background: white;
+      transform: translateY(-2px)
+    }
+
+    .salir-entrada,
+    .control {
+      width: 44px;
+      height: 44px;
+      border: 1px solid #f9efdfb8;
+      border-radius: 50%;
+      color: white;
+      background: #3e302ab3;
+      backdrop-filter: blur(8px);
+      font-size: 1.36rem;
+      display: grid;
+      place-items: center;
+      line-height: 1
+    }
+
+    .salir-entrada {
+      position: absolute;
+      top: max(18px, env(safe-area-inset-top));
+      left: 18px;
+      z-index: 3
+    }
+
+    .invitacion {
+      height: var(--alto);
+      overflow-y: auto;
+      overflow-x: hidden;
+      scroll-snap-type: y mandatory;
+      overscroll-behavior: contain;
+      scrollbar-width: none
+    }
+
+    .invitacion::-webkit-scrollbar {
+      display: none
+    }
+
+    .pantalla {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      display: grid;
+      place-items: center
+    }
+
+    .tarjeta-pantalla::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: #f7eee42b;
+      pointer-events: none
+    }
+
+    .tarjeta {
+      position: relative;
+      z-index: 1;
+      width: min(87vw, 470px);
+      max-height: calc(var(--alto) - 126px);
+      overflow: auto;
+      scrollbar-width: thin;
+      padding: clamp(26px, 5vh, 46px) clamp(24px, 6vw, 46px);
+      background: #fffaf2f5;
+      border: 1px solid #b68c56;
+      box-shadow: 0 18px 54px #3a261c42;
+      text-align: center
+    }
+
+    .tarjeta::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border: 1px solid #b9925d91;
+      pointer-events: none
+    }
+
+    .tarjeta::after {
+      content: "✦";
+      position: absolute;
+      top: 1px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 0 11px;
+      background: var(--marfil);
+      color: var(--oro);
+      font-size: 14px
+    }
+
+    .folio {
+      color: var(--oro);
+      margin: 3px 0 22px
+    }
+
+    .ornamento {
+      display: block;
+      color: var(--oro);
+      font: 400 1.25rem Georgia, serif;
+      letter-spacing: .25em;
+      margin: 13px auto
+    }
+
+    .etiqueta {
+      color: #997b60;
+      margin: 0 0 5px
+    }
+
+    .tarjeta h2 {
+      font: 500 clamp(2.05rem, 7vw, 3.1rem)/1.04 'Cormorant Garamond', Georgia, serif;
+      margin: 0 0 15px;
+      color: #564136
+    }
+
+    .texto {
+      font-size: clamp(.87rem, 2.8vw, 1rem);
+      line-height: 1.65;
+      margin: 10px auto;
+      max-width: 34ch
+    }
+
+    .destacado {
+      font: 500 clamp(1.4rem, 5vw, 2rem)/1.16 'Cormorant Garamond', Georgia, serif;
+      margin: 12px 0;
+      color: #775634
+    }
+
+    .linea {
+      display: block;
+      width: 72px;
+      height: 1px;
+      background: var(--oro);
+      margin: 20px auto
+    }
+
+    .lugar {
+      padding: 10px 0;
+      border-top: 1px solid #b7986b70
+    }
+
+    .lugar:first-of-type {
+      border: 0
+    }
+
+    .lugar strong {
+      display: block;
+      font: .67rem Jost, Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .2em;
+      color: #9a7449
+    }
+
+    .lugar .nombre {
+      font: 500 1.55rem 'Cormorant Garamond', Georgia, serif;
+      display: block;
+      margin: 3px 0
+    }
+
+    .lugar small {
+      display: block;
+      line-height: 1.4;
+      font-size: .81rem
+    }
+
+    .contador {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      margin: 18px 0
+    }
+
+    .contador div {
+      border-top: 1px solid #c2a77e;
+      border-bottom: 1px solid #c2a77e;
+      padding: 8px 2px
+    }
+
+    .contador strong {
+      display: block;
+      font: 500 1.5rem 'Cormorant Garamond', Georgia, serif
+    }
+
+    .contador small {
+      display: block;
+      text-transform: uppercase;
+      font-size: .55rem;
+      letter-spacing: .08em
+    }
+
+    .demo {
+      background: transparent;
+      color: #816f5c;
+      cursor: default;
+      margin-top: 9px
+    }
+
+    .foto {
+      background: #392b23
+    }
+
+    .foto>img {
+      object-position: center 47%
+    }
+
+    .foto::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, #24191255, transparent 30%, transparent 55%, #201713b8);
+      pointer-events: none
+    }
+
+    .foto-numero,
+    .leyenda {
+      position: absolute;
+      z-index: 1;
+      color: #fff;
+      text-shadow: 0 2px 13px #211812bf
+    }
+
+    .foto-numero {
+      top: max(78px, calc(env(safe-area-inset-top) + 66px));
+      left: 7%
+    }
+
+    .leyenda {
+      bottom: 108px;
+      left: 8%;
+      right: 8%;
+      text-align: center;
+      font: 500 clamp(1.55rem, 5.3vw, 2.3rem)/1.2 'Cormorant Garamond', Georgia, serif
+    }
+
+    .continuar {
+      position: absolute;
+      z-index: 5;
+      left: 50%;
+      bottom: max(17px, calc(env(safe-area-inset-bottom) + 12px));
+      transform: translateX(-50%);
+      width: max-content;
+      max-width: 88%;
+      background: #fffaf1ef;
+      box-shadow: 0 5px 18px #231a1538
+    }
+
+    .continuar:hover {
+      transform: translate(-50%, -2px)
+    }
+
+    .controles {
+      position: fixed;
+      z-index: 12;
+      top: max(18px, env(safe-area-inset-top));
+      left: 18px;
+      right: 18px;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .35s
+    }
+
+    body.iniciada .controles {
+      opacity: 1
+    }
+
+    .controles button {
+      pointer-events: auto
+    }
+
+    .pantalla .tarjeta,
+    .pantalla .leyenda {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .6s, transform .6s
+    }
+
+    .pantalla.visible .tarjeta,
+    .pantalla.visible .leyenda {
+      opacity: 1;
+      transform: none
+    }
+
+    @media(max-height:650px) {
+      .tarjeta {
+        max-height: calc(var(--alto) - 105px);
+        padding: 18px 24px
+      }
+
+      .folio {
+        margin-bottom: 10px
+      }
+
+      .linea {
+        margin: 10px auto
+      }
+
+      .texto {
+        line-height: 1.45
+      }
+
+      .leyenda {
+        bottom: 88px
+      }
+    }
+
+    @media(min-width:700px) {
+
+      .entrada,
+      .pantalla,
+      .invitacion {
+        max-width: 520px;
+        margin-inline: auto
+      }
+
+      .entrada {
+        left: 50%;
+        right: auto;
+        width: 520px;
+        transform: translateX(-50%)
+      }
+
+      .controles {
+        left: 50%;
+        right: auto;
+        width: min(520px, 100%);
+        transform: translateX(-50%)
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important
+      }
+
+      .pantalla .tarjeta,
+      .pantalla .leyenda {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .iconos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin: 18px 0;
+    }
+
+    .iconos img {
+      width: var(--icono-tamano, 52px);
+      height: var(--icono-tamano, 52px);
+      object-fit: contain;
+    }
+
+    .demo:not(:disabled) {
+      cursor: pointer;
+    }
+
+    @media(min-width:700px) {
+      :root {
+        --ancho-foto: min(100vw, calc(var(--alto) * 2 / 3));
+      }
+
+      .entrada,
+      .pantalla,
+      .invitacion {
+        max-width: var(--ancho-foto);
+      }
+
+      .entrada {
+        width: var(--ancho-foto);
+      }
+
+      .controles {
+        width: var(--ancho-foto);
+        padding-inline: 18px;
+      }
+
+      .entrada img,
+      .foto img {
+        object-fit: contain;
+        object-position: center;
+      }
+
+      .portada {
+        left: 7%;
+        right: 7%;
+      }
+
+      .portada h1 {
+        font-size: clamp(2rem, calc(var(--alto) * .085), 4.5rem);
+      }
+
+      .tarjeta {
+        width: min(86%, 470px);
+      }
+    }
+
+    #selector-calendarios {
+      padding: 0;
+      border: 1px solid #b9a47a;
+      border-radius: 22px;
+      position: fixed;
+      top: auto;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      box-sizing: border-box;
+      width: min(100%, 480px);
+      max-width: 100%;
+      max-height: 85vh;
+      max-height: 85dvh;
+      overflow-y: auto;
+      border-radius: 22px 22px 0 0;
+      color: #333;
+      background: #fffaf1;
+    }
+
+    #selector-calendarios .panel-calendarios {
+      padding-bottom: max(24px, env(safe-area-inset-bottom));
+    }
+
+    #selector-calendarios::backdrop {
+      background: rgba(0, 0, 0, .65);
+    }
+
+    .panel-calendarios {
+      position: relative;
+      padding: 32px 24px 24px;
+    }
+
+    .panel-calendarios h2 {
+      margin: 12px 0;
+      font: inherit;
+      font-size: 24px;
+    }
+
+    .panel-calendarios p {
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .panel-calendarios [data-calendario] {
+      width: 100%;
+      margin-top: 12px;
+      padding: 16px;
+      border: 1px solid #b9a47a;
+      border-radius: 12px;
+      background: #f3ead8;
+      color: #333;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .panel-calendarios small {
+      display: block;
+      margin-top: 5px;
+      font-size: 12px;
+    }
+
+    #cerrar-calendarios {
+      position: absolute;
+      right: 12px;
+      top: 8px;
+      background: transparent;
+      border: 0;
+      padding: 6px 12px;
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+    [data-control][aria-disabled="true"],
+    .panel-calendarios button:disabled {
+      cursor: default;
+    }
   </style>
 </head>
+
 <body>
-  <section class="entrada" id="entrada" aria-label="Portada de boda clásica">
-    <img src="assets/fotos/foto01.webp" alt="La pareja durante su ceremonia en la catedral" fetchpriority="high">
-    <button class="salir-entrada" id="salir-entrada" type="button" aria-label="Salir">×</button>
-    <div class="portada"><p class="adorno" aria-hidden="true">❧ ✦ ❧</p><p class="subtitulo">Tenemos el honor de invitarte a nuestra boda</p><h1 id="portada-nombres"></h1><p class="frase" id="frase-portada"></p><button class="boton-entrada" id="entrar" type="button">Ver invitación ↓</button></div>
+  <section aria-label="Portada de boda clásica" class="entrada" id="entrada">
+    <img alt="La pareja durante su ceremonia en la catedral" fetchpriority="high" src="assets/fotos/foto01.webp" />
+    <button aria-label="Salir" class="salir-entrada" id="salir-entrada" type="button">×</button>
+    <div class="portada">
+      <p aria-hidden="true" class="adorno">❧ ✦ ❧</p>
+      <p class="subtitulo" data-texto="texto1">Tenemos el honor de invitarte a nuestra boda</p>
+      <h1 id="portada-nombres"></h1>
+      <p class="frase" id="frase-portada"></p><button class="boton-entrada" id="entrar" type="button">Ver invitación
+        ↓</button>
+    </div>
   </section>
-  <main class="invitacion" id="invitacion" aria-label="Invitación de boda clásica">
-    <section class="pantalla tarjeta-pantalla"><img class="fondo" src="assets/fondos/fondo01.webp" alt="" fetchpriority="high"><article class="tarjeta"><p class="folio">I · Nuestra historia</p><span class="ornamento" aria-hidden="true">❦</span><p class="etiqueta">Con inmensa alegría</p><h2 id="nombres-presentacion"></h2><p class="texto" id="mensaje"></p><span class="linea"></span><p class="texto">Será un honor compartir contigo este día inolvidable.</p></article></section>
-    <section class="pantalla foto"><img src="assets/fotos/foto02.webp" alt="La pareja sale de la ceremonia entre los invitados" loading="lazy"><p class="foto-numero">I · El sí</p><p class="leyenda">Un amor para celebrar</p></section>
-    <section class="pantalla tarjeta-pantalla"><img class="fondo" src="assets/fondos/fondo02.webp" alt="" loading="lazy"><article class="tarjeta"><p class="folio">II · Ceremonia y recepción</p><span class="ornamento" aria-hidden="true">✦</span><h2>Te esperamos</h2><div class="lugar"><strong>Ceremonia religiosa</strong><span class="nombre" id="iglesia"></span><small id="direccion-iglesia"></small><small id="hora-iglesia"></small></div><div class="lugar"><strong>Recepción</strong><span class="nombre" id="salon"></span><small id="direccion-salon"></small><small id="hora-salon"></small></div><button class="demo" type="button" aria-disabled="true">Ver ubicaciones</button></article></section>
-    <section class="pantalla foto"><img src="assets/fotos/foto03.webp" alt="Los recién casados bajan las escalinatas de la catedral" loading="lazy"><p class="foto-numero">II · La alegría</p><p class="leyenda">Rodeados de quienes queremos</p></section>
-    <section class="pantalla tarjeta-pantalla"><img class="fondo" src="assets/fondos/fondo03.webp" alt="" loading="lazy"><article class="tarjeta"><p class="folio">III · Reserva la fecha</p><span class="ornamento" aria-hidden="true">❦</span><h2 id="fecha-texto"></h2><p class="texto">Contamos los días para vivir este momento contigo.</p><div class="contador" aria-label="Cuenta regresiva"><div><strong id="dias">00</strong><small>Días</small></div><div><strong id="horas">00</strong><small>Horas</small></div><div><strong id="minutos">00</strong><small>Min</small></div><div><strong id="segundos">00</strong><small>Seg</small></div></div><button class="demo" type="button" aria-disabled="true">Agregar al calendario</button></article></section>
-    <section class="pantalla foto"><img src="assets/fotos/foto04.webp" alt="La pareja camina por el jardín" loading="lazy"><p class="foto-numero">III · Juntos</p><p class="leyenda">El comienzo de una nueva historia</p></section>
-    <section class="pantalla tarjeta-pantalla"><img class="fondo" src="assets/fondos/fondo04.webp" alt="" loading="lazy"><article class="tarjeta"><p class="folio">IV · Los detalles</p><span class="ornamento" aria-hidden="true">✦</span><h2>Código de vestimenta</h2><p class="texto">Nos encantará verte celebrar con nosotros. La ocasión será de gala.</p><span class="linea"></span><p class="destacado" id="vestimenta"></p></article></section>
-    <section class="pantalla foto"><img src="assets/fotos/foto05.webp" alt="Los novios brindan desde su mesa principal" loading="lazy"><p class="foto-numero">IV · La fiesta</p><p class="leyenda">Una noche para recordar</p></section>
-    <section class="pantalla tarjeta-pantalla"><img class="fondo" src="assets/fondos/fondo05.webp" alt="" loading="lazy"><article class="tarjeta"><p class="folio">V · Tu presencia</p><span class="ornamento" aria-hidden="true">❦</span><h2>¿Nos acompañas?</h2><p class="texto">Por favor confirma tu asistencia antes del</p><p class="destacado" id="limite"></p><button class="demo" type="button" aria-disabled="true">Confirmar asistencia</button><span class="linea"></span><p class="texto" id="despedida"></p></article></section>
-    <section class="pantalla foto"><img src="assets/fotos/foto06.webp" alt="Retrato de los novios en la catedral" loading="lazy"><p class="foto-numero">V · Para siempre</p><p class="leyenda" id="firma"></p></section>
+  <main aria-label="Invitación de boda clásica" class="invitacion" id="invitacion">
+    <section class="pantalla tarjeta-pantalla"><img alt="" class="fondo" fetchpriority="high"
+        src="assets/fondos/fondo01.webp" />
+      <article class="tarjeta">
+        <p class="folio" data-texto="texto2">I · Nuestra historia</p><span aria-hidden="true" class="ornamento">❦</span>
+        <p class="etiqueta" data-texto="texto3">Con inmensa alegría</p>
+        <h2 id="nombres-presentacion"></h2>
+        <p class="texto" id="mensaje"></p><span class="linea"></span>
+        <p class="texto" data-texto="texto4">Será un honor compartir contigo este día inolvidable.</p>
+      </article>
+    </section>
+    <section class="pantalla foto"><img alt="La pareja sale de la ceremonia entre los invitados" loading="lazy"
+        src="assets/fotos/foto02.webp" />
+      <p class="foto-numero">I · El sí</p>
+      <p class="leyenda" data-texto="texto5">Un amor para celebrar</p>
+    </section>
+    <section class="pantalla tarjeta-pantalla"><img alt="" class="fondo" loading="lazy"
+        src="assets/fondos/fondo02.webp" />
+      <article class="tarjeta">
+        <p class="folio" data-texto="texto6">II · La ceremonia</p><span aria-hidden="true" class="ornamento">✦</span>
+        <h2 data-texto="texto7">Te esperamos</h2>
+        <div class="lugar"><strong data-texto="texto8">Ceremonia religiosa</strong><span class="nombre"
+            id="iglesia"></span><small id="direccion-iglesia"></small><small id="hora-iglesia"></small></div><button
+          class="demo" id="mapa-iglesia" type="button">Ubicación de la iglesia</button>
+      </article>
+    </section>
+    <section class="pantalla foto"><img alt="Los recién casados bajan las escalinatas de la catedral" loading="lazy"
+        src="assets/fotos/foto03.webp" />
+      <p class="foto-numero">II · La alegría</p>
+      <p class="leyenda" data-texto="texto9">Rodeados de quienes queremos</p>
+    </section>
+    <section class="pantalla tarjeta-pantalla"><img alt="" class="fondo" loading="lazy"
+        src="assets/fondos/fondo03.webp" />
+      <article class="tarjeta">
+        <p class="folio" data-texto="texto10">III · Reserva la fecha</p><span aria-hidden="true"
+          class="ornamento">❦</span>
+        <h2 id="fecha-texto"></h2>
+        <p class="texto" data-texto="texto11">Contamos los días para vivir este momento contigo.</p>
+        <div aria-label="Cuenta regresiva" class="contador">
+          <div><strong id="dias">00</strong><small>Días</small></div>
+          <div><strong id="horas">00</strong><small>Horas</small></div>
+          <div><strong id="minutos">00</strong><small>Min</small></div>
+          <div><strong id="segundos">00</strong><small>Seg</small></div>
+        </div><button class="demo" id="agregar-calendario" type="button">Agregar al calendario</button>
+      </article>
+    </section>
+    <section class="pantalla foto"><img alt="La pareja camina por el jardín" loading="lazy"
+        src="assets/fotos/foto04.webp" />
+      <p class="foto-numero">III · Juntos</p>
+      <p class="leyenda" data-texto="texto12">El comienzo de una nueva historia</p>
+    </section>
+    <section class="pantalla tarjeta-pantalla"><img alt="" class="fondo" loading="lazy"
+        src="assets/fondos/fondo04.webp" />
+      <article class="tarjeta">
+        <p class="folio" data-texto="texto13">IV · Los detalles</p><span aria-hidden="true" class="ornamento">✦</span>
+        <h2 data-texto="texto14">Código de vestimenta</h2>
+        <p class="texto" data-texto="texto15">Nos encantará verte celebrar con nosotros. La ocasión será de gala.</p>
+        <span class="linea"></span>
+        <div class="iconos" id="iconos-vestimenta"></div>
+        <p class="destacado" id="vestimenta"></p>
+      </article>
+    </section>
+    <section class="pantalla foto"><img alt="Los novios brindan desde su mesa principal" loading="lazy"
+        src="assets/fotos/foto05.webp" />
+      <p class="foto-numero">IV · La fiesta</p>
+      <p class="leyenda" data-texto="texto16">Una noche para recordar</p>
+    </section>
+    <section class="pantalla tarjeta-pantalla"><img alt="" class="fondo" loading="lazy"
+        src="assets/fondos/fondo05.webp" />
+      <article class="tarjeta">
+        <p class="folio" data-texto="texto17">V · Tu presencia</p><span aria-hidden="true" class="ornamento">❦</span>
+        <h2 data-texto="texto18">¿Nos acompañas?</h2>
+        <p class="texto" data-texto="texto19">Por favor confirma tu asistencia antes del</p>
+        <p class="destacado" id="limite"></p><button class="demo" id="confirmar-whatsapp" type="button">Confirmar
+          asistencia</button><span class="linea"></span>
+        <p class="texto" id="despedida"></p>
+      </article>
+    </section>
+    <section class="pantalla foto"><img alt="Retrato de los novios en la catedral" loading="lazy"
+        src="assets/fotos/foto06.webp" />
+      <p class="foto-numero">V · Para siempre</p>
+      <p class="leyenda" id="firma"></p>
+    </section>
+
+    <section class="pantalla tarjeta-pantalla"><img alt="" class="fondo" loading="lazy"
+        src="assets/fondos/fondo06.webp" />
+      <article class="tarjeta">
+        <p class="folio" data-texto="texto20">VI · Un detalle de amor</p><span aria-hidden="true"
+          class="ornamento">✦</span>
+        <h2 data-texto="texto21">Regalo sugerido</h2>
+        <div class="iconos" id="iconos-regalos"></div>
+        <p class="destacado" id="regalo"></p>
+        <p class="texto" id="mensaje-regalo"></p>
+      </article>
+    </section>
+    <section class="pantalla foto"><img alt="Retrato de los novios en su boda clásica" loading="lazy"
+        src="assets/fotos/foto07.webp" />
+      <p class="foto-numero">VI · Nuestro amor</p>
+      <p class="leyenda" data-texto="texto22">Cada instante, una nueva memoria</p>
+    </section>
+    <section class="pantalla tarjeta-pantalla"><img alt="" class="fondo" loading="lazy"
+        src="assets/fondos/fondo07.webp" />
+      <article class="tarjeta">
+        <p class="folio" data-texto="texto23">VII · La recepción</p><span aria-hidden="true" class="ornamento">❦</span>
+        <h2 data-texto="texto24">Ubicación del evento</h2>
+        <p class="texto" id="mensaje-evento"></p>
+        <div class="lugar"><strong data-texto="texto25">Recepción</strong><span class="nombre" id="salon"></span><small
+            id="direccion-salon"></small><small id="hora-salon"></small></div><button class="demo" id="mapa-evento"
+          type="button">Ubicación del evento</button>
+      </article>
+    </section>
+    <section class="pantalla foto"><img alt="Los novios comparten un momento de celebración" loading="lazy"
+        src="assets/fotos/foto08.webp" />
+      <p class="foto-numero">VII · Una vida juntos</p>
+      <p class="leyenda" data-texto="texto26">Gracias por celebrar nuestra historia</p>
+    </section>
   </main>
-  <div class="controles" aria-label="Controles de la invitación"><button class="control" id="salir" type="button" aria-label="Volver a portada">×</button><button class="control" id="musica-boton" type="button" aria-label="Reproducir música">♫</button></div>
-  <audio id="musica" loop preload="none"></audio>
+  <div aria-label="Controles de la invitación" class="controles"><button aria-label="Salir al listado de bodas"
+      class="control" id="salir" type="button">×</button><button aria-label="Reproducir música" class="control"
+      id="musica-boton" type="button">♫</button></div>
+  <dialog aria-labelledby="titulo-calendarios" id="selector-calendarios">
+    <div class="panel-calendarios">
+      <button aria-label="Cerrar calendarios" id="cerrar-calendarios" type="button">×</button>
+      <h2 id="titulo-calendarios">Agrega el evento a tu calendario</h2>
+      <p id="aviso-calendario" role="status"></p>
+      <button data-calendario="google" type="button"><span aria-hidden="true">📅</span> Calendario Google</button>
+      <button data-calendario="outlook" type="button"><span aria-hidden="true">📆</span> Outlook / Office 365
+        <small>Importar archivo de calendario</small></button>
+      <button data-calendario="apple" type="button"><span aria-hidden="true">🍎</span> Calendario Apple <small>Importar
+          archivo de calendario</small></button>
+    </div>
+  </dialog><audio id="musica" loop="" preload="none"></audio>
   <script>
-    // Modifica aquí los datos de la invitación. Los botones externos son de demostración.
-    const DATOS_INVITACION={
-      pareja:'Isabella & Sebastián',
-      frasePortada:'Un día especial merece compartirse con quienes más queremos.',
-      mensaje:'Después de tantos momentos juntos, hemos decidido unir nuestras vidas. Queremos que formes parte de nuestra celebración.',
-      fechaISO:'2027-06-19T17:00:00-06:00',
-      fechaTexto:'19 · JUNIO · 2027',
-      ceremonia:{lugar:'Catedral Metropolitana',direccion:'Centro, Monterrey, Nuevo León',hora:'5:00 p. m.'},
-      recepcion:{lugar:'Gran Salón Imperial',direccion:'Monterrey, Nuevo León',hora:'8:00 p. m.'},
-      vestimenta:'Formal de gala',
-      limiteConfirmacion:'5 de junio de 2027',
-      despedida:'Gracias por acompañarnos en el comienzo de esta nueva etapa.',
-      urlSalida:'../../../index.html',
-      audio:'assets/audio/musica.mp3'
+    /* DATOS EDITABLES: modifica este bloque.
+       true activa; false mantiene el botón visible sin ejecutar.
+       Calendario: horario de recepción, independiente del contador de ceremonia.
+       Completa WhatsApp y enlaces antes de activarlos. */
+    const DATOS_INVITACION = {
+      "botones": {
+        "abrirInvitacion": true,
+        "salir": true,
+        "musica": true,
+        "continuar": true,
+        "volverInicio": true,
+        "ubicacionEvento": false,
+        "confirmacionWhatsApp": false,
+        "selectorCalendarios": true,
+        "agregarCalendario": false,
+        "ubicacionIglesia": false
+      },
+      "pareja": "Isabella & Sebastián",
+      "frasePortada": "Un día especial merece compartirse con quienes más queremos.",
+      "mensaje": "Después de tantos momentos juntos, hemos decidido unir nuestras vidas. Queremos que formes parte de nuestra celebración.",
+      "fechaISO": "2027-06-19T17:00:00-06:00",
+      "fechaTexto": "19 · JUNIO · 2027",
+      "ceremonia": {
+        "lugar": "Catedral Metropolitana",
+        "direccion": "Centro, Monterrey, Nuevo León",
+        "hora": "5:00 p. m.",
+        "mapa": "https://maps.google.com/"
+      },
+      "vestimenta": "Formal de gala",
+      "iconosVestimenta": {
+        "traje": "../../../assets/iconos/formal_b01.webp",
+        "vestido": "../../../assets/iconos/formal_b02.webp",
+        "tamano": 52
+      },
+      "regalo": "Lluvia de sobres",
+      "mensajeRegalo": "Tu compañía es nuestro mejor regalo. Si deseas tener un detalle con nosotros, te sugerimos un sobre.",
+      "mensajeEvento": "Después de la ceremonia, compartiremos un momento para celebrar juntos.",
+      "iconosRegalos": {
+        "regalo": "../../../assets/iconos/regalo.webp",
+        "sobre": "../../../assets/iconos/sobre_w.webp",
+        "tamano": 52
+      },
+      "limiteConfirmacion": "5 de junio de 2027",
+      "despedida": "Gracias por acompañarnos en el comienzo de esta nueva etapa.",
+      "whatsapp": {
+        "numero": "5210000000000",
+        "mensaje": "Hola, quiero confirmar mi asistencia a la boda de Isabella y Sebastián."
+      },
+      "calendario": {
+        "inicio": "2027-06-19T20:00:00-06:00",
+        "fin": "2027-06-20T01:00:00-06:00"
+      },
+      "urlSalida": "../../../index.html#bodas",
+      "audio": "assets/audio/musica.mp3",
+      "textos": {
+        "texto1": "Tenemos el honor de invitarte a nuestra boda",
+        "texto2": "I · Nuestra historia",
+        "texto3": "Con inmensa alegría",
+        "texto4": "Será un honor compartir contigo este día inolvidable.",
+        "texto5": "Un amor para celebrar",
+        "texto6": "II · La ceremonia",
+        "texto7": "Te esperamos",
+        "texto8": "Ceremonia religiosa",
+        "texto9": "Rodeados de quienes queremos",
+        "texto10": "III · Reserva la fecha",
+        "texto11": "Contamos los días para vivir este momento contigo.",
+        "texto12": "El comienzo de una nueva historia",
+        "texto13": "IV · Los detalles",
+        "texto14": "Código de vestimenta",
+        "texto15": "Nos encantará verte celebrar con nosotros. La ocasión será de gala.",
+        "texto16": "Una noche para recordar",
+        "texto17": "V · Tu presencia",
+        "texto18": "¿Nos acompañas?",
+        "texto19": "Por favor confirma tu asistencia antes del",
+        "texto20": "VI · Un detalle de amor",
+        "texto21": "Regalo sugerido",
+        "texto22": "Cada instante, una nueva memoria",
+        "texto23": "VII · La recepción",
+        "texto24": "Ubicación del evento",
+        "texto25": "Recepción",
+        "texto26": "Gracias por celebrar nuestra historia"
+      },
+      "fotos": {
+        "portada": "assets/fotos/foto01.webp",
+        "secciones": [
+          "assets/fotos/foto02.webp",
+          "assets/fotos/foto03.webp",
+          "assets/fotos/foto04.webp",
+          "assets/fotos/foto05.webp",
+          "assets/fotos/foto06.webp",
+          "assets/fotos/foto07.webp",
+          "assets/fotos/foto08.webp"
+        ]
+      },
+      "fondos": [
+        "assets/fondos/fondo01.webp",
+        "assets/fondos/fondo02.webp",
+        "assets/fondos/fondo03.webp",
+        "assets/fondos/fondo04.webp",
+        "assets/fondos/fondo05.webp",
+        "assets/fondos/fondo06.webp",
+        "assets/fondos/fondo07.webp"
+      ],
+      "recepcion": {
+        "lugar": "Gran Salón Imperial",
+        "direccion": "Monterrey, Nuevo León",
+        "hora": "8:00 p. m.",
+        "mapa": "https://maps.google.com/"
+      }
     };
-    const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-    const visor=$('#invitacion'),pantallas=$$('.pantalla'),audio=$('#musica');let indice=0,iniciado=false,ajustando=false;
-    const campos={'#portada-nombres':'pareja','#frase-portada':'frasePortada','#nombres-presentacion':'pareja','#mensaje':'mensaje','#iglesia':'ceremonia.lugar','#direccion-iglesia':'ceremonia.direccion','#hora-iglesia':'ceremonia.hora','#salon':'recepcion.lugar','#direccion-salon':'recepcion.direccion','#hora-salon':'recepcion.hora','#fecha-texto':'fechaTexto','#vestimenta':'vestimenta','#limite':'limiteConfirmacion','#despedida':'despedida'};
-    for(const [selector,ruta] of Object.entries(campos)) $(selector).textContent=ruta.split('.').reduce((obj,clave)=>obj[clave],DATOS_INVITACION);
-    const [nombre1,nombre2]=DATOS_INVITACION.pareja.split(/\s*&\s*/);
-    const tituloPortada=$('#portada-nombres');
+    const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+    const visor = $('#invitacion'), pantallas = $$('.pantalla'), audio = $('#musica'); let indice = 0, iniciado = false, ajustando = false;
+    const campos = { '#portada-nombres': 'pareja', '#frase-portada': 'frasePortada', '#nombres-presentacion': 'pareja', '#mensaje': 'mensaje', '#iglesia': 'ceremonia.lugar', '#direccion-iglesia': 'ceremonia.direccion', '#hora-iglesia': 'ceremonia.hora', '#salon': 'recepcion.lugar', '#direccion-salon': 'recepcion.direccion', '#hora-salon': 'recepcion.hora', '#fecha-texto': 'fechaTexto', '#vestimenta': 'vestimenta', '#limite': 'limiteConfirmacion', '#despedida': 'despedida' };
+    for (const [selector, ruta] of Object.entries(campos)) $(selector).textContent = ruta.split('.').reduce((obj, clave) => obj[clave], DATOS_INVITACION);
+    const [nombre1, nombre2] = DATOS_INVITACION.pareja.split(/\s*&\s*/);
+    const tituloPortada = $('#portada-nombres');
     tituloPortada.replaceChildren();
-[nombre1,'&',nombre2].forEach((nombre,i)=>{
-    const linea=document.createElement('span');
-    linea.textContent=nombre;
-    if(i===1) linea.className='amp';
-    tituloPortada.append(linea);
+    [nombre1, '&', nombre2].forEach((nombre, i) => {
+      const linea = document.createElement('span');
+      linea.textContent = nombre;
+      if (i === 1) linea.className = 'amp';
+      tituloPortada.append(linea);
     });
-    $('#firma').textContent=`Con amor, ${DATOS_INVITACION.pareja}`;document.title=`${DATOS_INVITACION.pareja} | Boda clásica`;audio.src=DATOS_INVITACION.audio;
-    function irA(n,suave=true){indice=Math.max(0,Math.min(n,pantallas.length-1));visor.scrollTo({top:pantallas[indice].offsetTop,behavior:suave&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'instant'});pantallas[indice].classList.add('visible')}
-    pantallas.forEach((p,n)=>{const b=document.createElement('button');b.className='continuar';b.type='button';b.textContent=n===pantallas.length-1?'Volver al inicio ↑':'Continuar ↓';b.addEventListener('click',()=>irA(n===pantallas.length-1?0:n+1));p.append(b)});
-    const observador=new IntersectionObserver(es=>{for(const e of es)if(e.isIntersecting){e.target.classList.add('visible');if(e.intersectionRatio>.5)indice=pantallas.indexOf(e.target)}},{root:visor,threshold:[.1,.55]});pantallas.forEach(p=>observador.observe(p));
-    function ajustar(){const alto=Math.round(window.visualViewport?.height||window.innerHeight);document.documentElement.style.setProperty('--alto',`${alto}px`);if(iniciado&&!ajustando){ajustando=true;requestAnimationFrame(()=>{irA(indice,false);ajustando=false})}}ajustar();window.addEventListener('resize',ajustar);window.visualViewport?.addEventListener('resize',ajustar);
-    $('#entrar').addEventListener('click',()=>{iniciado=true;document.body.classList.add('iniciada');$('#entrada').classList.add('oculta');irA(0,false)});
-    function salir(){if(!iniciado){window.location.href=DATOS_INVITACION.urlSalida;return}iniciado=false;audio.pause();$('#musica-boton').textContent='♫';$('#musica-boton').setAttribute('aria-label','Reproducir música');document.body.classList.remove('iniciada');$('#entrada').classList.remove('oculta');irA(0,false)}
-    $('#salir').addEventListener('click',salir);$('#salir-entrada').addEventListener('click',salir);
-    $('#musica-boton').addEventListener('click',async()=>{if(!audio.paused){audio.pause();$('#musica-boton').textContent='♫';$('#musica-boton').setAttribute('aria-label','Reproducir música');return}try{await audio.play();$('#musica-boton').textContent='Ⅱ';$('#musica-boton').setAttribute('aria-label','Pausar música')}catch{$('#musica-boton').textContent='♫'}});
-    function contador(){const s=Math.max(0,Math.floor((new Date(DATOS_INVITACION.fechaISO).getTime()-Date.now())/1000));[Math.floor(s/86400),Math.floor(s/3600)%24,Math.floor(s/60)%60,s%60].forEach((n,i)=>$('#'+['dias','horas','minutos','segundos'][i]).textContent=String(n).padStart(2,'0'))}contador();setInterval(contador,1000);
+    $('#firma').textContent = `Con amor, ${DATOS_INVITACION.pareja}`; document.title = `${DATOS_INVITACION.pareja} | Boda clásica`; audio.src = DATOS_INVITACION.audio;
+    function irA(n, suave = true) { indice = Math.max(0, Math.min(n, pantallas.length - 1)); visor.scrollTo({ top: pantallas[indice].offsetTop, behavior: suave && !matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'instant' }); pantallas[indice].classList.add('visible') }
+    pantallas.forEach((p, n) => { const b = document.createElement('button'); b.className = 'continuar'; b.type = 'button'; b.textContent = n === pantallas.length - 1 ? 'Volver al inicio ↑' : 'Continuar ↓'; b.dataset.control = n === pantallas.length - 1 ? 'volverInicio' : 'continuar'; b.addEventListener('click', () => irA(n === pantallas.length - 1 ? 0 : n + 1)); p.append(b) });
+    const observador = new IntersectionObserver(es => { for (const e of es) { e.target.classList.toggle('visible', e.isIntersecting); if (e.isIntersecting && e.intersectionRatio > .5) indice = pantallas.indexOf(e.target); } }, { root: visor, threshold: [.1, .55] }); pantallas.forEach(p => observador.observe(p));
+    function ajustar() { const alto = Math.round(window.visualViewport?.height || window.innerHeight); document.documentElement.style.setProperty('--alto', `${alto}px`); if (iniciado && !ajustando) { ajustando = true; requestAnimationFrame(() => { irA(indice, false); ajustando = false }) } } ajustar(); window.addEventListener('resize', ajustar); window.visualViewport?.addEventListener('resize', ajustar);
+    $('#entrar').addEventListener('click', () => { iniciado = true; document.body.classList.add('iniciada'); $('#entrada').classList.add('oculta'); irA(0, false) });
+    function salir() { audio.pause(); window.location.href = DATOS_INVITACION.urlSalida; }
+    $('#salir').addEventListener('click', salir); $('#salir-entrada').addEventListener('click', salir);
+    $('#musica-boton').addEventListener('click', async () => { if (!audio.paused) { audio.pause(); $('#musica-boton').textContent = '♫'; $('#musica-boton').setAttribute('aria-label', 'Reproducir música'); return } try { await audio.play(); $('#musica-boton').textContent = 'Ⅱ'; $('#musica-boton').setAttribute('aria-label', 'Pausar música') } catch { $('#musica-boton').textContent = '♫' } });
+    function contador() { const s = Math.max(0, Math.floor((new Date(DATOS_INVITACION.fechaISO).getTime() - Date.now()) / 1000));[Math.floor(s / 86400), Math.floor(s / 3600) % 24, Math.floor(s / 60) % 60, s % 60].forEach((n, i) => $('#' + ['dias', 'horas', 'minutos', 'segundos'][i]).textContent = String(n).padStart(2, '0')) } contador(); setInterval(contador, 1000);
+    function datosCalendario() {
+      const inicio = new Date(DATOS_INVITACION.calendario.inicio);
+      const fin = new Date(DATOS_INVITACION.calendario.fin);
+      if (!Number.isFinite(inicio.getTime()) || !Number.isFinite(fin.getTime()) || fin <= inicio) {
+        throw new Error("Revisa inicio y fin en DATOS_INVITACION.calendario.");
+      }
+      return {
+        inicio, fin, titulo: `Boda de ${DATOS_INVITACION.pareja}`,
+        descripcion: DATOS_INVITACION.frasePortada,
+        lugar: `${DATOS_INVITACION.recepcion.lugar}, ${DATOS_INVITACION.recepcion.direccion}`
+      };
+    }
+    function fechaCalendario(fecha) {
+      return fecha.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
+    }
+    function crearICS(datos) {
+      const escapar = valor => String(valor).replace(/\\/g, "\\\\")
+        .replace(/\r?\n/g, "\\n").replace(/;/g, "\\;").replace(/,/g, "\\,");
+      // Pliega por bytes, sin dividir caracteres UTF-8.
+      const plegar = linea => {
+        let salida = "", actual = "", bytes = 0;
+        for (const caracter of linea) {
+          const longitud = new TextEncoder().encode(caracter).length;
+          if (bytes + longitud > 75) { salida += actual + "\r\n"; actual = " "; bytes = 1; }
+          actual += caracter; bytes += longitud;
+        }
+        return salida + actual;
+      };
+      return ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Eldinbridge//Invitaciones//ES",
+        "CALSCALE:GREGORIAN", "BEGIN:VEVENT",
+        `UID:${fechaCalendario(datos.inicio)}-${encodeURIComponent(DATOS_INVITACION.pareja)}@eldinbridge.com`,
+        `DTSTAMP:${fechaCalendario(new Date())}`, `DTSTART:${fechaCalendario(datos.inicio)}`,
+        `DTEND:${fechaCalendario(datos.fin)}`, `SUMMARY:${escapar(datos.titulo)}`,
+        `DESCRIPTION:${escapar(datos.descripcion)}`, `LOCATION:${escapar(datos.lugar)}`,
+        "END:VEVENT", "END:VCALENDAR"].map(plegar).join("\r\n") + "\r\n";
+    }
+    function prepararCalendario() {
+      const boton = $("#agregar-calendario");
+      boton.removeAttribute("href");
+      boton.removeAttribute("target");
+      boton.removeAttribute("rel");
+      boton.setAttribute("role", "button");
+      boton.tabIndex = 0;
+      boton.setAttribute("aria-haspopup", "dialog");
+      const dialogo = $("#selector-calendarios");
+      const abrir = () => {
+        const activo = DATOS_INVITACION.botones.agregarCalendario === true;
+        $("#aviso-calendario").textContent = activo
+          ? "Elige dónde guardar el evento. Confirma los datos en tu calendario."
+          : "Vista de demostración: agregar el evento está desactivado.";
+        $$("[data-calendario]").forEach(opcion => { opcion.disabled = !activo; });
+        if (!dialogo.open) dialogo.showModal();
+      };
+      boton.addEventListener("click", evento => { evento.preventDefault(); abrir(); });
+      boton.addEventListener("keydown", evento => {
+        if (evento.key === "Enter" || evento.key === " ") {
+          evento.preventDefault();
+          if (DATOS_INVITACION.botones.selectorCalendarios === true) abrir();
+        }
+      });
+      $("#cerrar-calendarios").addEventListener("click", () => dialogo.close());
+      dialogo.addEventListener("click", evento => { if (evento.target === dialogo) dialogo.close(); });
+      $$("[data-calendario]").forEach(opcion => opcion.addEventListener("click", () => {
+        if (DATOS_INVITACION.botones.agregarCalendario !== true) return;
+        try {
+          const datos = datosCalendario();
+          if (opcion.dataset.calendario === "google") {
+            const parametros = new URLSearchParams({
+              action: "TEMPLATE", text: datos.titulo,
+              dates: `${fechaCalendario(datos.inicio)}/${fechaCalendario(datos.fin)}`,
+              details: datos.descripcion, location: datos.lugar
+            });
+            window.open(`https://calendar.google.com/calendar/render?${parametros}`, "_blank", "noopener,noreferrer");
+          } else {
+            // Apple y Outlook: archivo estándar para importar y confirmar el evento.
+            const url = URL.createObjectURL(new Blob([crearICS(datos)], { type: "text/calendar;charset=utf-8" }));
+            const enlace = document.createElement("a");
+            enlace.href = url; enlace.download = "invitacion.ics";
+            document.body.appendChild(enlace); enlace.click(); enlace.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 60000);
+            $("#aviso-calendario").textContent = "Abre invitacion.ics en tu calendario e importa el evento. En iPhone también puedes abrirlo desde Mail.";
+          }
+        } catch (error) { $("#aviso-calendario").textContent = error.message; }
+      }));
+    }
+
+    // Imágenes centralizadas, igual que en las plantillas de quinceañera.
+    $('.entrada > img').src = DATOS_INVITACION.fotos.portada;
+    $$('.foto > img').forEach((imagen, i) => imagen.src = DATOS_INVITACION.fotos.secciones[i]);
+    $$('.fondo').forEach((imagen, i) => imagen.src = DATOS_INVITACION.fondos[i]);
+    Object.entries(DATOS_INVITACION.textos).forEach(([clave, texto]) => document.querySelector(`[data-texto="${clave}"]`).textContent = texto);
+    const extras = { '#regalo': 'regalo', '#mensaje-regalo': 'mensajeRegalo', '#mensaje-evento': 'mensajeEvento', };
+    Object.entries(extras).forEach(([selector, ruta]) => $(selector).textContent = ruta.split('.').reduce((o, k) => o[k], DATOS_INVITACION));
+    for (const [id, datos, claves, alts] of [['iconos-vestimenta', DATOS_INVITACION.iconosVestimenta, ['traje', 'vestido'], ['Vestimenta formal para hombre', 'Vestimenta formal para mujer']], ['iconos-regalos', DATOS_INVITACION.iconosRegalos, ['regalo', 'sobre'], ['Regalo', 'Sobre']]]) {
+      const grupo = document.getElementById(id); grupo.style.setProperty('--icono-tamano', datos.tamano + 'px');
+      claves.forEach((clave, i) => { const img = document.createElement('img'); img.src = datos[clave]; img.alt = alts[i]; grupo.append(img); });
+    }
+    const controles = { 'entrar': 'abrirInvitacion', 'salir': 'salir', 'salir-entrada': 'salir', 'musica-boton': 'musica', 'mapa-iglesia': 'ubicacionIglesia', 'mapa-evento': 'ubicacionEvento', 'confirmar-whatsapp': 'confirmacionWhatsApp', 'agregar-calendario': 'selectorCalendarios', 'cerrar-calendarios': 'selectorCalendarios' };
+    Object.entries(controles).forEach(([id, clave]) => document.getElementById(id).dataset.control = clave);
+    $$('[data-control]').forEach(b => { b.disabled = DATOS_INVITACION.botones[b.dataset.control] !== true; b.setAttribute('aria-disabled', String(b.disabled)); });
+    document.addEventListener('click', e => { const b = e.target.closest('[data-control]'); if (b && DATOS_INVITACION.botones[b.dataset.control] !== true) { e.preventDefault(); e.stopImmediatePropagation(); } }, true);
+    $('#mapa-iglesia').addEventListener('click', () => window.open(DATOS_INVITACION.ceremonia.mapa, '_blank', 'noopener,noreferrer'));
+    $('#mapa-evento').addEventListener('click', () => window.open(DATOS_INVITACION.recepcion.mapa, '_blank', 'noopener,noreferrer'));
+    $('#confirmar-whatsapp').addEventListener('click', () => window.open(`https://wa.me/${DATOS_INVITACION.whatsapp.numero.replace(/\D/g, '')}?text=${encodeURIComponent(DATOS_INVITACION.whatsapp.mensaje)}`, '_blank', 'noopener,noreferrer'));
+    prepararCalendario();
   </script>
 </body>
+
 </html>
