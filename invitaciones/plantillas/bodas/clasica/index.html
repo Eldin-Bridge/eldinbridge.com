@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
 <html lang="es">
-
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport" />
@@ -19,11 +17,9 @@
       --tinta: #493c37;
       --marfil: #fffaf2
     }
-
     * {
       box-sizing: border-box
     }
-
     html,
     body {
       margin: 0;
@@ -31,30 +27,25 @@
       height: 100%;
       overflow: hidden
     }
-
     body {
       background: #e9dccb;
       color: var(--tinta);
       font-family: Jost, Arial, sans-serif
     }
-
     button {
       font: inherit;
       cursor: pointer
     }
-
     button:focus-visible {
       outline: 3px solid #a77e4b;
       outline-offset: 4px
     }
-
     .entrada,
     .pantalla {
       position: relative;
       height: var(--alto);
       overflow: hidden
     }
-
     .entrada {
       position: fixed;
       inset: 0;
@@ -62,13 +53,11 @@
       background: #45352e;
       transition: opacity .6s, visibility .6s
     }
-
     .entrada.oculta {
       opacity: 0;
       visibility: hidden;
       pointer-events: none
     }
-
     .entrada>img,
     .fondo,
     .foto>img {
@@ -79,11 +68,9 @@
       height: 100%;
       object-fit: cover
     }
-
     .entrada>img {
       object-position: center 45%
     }
-
     .entrada::after {
       content: "";
       position: absolute;
@@ -91,7 +78,6 @@
       background: linear-gradient(180deg, #221a1833 0%, transparent 35%, #20171599 100%);
       pointer-events: none
     }
-
     .portada {
       position: absolute;
       z-index: 1;
@@ -102,12 +88,10 @@
       text-align: center;
       text-shadow: 0 2px 18px #221915a3
     }
-
     .portada .adorno {
       margin: 0 auto 12px;
       color: #f6dfba
     }
-
     .portada .subtitulo,
     .folio,
     .etiqueta,
@@ -117,29 +101,24 @@
       text-transform: uppercase;
       font-weight: 500
     }
-
     .portada h1 {
       font: 500 clamp(2.5rem, 10vw, 4.5rem)/.98 'Cormorant Garamond', Georgia, serif;
       margin: 13px 0 9px
     }
-
     .portada h1 span {
       display: block
     }
-
     .portada h1 .amp {
       font-size: .62em;
       line-height: .8;
       margin: .08em 0
     }
-
     .portada .frase {
       font-size: .93rem;
       line-height: 1.5;
       margin: 0 auto 21px;
       max-width: 32ch
     }
-
     .boton-entrada,
     .continuar,
     .demo {
@@ -154,13 +133,11 @@
       font-weight: 600;
       transition: transform .25s, background .25s
     }
-
     .boton-entrada:hover,
     .continuar:hover {
       background: white;
       transform: translateY(-2px)
     }
-
     .salir-entrada,
     .control {
       width: 44px;
@@ -175,14 +152,12 @@
       place-items: center;
       line-height: 1
     }
-
     .salir-entrada {
       position: absolute;
       top: max(18px, env(safe-area-inset-top));
       left: 18px;
       z-index: 3
     }
-
     .invitacion {
       height: var(--alto);
       overflow-y: auto;
@@ -191,18 +166,15 @@
       overscroll-behavior: contain;
       scrollbar-width: none
     }
-
     .invitacion::-webkit-scrollbar {
       display: none
     }
-
     .pantalla {
       scroll-snap-align: start;
       scroll-snap-stop: always;
       display: grid;
       place-items: center
     }
-
     .tarjeta-pantalla::after {
       content: "";
       position: absolute;
@@ -210,7 +182,6 @@
       background: #f7eee42b;
       pointer-events: none
     }
-
     .tarjeta {
       position: relative;
       z-index: 1;
@@ -224,7 +195,6 @@
       box-shadow: 0 18px 54px #3a261c42;
       text-align: center
     }
-
     .tarjeta::before {
       content: "";
       position: absolute;
@@ -232,7 +202,6 @@
       border: 1px solid #b9925d91;
       pointer-events: none
     }
-
     .tarjeta::after {
       content: "✦";
       position: absolute;
@@ -244,12 +213,10 @@
       color: var(--oro);
       font-size: 14px
     }
-
     .folio {
       color: var(--oro);
       margin: 3px 0 22px
     }
-
     .ornamento {
       display: block;
       color: var(--oro);
@@ -257,31 +224,26 @@
       letter-spacing: .25em;
       margin: 13px auto
     }
-
     .etiqueta {
       color: #997b60;
       margin: 0 0 5px
     }
-
     .tarjeta h2 {
       font: 500 clamp(2.05rem, 7vw, 3.1rem)/1.04 'Cormorant Garamond', Georgia, serif;
       margin: 0 0 15px;
       color: #564136
     }
-
     .texto {
       font-size: clamp(.87rem, 2.8vw, 1rem);
       line-height: 1.65;
       margin: 10px auto;
       max-width: 34ch
     }
-
     .destacado {
       font: 500 clamp(1.4rem, 5vw, 2rem)/1.16 'Cormorant Garamond', Georgia, serif;
       margin: 12px 0;
       color: #775634
     }
-
     .linea {
       display: block;
       width: 72px;
@@ -289,16 +251,13 @@
       background: var(--oro);
       margin: 20px auto
     }
-
     .lugar {
       padding: 10px 0;
       border-top: 1px solid #b7986b70
     }
-
     .lugar:first-of-type {
       border: 0
     }
-
     .lugar strong {
       display: block;
       font: .67rem Jost, Arial, sans-serif;
@@ -306,59 +265,49 @@
       letter-spacing: .2em;
       color: #9a7449
     }
-
     .lugar .nombre {
       font: 500 1.55rem 'Cormorant Garamond', Georgia, serif;
       display: block;
       margin: 3px 0
     }
-
     .lugar small {
       display: block;
       line-height: 1.4;
       font-size: .81rem
     }
-
     .contador {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 5px;
       margin: 18px 0
     }
-
     .contador div {
       border-top: 1px solid #c2a77e;
       border-bottom: 1px solid #c2a77e;
       padding: 8px 2px
     }
-
     .contador strong {
       display: block;
       font: 500 1.5rem 'Cormorant Garamond', Georgia, serif
     }
-
     .contador small {
       display: block;
       text-transform: uppercase;
       font-size: .55rem;
       letter-spacing: .08em
     }
-
     .demo {
       background: transparent;
       color: #816f5c;
       cursor: default;
       margin-top: 9px
     }
-
     .foto {
       background: #392b23
     }
-
     .foto>img {
       object-position: center 47%
     }
-
     .foto::after {
       content: "";
       position: absolute;
@@ -366,7 +315,6 @@
       background: linear-gradient(180deg, #24191255, transparent 30%, transparent 55%, #201713b8);
       pointer-events: none
     }
-
     .foto-numero,
     .leyenda {
       position: absolute;
@@ -374,12 +322,10 @@
       color: #fff;
       text-shadow: 0 2px 13px #211812bf
     }
-
     .foto-numero {
       top: max(78px, calc(env(safe-area-inset-top) + 66px));
       left: 7%
     }
-
     .leyenda {
       bottom: 108px;
       left: 8%;
@@ -387,7 +333,6 @@
       text-align: center;
       font: 500 clamp(1.55rem, 5.3vw, 2.3rem)/1.2 'Cormorant Garamond', Georgia, serif
     }
-
     .continuar {
       position: absolute;
       z-index: 5;
@@ -399,11 +344,9 @@
       background: #fffaf1ef;
       box-shadow: 0 5px 18px #231a1538
     }
-
     .continuar:hover {
       transform: translate(-50%, -2px)
     }
-
     .controles {
       position: fixed;
       z-index: 12;
@@ -416,67 +359,54 @@
       opacity: 0;
       transition: opacity .35s
     }
-
     body.iniciada .controles {
       opacity: 1
     }
-
     .controles button {
       pointer-events: auto
     }
-
     .pantalla .tarjeta,
     .pantalla .leyenda {
       opacity: 0;
       transform: translateY(18px);
       transition: opacity .6s, transform .6s
     }
-
     .pantalla.visible .tarjeta,
     .pantalla.visible .leyenda {
       opacity: 1;
       transform: none
     }
-
     @media(max-height:650px) {
       .tarjeta {
         max-height: calc(var(--alto) - 105px);
         padding: 18px 24px
       }
-
       .folio {
         margin-bottom: 10px
       }
-
       .linea {
         margin: 10px auto
       }
-
       .texto {
         line-height: 1.45
       }
-
       .leyenda {
         bottom: 88px
       }
     }
-
     @media(min-width:700px) {
-
       .entrada,
       .pantalla,
       .invitacion {
         max-width: 520px;
         margin-inline: auto
       }
-
       .entrada {
         left: 50%;
         right: auto;
         width: 520px;
         transform: translateX(-50%)
       }
-
       .controles {
         left: 50%;
         right: auto;
@@ -484,9 +414,7 @@
         transform: translateX(-50%)
       }
     }
-
     @media(prefers-reduced-motion:reduce) {
-
       *,
       *::before,
       *::after {
@@ -494,14 +422,12 @@
         transition-duration: .01ms !important;
         scroll-behavior: auto !important
       }
-
       .pantalla .tarjeta,
       .pantalla .leyenda {
         opacity: 1;
         transform: none
       }
     }
-
     .iconos {
       display: flex;
       justify-content: center;
@@ -509,57 +435,46 @@
       gap: 16px;
       margin: 18px 0;
     }
-
     .iconos img {
       width: var(--icono-tamano, 52px);
       height: var(--icono-tamano, 52px);
       object-fit: contain;
     }
-
     .demo:not(:disabled) {
       cursor: pointer;
     }
-
     @media(min-width:700px) {
       :root {
         --ancho-foto: min(100vw, calc(var(--alto) * 2 / 3));
       }
-
       .entrada,
       .pantalla,
       .invitacion {
         max-width: var(--ancho-foto);
       }
-
       .entrada {
         width: var(--ancho-foto);
       }
-
       .controles {
         width: var(--ancho-foto);
         padding-inline: 18px;
       }
-
       .entrada img,
       .foto img {
         object-fit: contain;
         object-position: center;
       }
-
       .portada {
         left: 7%;
         right: 7%;
       }
-
       .portada h1 {
         font-size: clamp(2rem, calc(var(--alto) * .085), 4.5rem);
       }
-
       .tarjeta {
         width: min(86%, 470px);
       }
     }
-
     #selector-calendarios {
       padding: 0;
       border: 1px solid #b9a47a;
@@ -580,31 +495,25 @@
       color: #333;
       background: #fffaf1;
     }
-
     #selector-calendarios .panel-calendarios {
       padding-bottom: max(24px, env(safe-area-inset-bottom));
     }
-
     #selector-calendarios::backdrop {
       background: rgba(0, 0, 0, .65);
     }
-
     .panel-calendarios {
       position: relative;
       padding: 32px 24px 24px;
     }
-
     .panel-calendarios h2 {
       margin: 12px 0;
       font: inherit;
       font-size: 24px;
     }
-
     .panel-calendarios p {
       font-size: 15px;
       line-height: 1.5;
     }
-
     .panel-calendarios [data-calendario] {
       width: 100%;
       margin-top: 12px;
@@ -616,13 +525,11 @@
       font: inherit;
       cursor: pointer;
     }
-
     .panel-calendarios small {
       display: block;
       margin-top: 5px;
       font-size: 12px;
     }
-
     #cerrar-calendarios {
       position: absolute;
       right: 12px;
@@ -633,14 +540,12 @@
       font-size: 26px;
       cursor: pointer;
     }
-
     [data-control][aria-disabled="true"],
     .panel-calendarios button:disabled {
       cursor: default;
     }
   </style>
 </head>
-
 <body>
   <section aria-label="Portada de boda clásica" class="entrada" id="entrada">
     <img alt="La pareja durante su ceremonia en la catedral" fetchpriority="high" src="assets/fotos/foto01.webp" />
@@ -736,7 +641,6 @@
       <p class="foto-numero">V · Para siempre</p>
       <p class="leyenda" id="firma"></p>
     </section>
-
     <section class="pantalla tarjeta-pantalla"><img alt="" class="fondo" loading="lazy"
         src="assets/fondos/fondo06.webp" />
       <article class="tarjeta">
@@ -914,10 +818,35 @@
     pantallas.forEach((p, n) => { const b = document.createElement('button'); b.className = 'continuar'; b.type = 'button'; b.textContent = n === pantallas.length - 1 ? 'Volver al inicio ↑' : 'Continuar ↓'; b.dataset.control = n === pantallas.length - 1 ? 'volverInicio' : 'continuar'; b.addEventListener('click', () => irA(n === pantallas.length - 1 ? 0 : n + 1)); p.append(b) });
     const observador = new IntersectionObserver(es => { for (const e of es) { e.target.classList.toggle('visible', e.isIntersecting); if (e.isIntersecting && e.intersectionRatio > .5) indice = pantallas.indexOf(e.target); } }, { root: visor, threshold: [.1, .55] }); pantallas.forEach(p => observador.observe(p));
     function ajustar() { const alto = Math.round(window.visualViewport?.height || window.innerHeight); document.documentElement.style.setProperty('--alto', `${alto}px`); if (iniciado && !ajustando) { ajustando = true; requestAnimationFrame(() => { irA(indice, false); ajustando = false }) } } ajustar(); window.addEventListener('resize', ajustar); window.visualViewport?.addEventListener('resize', ajustar);
-    $('#entrar').addEventListener('click', () => { iniciado = true; document.body.classList.add('iniciada'); $('#entrada').classList.add('oculta'); irA(0, false) });
+    async function reproducirMusica() {
+      if (!iniciado || DATOS_INVITACION.botones.musica !== true || !DATOS_INVITACION.audio) return;
+      try { await audio.play(); } catch { actualizarBotonMusica(); }
+    }
+    function actualizarBotonMusica() {
+      const sonando=!audio.paused;
+      $('#musica-boton').textContent=sonando?'Ⅱ':'♫';
+      $('#musica-boton').setAttribute('aria-label',sonando?'Pausar música':'Reproducir música');
+    }
+    audio.addEventListener('play',()=>{
+      if (!iniciado || DATOS_INVITACION.botones.musica !== true) { audio.pause(); return; }
+      actualizarBotonMusica();
+    });
+    audio.addEventListener('pause',actualizarBotonMusica);
+    audio.pause();
+    actualizarBotonMusica();
+    $('#entrar').addEventListener('click', () => {
+      iniciado=true;
+      reproducirMusica();
+      document.body.classList.add('iniciada');
+      $('#entrada').classList.add('oculta');
+      irA(0,false);
+    });
     function salir() { audio.pause(); window.location.href = DATOS_INVITACION.urlSalida; }
     $('#salir').addEventListener('click', salir); $('#salir-entrada').addEventListener('click', salir);
-    $('#musica-boton').addEventListener('click', async () => { if (!audio.paused) { audio.pause(); $('#musica-boton').textContent = '♫'; $('#musica-boton').setAttribute('aria-label', 'Reproducir música'); return } try { await audio.play(); $('#musica-boton').textContent = 'Ⅱ'; $('#musica-boton').setAttribute('aria-label', 'Pausar música') } catch { $('#musica-boton').textContent = '♫' } });
+    $('#musica-boton').addEventListener('click',()=>{
+      if (!iniciado || DATOS_INVITACION.botones.musica !== true) return;
+      if (audio.paused) reproducirMusica(); else audio.pause();
+    });
     function contador() { const s = Math.max(0, Math.floor((new Date(DATOS_INVITACION.fechaISO).getTime() - Date.now()) / 1000));[Math.floor(s / 86400), Math.floor(s / 3600) % 24, Math.floor(s / 60) % 60, s % 60].forEach((n, i) => $('#' + ['dias', 'horas', 'minutos', 'segundos'][i]).textContent = String(n).padStart(2, '0')) } contador(); setInterval(contador, 1000);
     function datosCalendario() {
       const inicio = new Date(DATOS_INVITACION.calendario.inicio);
@@ -1004,7 +933,6 @@
         } catch (error) { $("#aviso-calendario").textContent = error.message; }
       }));
     }
-
     // Imágenes centralizadas, igual que en las plantillas de quinceañera.
     $('.entrada > img').src = DATOS_INVITACION.fotos.portada;
     $$('.foto > img').forEach((imagen, i) => imagen.src = DATOS_INVITACION.fotos.secciones[i]);
@@ -1026,5 +954,4 @@
     prepararCalendario();
   </script>
 </body>
-
 </html>

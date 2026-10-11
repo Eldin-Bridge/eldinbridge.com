@@ -1114,10 +1114,38 @@
     });
     // Precargar fotos evita pantallas vacías al avanzar rápidamente.
     $$('.foto img').forEach(img => { img.loading = 'eager'; img.decoding = 'async' });
-    $('#entrar').addEventListener('click', () => { iniciado = true; visor.inert = false; $('#entrada').inert = true; document.body.classList.add('iniciada'); $('#entrada').classList.add('oculta'); irA(0, false); pantallas[0].querySelector('.seguir').focus({ preventScroll: true }) });
+    async function reproducirMusica() {
+      if (!iniciado || DATOS_INVITACION.botones.musica !== true || !DATOS_INVITACION.audio) return;
+      try { await audio.play(); } catch { actualizarBotonMusica(); }
+    }
+    function actualizarBotonMusica() {
+      const sonando=!audio.paused;
+      $('#musica-boton').textContent=sonando?'Ⅱ':'♫';
+      $('#musica-boton').setAttribute('aria-label',sonando?'Pausar música':'Reproducir música');
+    }
+    audio.addEventListener('play',()=>{
+      if (!iniciado || DATOS_INVITACION.botones.musica !== true) { audio.pause(); return; }
+      actualizarBotonMusica();
+    });
+    audio.addEventListener('pause',actualizarBotonMusica);
+    audio.pause();
+    actualizarBotonMusica();
+    $('#entrar').addEventListener('click', () => {
+      iniciado=true;
+      visor.inert=false;
+      $('#entrada').inert=true;
+      reproducirMusica();
+      document.body.classList.add('iniciada');
+      $('#entrada').classList.add('oculta');
+      irA(0,false);
+      pantallas[0].querySelector('.seguir').focus({preventScroll:true});
+    });
     function salir() { audio.pause(); window.location.href = DATOS_INVITACION.urlSalida; }
     $('#salir').addEventListener('click', salir); $('#salir-entrada').addEventListener('click', salir);
-    $('#musica-boton').addEventListener('click', async () => { if (!DATOS_INVITACION.audio) return; if (!audio.paused) { audio.pause(); $('#musica-boton').textContent = '♫'; $('#musica-boton').setAttribute('aria-label', 'Reproducir música'); return } try { await audio.play(); $('#musica-boton').textContent = 'Ⅱ'; $('#musica-boton').setAttribute('aria-label', 'Pausar música') } catch { $('#musica-boton').textContent = '♫' } });
+    $('#musica-boton').addEventListener('click',()=>{
+      if (!iniciado || DATOS_INVITACION.botones.musica !== true) return;
+      if (audio.paused) reproducirMusica(); else audio.pause();
+    });
     function contador() { const segundos = Math.max(0, Math.floor((new Date(DATOS_INVITACION.fechaISO).getTime() - Date.now()) / 1000));[Math.floor(segundos / 86400), Math.floor(segundos / 3600) % 24, Math.floor(segundos / 60) % 60, segundos % 60].forEach((n, i) => $('#' + ['dias', 'horas', 'minutos', 'segundos'][i]).textContent = String(n).padStart(2, '0')) } contador(); setInterval(contador, 1000);
     function datosCalendario() {
       const inicio = new Date(DATOS_INVITACION.calendario.inicio);

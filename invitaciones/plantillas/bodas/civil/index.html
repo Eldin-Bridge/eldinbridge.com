@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport" />
@@ -19,11 +18,9 @@
       --papel: #f9f6f0;
       --borde: #c6cfd0;
     }
-
     * {
       box-sizing: border-box;
     }
-
     html,
     body {
       margin: 0;
@@ -31,23 +28,19 @@
       height: 100%;
       overflow: hidden;
     }
-
     body {
       font-family: 'DM Sans', Arial, sans-serif;
       color: var(--tinta);
       background: #e9e5de;
     }
-
     button {
       font: inherit;
       cursor: pointer;
     }
-
     button:focus-visible {
       outline: 3px solid #94b6ca;
       outline-offset: 4px;
     }
-
     .entrada,
     .pantalla {
       position: relative;
@@ -55,7 +48,6 @@
       min-height: 0;
       overflow: hidden;
     }
-
     .entrada {
       position: fixed;
       inset: 0;
@@ -63,13 +55,11 @@
       background: #46525b;
       transition: opacity .55s ease, visibility .55s ease;
     }
-
     .entrada.oculta {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
     }
-
     .entrada img,
     .fondo,
     .foto img {
@@ -78,11 +68,9 @@
       height: 100%;
       object-fit: cover;
     }
-
     .entrada img {
       object-position: center 48%;
     }
-
     .entrada::after {
       content: "";
       position: absolute;
@@ -90,7 +78,6 @@
       background: linear-gradient(180deg, rgba(15, 30, 42, .17) 0%, rgba(15, 30, 42, .03) 35%, rgba(15, 30, 42, .71) 100%);
       pointer-events: none;
     }
-
     .portada-contenido {
       position: absolute;
       z-index: 1;
@@ -101,7 +88,6 @@
       text-align: center;
       text-shadow: 0 2px 15px #18242c85;
     }
-
     .portada-kicker,
     .kicker,
     .folio,
@@ -113,7 +99,6 @@
       letter-spacing: .22em;
       font-size: clamp(.59rem, 2.3vw, .75rem);
     }
-
     .portada-nombres {
       font-family: Manrope, Arial, sans-serif;
       font-size: clamp(2.3rem, 9vw, 4.5rem);
@@ -122,14 +107,12 @@
       margin: 18px 0 12px;
       font-weight: 500;
     }
-
     .portada-frase {
       margin: 0 auto 23px;
       max-width: 32ch;
       line-height: 1.5;
       font-size: clamp(.9rem, 3vw, 1.1rem);
     }
-
     .entrar,
     .continuar,
     .boton-demo {
@@ -144,19 +127,16 @@
       text-transform: uppercase;
       transition: background .2s, transform .2s;
     }
-
     .entrar {
       color: #203546;
       background: #faf7f1;
       border-color: #faf7f1;
       text-shadow: none;
     }
-
     .entrar:hover,
     .continuar:hover {
       transform: translateY(-2px);
     }
-
     .salir-portada,
     .control {
       border: 1px solid #ffffff9c;
@@ -171,14 +151,12 @@
       font-size: 1.35rem;
       line-height: 1;
     }
-
     .salir-portada {
       position: absolute;
       z-index: 3;
       top: max(18px, env(safe-area-inset-top));
       left: 18px;
     }
-
     .invitacion {
       height: var(--alto);
       overflow-y: auto;
@@ -187,24 +165,20 @@
       overscroll-behavior: contain;
       scrollbar-width: none;
     }
-
     .invitacion::-webkit-scrollbar {
       display: none;
     }
-
     .pantalla {
       scroll-snap-align: start;
       scroll-snap-stop: always;
       display: grid;
       place-items: center;
     }
-
     .fondo {
       position: absolute;
       inset: 0;
       object-position: center;
     }
-
     .tarjeta-pantalla::after {
       content: "";
       position: absolute;
@@ -212,7 +186,6 @@
       background: #f2eee822;
       pointer-events: none;
     }
-
     .tarjeta {
       position: relative;
       z-index: 1;
@@ -226,7 +199,6 @@
       padding: clamp(22px, 5.2vh, 44px) clamp(22px, 6vw, 43px);
       text-align: center;
     }
-
     .tarjeta::before {
       content: "";
       position: absolute;
@@ -234,12 +206,10 @@
       border: 1px solid #b6c2c066;
       pointer-events: none;
     }
-
     .folio {
       color: var(--azul);
       margin: 0 0 25px;
     }
-
     .folio::after {
       content: "";
       display: block;
@@ -248,12 +218,10 @@
       background: #9db1b8;
       margin: 15px auto 0;
     }
-
     .kicker {
       color: var(--azul);
       margin: 0 0 10px;
     }
-
     h2 {
       font-family: Manrope, Arial, sans-serif;
       font-size: clamp(1.55rem, 5.8vw, 2.45rem);
@@ -262,28 +230,24 @@
       letter-spacing: -.055em;
       margin: 0 0 17px;
     }
-
     .texto {
       font-size: clamp(.88rem, 2.7vw, 1rem);
       line-height: 1.7;
       margin: 12px auto;
       max-width: 34ch;
     }
-
     .dato {
       font-size: clamp(1.02rem, 3.6vw, 1.28rem);
       line-height: 1.4;
       font-weight: 700;
       margin: 10px 0 3px;
     }
-
     .secundario {
       font-size: .84rem;
       color: #5d6b70;
       line-height: 1.5;
       margin: 5px 0;
     }
-
     .linea {
       display: block;
       width: 48px;
@@ -291,14 +255,12 @@
       background: #adc0c3;
       margin: 22px auto;
     }
-
     .detalle {
       padding: 8px 0;
       border-top: 1px solid #cfd7d5;
       font-size: .83rem;
       line-height: 1.5;
     }
-
     .detalle strong {
       display: block;
       color: #607d8e;
@@ -308,31 +270,26 @@
       text-transform: uppercase;
       margin-bottom: 4px;
     }
-
     .contador {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 5px;
       margin: 22px 0 16px;
     }
-
     .contador div {
       border: 1px solid #b7c5c6;
       padding: 10px 2px;
     }
-
     .contador strong {
       display: block;
       font-size: 1.3rem;
       font-weight: 500;
     }
-
     .contador small {
       text-transform: uppercase;
       letter-spacing: .08em;
       font-size: .57rem;
     }
-
     .boton-demo {
       background: transparent;
       color: #72828a;
@@ -340,17 +297,14 @@
       cursor: default;
       margin-top: 12px;
     }
-
     .foto {
       background: #243544;
     }
-
     .foto img {
       position: absolute;
       inset: 0;
       object-position: center 45%;
     }
-
     .foto::after {
       content: "";
       position: absolute;
@@ -358,7 +312,6 @@
       background: linear-gradient(180deg, #182a3645 0%, transparent 30%, transparent 55%, #1427349c 100%);
       pointer-events: none;
     }
-
     .foto-numero,
     .leyenda {
       position: absolute;
@@ -366,12 +319,10 @@
       color: white;
       text-shadow: 0 2px 12px #102532ae;
     }
-
     .foto-numero {
       top: max(75px, calc(env(safe-area-inset-top) + 66px));
       left: 7%;
     }
-
     .leyenda {
       bottom: 112px;
       left: 9%;
@@ -379,7 +330,6 @@
       text-align: center;
       line-height: 1.6;
     }
-
     .continuar {
       position: absolute;
       z-index: 5;
@@ -393,11 +343,9 @@
       border-color: #c1cdcf;
       box-shadow: 0 5px 20px #12263824;
     }
-
     .continuar:hover {
       transform: translate(-50%, -2px);
     }
-
     .controles {
       position: fixed;
       z-index: 12;
@@ -408,72 +356,58 @@
       opacity: 0;
       transition: opacity .35s;
     }
-
     body.iniciada .controles {
       opacity: 1;
     }
-
     .controles .control {
       pointer-events: auto;
     }
-
     .control.musica {
       font-size: 1.1rem;
     }
-
     .pantalla .tarjeta,
     .pantalla .leyenda {
       opacity: 0;
       transform: translateY(18px);
       transition: opacity .55s ease, transform .55s ease;
     }
-
     .pantalla.visible .tarjeta,
     .pantalla.visible .leyenda {
       opacity: 1;
       transform: none;
     }
-
     @media(max-height:650px) {
       .tarjeta {
         max-height: calc(var(--alto) - 105px);
         padding: 17px 22px;
       }
-
       .folio {
         margin-bottom: 10px;
       }
-
       .linea {
         margin: 12px auto;
       }
-
       .texto {
         line-height: 1.45;
         margin: 7px auto;
       }
-
       .leyenda {
         bottom: 88px;
       }
     }
-
     @media(min-width:700px) {
-
       .entrada,
       .pantalla,
       .invitacion {
         max-width: 520px;
         margin-inline: auto;
       }
-
       .entrada {
         left: 50%;
         right: auto;
         width: 520px;
         transform: translateX(-50%);
       }
-
       .controles {
         left: 50%;
         right: auto;
@@ -481,9 +415,7 @@
         transform: translateX(-50%);
       }
     }
-
     @media(prefers-reduced-motion:reduce) {
-
       *,
       *::before,
       *::after {
@@ -491,14 +423,12 @@
         animation-duration: .01ms !important;
         transition-duration: .01ms !important;
       }
-
       .pantalla .tarjeta,
       .pantalla .leyenda {
         opacity: 1;
         transform: none;
       }
     }
-
     .iconos {
       display: flex;
       justify-content: center;
@@ -506,57 +436,46 @@
       gap: 16px;
       margin: 18px 0;
     }
-
     .iconos img {
       width: var(--icono-tamano, 52px);
       height: var(--icono-tamano, 52px);
       object-fit: contain;
     }
-
     .boton-demo:not(:disabled) {
       cursor: pointer;
     }
-
     @media(min-width:700px) {
       :root {
         --ancho-foto: min(100vw, calc(var(--alto) * 2 / 3));
       }
-
       .entrada,
       .pantalla,
       .invitacion {
         max-width: var(--ancho-foto);
       }
-
       .entrada {
         width: var(--ancho-foto);
       }
-
       .controles {
         width: var(--ancho-foto);
         padding-inline: 18px;
       }
-
       .entrada img,
       .foto img {
         object-fit: contain;
         object-position: center;
       }
-
       .portada-contenido {
         left: 7%;
         width: 86%;
       }
-
       .portada-nombres {
         font-size: clamp(2rem, calc(var(--alto) * .065), 4.5rem);
       }
-
       .tarjeta {
         width: min(86%, 480px);
       }
     }
-
     #selector-calendarios {
       padding: 0;
       border: 1px solid #b9a47a;
@@ -577,31 +496,25 @@
       color: #333;
       background: #fffaf1;
     }
-
     #selector-calendarios .panel-calendarios {
       padding-bottom: max(24px, env(safe-area-inset-bottom));
     }
-
     #selector-calendarios::backdrop {
       background: rgba(0, 0, 0, .65);
     }
-
     .panel-calendarios {
       position: relative;
       padding: 32px 24px 24px;
     }
-
     .panel-calendarios h2 {
       margin: 12px 0;
       font: inherit;
       font-size: 24px;
     }
-
     .panel-calendarios p {
       font-size: 15px;
       line-height: 1.5;
     }
-
     .panel-calendarios [data-calendario] {
       width: 100%;
       margin-top: 12px;
@@ -613,13 +526,11 @@
       font: inherit;
       cursor: pointer;
     }
-
     .panel-calendarios small {
       display: block;
       margin-top: 5px;
       font-size: 12px;
     }
-
     #cerrar-calendarios {
       position: absolute;
       right: 12px;
@@ -630,12 +541,10 @@
       font-size: 26px;
       cursor: pointer;
     }
-
     [data-control][aria-disabled="true"],
     .panel-calendarios button:disabled {
       cursor: default;
     }
-
     /* Nombres arriba, dentro de la foto, en composición diagonal. */
     .entrada>.portada-nombres {
       position: absolute;
@@ -654,11 +563,9 @@
       grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
       column-gap: .35em;
     }
-
     .portada-nombres span {
       display: block;
     }
-
     .portada-nombres .nombre-izq {
       grid-column: 1;
       grid-row: 1;
@@ -666,7 +573,6 @@
       text-align: right;
       white-space: nowrap;
     }
-
     .portada-nombres .union {
       grid-column: 2;
       grid-row: 2;
@@ -675,7 +581,6 @@
       font-size: .65em;
       margin: -2px 0;
     }
-
     .portada-nombres .nombre-der {
       grid-column: 3;
       grid-row: 3;
@@ -683,13 +588,11 @@
       text-align: left;
       white-space: nowrap;
     }
-
     /* Detalles finos que acompañan los nombres sin cambiar la composición. */
     .portada-nombres .nombre-izq,
     .portada-nombres .nombre-der {
       position: relative;
     }
-
     .portada-nombres .nombre-izq::after,
     .portada-nombres .nombre-der::after {
       content: "";
@@ -702,7 +605,6 @@
       box-shadow: 0 1px 3px rgba(24, 36, 44, .25);
       pointer-events: none;
     }
-
     .portada-nombres .nombre-izq::before,
     .portada-nombres .nombre-der::before {
       content: "";
@@ -714,17 +616,14 @@
       transform: rotate(45deg);
       pointer-events: none;
     }
-
     .portada-nombres .nombre-izq::before {
       left: 0;
     }
-
     .portada-nombres .nombre-der::before {
       right: 0;
     }
   </style>
 </head>
-
 <body>
   <section aria-label="Portada de la boda civil" class="entrada" id="entrada">
     <img alt="La pareja después de su boda civil" fetchpriority="high" src="assets/fotos/foto06.webp" />
@@ -1017,10 +916,35 @@
     pantallas.forEach(p => observador.observe(p));
     function ajustar() { const alto = Math.round(window.visualViewport?.height || window.innerHeight); document.documentElement.style.setProperty('--alto', `${alto}px`); if (iniciado && !ajustando) { ajustando = true; requestAnimationFrame(() => { irA(indice, false); ajustando = false; }); } }
     ajustar(); window.addEventListener('resize', ajustar); window.visualViewport?.addEventListener('resize', ajustar);
-    $('#entrar').addEventListener('click', () => { iniciado = true; document.body.classList.add('iniciada'); $('#entrada').classList.add('oculta'); irA(0, false); });
+    async function reproducirMusica() {
+      if (!iniciado || DATOS_INVITACION.botones.musica !== true || !DATOS_INVITACION.audio) return;
+      try { await audio.play(); } catch { actualizarBotonMusica(); }
+    }
+    function actualizarBotonMusica() {
+      const sonando=!audio.paused;
+      $('#musica-boton').textContent=sonando?'Ⅱ':'♫';
+      $('#musica-boton').setAttribute('aria-label',sonando?'Pausar música':'Reproducir música');
+    }
+    audio.addEventListener('play',()=>{
+      if (!iniciado || DATOS_INVITACION.botones.musica !== true) { audio.pause(); return; }
+      actualizarBotonMusica();
+    });
+    audio.addEventListener('pause',actualizarBotonMusica);
+    audio.pause();
+    actualizarBotonMusica();
+    $('#entrar').addEventListener('click', () => {
+      iniciado=true;
+      reproducirMusica();
+      document.body.classList.add('iniciada');
+      $('#entrada').classList.add('oculta');
+      irA(0,false);
+    });
     function salir() { audio.pause(); window.location.href = DATOS_INVITACION.urlSalida; }
     $('#salir').addEventListener('click', salir); $('#salir-portada').addEventListener('click', salir);
-    $('#musica-boton').addEventListener('click', async () => { if (!audio.paused) { audio.pause(); $('#musica-boton').textContent = '♫'; $('#musica-boton').setAttribute('aria-label', 'Reproducir música'); return; } try { await audio.play(); $('#musica-boton').textContent = 'Ⅱ'; $('#musica-boton').setAttribute('aria-label', 'Pausar música'); } catch { $('#musica-boton').textContent = '♫'; } });
+    $('#musica-boton').addEventListener('click',()=>{
+      if (!iniciado || DATOS_INVITACION.botones.musica !== true) return;
+      if (audio.paused) reproducirMusica(); else audio.pause();
+    });
     function contador() { const segundos = Math.max(0, Math.floor((new Date(DATOS_INVITACION.fechaISO).getTime() - Date.now()) / 1000)); const valores = [Math.floor(segundos / 86400), Math.floor(segundos / 3600) % 24, Math.floor(segundos / 60) % 60, segundos % 60];['dias', 'horas', 'minutos', 'segundos'].forEach((id, i) => $('#' + id).textContent = String(valores[i]).padStart(2, '0')); } contador(); setInterval(contador, 1000);
     function datosCalendario() {
       const inicio = new Date(DATOS_INVITACION.calendario.inicio);
@@ -1128,5 +1052,4 @@
     prepararCalendario();
   </script>
 </body>
-
 </html>
