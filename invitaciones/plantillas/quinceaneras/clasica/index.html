@@ -30,7 +30,7 @@
       padding: 0;
     }
     html {
-      scroll-behavior: smooth;
+      scroll-behavior: auto;
       background: var(--sage-dark);
     }
     body {
@@ -185,7 +185,7 @@
       overflow-x: hidden;
       overflow-y: auto;
       background: var(--cream);
-      scroll-behavior: smooth;
+      scroll-behavior: auto;
       scroll-snap-type: y mandatory;
       overscroll-behavior-y: contain;
       touch-action: pan-y;
@@ -1065,7 +1065,6 @@
         fin: "2027-08-15T00:30:00-06:00"
         // Nombre, descripción y ubicación se toman de los datos de abajo.
       },
-
       nombre: "Alexa Herrera",
       nombreCorto: "Alexa",
       monograma: "AH",
@@ -1141,26 +1140,25 @@
     let intervaloParticulas;
     let indiceActivo = 0;
     let temporizadorVista;
-    let temporizadorAjuste;
+
     function ajustarAltura(inmediato = false) {
       clearTimeout(temporizadorVista);
-      const aplicar = () => {
-        const alto = window.visualViewport?.height || window.innerHeight;
-        document.documentElement.style.setProperty("--alto", `${Math.round(alto)}px`);
-        if (document.body.classList.contains("iniciada")) {
-          irA(indiceActivo, false);
-        }
+      const aplicar=()=>{
+        const alto=Math.round(window.visualViewport?.height || window.innerHeight);
+        if (alto===invitacion.clientHeight) return;
+        // Conserva el avance real; no vuelve a una sección anterior a mitad de un gesto.
+        const progreso=invitacion.clientHeight ? invitacion.scrollTop/invitacion.clientHeight : 0;
+        document.documentElement.style.setProperty('--alto',alto+'px');
+        if(document.body.classList.contains('iniciada'))
+          invitacion.scrollTo({top:progreso*invitacion.clientHeight,behavior:'instant'});
       };
-      if (inmediato) aplicar();
-      else temporizadorVista = setTimeout(aplicar, 90);
+      if(inmediato) aplicar(); else temporizadorVista=setTimeout(aplicar,90);
     }
-    function irA(indice, suave = true) {
-      indiceActivo = Math.max(0, Math.min(indice, secciones.length - 1));
-      invitacion.scrollTo({
-        left: 0,
-        top: indiceActivo * invitacion.clientHeight,
-        behavior: suave ? "smooth" : "auto"
-      });
+    function irA(indice,suave=true) {
+      indiceActivo=Math.max(0,Math.min(indice,secciones.length-1));
+      const destino=secciones[indiceActivo];
+      const top=destino.getBoundingClientRect().top-invitacion.getBoundingClientRect().top+invitacion.scrollTop;
+      invitacion.scrollTo({left:0,top,behavior:suave?'smooth':'instant'});
     }
     function crearBotonesContinuar() {
       secciones.forEach((seccion, indice) => {
@@ -1423,16 +1421,7 @@
       clearInterval(intervaloParticulas);
       window.location.href = DATOS_INVITACION.urlSalida;
     });
-    invitacion.addEventListener("scroll", () => {
-      clearTimeout(temporizadorAjuste);
-      temporizadorAjuste = setTimeout(() => {
-        const indice = Math.round(invitacion.scrollTop / invitacion.clientHeight);
-        const posicionExacta = indice * invitacion.clientHeight;
-        if (Math.abs(invitacion.scrollTop - posicionExacta) > 2) {
-          irA(indice);
-        }
-      }, 130);
-    }, { passive: true });
+    // El scroll manual usa únicamente scroll-snap del navegador.
     window.addEventListener("resize", () => ajustarAltura());
     window.visualViewport?.addEventListener("resize", () => ajustarAltura());
     ajustarAltura(true);
