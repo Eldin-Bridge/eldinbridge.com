@@ -857,17 +857,21 @@
     let intervaloParticulas;
     let indiceActivo = 0;
     let temporizadorVista;
-
-    function ajustarAltura(inmediato = false) {
+    let anchoViewport=0, altoViewport=0;
+    function ajustarAltura(inmediato=false) {
       clearTimeout(temporizadorVista);
       const aplicar=()=>{
-        const alto=Math.round(window.visualViewport?.height || window.innerHeight);
-        if (alto===invitacion.clientHeight) return;
-        // Conserva el avance real; no vuelve a una sección anterior a mitad de un gesto.
-        const progreso=invitacion.clientHeight ? invitacion.scrollTop/invitacion.clientHeight : 0;
+        const ancho=window.innerWidth;
+        // La barra del navegador no cambia la altura de las escenas durante el recorrido.
+        if(altoViewport && ancho===anchoViewport && document.body.classList.contains('iniciada')) return;
+        const alto=Math.round(window.innerHeight);
+        if(ancho===anchoViewport && alto===altoViewport) return;
+        const anterior=invitacion.clientHeight;
+        const progreso=anterior?invitacion.scrollTop/anterior:0;
+        anchoViewport=ancho;altoViewport=alto;
         document.documentElement.style.setProperty('--alto',alto+'px');
         if(document.body.classList.contains('iniciada'))
-          invitacion.scrollTo({top:progreso*invitacion.clientHeight,behavior:'instant'});
+          invitacion.scrollTo({top:progreso*alto,behavior:'instant'});
       };
       if(inmediato) aplicar(); else temporizadorVista=setTimeout(aplicar,90);
     }
@@ -1064,27 +1068,25 @@
       $("#segundos").textContent = String(segundos).padStart(2, "0");
     }
     function iniciarObservador() {
-      const observador = new IntersectionObserver(entradas => {
-        const visible = entradas
-          .filter(item => item.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        entradas.forEach(item => {
-          item.target.classList.toggle("visible", item.isIntersecting);
+      const proporciones=new Map();
+      const observador=new IntersectionObserver(entradas=>{
+        entradas.forEach(item=>{
+          proporciones.set(item.target,item.intersectionRatio);
+          if(item.isIntersecting && item.intersectionRatio>0) {
+            item.target.classList.add('visible');
+            item.target.querySelectorAll('.revelar').forEach(el=>el.classList.add('visible'));
+          } else if(item.intersectionRatio===0) {
+            // Reinicia efectos sólo cuando la sección ya salió por completo.
+            item.target.classList.remove('visible');
+          }
         });
-        if (visible) {
-          indiceActivo = secciones.indexOf(visible.target);
-          visible.target.querySelectorAll(".revelar").forEach(elemento => {
-            elemento.classList.add("visible");
-          });
-        }
-      }, {
-        root: invitacion,
-        threshold: [.58, .72]
-      });
-      secciones.forEach(seccion => observador.observe(seccion));
+        const actual=[...proporciones].sort((a,b)=>b[1]-a[1])[0];
+        if(actual && actual[1]>.5) indiceActivo=secciones.indexOf(actual[0]);
+      },{root:invitacion,threshold:[0,.1,.5,.75,1]});
+      secciones.forEach(seccion=>observador.observe(seccion));
     }
     async function reproducirMusica() {
-      if (DATOS_INVITACION.botones.musica !== true) return;
+      if (DATOS_INVITACION.botones.musica !== true || document.hidden || !document.body.classList.contains("iniciada")) return;
       try {
         await musica.play();
         musicaActiva = true;
@@ -1134,6 +1136,21 @@
       clearInterval(intervaloParticulas);
       window.location.href = DATOS_INVITACION.urlSalida;
     });
+    function pausarAlOcultar() {
+      musica.pause();
+      musicaActiva=false;
+      $('#boton-musica').textContent='♫';
+      $('#boton-musica').setAttribute('aria-label','Reproducir música');
+      clearInterval(intervaloParticulas);
+      intervaloParticulas=null;
+    }
+    document.addEventListener('visibilitychange',()=>{
+      if(document.hidden) pausarAlOcultar();
+      else if(document.body.classList.contains('iniciada') && !intervaloParticulas)
+        intervaloParticulas=setInterval(crearLuz,950);
+    });
+    window.addEventListener('pagehide',pausarAlOcultar);
+    window.addEventListener('beforeunload',pausarAlOcultar);
     // El scroll manual usa únicamente scroll-snap del navegador.
     window.addEventListener("resize", () => ajustarAltura());
     window.visualViewport?.addEventListener("resize", () => ajustarAltura());
