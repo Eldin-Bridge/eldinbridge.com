@@ -1584,6 +1584,10 @@
                 document.body.classList.add("fondo-listo");
             });
         let invitacionAbierta = false;
+        // La portada siempre inicia en silencio.
+        musica.pause();
+        botonMusica.disabled = true;
+        botonMusica.setAttribute("aria-disabled", "true");
         let intervaloCascada = null;
         let ultimaEscenaVisible = "";
         let ultimaCascada = 0;
@@ -1638,6 +1642,9 @@
 
         $("#boton-salir").addEventListener("click", () => {
             invitacionAbierta = false;
+            botonMusica.disabled = true;
+            botonMusica.setAttribute("aria-disabled", "true");
+            delete musica.dataset.reanudar;
 
             musica.pause();
             musica.currentTime = 0;
@@ -1666,6 +1673,8 @@
                 $("#intro").classList.add("oculto");
 
                 invitacionAbierta = true;
+                botonMusica.disabled = false;
+                botonMusica.setAttribute("aria-disabled", "false");
 
                 const primeraTarjeta =
                     document.querySelector("#inicio .revelar");
@@ -1695,8 +1704,9 @@
         botonMusica.addEventListener(
             "click",
             () => {
+                if (!invitacionAbierta) return;
                 if (musica.paused) {
-                    musica.play();
+                    musica.play().catch(() => { });
                 } else {
                     musica.pause();
                 }
@@ -1706,6 +1716,11 @@
         musica.addEventListener(
             "play",
             () => {
+                if (!invitacionAbierta) {
+                    musica.pause();
+                    delete musica.dataset.reanudar;
+                    return;
+                }
                 botonMusica.textContent = "⏸";
             }
         );
@@ -1720,6 +1735,11 @@
         document.addEventListener(
             "visibilitychange",
             () => {
+                if (!invitacionAbierta) {
+                    musica.pause();
+                    delete musica.dataset.reanudar;
+                    return;
+                }
                 if (document.hidden && !musica.paused) {
                     musica.dataset.reanudar = "1";
                     musica.pause();
