@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -20,20 +19,17 @@
             --blanco: #ffffff;
             --alto-pantalla: 100svh;
         }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-
         html {
             width: 100%;
             height: 100%;
             overflow: hidden;
             background: #07182f;
         }
-
         body {
             width: 100%;
             min-width: 320px;
@@ -43,7 +39,6 @@
             background: #07182f;
             font-family: Inter, "Segoe UI", Arial, sans-serif;
         }
-
         main {
             display: flex;
             width: 100%;
@@ -57,25 +52,20 @@
             touch-action: pan-x;
             -webkit-overflow-scrolling: touch;
         }
-
         main::-webkit-scrollbar {
             display: none;
         }
-
         button,
         a {
             color: inherit;
             font: inherit;
         }
-
         button {
             border: 0;
         }
-
         a {
             text-decoration: none;
         }
-
         .escena {
             position: relative;
             display: grid;
@@ -92,7 +82,6 @@
             scroll-snap-stop: always;
             isolation: isolate;
         }
-
         .fondo {
             position: absolute;
             inset: 0;
@@ -108,12 +97,10 @@
                 filter 1s ease;
             will-change: transform;
         }
-
         .escena.activa .fondo {
             filter: saturate(1.04) brightness(.66);
             transform: scale(1.025);
         }
-
         .velo {
             position: absolute;
             inset: 0;
@@ -122,14 +109,12 @@
                 linear-gradient(180deg, rgba(4, 22, 52, .08), rgba(5, 24, 54, .30) 48%, rgba(3, 14, 35, .72)),
                 radial-gradient(circle at center, transparent 24%, rgba(3, 18, 45, .16));
         }
-
         .capa-assets {
             position: absolute;
             inset: 0;
             z-index: 3;
             pointer-events: none;
         }
-
         .asset {
             position: absolute;
             left: var(--x);
@@ -142,43 +127,35 @@
             user-select: none;
             filter: drop-shadow(0 12px 14px rgba(0, 0, 0, .34));
         }
-
         .personaje {
             animation: respirar 4.4s ease-in-out infinite;
         }
-
         .adorno {
             animation: flotar 4s ease-in-out infinite;
         }
-
         .girar {
             animation: girar 18s linear infinite;
         }
-
         .escena:not(.activa) .asset,
         .escena:not(.activa) .pelota-cayendo {
             animation-play-state: paused;
         }
-
         @keyframes respirar {
             50% {
                 translate: 0 -8px;
             }
         }
-
         @keyframes flotar {
             50% {
                 translate: 0 -13px;
                 rotate: 3deg;
             }
         }
-
         @keyframes girar {
             to {
                 rotate: 360deg;
             }
         }
-
         .tarjeta-juego {
             position: relative;
             z-index: 5;
@@ -202,16 +179,13 @@
                 transform .7s cubic-bezier(.22, .8, .32, 1);
             will-change: transform, opacity;
         }
-
         .escena.activa .tarjeta-juego {
             opacity: 1;
             transform: none;
         }
-
         .tarjeta-juego::before {
             display: none;
         }
-
         .tarjeta-juego::after {
             content: "";
             position: absolute;
@@ -228,7 +202,6 @@
             transform: translateX(-50%);
             pointer-events: none;
         }
-
         .insignia-nivel {
             display: inline-flex;
             align-items: center;
@@ -245,39 +218,33 @@
             letter-spacing: .12em;
             text-transform: uppercase;
         }
-
         .insignia-nivel::before {
             content: "★";
             color: var(--amarillo);
             font-size: .8rem;
             line-height: 1;
         }
-
         h1,
         h2 {
             color: var(--azul-oscuro);
             font-family: Inter, "Segoe UI", Arial, sans-serif;
             text-wrap: balance;
         }
-
         h1 {
             font-size: clamp(2.6rem, 7vw, 5rem);
             line-height: .93;
             letter-spacing: -.05em;
         }
-
         h2 {
             font-size: clamp(1.9rem, 5vw, 3.6rem);
             line-height: .98;
             letter-spacing: -.04em;
         }
-
         .resaltado {
             display: block;
             color: var(--naranja);
             font-style: normal;
         }
-
         .texto {
             max-width: 510px;
             margin: 17px auto 0;
@@ -285,19 +252,16 @@
             font-size: clamp(.96rem, 2.7vw, 1.08rem);
             line-height: 1.58;
         }
-
         .nombre {
             margin-top: 11px;
             color: var(--azul);
             font-size: clamp(1.4rem, 5vw, 2.1rem);
             font-weight: 900;
         }
-
         .edad {
             color: #d86517;
             font-weight: 850;
         }
-
         .separador-color {
             display: flex;
             width: min(250px, 75%);
@@ -307,7 +271,6 @@
             color: var(--naranja);
             font-size: 1.15rem;
         }
-
         .separador-color::before,
         .separador-color::after {
             content: "";
@@ -321,7 +284,6 @@
                     var(--amarillo) 16px 25px,
                     transparent 25px 32px);
         }
-
         .boton-juego,
         .boton-mapa {
             position: relative;
@@ -344,25 +306,21 @@
             cursor: pointer;
             transition: transform .2s ease, filter .2s ease;
         }
-
         .boton-mapa[aria-disabled="true"] {
             cursor: default;
             pointer-events: none;
         }
-
         .boton-juego:hover,
         .boton-mapa:hover {
             filter: brightness(1.08);
             transform: translateY(-2px) scale(1.02);
         }
-
         .contador {
             display: flex;
             justify-content: center;
             gap: 11px;
             margin-top: 21px;
         }
-
         .tiempo {
             display: grid;
             width: clamp(62px, 15vw, 82px);
@@ -375,26 +333,21 @@
             background: linear-gradient(145deg, #ffffff, #dbeeff);
             box-shadow: 0 7px 0 rgba(18, 104, 215, .22);
         }
-
         .tiempo:nth-child(2) {
             box-shadow: 0 7px 0 rgba(255, 129, 45, .28);
         }
-
         .tiempo:nth-child(3) {
             box-shadow: 0 7px 0 rgba(255, 212, 71, .34);
         }
-
         .tiempo:nth-child(4) {
             box-shadow: 0 7px 0 rgba(53, 173, 104, .28);
         }
-
         .numero {
             display: block;
             color: var(--azul);
             font-size: clamp(1.25rem, 4.5vw, 2rem);
             font-weight: 950;
         }
-
         .unidad {
             display: block;
             margin-top: 2px;
@@ -406,14 +359,12 @@
             text-overflow: ellipsis;
             text-transform: uppercase;
         }
-
         .datos {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 9px;
             margin-top: 20px;
         }
-
         .dato {
             min-width: 0;
             padding: 14px 9px;
@@ -423,44 +374,36 @@
             background: rgba(255, 255, 255, .66);
             box-shadow: 0 7px 18px rgba(18, 104, 215, .10);
         }
-
         .dato:nth-child(2) {
             border-top-color: var(--naranja);
         }
-
         .dato:nth-child(3) {
             border-top-color: var(--amarillo);
         }
-
         .dato:nth-child(4) {
             border-top-color: var(--verde-juego);
         }
-
         .dato-icono {
             display: block;
             margin-bottom: 4px;
             font-size: 1.35rem;
         }
-
         .dato strong,
         .dato span {
             display: block;
         }
-
         .dato strong {
             color: var(--azul-oscuro);
             font-size: .7rem;
             letter-spacing: .06em;
             text-transform: uppercase;
         }
-
         .dato span:last-child {
             margin-top: 4px;
             color: #465b50;
             font-size: .86rem;
             line-height: 1.3;
         }
-
         .lista-juegos {
             display: flex;
             max-width: 520px;
@@ -471,7 +414,6 @@
             list-style: none;
             counter-reset: actividad;
         }
-
         .lista-juegos li {
             position: relative;
             display: inline-flex;
@@ -486,15 +428,12 @@
             background: rgba(225, 241, 255, .86);
             text-align: center;
         }
-
         .lista-juegos li:nth-child(2) {
             background: rgba(255, 235, 205, .90);
         }
-
         .lista-juegos li:nth-child(3) {
             background: rgba(225, 248, 231, .90);
         }
-
         .lista-juegos li::before {
             counter-increment: actividad;
             content: counter(actividad);
@@ -508,15 +447,12 @@
             background: var(--azul);
             font-weight: 950;
         }
-
         .lista-juegos li:nth-child(2)::before {
             background: var(--naranja);
         }
-
         .lista-juegos li:nth-child(3)::before {
             background: var(--verde-juego);
         }
-
         .lista-atuendo {
             display: flex;
             width: min(100%, 390px);
@@ -526,7 +462,6 @@
             margin: 20px auto 0;
             list-style: none;
         }
-
         .lista-atuendo li {
             position: relative;
             display: flex;
@@ -540,7 +475,6 @@
             line-height: 1.3;
             text-align: center;
         }
-
         .icono-atuendo {
             position: absolute;
             left: 8px;
@@ -554,27 +488,21 @@
             transform-origin: center;
             will-change: transform;
         }
-
         .lista-atuendo li:nth-child(2) .icono-atuendo {
             animation-delay: .18s;
         }
-
         .lista-atuendo li:nth-child(3) .icono-atuendo {
             animation-delay: .36s;
         }
-
         @keyframes mover-icono-atuendo {
-
             0%,
             100% {
                 transform: translateY(0) rotate(-3deg) scale(1);
             }
-
             50% {
                 transform: translateY(-6px) rotate(4deg) scale(1.08);
             }
         }
-
         .icono-confeti {
             display: inline-block;
             margin-left: .12em;
@@ -583,28 +511,22 @@
             animation: mover-icono-atuendo 1.8s ease-in-out infinite;
             will-change: transform;
         }
-
         #cuenta .tarjeta-juego {
             padding-top: 22px;
             padding-bottom: 22px;
         }
-
         #cuenta .insignia-nivel {
             margin-bottom: 9px;
         }
-
         #cuenta .texto {
             margin-top: 10px;
         }
-
         #cuenta .contador {
             margin-top: 13px;
         }
-
         #cuenta .boton-juego {
             margin-top: 13px;
         }
-
         .salir,
         .musica {
             position: fixed;
@@ -620,7 +542,6 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
         }
-
         .salir {
             top: max(15px, env(safe-area-inset-top));
             right: max(15px, env(safe-area-inset-right));
@@ -630,7 +551,6 @@
             font-weight: 800;
             cursor: pointer;
         }
-
         .musica {
             right: max(17px, env(safe-area-inset-right));
             bottom: max(17px, env(safe-area-inset-bottom));
@@ -640,7 +560,6 @@
             cursor: pointer;
             font-size: 1.1rem;
         }
-
         .entrada {
             position: fixed;
             inset: 0;
@@ -654,22 +573,18 @@
                 linear-gradient(rgba(4, 25, 58, .30), rgba(3, 15, 38, .70)),
                 url("assets/fondos/fondo01.webp") center/cover no-repeat;
         }
-
         body:not(.invitacion-abierta) main {
             visibility: hidden;
             overflow: hidden;
             pointer-events: none;
             touch-action: none;
         }
-
         body:not(.invitacion-abierta) .musica {
             display: none;
         }
-
         .entrada.oculta {
             display: none;
         }
-
         .entrada-contenido {
             width: min(90vw, 520px);
             padding: 33px 25px;
@@ -690,12 +605,10 @@
                 opacity .45s ease-out,
                 transform .65s cubic-bezier(.22, .8, .32, 1);
         }
-
         body.fondo-listo .entrada-contenido {
             opacity: 1;
             transform: none;
         }
-
         .entrada-icono {
             width: 92px;
             margin-bottom: 12px;
@@ -704,37 +617,30 @@
             animation: saltar-icono 1.8s ease-in-out infinite;
             will-change: transform;
         }
-
         @keyframes saltar-icono {
-
             0%,
             100% {
                 transform: translateY(0) scale(1);
             }
-
             50% {
                 transform: translateY(-12px) scale(1.045);
             }
         }
-
         .entrada h2 {
             font-size: clamp(2.2rem, 8vw, 4rem);
             font-weight: 950;
             letter-spacing: -.045em;
         }
-
         .boton-mapa {
             color: #ffffff;
             background: linear-gradient(135deg, var(--azul), #42a9ff);
             box-shadow: 0 6px 0 var(--azul-oscuro);
         }
-
         .entrada p {
             margin-top: 12px;
             color: #46617f;
             line-height: 1.5;
         }
-
         .particulas {
             position: fixed;
             inset: 0;
@@ -742,7 +648,6 @@
             overflow: hidden;
             pointer-events: none;
         }
-
         .pelota-cayendo {
             position: absolute;
             top: -35px;
@@ -756,40 +661,33 @@
             transform-origin: center;
             animation: caer-pelota var(--duracion) linear forwards;
         }
-
         @keyframes caer-pelota {
             0% {
                 translate: 0 -30px;
                 rotate: 0deg;
             }
-
             25% {
                 translate: 24px 25vh;
                 scale: .94;
             }
-
             50% {
                 translate: -18px 50vh;
                 scale: 1.04;
             }
-
             75% {
                 translate: 28px 75vh;
                 scale: .96;
             }
-
             100% {
                 translate: var(--desvio) calc(var(--alto-pantalla) + 60px);
                 scale: 1;
                 opacity: .15;
             }
         }
-
         @media (max-width: 600px) {
             .escena {
                 padding-inline: 14px;
             }
-
             .tarjeta-juego {
                 z-index: auto;
                 width: min(92vw, 720px);
@@ -800,7 +698,6 @@
                 background: transparent;
                 box-shadow: none;
             }
-
             .tarjeta-juego::before {
                 content: "";
                 position: absolute;
@@ -819,36 +716,29 @@
                     inset 0 2px rgba(255, 255, 255, .76);
                 pointer-events: none;
             }
-
             .tarjeta-juego::after {
                 display: none;
             }
-
             .tarjeta-juego>* {
                 position: relative;
                 z-index: 12;
             }
-
             .capa-assets {
                 z-index: 11;
             }
-
             .asset {
                 left: var(--x-movil);
                 top: var(--y-movil);
                 width: calc(var(--tamano-movil) * 1%);
             }
-
             h1 {
                 font-size: clamp(2.2rem, 10.5vw, 3.5rem);
                 line-height: .94;
             }
-
             h2 {
                 font-size: clamp(1.85rem, 8.5vw, 3rem);
                 line-height: .98;
             }
-
             .salir {
                 top: max(11px, env(safe-area-inset-top));
                 right: max(11px, env(safe-area-inset-right));
@@ -856,24 +746,19 @@
                 padding: 8px 13px;
                 font-size: .76rem;
             }
-
             .texto {
                 font-size: .94rem;
             }
-
             .contador {
                 gap: 5px;
             }
-
             .tiempo {
                 padding: 11px 2px;
             }
-
             .unidad {
                 font-size: .5rem;
                 letter-spacing: .02em;
             }
-
             #mision .lista-juegos {
                 display: flex !important;
                 width: 100% !important;
@@ -882,7 +767,6 @@
                 align-items: center;
                 margin: 18px auto 0 !important;
             }
-
             #mision .lista-juegos li {
                 display: inline-flex !important;
                 width: auto !important;
@@ -893,24 +777,20 @@
                 padding: 7px 13px 7px 8px !important;
                 text-align: center !important;
             }
-
             #mision .lista-juegos li+li {
                 margin-top: 8px !important;
             }
-
             #mision .lista-juegos li::before {
                 position: static !important;
                 display: grid;
                 transform: none !important;
             }
         }
-
         @media (max-width: 380px) {
             .dato span:last-child {
                 font-size: .77rem;
             }
         }
-
         /* Navegación centrada fuera de las tarjetas, en móvil y web. */
         .navegacion-escena {
             position: absolute;
@@ -921,11 +801,9 @@
             margin: 0;
             max-width: calc(100% - 36px);
         }
-
         .navegacion-escena:hover {
             transform: translate(-50%, -2px) scale(1.02);
         }
-
         .tarjeta-juego .boton-mapa {
             display: flex;
             width: max-content;
@@ -934,7 +812,6 @@
         }
     </style>
 </head>
-
 <body>
     <audio id="audio" src="assets/audio/audio01.mp3" loop preload="metadata"></audio>
     <div class="entrada" id="entrada">
@@ -1361,6 +1238,57 @@
         let indiceActivo = 0;
         let temporizadorAjuste;
         let musicaActiva = false;
+        let reanudarMusica = false;
+        let saliendo = false;
+        function invitacionVisible() {
+            return !saliendo && !document.hidden && document.body.classList.contains("invitacion-abierta");
+        }
+        function actualizarBotonMusica() {
+            musicaActiva = !audio.paused;
+            botonMusica.textContent = musicaActiva ? "Ⅱ" : "▶";
+            botonMusica.setAttribute("aria-label", musicaActiva ? "Pausar música" : "Reproducir música");
+            botonMusica.setAttribute("aria-pressed", String(musicaActiva));
+        }
+        async function reproducirMusica() {
+            if (!invitacionVisible()) return;
+            try {
+                await audio.play();
+                if (!invitacionVisible()) pausarAlOcultar();
+            } catch { }
+            actualizarBotonMusica();
+        }
+        function pausarAlOcultar() {
+            if (!saliendo && document.body.classList.contains("invitacion-abierta") && !audio.paused) {
+                reanudarMusica = true;
+            }
+            audio.pause();
+            actualizarBotonMusica();
+        }
+        function reanudarAlVolver() {
+            if (!invitacionVisible() || !reanudarMusica) return;
+            reanudarMusica = false;
+            reproducirMusica();
+        }
+        audio.addEventListener("play", () => {
+            if (!invitacionVisible()) pausarAlOcultar();
+            actualizarBotonMusica();
+        });
+        audio.addEventListener("pause", actualizarBotonMusica);
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) pausarAlOcultar();
+            else reanudarAlVolver();
+        });
+        window.addEventListener("pagehide", pausarAlOcultar);
+        window.addEventListener("pageshow", reanudarAlVolver);
+        $(".salir").addEventListener("click", () => {
+            saliendo = true;
+            reanudarMusica = false;
+            audio.pause();
+            audio.currentTime = 0;
+            actualizarBotonMusica();
+        });
+        audio.pause();
+        actualizarBotonMusica();
         function aplicarDatos() {
             $$('[data-nombre]').forEach(el => el.textContent = CONFIG.nombre);
             $$('[data-edad]').forEach(el => el.textContent = CONFIG.edad);
@@ -1427,36 +1355,16 @@
             escenas[0].classList.remove("activa");
             void escenas[0].offsetWidth;
             escenas[0].classList.add("activa");
-            try {
-                await audio.play();
-                musicaActiva = true;
-                botonMusica.textContent = "Ⅱ";
-                botonMusica.setAttribute("aria-label", "Pausar música");
-                botonMusica.setAttribute("aria-pressed", "true");
-            } catch {
-                musicaActiva = false;
-                botonMusica.textContent = "▶";
-                botonMusica.setAttribute("aria-label", "Reproducir música");
-                botonMusica.setAttribute("aria-pressed", "false");
-            }
+            saliendo = false;
+            reanudarMusica = false;
+            await reproducirMusica();
         });
         botonMusica.addEventListener("click", async () => {
-            if (audio.paused) {
-                try {
-                    await audio.play();
-                    musicaActiva = true;
-                    botonMusica.textContent = "Ⅱ";
-                    botonMusica.setAttribute("aria-label", "Pausar música");
-                } catch {
-                    musicaActiva = false;
-                }
-            } else {
-                audio.pause();
-                musicaActiva = false;
-                botonMusica.textContent = "▶";
-                botonMusica.setAttribute("aria-label", "Reproducir música");
-            }
-            botonMusica.setAttribute("aria-pressed", String(musicaActiva));
+            if (!invitacionVisible()) return;
+            reanudarMusica = false;
+            if (audio.paused) await reproducirMusica();
+            else audio.pause();
+            actualizarBotonMusica();
         });
         function actualizarCuenta() {
             const diferencia = new Date(CONFIG.fechaEvento).getTime() - Date.now();
@@ -1551,5 +1459,4 @@
         window.addEventListener("pageshow", actualizarAltoPantalla);
     </script>
 </body>
-
 </html>
