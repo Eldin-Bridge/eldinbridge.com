@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -26,13 +25,11 @@
       --borgona: #6f1930;
       --sombra: 0 30px 90px rgba(0, 0, 0, .56);
     }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-
     html,
     body {
       width: 100%;
@@ -41,27 +38,22 @@
       overscroll-behavior: none;
       background: var(--negro);
     }
-
     body {
       min-width: 320px;
       color: var(--marfil);
       font-family: Lora, Georgia, serif;
     }
-
     button,
     a {
       color: inherit;
       font: inherit;
     }
-
     button {
       border: 0;
     }
-
     a {
       text-decoration: none;
     }
-
     main {
       display: flex;
       width: 100%;
@@ -75,16 +67,13 @@
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
     }
-
     main::-webkit-scrollbar {
       display: none;
     }
-
     body:not(.invitacion-abierta) main {
       visibility: hidden;
       pointer-events: none;
     }
-
     .escena {
       position: relative;
       display: grid;
@@ -100,7 +89,6 @@
       scroll-snap-stop: always;
       isolation: isolate;
     }
-
     .fondo {
       position: absolute;
       inset: 0;
@@ -114,12 +102,10 @@
       transition: transform 1.2s cubic-bezier(.22, .8, .32, 1), filter 1.1s ease;
       will-change: transform;
     }
-
     .escena.activa .fondo {
       filter: saturate(.9) brightness(.61);
       transform: scale(1.035);
     }
-
     .velo {
       position: absolute;
       inset: 0;
@@ -128,7 +114,6 @@
         linear-gradient(180deg, rgba(10, 9, 10, .2), rgba(14, 11, 12, .3) 52%, rgba(9, 8, 9, .78)),
         radial-gradient(circle at 50% 44%, transparent 18%, rgba(10, 8, 9, .35));
     }
-
     .resplandor {
       position: absolute;
       inset: -30% 10% auto;
@@ -139,7 +124,6 @@
       filter: blur(26px);
       pointer-events: none;
     }
-
     .escena::before {
       content: "";
       position: absolute;
@@ -156,33 +140,27 @@
       transform-origin: 50% 0;
       pointer-events: none;
     }
-
     .escena.activa::before {
       opacity: .55;
       animation: luz-gala 8s ease-in-out infinite;
     }
-
     @keyframes luz-gala {
-
       0%,
       100% {
         opacity: .32;
         transform: translateX(-53%) rotate(-7deg);
       }
-
       50% {
         opacity: .58;
         transform: translateX(-47%) rotate(5deg);
       }
     }
-
     .capa-assets {
       position: absolute;
       inset: 0;
       z-index: 13;
       pointer-events: none;
     }
-
     .elemento {
       position: absolute;
       left: calc(var(--x) * 1%);
@@ -196,80 +174,63 @@
       animation: flotar 4.8s ease-in-out infinite;
       will-change: translate;
     }
-
     .escena:not(.activa) .elemento {
       animation-play-state: paused;
     }
-
     #detalles .elemento {
       animation-name: marcar-hora;
       animation-duration: 5s;
     }
-
     #menu .elemento {
       animation-name: presentar-plato;
       animation-duration: 4.2s;
     }
-
     #final .elemento {
       animation-name: postre-gala;
       animation-duration: 5.4s;
     }
-
     @keyframes flotar {
-
       0%,
       100% {
         translate: 0 0;
       }
-
       50% {
         translate: 0 -10px;
       }
     }
-
     @keyframes marcar-hora {
-
       0%,
       100% {
         translate: 0 0;
         rotate: 0deg;
       }
-
       50% {
         translate: 0 -8px;
         rotate: -1.5deg;
       }
     }
-
     @keyframes presentar-plato {
-
       0%,
       100% {
         translate: 0 0;
         scale: 1;
       }
-
       50% {
         translate: 0 -7px;
         scale: 1.025;
       }
     }
-
     @keyframes postre-gala {
-
       0%,
       100% {
         translate: 0 0;
         filter: brightness(1);
       }
-
       50% {
         translate: 0 -9px;
         filter: brightness(1.12);
       }
     }
-
     .tarjeta {
       position: relative;
       z-index: 10;
@@ -287,7 +248,6 @@
       transition: opacity .52s ease-out, transform .75s cubic-bezier(.22, .8, .32, 1);
       will-change: transform, opacity;
     }
-
     .tarjeta-interior {
       position: relative;
       padding: 31px 31px 29px;
@@ -298,7 +258,6 @@
       border: 1px solid rgba(181, 138, 69, .55);
       clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 18px, 100% calc(100% - 18px), calc(100% - 18px) 100%, 18px 100%, 0 calc(100% - 18px), 0 18px);
     }
-
     .tarjeta-interior::before,
     .tarjeta-interior::after {
       content: "";
@@ -309,26 +268,22 @@
       opacity: .55;
       pointer-events: none;
     }
-
     .tarjeta-interior::before {
       top: 10px;
       left: 10px;
       border-top: 1px solid;
       border-left: 1px solid;
     }
-
     .tarjeta-interior::after {
       right: 10px;
       bottom: 10px;
       border-right: 1px solid;
       border-bottom: 1px solid;
     }
-
     .escena.activa .tarjeta {
       opacity: 1;
       transform: translateX(0) scale(1);
     }
-
     .sello {
       display: inline-flex;
       align-items: center;
@@ -341,7 +296,6 @@
       letter-spacing: .2em;
       text-transform: uppercase;
     }
-
     .sello::before,
     .sello::after {
       content: "";
@@ -350,7 +304,6 @@
       border: 1px solid var(--oro);
       transform: rotate(45deg);
     }
-
     h1,
     h2 {
       max-width: 540px;
@@ -362,15 +315,12 @@
       letter-spacing: -.035em;
       text-wrap: balance;
     }
-
     h1 {
       font-size: clamp(2.65rem, 6.5vw, 5.1rem);
     }
-
     h2 {
       font-size: clamp(2.15rem, 5.2vw, 4rem);
     }
-
     .acento {
       display: block;
       margin-top: 4px;
@@ -380,7 +330,6 @@
       font-weight: 500;
       letter-spacing: -.03em;
     }
-
     .anfitrion {
       margin-top: 18px;
       color: var(--borgona);
@@ -389,7 +338,6 @@
       font-weight: 600;
       letter-spacing: .04em;
     }
-
     .descripcion {
       max-width: 480px;
       margin: 18px auto 0;
@@ -398,7 +346,6 @@
       line-height: 1.67;
       text-wrap: balance;
     }
-
     .ornamento {
       display: flex;
       align-items: center;
@@ -406,7 +353,6 @@
       gap: 10px;
       margin: 20px auto;
     }
-
     .ornamento::before,
     .ornamento::after {
       content: "";
@@ -414,18 +360,15 @@
       height: 1px;
       background: linear-gradient(90deg, transparent, var(--oro));
     }
-
     .ornamento::after {
       transform: rotate(180deg);
     }
-
     .ornamento span {
       width: 8px;
       height: 8px;
       border: 1px solid var(--borgona);
       transform: rotate(45deg);
     }
-
     .boton,
     .boton-ubicacion {
       display: inline-flex;
@@ -446,39 +389,33 @@
       letter-spacing: .07em;
       transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
     }
-
     .boton:hover,
     .boton-ubicacion:hover {
       background: var(--borgona);
       transform: translateY(-2px);
       box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .1), 0 15px 28px rgba(72, 16, 35, .26);
     }
-
     .boton:active,
     .boton-ubicacion:active {
       transform: translateY(1px) scale(.985);
     }
-
     .boton-ubicacion {
       color: #211d1c;
       background: var(--oro-claro);
       border-color: #8e6935;
     }
-
     .contador {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 9px;
       margin: 23px auto 26px;
     }
-
     .tiempo {
       min-width: 0;
       padding: 15px 5px 12px;
       border: 1px solid rgba(181, 138, 69, .42);
       background: rgba(181, 138, 69, .08);
     }
-
     .tiempo strong {
       display: block;
       color: var(--borgona);
@@ -487,7 +424,6 @@
       font-variant-numeric: tabular-nums;
       line-height: 1;
     }
-
     .tiempo span {
       display: block;
       margin-top: 6px;
@@ -496,14 +432,12 @@
       letter-spacing: .08em;
       text-transform: uppercase;
     }
-
     .datos {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 9px;
       margin: 23px auto 25px;
     }
-
     .dato {
       display: grid;
       min-height: 101px;
@@ -513,27 +447,23 @@
       border: 1px solid rgba(181, 138, 69, .38);
       background: rgba(255, 255, 255, .38);
     }
-
     .dato i {
       margin-bottom: 5px;
       font-size: 1.2rem;
       font-style: normal;
     }
-
     .dato small {
       color: var(--borgona);
       font: 700 .54rem Cinzel, serif;
       letter-spacing: .14em;
       text-transform: uppercase;
     }
-
     .dato strong {
       margin-top: 5px;
       color: #322c29;
       font-size: .76rem;
       line-height: 1.35;
     }
-
     .lista {
       display: grid;
       width: min(100%, 430px);
@@ -541,7 +471,6 @@
       margin: 21px auto 24px;
       list-style: none;
     }
-
     .lista li {
       display: inline-flex;
       width: fit-content;
@@ -555,13 +484,11 @@
       font-size: .8rem;
       line-height: 1.3;
     }
-
     .lista-icono {
       color: var(--borgona);
       font-family: Cinzel, serif;
       font-size: .75rem;
     }
-
     .menu {
       display: flex;
       max-width: 450px;
@@ -570,7 +497,6 @@
       gap: 8px;
       margin: 21px auto 24px;
     }
-
     .menu span {
       width: fit-content;
       padding: 9px 13px;
@@ -579,7 +505,6 @@
       background: rgba(111, 25, 48, .055);
       font-size: .75rem;
     }
-
     .acciones-finales {
       display: flex;
       flex-wrap: wrap;
@@ -587,7 +512,6 @@
       gap: 9px;
       margin-top: 21px;
     }
-
     .control {
       position: fixed;
       top: max(18px, env(safe-area-inset-top));
@@ -606,30 +530,25 @@
       cursor: pointer;
       transition: opacity .3s ease, transform .2s ease, background .2s ease;
     }
-
     .control:hover {
       background: var(--borgona);
       transform: translateY(-2px);
     }
-
     .salir {
       left: max(18px, env(safe-area-inset-left));
       width: auto;
       padding-inline: 19px;
       font: 700 .72rem Cinzel, serif;
     }
-
     .musica {
       right: max(18px, env(safe-area-inset-right));
       font-family: Cinzel, serif;
     }
-
     body:not(.invitacion-abierta) .musica {
       opacity: 0;
       pointer-events: none;
       transform: translateY(-12px);
     }
-
     .entrada {
       position: fixed;
       inset: 0;
@@ -643,21 +562,18 @@
       visibility: hidden;
       transition: opacity .65s ease, visibility 0s linear .65s;
     }
-
     body.fondo-listo .entrada {
       opacity: 1;
       visibility: visible;
       background: linear-gradient(rgba(9, 8, 9, .38), rgba(9, 8, 9, .74)), url("assets/fondos/fondo01.webp") center / cover no-repeat;
       transition: opacity .65s ease;
     }
-
     body.fondo-listo .entrada.oculta {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
       transition: opacity .55s ease, visibility 0s linear .55s;
     }
-
     .entrada-contenido {
       position: relative;
       width: min(86vw, 480px);
@@ -672,19 +588,16 @@
       opacity: 0;
       transition: opacity .7s ease .12s, transform .8s cubic-bezier(.22, .8, .32, 1) .12s;
     }
-
     .entrada-panel {
       padding: 27px 25px 29px;
       background: var(--papel);
       border: 1px solid rgba(181, 138, 69, .58);
       clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
     }
-
     body.fondo-listo .entrada-contenido {
       opacity: 1;
       transform: translateY(0) scale(1);
     }
-
     .entrada-icono {
       width: min(49vw, 235px);
       max-height: 150px;
@@ -693,11 +606,9 @@
       filter: drop-shadow(0 12px 18px rgba(0, 0, 0, .34));
       animation: flotar 4.5s ease-in-out infinite;
     }
-
     .entrada h2 {
       font-size: clamp(2rem, 6.5vw, 3.5rem);
     }
-
     .entrada p {
       margin: 15px auto 21px;
       color: var(--texto);
@@ -705,7 +616,6 @@
       line-height: 1.6;
       text-wrap: balance;
     }
-
     .particulas {
       position: fixed;
       inset: 0;
@@ -713,7 +623,6 @@
       overflow: hidden;
       pointer-events: none;
     }
-
     .destello {
       position: absolute;
       left: var(--x);
@@ -725,190 +634,148 @@
       box-shadow: 0 0 9px rgba(219, 194, 140, .9);
       animation: elevar-destello var(--d) ease-out forwards;
     }
-
     @keyframes elevar-destello {
       to {
         opacity: 0;
         transform: translate(var(--dx), -80px) rotate(135deg) scale(.2);
       }
     }
-
     @media (max-width: 600px) {
       .escena {
         padding: max(72px, env(safe-area-inset-top)) max(25px, env(safe-area-inset-right)) max(25px, env(safe-area-inset-bottom)) max(25px, env(safe-area-inset-left));
       }
-
       .tarjeta {
         width: 100%;
         padding: 11px;
         clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 18px, 100% calc(100% - 18px), calc(100% - 18px) 100%, 18px 100%, 0 calc(100% - 18px), 0 18px);
       }
-
       .tarjeta-interior {
         padding: 27px 19px 24px;
       }
-
       h1 {
         font-size: clamp(2.3rem, 10.8vw, 3.7rem);
       }
-
       h2 {
         font-size: clamp(1.85rem, 8.8vw, 3rem);
       }
-
       .descripcion {
         margin-top: 14px;
         font-size: .82rem;
         line-height: 1.52;
       }
-
       .sello {
         margin-bottom: 13px;
         font-size: .56rem;
       }
-
       .boton,
       .boton-ubicacion {
         min-height: 44px;
         padding: 10px 17px;
         font-size: .63rem;
       }
-
       .contador {
         gap: 5px;
         margin: 18px auto 21px;
       }
-
       .tiempo {
         padding: 11px 2px 9px;
       }
-
       .tiempo strong {
         font-size: 1.3rem;
       }
-
       .tiempo span {
         font-size: .46rem;
       }
-
       .datos {
         gap: 6px;
         margin: 18px auto 20px;
       }
-
       .dato {
         min-height: 86px;
         padding: 9px 4px;
       }
-
       .dato strong {
         font-size: .65rem;
       }
-
       .lista {
         gap: 5px;
         margin: 17px auto 20px;
       }
-
       .lista li {
         padding: 7px 10px;
         font-size: .69rem;
       }
-
       .menu {
         gap: 6px;
         margin: 17px auto 20px;
       }
-
       .menu span {
         padding: 7px 9px;
         font-size: .66rem;
       }
-
       .elemento {
         left: calc(var(--x-movil) * 1%);
         top: calc(var(--y-movil) * 1%);
         width: calc(var(--tamano-movil) * 1%);
       }
-
-
-
-
-
-
       .control {
         top: max(14px, env(safe-area-inset-top));
         min-width: 46px;
         height: 46px;
       }
-
       .salir {
         left: max(14px, env(safe-area-inset-left));
         padding-inline: 16px;
       }
-
       .musica {
         right: max(14px, env(safe-area-inset-right));
       }
-
       .entrada {
         padding: 78px 24px 27px;
       }
-
       .entrada-contenido {
         width: 100%;
       }
-
       .entrada-panel {
         padding: 23px 19px 25px;
       }
-
       .entrada-icono {
         width: min(48vw, 190px);
         max-height: 128px;
       }
     }
-
     @media (max-height: 690px) {
       .tarjeta-interior {
         padding-block: 20px 19px;
       }
-
       h1 {
         font-size: clamp(2.1rem, 9vw, 3.2rem);
       }
-
       h2 {
         font-size: clamp(1.7rem, 7.5vw, 2.7rem);
       }
-
       .descripcion {
         margin-top: 10px;
         line-height: 1.43;
       }
-
       .contador,
       .datos,
       .lista,
       .menu {
         margin-block: 13px 16px;
       }
-
       .ornamento {
         margin-block: 13px;
       }
-
       .dato {
         min-height: 74px;
       }
-
       .lista li {
         padding-block: 6px;
       }
     }
   </style>
 </head>
-
 <body>
   <audio id="audio" src="assets/audio/audio01.mp3" loop preload="metadata"></audio>
   <div class="entrada" id="entrada">
@@ -1234,6 +1101,57 @@
       botonMusica.setAttribute("aria-label", reproduciendo ? "Pausar música" : "Reproducir música");
       botonMusica.setAttribute("aria-pressed", String(reproduciendo));
     }
+        let reanudarMusica = false;
+        let saliendo = false;
+        function invitacionVisible() {
+            return !saliendo && !document.hidden && document.body.classList.contains("invitacion-abierta");
+        }
+        function actualizarBotonMusica() {
+            const musicaActiva = !audio.paused;
+            botonMusica.textContent = musicaActiva ? "Ⅱ" : "▶";
+            botonMusica.setAttribute("aria-label", musicaActiva ? "Pausar música" : "Reproducir música");
+            botonMusica.setAttribute("aria-pressed", String(musicaActiva));
+        }
+        async function reproducirMusica() {
+            if (!invitacionVisible()) return;
+            try {
+                await audio.play();
+                if (!invitacionVisible()) pausarAlOcultar();
+            } catch { }
+            actualizarBotonMusica();
+        }
+        function pausarAlOcultar() {
+            if (!saliendo && document.body.classList.contains("invitacion-abierta") && !audio.paused) {
+                reanudarMusica = true;
+            }
+            audio.pause();
+            actualizarBotonMusica();
+        }
+        function reanudarAlVolver() {
+            if (!invitacionVisible() || !reanudarMusica) return;
+            reanudarMusica = false;
+            reproducirMusica();
+        }
+        audio.addEventListener("play", () => {
+            if (!invitacionVisible()) pausarAlOcultar();
+            actualizarBotonMusica();
+        });
+        audio.addEventListener("pause", actualizarBotonMusica);
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) pausarAlOcultar();
+            else reanudarAlVolver();
+        });
+        window.addEventListener("pagehide", pausarAlOcultar);
+        window.addEventListener("pageshow", reanudarAlVolver);
+        $(".salir").addEventListener("click", () => {
+            saliendo = true;
+            reanudarMusica = false;
+            audio.pause();
+            audio.currentTime = 0;
+            actualizarBotonMusica();
+        });
+        audio.pause();
+        actualizarBotonMusica();
     $("#entrar").addEventListener("click", async () => {
       document.body.classList.add("invitacion-abierta");
       irA(0, false);
@@ -1244,12 +1162,16 @@
       void escenas[0].offsetWidth;
       escenas[0].classList.add("activa");
       crearDestellos();
-      try { await audio.play(); estadoMusica(true); } catch { estadoMusica(false); }
+      saliendo = false;
+      reanudarMusica = false;
+      await reproducirMusica();
     });
     botonMusica.addEventListener("click", async () => {
-      if (audio.paused) {
-        try { await audio.play(); estadoMusica(true); } catch { estadoMusica(false); }
-      } else { audio.pause(); estadoMusica(false); }
+      if (!invitacionVisible()) return;
+      reanudarMusica = false;
+      if (audio.paused) await reproducirMusica();
+      else audio.pause();
+      actualizarBotonMusica();
     });
     function actualizarCuenta() {
       const restante = Math.max(0, new Date(CONFIG.fechaEvento).getTime() - Date.now());
@@ -1292,9 +1214,7 @@
       evento.preventDefault();
       invitacion.scrollBy({ left: evento.deltaY, top: 0, behavior: "auto" });
     }, { passive: false });
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden && !audio.paused) { audio.pause(); estadoMusica(false); }
-    });
+
     const fondoEntrada = new Image();
     fondoEntrada.src = "assets/fondos/fondo01.webp";
     const mostrarEntrada = () => {
@@ -1322,5 +1242,4 @@
     });
   </script>
 </body>
-
 </html>

@@ -610,19 +610,12 @@
         font-size: 0.78rem;
       }
       /* TARJETA 1: Inicio — actualmente sin elemento */
-
       /* TARJETA 2: Cuenta regresiva — elemento04 */
-
       /* TARJETA 3: Dónde y cuándo — elemento03, hielera */
-
       /* TARJETA 4: El plan — elemento06, bocina */
-
       /* TARJETA 5: Parrillada — elemento02, tabla de carne */
-
       /* TARJETA 6: Recomendaciones — elemento07, vaso de cerveza */
-
       /* TARJETA 7: Cierre — elemento05, guirnalda */
-
       .entrada-icono {
         width: min(57vw, 210px);
       }
@@ -1029,6 +1022,57 @@
       b.addEventListener("click", () => irA(i + 1)),
     );
     $("#volver-inicio").addEventListener("click", () => irA(0));
+        let reanudarMusica = false;
+        let saliendo = false;
+        function invitacionVisible() {
+            return !saliendo && !document.hidden && document.body.classList.contains("invitacion-abierta");
+        }
+        function actualizarBotonMusica() {
+            const musicaActiva = !audio.paused;
+            botonMusica.textContent = musicaActiva ? "Ⅱ" : "▶";
+            botonMusica.setAttribute("aria-label", musicaActiva ? "Pausar música" : "Reproducir música");
+            botonMusica.setAttribute("aria-pressed", String(musicaActiva));
+        }
+        async function reproducirMusica() {
+            if (!invitacionVisible()) return;
+            try {
+                await audio.play();
+                if (!invitacionVisible()) pausarAlOcultar();
+            } catch { }
+            actualizarBotonMusica();
+        }
+        function pausarAlOcultar() {
+            if (!saliendo && document.body.classList.contains("invitacion-abierta") && !audio.paused) {
+                reanudarMusica = true;
+            }
+            audio.pause();
+            actualizarBotonMusica();
+        }
+        function reanudarAlVolver() {
+            if (!invitacionVisible() || !reanudarMusica) return;
+            reanudarMusica = false;
+            reproducirMusica();
+        }
+        audio.addEventListener("play", () => {
+            if (!invitacionVisible()) pausarAlOcultar();
+            actualizarBotonMusica();
+        });
+        audio.addEventListener("pause", actualizarBotonMusica);
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) pausarAlOcultar();
+            else reanudarAlVolver();
+        });
+        window.addEventListener("pagehide", pausarAlOcultar);
+        window.addEventListener("pageshow", reanudarAlVolver);
+        $(".salir").addEventListener("click", () => {
+            saliendo = true;
+            reanudarMusica = false;
+            audio.pause();
+            audio.currentTime = 0;
+            actualizarBotonMusica();
+        });
+        audio.pause();
+        actualizarBotonMusica();
     $("#entrar").addEventListener("click", async () => {
       document.body.classList.add("invitacion-abierta");
       irA(0, false);
@@ -1039,28 +1083,16 @@
       void escenas[0].offsetWidth;
       escenas[0].classList.add("activa");
       crearBrasas();
-      try {
-        await audio.play();
-        botonMusica.textContent = "Ⅱ";
-        botonMusica.setAttribute("aria-pressed", "true");
-      } catch {
-        botonMusica.textContent = "▶";
-        botonMusica.setAttribute("aria-pressed", "false");
-      }
+      saliendo = false;
+      reanudarMusica = false;
+      await reproducirMusica();
     });
     botonMusica.addEventListener("click", async () => {
-      if (audio.paused) {
-        try {
-          await audio.play();
-          botonMusica.textContent = "Ⅱ";
-          botonMusica.setAttribute("aria-label", "Pausar música");
-        } catch { }
-      } else {
-        audio.pause();
-        botonMusica.textContent = "▶";
-        botonMusica.setAttribute("aria-label", "Reproducir música");
-      }
-      botonMusica.setAttribute("aria-pressed", String(!audio.paused));
+      if (!invitacionVisible()) return;
+      reanudarMusica = false;
+      if (audio.paused) await reproducirMusica();
+      else audio.pause();
+      actualizarBotonMusica();
     });
     function cuenta() {
       const r = Math.max(
@@ -1097,13 +1129,7 @@
         b.addEventListener("animationend", () => b.remove(), { once: true });
       }
     }
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden && !audio.paused) {
-        audio.pause();
-        botonMusica.textContent = "▶";
-        botonMusica.setAttribute("aria-pressed", "false");
-      }
-    });
+
     window.addEventListener("resize", ajustarAlto, { passive: true });
     window.visualViewport?.addEventListener("resize", ajustarAlto, {
       passive: true,

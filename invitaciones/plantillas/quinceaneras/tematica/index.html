@@ -1809,18 +1809,32 @@
         requestAnimationFrame(abrirTarjetaFijada);
       });
     }
+    let reanudarMusica = false;
+    let saliendo = false;
+    function puedeReproducirMusica() {
+      return !saliendo && DATOS_INVITACION.botones.musica === true && !document.hidden && document.body.classList.contains("iniciada");
+    }
+    function actualizarBotonMusica() {
+      musicaActiva = !musica.paused;
+      $('#boton-musica').textContent = musicaActiva ? 'Ⅱ' : '♫';
+      $('#boton-musica').setAttribute('aria-label', musicaActiva ? 'Pausar música' : 'Reproducir música');
+      $('#boton-musica').setAttribute('aria-pressed', String(musicaActiva));
+    }
     async function reproducirMusica() {
-      if (DATOS_INVITACION.botones.musica !== true || document.hidden || !document.body.classList.contains("iniciada")) return;
+      if (!puedeReproducirMusica()) return;
       try {
         await musica.play();
-        musicaActiva = true;
-        $("#boton-musica").textContent = "Ⅱ";
-        $("#boton-musica").setAttribute("aria-label", "Pausar música");
-      } catch (_) {
-        musicaActiva = false;
-        $("#boton-musica").textContent = "♫";
-      }
+        if (!puedeReproducirMusica()) pausarAlOcultar();
+      } catch (_) { }
+      actualizarBotonMusica();
     }
+    musica.addEventListener('play', () => {
+      if (!puedeReproducirMusica()) pausarAlOcultar();
+      actualizarBotonMusica();
+    });
+    musica.addEventListener('pause', actualizarBotonMusica);
+    musica.pause();
+    actualizarBotonMusica();
     function crearDestello() {
       if (!document.body.classList.contains("iniciada")) return;
       const destello = document.createElement("span");
@@ -1833,6 +1847,8 @@
       destello.addEventListener("animationend", () => destello.remove());
     }
     $("#boton-entrar").addEventListener("click", () => {
+      saliendo = false;
+      reanudarMusica = false;
       document.body.classList.add("iniciada");
       entrada.classList.add("oculta");
       indiceActivo = 0;
@@ -1842,38 +1858,44 @@
       clearInterval(intervaloParticulas);
       intervaloParticulas = setInterval(crearDestello, 1200);
     });
-    $("#boton-salir-portada").addEventListener("click", () => {
-      window.location.href = DATOS_INVITACION.urlSalida;
-    });
-    $("#boton-musica").addEventListener("click", () => {
-      if (musicaActiva) {
-        musica.pause();
-        musicaActiva = false;
-        $("#boton-musica").textContent = "♫";
-        $("#boton-musica").setAttribute("aria-label", "Reproducir música");
-      } else {
-        reproducirMusica();
-      }
-    });
-    $("#boton-salir").addEventListener("click", () => {
+    function salirDeInvitacion() {
+      saliendo = true;
+      reanudarMusica = false;
       pausarAlOcultar();
+      musica.currentTime = 0;
       window.location.href = DATOS_INVITACION.urlSalida;
+    }
+    $("#boton-salir-portada").addEventListener("click", salirDeInvitacion);
+    $("#boton-salir").addEventListener("click", salirDeInvitacion);
+    $("#boton-musica").addEventListener("click", () => {
+      if (!puedeReproducirMusica()) return;
+      reanudarMusica = false;
+      if (!musica.paused) musica.pause();
+      else reproducirMusica();
+      actualizarBotonMusica();
     });
     function pausarAlOcultar() {
+      if (!saliendo && document.body.classList.contains('iniciada') && !musica.paused) reanudarMusica = true;
       musica.pause();
-      musicaActiva=false;
-      $('#boton-musica').textContent='♫';
-      $('#boton-musica').setAttribute('aria-label','Reproducir música');
+      actualizarBotonMusica();
       clearInterval(intervaloParticulas);
-      intervaloParticulas=null;
+      intervaloParticulas = null;
     }
-    document.addEventListener('visibilitychange',()=>{
-      if(document.hidden) pausarAlOcultar();
-      else if(document.body.classList.contains('iniciada') && !intervaloParticulas)
-        intervaloParticulas=setInterval(crearDestello,1200);
+    function reanudarAlVolver() {
+      if (document.hidden || saliendo || !document.body.classList.contains('iniciada')) return;
+      if (!intervaloParticulas) intervaloParticulas = setInterval(crearDestello, 1200);
+      if (reanudarMusica && DATOS_INVITACION.botones.musica === true) {
+        reanudarMusica = false;
+        reproducirMusica();
+      }
+    }
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) pausarAlOcultar();
+      else reanudarAlVolver();
     });
-    window.addEventListener('pagehide',pausarAlOcultar);
-    window.addEventListener('beforeunload',pausarAlOcultar);
+    window.addEventListener('pagehide', pausarAlOcultar);
+    window.addEventListener('pageshow', reanudarAlVolver);
+    window.addEventListener('beforeunload', pausarAlOcultar);
     window.addEventListener("resize", () => ajustarAltura());
     window.visualViewport?.addEventListener("resize", () => ajustarAltura());
     ajustarAltura(true);

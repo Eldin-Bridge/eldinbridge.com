@@ -660,12 +660,6 @@
         padding: 10px 17px;
         font-size: .76rem;
       }
-
-
-
-
-
-
     }
     @media (max-height: 700px) {
       .tarjeta {
@@ -1259,6 +1253,57 @@
         String(reproduciendo)
       );
     }
+        let reanudarMusica = false;
+        let saliendo = false;
+        function invitacionVisible() {
+            return !saliendo && !document.hidden && document.body.classList.contains("invitacion-abierta");
+        }
+        function actualizarBotonMusica() {
+            const musicaActiva = !audio.paused;
+            botonMusica.textContent = musicaActiva ? "Ⅱ" : "▶";
+            botonMusica.setAttribute("aria-label", musicaActiva ? "Pausar música" : "Reproducir música");
+            botonMusica.setAttribute("aria-pressed", String(musicaActiva));
+        }
+        async function reproducirMusica() {
+            if (!invitacionVisible()) return;
+            try {
+                await audio.play();
+                if (!invitacionVisible()) pausarAlOcultar();
+            } catch { }
+            actualizarBotonMusica();
+        }
+        function pausarAlOcultar() {
+            if (!saliendo && document.body.classList.contains("invitacion-abierta") && !audio.paused) {
+                reanudarMusica = true;
+            }
+            audio.pause();
+            actualizarBotonMusica();
+        }
+        function reanudarAlVolver() {
+            if (!invitacionVisible() || !reanudarMusica) return;
+            reanudarMusica = false;
+            reproducirMusica();
+        }
+        audio.addEventListener("play", () => {
+            if (!invitacionVisible()) pausarAlOcultar();
+            actualizarBotonMusica();
+        });
+        audio.addEventListener("pause", actualizarBotonMusica);
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) pausarAlOcultar();
+            else reanudarAlVolver();
+        });
+        window.addEventListener("pagehide", pausarAlOcultar);
+        window.addEventListener("pageshow", reanudarAlVolver);
+        $(".salir").addEventListener("click", () => {
+            saliendo = true;
+            reanudarMusica = false;
+            audio.pause();
+            audio.currentTime = 0;
+            actualizarBotonMusica();
+        });
+        audio.pause();
+        actualizarBotonMusica();
     $("#entrar").addEventListener(
       "click",
       async () => {
@@ -1278,30 +1323,18 @@
         void escenas[0].offsetWidth;
         escenas[0].classList.add("activa");
         crearLuces();
-        try {
-          await audio.play();
-          estadoMusica(true);
-        } catch {
-          estadoMusica(false);
-        }
+        saliendo = false;
+        reanudarMusica = false;
+        await reproducirMusica();
       }
     );
-    botonMusica.addEventListener(
-      "click",
-      async () => {
-        if (audio.paused) {
-          try {
-            await audio.play();
-            estadoMusica(true);
-          } catch {
-            estadoMusica(false);
-          }
-        } else {
-          audio.pause();
-          estadoMusica(false);
-        }
-      }
-    );
+    botonMusica.addEventListener("click", async () => {
+      if (!invitacionVisible()) return;
+      reanudarMusica = false;
+      if (audio.paused) await reproducirMusica();
+      else audio.pause();
+      actualizarBotonMusica();
+    });
     function cuenta() {
       const restante = Math.max(
         0,
@@ -1421,18 +1454,6 @@
       },
       {
         passive: false
-      }
-    );
-    document.addEventListener(
-      "visibilitychange",
-      () => {
-        if (
-          document.hidden &&
-          !audio.paused
-        ) {
-          audio.pause();
-          estadoMusica(false);
-        }
       }
     );
     const fondoEntrada = new Image();
