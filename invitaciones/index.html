@@ -939,6 +939,28 @@
             .tabla-precios th,.tabla-precios td { padding:9px 6px; }
             .precios-acciones .ver-catalogo { width:auto; }
         }
+        .precios-movil { display:none; }
+        @media(max-width:600px) {
+            body:has(#vista-precios:not(.vista-oculta)) main { padding-top:10px; padding-bottom:12px; }
+            body:has(#vista-precios:not(.vista-oculta)) .barra { min-height:54px; }
+            #vista-precios { padding-top:0; }
+            #vista-precios .precios-acciones { margin-bottom:8px; }
+            #vista-precios .ver-catalogo { padding:9px 16px; font-size:.8rem; }
+            #vista-precios .tabla-precios-wrap { display:none; }
+            .precios-movil { display:block; border:1px solid var(--borde); border-radius:12px; overflow:hidden; background:#101426; }
+            .precios-movil .moneda-movil { text-align:center; padding:6px; font-size:.65rem; color:var(--secundario); }
+            .precios-movil table { width:100%; table-layout:fixed; border-collapse:collapse; text-align:center; }
+            .precios-movil table + table { border-top:2px solid rgba(139,92,246,.5); }
+            .precios-movil th,.precios-movil td { padding:0 3px; border-top:1px solid var(--borde); border-right:1px solid var(--borde); vertical-align:middle; line-height:1.08; }
+            .precios-movil thead th { height:38px; font-size:clamp(9px,2.7vw,11px); font-weight:650; background:rgba(139,92,246,.09); }
+            .precios-movil th:first-child { width:34%; }
+            .precios-movil tbody th { font-size:clamp(9px,2.7vw,11px); font-weight:500; }
+            .precios-movil tbody tr { height:clamp(14px,calc((100svh - 250px)/22),20px); }
+            .precios-movil tbody td { font-size:14px; color:#6ee7b7; font-weight:750; }
+            .precios-movil td.no-incluido { color:#747e98; }
+            .precios-movil .precio-movil { display:block; color:#c4b5fd; font-size:12px; font-weight:800; margin-top:3px; }
+            #vista-precios .ayuda-tabla { font-size:.65rem; margin:6px 0; }
+        }
     </style>
 </head>
 
@@ -973,7 +995,8 @@
                     <tbody id="filas-precios"></tbody>
                 </table>
             </div>
-            <p class="ayuda-tabla">✓ Incluido · — No incluido. En celular, desliza la tabla hacia los lados.</p>
+            <div id="precios-movil" class="precios-movil" aria-label="Comparación de precios"></div>
+            <p class="ayuda-tabla">✓ Incluido · — No incluido</p>
         </section>
         <section aria-labelledby="titulo-categorias" class="vista-oculta">
             <div class="encabezado">
@@ -2144,6 +2167,44 @@
             });
             document.getElementById('filas-precios').appendChild(fila);
         });
+        // Etiquetas breves solo para móvil, en el mismo orden de los datos editables.
+        const TEXTOS_MOVIL = {
+            categorias: ['Infantiles','Fiestas y reuniones','Baby showers','Posadas','Quinceañeras','Bodas'],
+            caracteristicas: ['Personalización','Música','Animaciones','Cuenta regresiva','Vestimenta','Regalo sugerido','Ubicación','WhatsApp','Calendario','Álbum de fotos','Video invitación']
+        };
+        const comparativaMovil = document.getElementById('precios-movil');
+        const monedaMovil = document.createElement('p');
+        monedaMovil.className = 'moneda-movil'; monedaMovil.textContent = 'Pesos Mexicanos · MXN';
+        comparativaMovil.appendChild(monedaMovil);
+        [0,3].forEach(inicio => {
+            const tabla = document.createElement('table');
+            const cabecera = document.createElement('thead'); const filaCabecera = document.createElement('tr');
+            const titulo = document.createElement('th'); titulo.scope = 'col'; titulo.textContent = 'Qué incluye';
+            filaCabecera.appendChild(titulo);
+            PRECIOS.slice(inicio,inicio+3).forEach((datos,local) => {
+                const celda = document.createElement('th'); celda.scope = 'col';
+                const nombre = document.createElement('span'); nombre.textContent = TEXTOS_MOVIL.categorias[inicio+local] || datos.categoria;
+                const precio = document.createElement('span'); precio.className = 'precio-movil';
+                precio.textContent = '$' + datos.precio;
+                celda.append(nombre,precio); filaCabecera.appendChild(celda);
+            });
+            cabecera.appendChild(filaCabecera); tabla.appendChild(cabecera);
+            const cuerpo = document.createElement('tbody');
+            CARACTERISTICAS.forEach((datos,filaIndice) => {
+                const fila = document.createElement('tr'); const nombre = document.createElement('th');
+                nombre.scope = 'row'; nombre.textContent = TEXTOS_MOVIL.caracteristicas[filaIndice] || datos.nombre;
+                nombre.setAttribute('aria-label',datos.nombre); fila.appendChild(nombre);
+                PRECIOS.slice(inicio,inicio+3).forEach((categoria,local) => {
+                    const incluido = datos.incluido[inicio+local] === true;
+                    const celda = document.createElement('td'); celda.textContent = incluido ? '✓' : '—';
+                    if (!incluido) celda.className = 'no-incluido';
+                    celda.setAttribute('aria-label',categoria.categoria + ': ' + (incluido ? 'Incluido' : 'No incluido'));
+                    fila.appendChild(celda);
+                });
+                cuerpo.appendChild(fila);
+            });
+            tabla.appendChild(cuerpo); comparativaMovil.appendChild(tabla);
+        });
         document.getElementById('ver-catalogo').addEventListener('click', () => {
             history.pushState({catalogo:null}, '', direccionCatalogo + '#catalogo');
             mostrarCategorias(false);
@@ -2153,7 +2214,7 @@
             vistaPrecios.classList.remove('vista-oculta');
             vistaCategorias.classList.add('vista-oculta');
             presentacionPrincipal.classList.add('vista-oculta');
-            etiquetaBarra.textContent = 'Precio';
+            etiquetaBarra.textContent = 'Precios';
             irArriba();
         }
 
