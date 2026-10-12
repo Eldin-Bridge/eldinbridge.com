@@ -788,6 +788,19 @@
         @media(max-width:560px) {
             .escena { height:var(--alto-escena,100svh); min-height:var(--alto-escena,100svh); }
         }
+
+        @media(max-width:560px) {
+            body.invitacion-abierta:not(.editor-activo) { overflow:hidden; }
+            body:not(.editor-activo) #invitacion {
+                position:fixed; top:0; left:0; width:100%;
+                height:var(--alto-escena,100svh);
+                overflow-y:auto; overflow-x:hidden;
+                scroll-snap-type:y mandatory; overscroll-behavior-y:contain;
+                touch-action:pan-y; scrollbar-width:none;
+            }
+            body:not(.editor-activo) #invitacion::-webkit-scrollbar { display:none; }
+            .escena { height:var(--alto-escena,100svh); min-height:var(--alto-escena,100svh); }
+        }
     </style>
 </head>
 
@@ -1595,14 +1608,25 @@
         let ultimaEscenaVisible = "";
         let ultimaCascada = 0;
 
-        let anchoEscenas=0;
+        let anchoEscenas=0,altoEscenas=0,ajustePantalla;
         function estabilizarEscenas() {
-            if(invitacionAbierta && window.innerWidth===anchoEscenas) return;
-            anchoEscenas=window.innerWidth;
-            document.documentElement.style.setProperty('--alto-escena',Math.round(window.innerHeight)+'px');
+            const alto=Math.round(window.visualViewport?.height || window.innerHeight);
+            const ancho=window.innerWidth;
+            if(alto===altoEscenas && ancho===anchoEscenas) return;
+            const contenedor=$('#invitacion');
+            const indice=altoEscenas?Math.round(contenedor.scrollTop/altoEscenas):0;
+            anchoEscenas=ancho;altoEscenas=alto;
+            document.documentElement.style.setProperty('--alto-escena',alto+'px');
+            if(invitacionAbierta && !editorActivo && matchMedia('(max-width:560px)').matches)
+                contenedor.scrollTo({top:indice*alto,behavior:'instant'});
+        }
+        function programarAjuste() {
+            clearTimeout(ajustePantalla);
+            ajustePantalla=setTimeout(estabilizarEscenas,180);
         }
         estabilizarEscenas();
-        window.addEventListener('resize',estabilizarEscenas,{passive:true});
+        window.addEventListener('resize',programarAjuste,{passive:true});
+        window.visualViewport?.addEventListener('resize',programarAjuste,{passive:true});
         $("#boton-salir").addEventListener("click", () => {
             invitacionAbierta = false;
             botonMusica.disabled = true;
@@ -1629,6 +1653,8 @@
                     behavior: "auto"
                 });
 
+                $("#invitacion").scrollTop=0;
+                estabilizarEscenas();
                 document.documentElement.scrollTop = 0;
                 document.body.scrollTop = 0;
 
