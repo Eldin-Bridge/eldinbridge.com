@@ -944,7 +944,7 @@
     }
     /* La portada se abre hacia la izquierda */
     /* Solamente abre libros después de entrar a la invitación */
-    body.iniciada .tarjeta-seccion.visible .portada-libro {
+    body.iniciada .tarjeta-seccion.abrir-libro .portada-libro {
       transform: rotateY(-145deg);
       filter: drop-shadow(12px 10px 14px rgba(4, 18, 11, .35));
       transition-delay: 1.2s;
@@ -1067,7 +1067,7 @@
     }
     /* En pantallas angostas abrimos un poco menos la portada */
     @media (max-width: 480px) {
-      body.iniciada .tarjeta-seccion.visible .portada-libro {
+      body.iniciada .tarjeta-seccion.abrir-libro .portada-libro {
         transform: rotateY(-132deg);
       }
     }
@@ -1123,7 +1123,7 @@
         100% 0, 100% 100%, 0 100%);
     }
     /* Cerramos la portada fuera de pantalla para preparar la siguiente apertura. */
-    .tarjeta-seccion:not(.visible) .portada-libro {
+    .tarjeta-seccion:not(.abrir-libro) .portada-libro {
       transition: none;
       transform: rotateY(0deg);
       filter: none;
@@ -1508,7 +1508,7 @@
           const seccion = tarjeta.closest(".tarjeta-seccion");
           if (
             !document.body.classList.contains("iniciada") ||
-            !seccion.classList.contains("visible")
+            !seccion.classList.contains("abrir-libro")
           ) {
             return;
           }
@@ -1516,7 +1516,7 @@
           seccion.temporizadorTexto = setTimeout(() => {
             if (
               document.body.classList.contains("iniciada") &&
-              seccion.classList.contains("visible")
+              seccion.classList.contains("abrir-libro")
             ) {
               seccion.classList.add("libro-abierto");
             }
@@ -1725,49 +1725,55 @@
       const proporciones=new Map();
       const observador=new IntersectionObserver(entradas=>{
         entradas.forEach(item=>{
-          const seccion=item.target;
-          proporciones.set(seccion,item.intersectionRatio);
-          const tarjeta=seccion.classList.contains('tarjeta-seccion');
-          if(item.isIntersecting && (tarjeta?item.intersectionRatio>=.58:item.intersectionRatio>0)) {
-            if(tarjeta && !seccion.classList.contains('visible')) {
-              // Fija primero el estado cerrado para que cada nueva entrada vuelva a animarse.
-              seccion.classList.remove('libro-abierto');
-              const portada=seccion.querySelector('.portada-libro');
-              if(portada) void portada.offsetWidth;
-            }
-            seccion.classList.add('visible');
-            seccion.querySelectorAll('.revelar').forEach(el=>el.classList.add('visible'));
-          } else if(item.intersectionRatio===0 || item.boundingClientRect.bottom <= item.rootBounds.top + 2 || item.boundingClientRect.top >= item.rootBounds.bottom - 2) {
-            // Cierra el libro sólo fuera de pantalla; abre nuevamente al regresar.
-            clearTimeout(seccion.temporizadorTexto);
-            seccion.classList.remove('visible','libro-abierto');
-            if(tarjeta) seccion.querySelectorAll('.revelar').forEach(el=>el.classList.remove('visible'));
+          proporciones.set(item.target,item.intersectionRatio);
+          if(item.isIntersecting && item.intersectionRatio>0) {
+            item.target.classList.add('visible');
+            if(!item.target.classList.contains('tarjeta-seccion'))
+              item.target.querySelectorAll('.revelar').forEach(el=>el.classList.add('visible'));
+          } else if(item.intersectionRatio===0 && !item.target.classList.contains('tarjeta-seccion')) {
+            item.target.classList.remove('visible');
           }
         });
         const actual=[...proporciones].sort((a,b)=>b[1]-a[1])[0];
         if(actual && actual[1]>.5) indiceActivo=secciones.indexOf(actual[0]);
-      },{root:invitacion,threshold:[0,.1,.5,.58,.75,1]});
+      },{root:invitacion,threshold:[0,.1,.5,.75,1]});
       secciones.forEach(seccion=>observador.observe(seccion));
-      // Corrige residuos de 1–2 píxeles del snap, sin mover el scroll ni cerrar la tarjeta visible.
-      function prepararLibrosFueraDePantalla() {
+      let ultimaSeccion=null, temporizadorReposo;
+      function cerrarLibro(seccion) {
+        clearTimeout(seccion.temporizadorTexto);
+        seccion.classList.remove('abrir-libro','libro-abierto');
+        seccion.querySelectorAll('.revelar').forEach(el=>el.classList.remove('visible'));
+      }
+      function abrirTarjetaFijada() {
+        if(!document.body.classList.contains('iniciada')) return;
         const marco=invitacion.getBoundingClientRect();
+        const destino=secciones.reduce((mejor,seccion)=>
+          Math.abs(seccion.getBoundingClientRect().top-marco.top)<Math.abs(mejor.getBoundingClientRect().top-marco.top)?seccion:mejor,secciones[0]);
+        // Nunca inicia la apertura en una tarjeta que está cruzando la pantalla.
+        if(Math.abs(destino.getBoundingClientRect().top-marco.top)>3 || destino===ultimaSeccion) return;
+        ultimaSeccion=destino;
         secciones.forEach(seccion=>{
-          if(!seccion.classList.contains('tarjeta-seccion')) return;
-          const rect=seccion.getBoundingClientRect();
-          if(rect.bottom<=marco.top+2 || rect.top>=marco.bottom-2) {
-            clearTimeout(seccion.temporizadorTexto);
-            seccion.classList.remove('visible','libro-abierto');
-            seccion.querySelectorAll('.revelar').forEach(el=>el.classList.remove('visible'));
+          if(seccion!==destino && seccion.classList.contains('tarjeta-seccion')) {
+            const rect=seccion.getBoundingClientRect();
+            if(rect.bottom<=marco.top || rect.top>=marco.bottom) cerrarLibro(seccion);
           }
         });
+        if(!destino.classList.contains('tarjeta-seccion')) return;
+        cerrarLibro(destino);
+        const portada=destino.querySelector('.portada-libro');
+        if(portada) void getComputedStyle(portada).transform;
+        destino.querySelectorAll('.revelar').forEach(el=>el.classList.add('visible'));
+        destino.classList.add('abrir-libro');
       }
-      invitacion.addEventListener('scrollend',prepararLibrosFueraDePantalla);
-      let temporizadorLibros;
+      invitacion.addEventListener('scrollend',abrirTarjetaFijada);
       invitacion.addEventListener('scroll',()=>{
-        clearTimeout(temporizadorLibros);
-        temporizadorLibros=setTimeout(prepararLibrosFueraDePantalla,180);
+        clearTimeout(temporizadorReposo);
+        temporizadorReposo=setTimeout(abrirTarjetaFijada,180);
       },{passive:true});
-
+      $('#boton-entrar').addEventListener('click',()=>{
+        ultimaSeccion=null;
+        requestAnimationFrame(abrirTarjetaFijada);
+      });
     }
     async function reproducirMusica() {
       if (DATOS_INVITACION.botones.musica !== true || document.hidden || !document.body.classList.contains("iniciada")) return;
