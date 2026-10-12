@@ -879,13 +879,73 @@
                 display: none;
             }
         }
+
+        .precios-acciones { display:flex; justify-content:flex-end; margin-bottom:24px; }
+        .ver-catalogo { display:inline-flex; align-items:center; justify-content:center; padding:14px 22px; border:1px solid rgba(139,92,246,.6); border-radius:14px; background:linear-gradient(120deg,#7c3aed,#4f46e5); color:#fff; font:inherit; font-weight:700; cursor:pointer; text-decoration:none; }
+        .ver-catalogo:focus-visible { outline:3px solid var(--azul); outline-offset:4px; }
+        .tabla-precios-wrap { overflow-x:auto; border:1px solid var(--borde); border-radius:20px; background:rgba(15,19,34,.82); margin:24px 0; }
+        .tabla-precios { width:100%; border-collapse:collapse; text-align:left; }
+        .tabla-precios caption { text-align:left; padding:20px; font-weight:700; color:var(--secundario); }
+        .tabla-precios th,.tabla-precios td { padding:20px; border-top:1px solid var(--borde); vertical-align:top; }
+        .tabla-precios thead th { color:var(--secundario); font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; background:rgba(139,92,246,.08); }
+        .tabla-precios tbody th { font-weight:700; width:26%; }
+        .tabla-precios .precio { color:#c4b5fd; font-weight:800; font-size:1.3rem; white-space:nowrap; }
+        .tabla-precios td:last-child { color:var(--secundario); line-height:1.65; }
+        .precios-incluye { padding:24px; border:1px solid var(--borde); border-radius:20px; margin-bottom:36px; }
+        .precios-incluye h3 { margin-bottom:12px; }
+        .precios-incluye p { color:var(--secundario); line-height:1.8; }
+        @media(max-width:600px) {
+            .tabla-precios th,.tabla-precios td { padding:14px 10px; font-size:.82rem; }
+            .tabla-precios .precio { font-size:1.08rem; }
+            .tabla-precios tbody th { width:30%; }
+            .precios-acciones .ver-catalogo { width:100%; }
+        }
+        .ayuda-tabla { color:var(--secundario); font-size:.85rem; line-height:1.6; margin:18px 0; }
+        .tabla-precios { min-width:960px; table-layout:fixed; }
+        .tabla-precios th,.tabla-precios td { border-right:1px solid var(--borde); padding:18px 12px; }
+        .tabla-precios th:first-child { width:210px; position:sticky; left:0; background:#101426; z-index:1; }
+        .tabla-precios thead th { text-transform:none; letter-spacing:0; text-align:center; font-size:.9rem; }
+        .tabla-precios thead th:first-child { text-align:left; z-index:2; }
+        .tabla-precios tbody td { text-align:center; }
+        .tabla-precios tbody th { font-size:.9rem; }
+        .tabla-precios tbody tr:nth-child(even) td { background:rgba(255,255,255,.025); }
+        .tabla-precios .paloma { color:#6ee7b7; font-size:1.55rem; font-weight:800; }
+        .tabla-precios .no-incluido { color:#747e98; font-size:1.2rem; }
+        .tabla-precios .precio { display:block; margin-top:10px; }
+        @media(max-width:600px) {
+            .tabla-precios { min-width:900px; }
+            .tabla-precios th:first-child { width:160px; }
+            .tabla-precios th,.tabla-precios td { padding:15px 10px; }
+        }
+        /* Vista de precios: compacta y con textos centrados. */
+        .solo-lectores { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0; }
+        #vista-precios { padding-top:20px; }
+        .precios-acciones { justify-content:center; margin-bottom:18px; }
+        .tabla-precios-wrap { margin:0 0 14px; border-radius:16px; }
+        .tabla-precios { min-width:820px; text-align:center; }
+        .tabla-precios caption { text-align:center; padding:12px; font-size:.8rem; }
+        .tabla-precios th,.tabla-precios td { text-align:center; vertical-align:middle; padding:10px 8px; }
+        .tabla-precios thead th:first-child { text-align:center; }
+        .tabla-precios th:first-child { width:190px; }
+        .tabla-precios tbody th { font-size:.82rem; font-weight:600; }
+        .tabla-precios thead th { font-size:.82rem; }
+        .tabla-precios .precio { font-size:1.15rem; margin-top:6px; }
+        .tabla-precios .paloma { font-size:1.3rem; }
+        .tabla-precios .no-incluido { font-size:1rem; }
+        #vista-precios .ayuda-tabla { text-align:center; margin:12px 0; }
+        @media(max-width:600px) {
+            .tabla-precios { min-width:760px; }
+            .tabla-precios th:first-child { width:150px; }
+            .tabla-precios th,.tabla-precios td { padding:9px 6px; }
+            .precios-acciones .ver-catalogo { width:auto; }
+        }
     </style>
 </head>
 
 <body>
     <header class="contenedor barra">
         <span class="etiqueta etiqueta-barra" id="etiqueta-barra">
-            Invitaciones digitales
+            Precios
         </span>
 
         <a class="volver" id="boton-volver" href="../">
@@ -894,7 +954,7 @@
     </header>
 
     <main class="contenedor">
-        <section class="presentacion" aria-labelledby="titulo-principal">
+        <section class="presentacion vista-oculta" aria-labelledby="titulo-principal">
             <h1 id="titulo-principal">
                 Una invitación para cada <span class="degradado">momento especial.</span>
             </h1>
@@ -903,7 +963,19 @@
             </p>
         </section>
 
-        <section aria-labelledby="titulo-categorias">
+        <section id="vista-precios" aria-labelledby="titulo-precios">
+            <div class="precios-acciones"><button class="ver-catalogo" id="ver-catalogo" type="button">Ver catálogo →</button></div>
+            <h1 id="titulo-precios" class="solo-lectores">Precio de invitaciones digitales</h1>
+            <div class="tabla-precios-wrap" tabindex="0" role="region" aria-label="Comparación de precios y características">
+                <table class="tabla-precios">
+                    <caption>Pesos Mexicanos · MXN</caption>
+                    <thead id="encabezado-precios"></thead>
+                    <tbody id="filas-precios"></tbody>
+                </table>
+            </div>
+            <p class="ayuda-tabla">✓ Incluido · — No incluido. En celular, desliza la tabla hacia los lados.</p>
+        </section>
+        <section aria-labelledby="titulo-categorias" class="vista-oculta">
             <div class="encabezado">
                 <h2 id="titulo-categorias">Elige una categoría</h2>
             </div>
@@ -1893,6 +1965,198 @@
         };
 
 
+        // DATOS EDITABLES: precios en MXN; true muestra una paloma y false un guion.
+        // Los valores de cada fila siguen el orden de las categorías.
+        const PRECIOS = [
+    {
+        "categoria": "Fiestas infantiles",
+        "precio": 50
+    },
+    {
+        "categoria": "Fiestas y reuniones",
+        "precio": 100
+    },
+    {
+        "categoria": "Baby showers",
+        "precio": 150
+    },
+    {
+        "categoria": "Posadas",
+        "precio": 200
+    },
+    {
+        "categoria": "Quinceañeras",
+        "precio": 250
+    },
+    {
+        "categoria": "Bodas",
+        "precio": 300
+    }
+];
+        const CARACTERISTICAS = [
+    {
+        "nombre": "Personalización",
+        "incluido": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ]
+    },
+    {
+        "nombre": "Música",
+        "incluido": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ]
+    },
+    {
+        "nombre": "Animaciones",
+        "incluido": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ]
+    },
+    {
+        "nombre": "Cuenta Regresiva",
+        "incluido": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ]
+    },
+    {
+        "nombre": "Codigo De Vestimenta",
+        "incluido": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ]
+    },
+    {
+        "nombre": "Regalo Sugerido",
+        "incluido": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ]
+    },
+    {
+        "nombre": "Ubicación Del Evento",
+        "incluido": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ]
+    },
+    {
+        "nombre": "Confirmación Por WhatsApp",
+        "incluido": [
+            false,
+            false,
+            true,
+            true,
+            true,
+            true
+        ]
+    },
+    {
+        "nombre": "Agregar A Calendario",
+        "incluido": [
+            false,
+            false,
+            true,
+            true,
+            true,
+            true
+        ]
+    },
+    {
+        "nombre": "Album De Fotos",
+        "incluido": [
+            false,
+            false,
+            false,
+            false,
+            true,
+            true
+        ]
+    },
+    {
+        "nombre": "Video Invitación",
+        "incluido": [
+            false,
+            false,
+            false,
+            false,
+            true,
+            true
+        ]
+    }
+];
+        const vistaPrecios = document.getElementById('vista-precios');
+        const encabezado = document.createElement('tr');
+        const tituloColumna = document.createElement('th');
+        tituloColumna.scope = 'col'; tituloColumna.textContent = 'Qué incluye';
+        encabezado.appendChild(tituloColumna);
+        PRECIOS.forEach(datos => {
+            const celda = document.createElement('th'); celda.scope = 'col';
+            const nombre = document.createElement('span'); nombre.textContent = datos.categoria;
+            const precio = document.createElement('span'); precio.className = 'precio';
+            precio.textContent = new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN',maximumFractionDigits:0}).format(datos.precio);
+            celda.append(nombre,precio); encabezado.appendChild(celda);
+        });
+        document.getElementById('encabezado-precios').appendChild(encabezado);
+        CARACTERISTICAS.forEach(datos => {
+            const fila = document.createElement('tr');
+            const nombre = document.createElement('th'); nombre.scope = 'row'; nombre.textContent = datos.nombre;
+            fila.appendChild(nombre);
+            PRECIOS.forEach((categoria,indice) => {
+                const incluido = datos.incluido[indice] === true;
+                const celda = document.createElement('td');
+                const marca = document.createElement('span');
+                marca.className = incluido ? 'paloma' : 'no-incluido';
+                marca.textContent = incluido ? '✓' : '—'; marca.setAttribute('aria-hidden','true');
+                celda.setAttribute('aria-label',categoria.categoria + ': ' + (incluido ? 'Incluido' : 'No incluido'));
+                celda.appendChild(marca); fila.appendChild(celda);
+            });
+            document.getElementById('filas-precios').appendChild(fila);
+        });
+        document.getElementById('ver-catalogo').addEventListener('click', () => {
+            history.pushState({catalogo:null}, '', direccionCatalogo + '#catalogo');
+            mostrarCategorias(false);
+        });
+        function mostrarPrecios() {
+            ocultarCatalogos();
+            vistaPrecios.classList.remove('vista-oculta');
+            vistaCategorias.classList.add('vista-oculta');
+            presentacionPrincipal.classList.add('vista-oculta');
+            etiquetaBarra.textContent = 'Precio';
+            irArriba();
+        }
+
         function ocultarCatalogos() {
             Object.values(CATALOGOS).forEach(
                 function (catalogo) {
@@ -1916,6 +2180,7 @@
             nombreCatalogo,
             registrarHistorial = true
         ) {
+            vistaPrecios.classList.add("vista-oculta");
             const catalogo =
                 CATALOGOS[nombreCatalogo];
 
@@ -1960,6 +2225,7 @@
             actualizarDireccion = true
         ) {
             ocultarCatalogos();
+            vistaPrecios.classList.add("vista-oculta");
 
             presentacionPrincipal.classList.remove(
                 "vista-oculta"
@@ -1978,7 +2244,7 @@
                         catalogo: null
                     },
                     "",
-                    direccionCatalogo
+                    direccionCatalogo + "#catalogo"
                 );
             }
 
@@ -2014,7 +2280,7 @@
                         }
                     );
 
-                if (catalogoAbierto) {
+                if (catalogoAbierto || !vistaCategorias.classList.contains("vista-oculta")) {
                     evento.preventDefault();
                     history.back();
                 }
@@ -2042,8 +2308,10 @@
                     nombreCatalogo,
                     false
                 );
-            } else {
+            } else if (nombreCatalogo === "catalogo") {
                 mostrarCategorias(false);
+            } else {
+                mostrarPrecios();
             }
         }
 
@@ -2084,6 +2352,9 @@
         );
 
 
+        if (catalogoInicial || nombreInicial === 'catalogo') {
+            history.pushState({catalogo:null}, '', direccionCatalogo + '#catalogo');
+        }
         if (catalogoInicial) {
             history.pushState(
                 {
