@@ -1161,6 +1161,38 @@
     .tarjeta-seccion.libro-abierto .tarjeta > :not(.portada-libro) {
       visibility:visible;
     }
+
+    /* La fotografía no se desvanece durante el desplazamiento: evita el panel azul intermedio. */
+    .foto-pantalla .foto-marco,
+    .foto-pantalla.visible .foto-marco {
+      opacity:1;
+      transform:none;
+      transition:none;
+    }
+
+    /* Estado cerrado estable: no deja una hoja crema expuesta bajo la capa 3D al deslizar. */
+    .tarjeta-seccion:not(.abrir-libro) .tarjeta {
+      background:linear-gradient(145deg,#315e46,#173b2b 45%,#0c281d);
+      transform-style:flat;
+    }
+    .tarjeta-seccion:not(.abrir-libro) .portada-libro {
+      transform:none;
+      transform-style:flat;
+      will-change:auto;
+      transition:none;
+      filter:none;
+    }
+    .tarjeta-seccion:not(.abrir-libro) .portada-frente {
+      backface-visibility:visible;
+    }
+    .tarjeta-seccion:not(.abrir-libro) .portada-reverso {
+      display:none;
+    }
+    .tarjeta-seccion.abrir-libro .tarjeta { transform-style:preserve-3d; }
+    .tarjeta-seccion.abrir-libro .portada-libro {
+      transform-style:preserve-3d;
+      will-change:transform;
+    }
   </style>
 </head>
 <body>
@@ -1577,6 +1609,8 @@
       musica.src = DATOS_INVITACION.audio;
       $("#foto-portada").src = DATOS_INVITACION.fotos.portada;
       $$(".foto-pantalla img").forEach((imagen, i) => {
+        imagen.loading='eager';
+        imagen.decoding='async';
         imagen.src = DATOS_INVITACION.fotos.secciones[i];
       });
       $$(".fondo-tarjeta").forEach((imagen, i) => {
