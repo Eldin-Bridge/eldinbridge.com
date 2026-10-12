@@ -1,29 +1,17 @@
 <!doctype html>
-
 <html lang="es">
-
 <head>
-
   <meta charset="utf-8">
-
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-
   <meta name="theme-color" content="#173c51">
-
   <meta name="description" content="Invitación a una posada pública">
-
   <title>Posada Pública | Invitación</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
-
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Josefin+Sans:wght@500;600;700&family=Yeseva+One&display=swap"
     rel="stylesheet">
-
   <link rel="preload" as="image" href="assets/foto/foto01.webp">
-
   <style>
     :root {
       --h: 100svh;
@@ -32,11 +20,9 @@
       --gold: #e6a949;
       --cream: #fff9e9
     }
-
     * {
       box-sizing: border-box
     }
-
     html,
     body {
       height: 100%;
@@ -45,36 +31,29 @@
       overflow: hidden;
       background: #173c51
     }
-
     body {
       font-family: "DM Sans", Arial, sans-serif;
       color: var(--cream);
       -webkit-font-smoothing: antialiased
     }
-
     button,
     a {
       font: inherit
     }
-
     button {
       cursor: pointer
     }
-
     a {
       color: inherit
     }
-
     [hidden] {
       display: none !important
     }
-
     button:focus-visible,
     a:focus-visible {
       outline: 3px solid #fff;
       outline-offset: 3px
     }
-
     .shell {
       position: relative;
       width: 100%;
@@ -85,7 +64,6 @@
       background: #173c51;
       box-shadow: 0 0 70px #0008
     }
-
     .pages {
       height: 100%;
       overflow-y: auto;
@@ -95,11 +73,9 @@
       touch-action: pan-y;
       -webkit-overflow-scrolling: touch
     }
-
     .pages::-webkit-scrollbar {
       display: none
     }
-
     .scene,
     .entry {
       position: relative;
@@ -108,12 +84,10 @@
       overflow: hidden;
       isolation: isolate
     }
-
     .scene {
       scroll-snap-align: start;
       scroll-snap-stop: always
     }
-
     .bg,
     .entry-photo {
       position: absolute;
@@ -123,7 +97,6 @@
       object-fit: cover;
       display: block
     }
-
     .scene::before {
       content: "";
       position: absolute;
@@ -132,24 +105,20 @@
       background: linear-gradient(180deg, #0b2b3c69, #123c4879 48%, #082a3ead);
       pointer-events: none
     }
-
     .entry {
       position: absolute;
       inset: 0;
       z-index: 20;
       transition: opacity .65s, visibility .65s
     }
-
     .entry.closed {
       opacity: 0;
       visibility: hidden;
       pointer-events: none
     }
-
     .entry-photo {
       object-position: center center
     }
-
     .entry::after {
       content: "";
       position: absolute;
@@ -157,7 +126,6 @@
       background: linear-gradient(180deg, #102a3b8c, transparent 38%, #102b3b24 47%, #0b2e43ed 92%);
       pointer-events: none
     }
-
     .entry-bottom {
       position: absolute;
       z-index: 2;
@@ -167,7 +135,6 @@
       text-align: center;
       text-shadow: 0 3px 17px #000
     }
-
     .entry-bottom .eyebrow {
       font-size: .66rem;
       letter-spacing: .19em;
@@ -175,13 +142,11 @@
       font-weight: 700;
       color: #ffe7bd
     }
-
     .entry h1 {
       font: 400 clamp(3.1rem, 12vw, 5rem)/1 "Yeseva One", Georgia, serif;
       margin: 8px 0;
       color: #fffaf0
     }
-
     .entry h1 em {
       display: block;
       font: 700 clamp(3.1rem, 12vw, 4.8rem)/1 "Josefin Sans", sans-serif;
@@ -191,14 +156,12 @@
       color: #ffd486;
       margin-top: 12px
     }
-
     .entry-bottom p:last-child {
       max-width: 34ch;
       margin: 15px auto 0;
       line-height: 1.5;
       font-size: .9rem
     }
-
     .button,
     .pill {
       display: inline-flex;
@@ -218,12 +181,10 @@
       text-transform: uppercase;
       box-shadow: 0 9px 24px #08203166
     }
-
     .button:active,
     .pill:active {
       background: #fff0ca
     }
-
     .entry-start {
       position: absolute;
       z-index: 3;
@@ -232,7 +193,6 @@
       transform: translateX(-50%);
       white-space: nowrap
     }
-
     .controls {
       position: absolute;
       z-index: 25;
@@ -243,19 +203,15 @@
       justify-content: space-between;
       pointer-events: none
     }
-
     .controls button {
       pointer-events: auto
     }
-
     .controls #music {
       visibility: hidden
     }
-
     .started .controls #music {
       visibility: visible
     }
-
     .round {
       height: 44px;
       width: 44px;
@@ -270,9 +226,7 @@
       line-height: 1;
       backdrop-filter: blur(8px)
     }
-
     /* Cartel festivo de plaza: bandas de color y marco inspirado en papel picado. */
-
     .card {
       position: absolute;
       z-index: 4;
@@ -286,7 +240,6 @@
       border-radius: 2px;
       box-shadow: 0 18px 48px #082333b3, inset 0 0 0 3px #fff9e9, inset 0 0 0 5px #e77555
     }
-
     .card::before {
       content: "";
       position: absolute;
@@ -299,7 +252,6 @@
       clip-path: polygon(0 0, 100% 0, 100% 64%, 96% 100%, 92% 64%, 88% 100%, 84% 64%, 80% 100%, 76% 64%, 72% 100%, 68% 64%, 64% 100%, 60% 64%, 56% 100%, 52% 64%, 48% 100%, 44% 64%, 40% 100%, 36% 64%, 32% 100%, 28% 64%, 24% 100%, 20% 64%, 16% 100%, 12% 64%, 8% 100%, 4% 64%, 0 100%);
       pointer-events: none
     }
-
     .card-inner {
       position: relative;
       padding: clamp(39px, 5vh, 51px) clamp(22px, 6vw, 37px) 31px;
@@ -308,12 +260,10 @@
       translate: 0 17px;
       transition: opacity .7s ease, translate .7s ease
     }
-
     .scene.active .card-inner {
       opacity: 1;
       translate: 0 0
     }
-
     .series {
       display: inline-block;
       margin: 0 0 14px;
@@ -325,17 +275,14 @@
       letter-spacing: .12em;
       font-weight: 700
     }
-
     .monogram {
       display: block;
       margin: 0 auto 13px;
       color: var(--coral)
     }
-
     .monogram span {
       font: 2rem "Yeseva One", Georgia, serif
     }
-
     .card h2 {
       font: 400 clamp(1.87rem, 7.4vw, 2.7rem)/1.16 "Yeseva One", Georgia, serif;
       letter-spacing: -.025em;
@@ -343,36 +290,30 @@
       text-wrap: balance;
       color: #194b60
     }
-
     .card h2 em {
       font-style: normal;
       color: #d0563f
     }
-
     .card p {
       font-size: clamp(.86rem, 3.1vw, .98rem);
       line-height: 1.6;
       margin: 11px 0
     }
-
     .card .lead {
       font: 700 clamp(1.2rem, 4.9vw, 1.62rem)/1.31 "Josefin Sans", sans-serif;
       color: #c44f3d;
       margin: 16px 0
     }
-
     .card .muted {
       color: #64717a;
       font-size: .76rem
     }
-
     .divider {
       font: 1rem Georgia, serif;
       color: #d49a45;
       letter-spacing: .35em;
       margin: 16px 0
     }
-
     .date {
       display: flex;
       justify-content: center;
@@ -381,11 +322,9 @@
       color: var(--coral);
       margin: 13px auto
     }
-
     .date b {
       font: 400 4rem/.9 "Yeseva One", Georgia, serif
     }
-
     .date span {
       text-align: left;
       font-size: .8rem;
@@ -393,38 +332,32 @@
       text-transform: uppercase;
       line-height: 1.5
     }
-
     .countdown {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 5px;
       margin: 17px 0
     }
-
     .countdown div {
       padding: 8px 1px;
       border-top: 2px solid #e3b465;
       border-bottom: 2px solid #e3b465
     }
-
     .countdown b {
       display: block;
       font: 400 clamp(1.1rem, 5vw, 1.5rem) "Yeseva One", Georgia, serif;
       color: var(--coral)
     }
-
     .countdown small {
       font-size: .53rem;
       text-transform: uppercase
     }
-
     .program {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
       margin: 18px 0
     }
-
     .program span {
       border-left: 4px solid #e5a749;
       padding: 11px 6px;
@@ -432,7 +365,6 @@
       color: #28556a;
       font-size: .7rem
     }
-
     .actions {
       display: flex;
       flex-wrap: wrap;
@@ -440,19 +372,16 @@
       gap: 8px;
       margin: 17px 0 0
     }
-
     .pill[aria-disabled="true"] {
       opacity: .62;
       cursor: default;
       pointer-events: none
     }
-
     .pill.secondary {
       background: transparent;
       color: #194b60;
       box-shadow: none
     }
-
     .elemento {
       position: absolute;
       z-index: 9;
@@ -468,57 +397,47 @@
       filter: drop-shadow(0 10px 14px #0b1111a1);
       animation: flotar 4.8s ease-in-out infinite
     }
-
     @keyframes flotar {
       50% {
         translate: 0 -13px
       }
     }
-
     /* POSICIONES WEB: más X = derecha, más Y = abajo, --size = tamaño. */
-
     .scene:nth-child(1) .elemento {
       --x: 50;
       --y: 18;
       --size: 29
     }
-
     .scene:nth-child(2) .elemento {
       --x: 13;
       --y: 79;
       --size: 27
     }
-
     .scene:nth-child(3) .elemento {
       --x: 86;
       --y: 75;
       --size: 26
     }
-
     .scene:nth-child(4) .elemento {
       --x: 50;
       --y: 18;
       --size: 27
     }
-
     .scene:nth-child(5) .elemento {
       --x: 50;
       --y: 25;
       --size: 27
     }
-
     .scene:nth-child(6) .elemento {
       --x: 14;
       --y: 82;
       --size: 27
     }
-
     .scene:nth-child(7) .elemento {
       --x: 86;
       --y: 78;
       --size: 27
     }
-
     .next {
       position: absolute;
       z-index: 12;
@@ -527,7 +446,6 @@
       transform: translateX(-50%);
       white-space: nowrap
     }
-
     .progress {
       position: absolute;
       z-index: 12;
@@ -540,11 +458,9 @@
       pointer-events: none;
       opacity: 0
     }
-
     .started .progress {
       opacity: 1
     }
-
     .progress i {
       height: 5px;
       width: 5px;
@@ -552,85 +468,70 @@
       background: #f4e3c3a0;
       transition: width .3s
     }
-
     .progress i.on {
       width: 21px;
       border-radius: 8px;
       background: #fff8e7
     }
-
     @media(max-height:680px) {
       .card-inner {
         padding-top: 24px;
         padding-bottom: 24px
       }
-
       .card h2 {
         font-size: clamp(1.65rem, 7vw, 2.3rem)
       }
-
       .card p {
         line-height: 1.4;
         margin: 7px 0
       }
-
       .monogram {
         height: 40px;
         width: 40px;
         margin-bottom: 9px
       }
     }
-
     @media(max-width:560px) {
       :root {
         --h: 100dvh
       }
-
       .elemento {
         max-width: 43vw;
         max-height: 25vh
       }
     }
-
     @media(max-width:560px) and (pointer:coarse) {
       /* POSICIONES MÓVIL: independientes de las de web. */
-
       .scene:nth-child(1) .elemento {
         --x: 50;
         --y: 16;
         --size: 30
       }
-
       .scene:nth-child(2) .elemento {
         --x: 12;
         --y: 79;
         --size: 30
       }
-
       .scene:nth-child(3) .elemento {
         --x: 85;
         --y: 76;
         --size: 30
       }
-
       .scene:nth-child(4) .elemento {
         --x: 50;
         --y: 15;
         --size: 30
       }
-
       .scene:nth-child(5) .elemento {
         --x: 50;
         --y: 20;
         --size: 30
       }
-
       .scene:nth-child(6) .elemento {
         --x: 15;
         --y: 81;
         --size: 27
       }
-
       .scene:nth-child(7) .elemento {
         --x: 85;
         --y: 78;
@@ -638,34 +539,23 @@
       }
     }
   </style>
-
 </head>
-
 <body>
-
   <main class="shell" id="shell">
-
     <div class="entry" id="entry">
-
       <img class="entry-photo" src="assets/foto/foto01.webp"
         alt="Comunidad reunida en una plaza mexicana para celebrar la posada" fetchpriority="high">
-
       <div class="entry-bottom">
         <p class="eyebrow">La plaza se llena de Navidad</p>
         <h1>Posada <em>Pública</em></h1>
         <p>Luces, piñata, ponche y una noche para celebrar con toda la comunidad.</p>
       </div>
-
       <button class="button entry-start" id="start" type="button">Abrir invitación ✦</button>
-
     </div>
-
     <div class="controls" aria-label="Controles de la invitación"><button class="round" id="exit" type="button"
         aria-label="Salir de la invitación">×</button><button class="round" id="music" type="button"
         aria-label="Reproducir música" aria-pressed="false">♫</button></div>
-
     <div class="pages" id="pages">
-
       <section class="scene" aria-label="Bienvenida"><img class="bg" src="assets/fondos/fondo01.webp" alt=""
           fetchpriority="high"><img class="elemento" src="assets/elementos/elemento01.webp" alt="">
         <article class="card">
@@ -680,7 +570,6 @@
           </div>
         </article>
       </section>
-
       <section class="scene" aria-label="Mensaje"><img class="bg" src="assets/fondos/fondo02.webp" alt=""
           loading="lazy"><img class="elemento" src="assets/elementos/elemento02.webp" alt="" loading="lazy">
         <article class="card">
@@ -693,7 +582,6 @@
           </div>
         </article>
       </section>
-
       <section class="scene" aria-label="Cuenta regresiva"><img class="bg" src="assets/fondos/fondo03.webp" alt=""
           loading="lazy"><img class="elemento" src="assets/elementos/elemento03.webp" alt="" loading="lazy">
         <article class="card">
@@ -710,7 +598,6 @@
           </div>
         </article>
       </section>
-
       <section class="scene" aria-label="Ubicación"><img class="bg" src="assets/fondos/fondo04.webp" alt=""
           loading="lazy"><img class="elemento" src="assets/elementos/elemento04.webp" alt="" loading="lazy">
         <article class="card">
@@ -728,7 +615,6 @@
           </div>
         </article>
       </section>
-
       <section class="scene" aria-label="Celebración en la plaza"><img class="bg" src="assets/fondos/fondo05.webp"
           alt="" loading="lazy"><img class="elemento" src="assets/elementos/elemento05.webp" alt="" loading="lazy">
         <article class="card">
@@ -742,7 +628,6 @@
           </div>
         </article>
       </section>
-
       <section class="scene" aria-label="Confirmación"><img class="bg" src="assets/fondos/fondo06.webp" alt=""
           loading="lazy"><img class="elemento" src="assets/elementos/elemento06.webp" alt="" loading="lazy">
         <article class="card">
@@ -757,7 +642,6 @@
           </div>
         </article>
       </section>
-
       <section class="scene" aria-label="Despedida"><img class="bg" src="assets/fondos/fondo07.webp" alt=""
           loading="lazy"><img class="elemento" src="assets/elementos/elemento07.webp" alt="" loading="lazy">
         <article class="card">
@@ -772,17 +656,11 @@
           </div>
         </article>
       </section>
-
     </div>
-
     <div class="progress" id="progress" aria-hidden="true"></div>
-
     <audio id="audio" src="assets/audio/audio01.mp3" loop preload="none"></audio>
-
   </main>
-
   <script>
-
     // DATOS EDITABLES: información de esta posada pública.
     // Deja mapa y telefonoWhatsApp vacíos mientras no haya enlaces reales:
     // sus botones permanecerán visibles y desactivados.
@@ -799,11 +677,9 @@
       notaVisitantes: "Entrada libre · Ven con tu familia",
       salida: "../../../index.html#posadas"
     };
-
     const $ = s => document.querySelector(s);
     const pages = $("#pages"), scenes = [...document.querySelectorAll(".scene")], audio = $("#audio");
     let current = 0, started = false, heightTimer;
-
     $("#organizerWelcome").textContent = DATOS.organizador;
     $("#signature").textContent = DATOS.organizador;
     $("#message").textContent = DATOS.mensaje;
@@ -814,7 +690,6 @@
     if (DATOS.notaCelebracion) $("#programNote").textContent = DATOS.notaCelebracion;
     else $("#programNote").hidden = true;
     document.title = "Posada Pública | " + DATOS.organizador;
-
     const date = new Date(DATOS.fecha);
     const validDate = !Number.isNaN(date.getTime());
     const pad = n => String(n).padStart(2, "0");
@@ -832,7 +707,6 @@
       $("#seconds").textContent = pad(seconds % 60);
     }
     if (validDate) { updateCountdown(); setInterval(updateCountdown, 1000) }
-
     // ENLACES EDITABLES: Maps y WhatsApp solo se activan al completar DATOS.
     function optionalLink(id, url) {
       const link = $(id);
@@ -842,41 +716,58 @@
     optionalLink("#map", DATOS.mapa.trim());
     const phone = DATOS.telefonoWhatsApp.replace(/\D/g, "");
     optionalLink("#rsvp", phone ? "https://wa.me/" + phone + "?text=" + encodeURIComponent("Hola, confirmo que asistiré a la Posada Pública organizada por " + DATOS.organizador + ".") : "");
-
     const dots = scenes.map(() => { const dot = document.createElement("i"); $("#progress").append(dot); return dot });
-
     function mark(i) { if (i === current && scenes[i].classList.contains("active")) return; current = i; scenes.forEach((scene, n) => scene.classList.toggle("active", n === i)); dots.forEach((dot, n) => dot.classList.toggle("on", n === i)) }
-
     function go(i, smooth = true) { const target = Math.max(0, Math.min(i, scenes.length - 1)); pages.scrollTo({ left: 0, top: target * pages.clientHeight, behavior: smooth ? "smooth" : "auto" }) }
-
     function adjustHeight() { if (!matchMedia("(max-width:560px)").matches) { document.documentElement.style.removeProperty("--h"); return } clearTimeout(heightTimer); heightTimer = setTimeout(() => { const h = window.visualViewport?.height || window.innerHeight; document.documentElement.style.setProperty("--h", Math.round(h) + "px"); if (started) go(current, false) }, 250) }
-
     scenes.forEach((scene, i) => { const button = document.createElement("button"); button.type = "button"; button.className = "button next"; button.textContent = i === scenes.length - 1 ? "Volver al inicio ↑" : "Continuar ↓"; button.addEventListener("click", () => go(i === scenes.length - 1 ? 0 : i + 1)); scene.append(button) });
-
     const observer = new IntersectionObserver(entries => { const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]; if (visible) mark(scenes.indexOf(visible.target)) }, { root: pages, threshold: .65 }); scenes.forEach(scene => observer.observe(scene));
-
     function musicState(on) { $("#music").textContent = on ? "Ⅱ" : "♫"; $("#music").setAttribute("aria-label", on ? "Pausar música" : "Reproducir música"); $("#music").setAttribute("aria-pressed", String(on)) }
-
-    async function play() { try { await audio.play(); musicState(true) } catch { musicState(false) } }
-
-    $("#start").addEventListener("click", () => { started = true; history.pushState({ posadaPublica: "invitacion" }, ""); $("#shell").classList.add("started"); go(0, false); $("#entry").classList.add("closed"); mark(0); play() });
-
-    $("#music").addEventListener("click", () => { if (audio.paused) play(); else { audio.pause(); musicState(false) } });
-
-    function exit() { if (!started) { if (DATOS.salida) location.href = DATOS.salida; return } started = false; audio.pause(); musicState(false); $("#shell").classList.remove("started"); $("#entry").classList.remove("closed"); go(0, false); mark(0) }
-
-    $("#exit").addEventListener("click", () => { if (DATOS.salida) location.href = DATOS.salida; else exit() });
-
-    document.addEventListener("visibilitychange", () => { if (document.hidden && !audio.paused) { audio.pause(); musicState(false) } });
-
+    let resumeMusic = false;
+    function canPlay() { return started && !document.hidden; }
+    async function play() {
+      if (!canPlay()) return;
+      try {
+        await audio.play();
+        if (!canPlay()) pauseWhenHidden();
+      } catch { }
+      musicState(!audio.paused);
+    }
+    function pauseWhenHidden() {
+      if (started && !audio.paused) resumeMusic = true;
+      audio.pause();
+      musicState(false);
+    }
+    function resumeWhenVisible() {
+      if (!canPlay() || !resumeMusic) return;
+      resumeMusic = false;
+      play();
+    }
+    audio.addEventListener('play', () => {
+      if (!canPlay()) pauseWhenHidden();
+      musicState(!audio.paused);
+    });
+    audio.addEventListener('pause', () => musicState(false));
+    audio.pause();
+    musicState(false);
+    window.addEventListener('pagehide', pauseWhenHidden);
+    window.addEventListener('pageshow', resumeWhenVisible);
+    $("#start").addEventListener("click", () => { started = true; resumeMusic = false; history.pushState({ posadaPublica: "invitacion" }, ""); $("#shell").classList.add("started"); go(0, false); $("#entry").classList.add("closed"); mark(0); play() });
+    $("#music").addEventListener("click", () => { if (!canPlay()) return; resumeMusic = false; if (audio.paused) play(); else audio.pause(); });
+    function exit() { if (!started) { if (DATOS.salida) location.href = DATOS.salida; return } started = false; resumeMusic = false; audio.pause(); musicState(false); $("#shell").classList.remove("started"); $("#entry").classList.remove("closed"); go(0, false); mark(0) }
+    $("#exit").addEventListener("click", () => {
+      if (DATOS.salida) {
+        started = false;
+        resumeMusic = false;
+        audio.pause();
+        audio.currentTime = 0;
+        location.href = DATOS.salida;
+      } else exit();
+    });
+    document.addEventListener("visibilitychange", () => { if (document.hidden) pauseWhenHidden(); else resumeWhenVisible(); });
     window.addEventListener("resize", adjustHeight, { passive: true }); window.visualViewport?.addEventListener("resize", adjustHeight, { passive: true }); window.addEventListener("orientationchange", adjustHeight, { passive: true });
-
     window.addEventListener("pageshow", () => { adjustHeight(); if (!started) go(0, false) }); addEventListener("popstate", () => { if (started) exit() });
-
     mark(0); adjustHeight(); go(0, false);
-
   </script>
-
 </body>
-
 </html>
