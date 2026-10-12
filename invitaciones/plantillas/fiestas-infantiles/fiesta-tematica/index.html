@@ -510,8 +510,6 @@
             transform: translateY(-2px);
         }
 
-
-
         .control-musica:disabled {
             opacity: .45;
             cursor: not-allowed;
@@ -700,7 +698,6 @@
 
         @media (max-width: 560px) {
 
-
             html {
                 scroll-snap-type: y mandatory;
                 scroll-padding-top: 0;
@@ -719,7 +716,6 @@
                 scroll-snap-stop: always;
             }
 
-
             .boton-salir {
                 top: max(11px, env(safe-area-inset-top));
                 right: max(11px, env(safe-area-inset-right));
@@ -727,7 +723,6 @@
                 padding: 8px 13px;
                 font-size: .76rem;
             }
-
 
             .contador {
                 grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -785,21 +780,33 @@
                 width: calc(var(--tamano-movil) * 1%);
             }
         }
-        @media(max-width:560px) {
-            .escena { height:var(--alto-escena,100svh); min-height:var(--alto-escena,100svh); }
-        }
-
-        @media(max-width:560px) {
-            body.invitacion-abierta:not(.editor-activo) { overflow:hidden; }
-            body:not(.editor-activo) #invitacion {
-                position:fixed; top:0; left:0; width:100%;
-                height:var(--alto-escena,100svh);
-                overflow-y:auto; overflow-x:hidden;
-                scroll-snap-type:y mandatory; overscroll-behavior-y:contain;
-                touch-action:pan-y; scrollbar-width:none;
+        /* El desplazamiento móvil pertenece únicamente a las tarjetas. */
+        @media (max-width: 560px) {
+            html:has(body:not(.editor-activo)),
+            body:not(.editor-activo) {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                overscroll-behavior: none;
+                scroll-snap-type: none;
             }
-            body:not(.editor-activo) #invitacion::-webkit-scrollbar { display:none; }
-            .escena { height:var(--alto-escena,100svh); min-height:var(--alto-escena,100svh); }
+            body:not(.editor-activo) #invitacion {
+                position: relative;
+                width: 100%;
+                height: var(--alto-escena, 100svh);
+                overflow-y: auto;
+                overflow-x: hidden;
+                scroll-snap-type: y mandatory;
+                overscroll-behavior-y: contain;
+                touch-action: pan-y;
+                scrollbar-width: none;
+                -webkit-overflow-scrolling: touch;
+            }
+            body:not(.editor-activo) #invitacion::-webkit-scrollbar { display: none; }
+            .escena {
+                height: var(--alto-escena, 100svh);
+                min-height: var(--alto-escena, 100svh);
+            }
         }
     </style>
 </head>
@@ -860,9 +867,7 @@
                     magia y nuevas aventuras.
                 </p>
 
-
             </div>
-
 
             <div class="botones navegacion-escena">
                 <a class="boton" href="#cuenta">
@@ -910,7 +915,6 @@
                     </div>
                 </div>
 
-
             </div>
 
             <div class="botones navegacion-escena">
@@ -941,7 +945,6 @@
                     Ven preparado para jugar, descubrir secretos del reino
                     y crear recuerdos que brillarán para siempre.
                 </p>
-
 
             </div>
 
@@ -975,7 +978,6 @@
                     violeta, dorado o brillante.
                 </p>
 
-
             </div>
 
             <div class="botones navegacion-escena">
@@ -1007,7 +1009,6 @@
                     Si deseas llevar un detalle para <span id="nombre-regalos"></span>,
                     será recibido con muchísimo cariño.
                 </p>
-
 
             </div>
 
@@ -1064,7 +1065,6 @@
                         </span>
                     </div>
                 </div>
-
 
             </div>
 
@@ -2287,10 +2287,15 @@
 
                     evento.preventDefault();
 
-                    destino.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
+                    if (!editorActivo && matchMedia('(max-width: 560px)').matches) {
+                        const contenedor = $('#invitacion');
+                        contenedor.scrollTo({
+                            top: contenedor.scrollTop + destino.getBoundingClientRect().top - contenedor.getBoundingClientRect().top,
+                            behavior: "smooth"
+                        });
+                    } else {
+                        destino.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
 
                     history.replaceState(
                         null,
@@ -2299,7 +2304,6 @@
                     );
                 });
             });
-
 
     </script>
 </body>
