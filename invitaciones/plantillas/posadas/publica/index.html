@@ -555,6 +555,11 @@
       .lienzo-tarjeta .countdown b { font-size:clamp(1.1rem,5cqw,1.5rem); }
       .lienzo-tarjeta .monogram { height:auto; width:auto; margin:0 auto 13px; }
     }
+    .elemento.ajuste-seguro {
+      left:var(--seguro-x); top:var(--seguro-y);
+      width:var(--seguro-ancho); height:var(--seguro-alto);
+      max-width:none; max-height:none;
+    }
   </style>
 </head>
 <body>
@@ -587,7 +592,6 @@
             <p>Ven con tu familia, tus vecinos y tus amigos.</p>
           </div>
         </article>
-      
         </div>
       </section>
       <section class="scene" aria-label="Mensaje"><img class="bg" src="assets/fondos/fondo02.webp" alt=""
@@ -602,7 +606,6 @@
             <p class="lead">Tu presencia hará más alegre la plaza.</p>
           </div>
         </article>
-      
         </div>
       </section>
       <section class="scene" aria-label="Cuenta regresiva"><img class="bg" src="assets/fondos/fondo03.webp" alt=""
@@ -621,7 +624,6 @@
             </div>
           </div>
         </article>
-      
         </div>
       </section>
       <section class="scene" aria-label="Ubicación"><img class="bg" src="assets/fondos/fondo04.webp" alt=""
@@ -641,7 +643,6 @@
                 ubicación ↗</a></div>
           </div>
         </article>
-      
         </div>
       </section>
       <section class="scene" aria-label="Celebración en la plaza"><img class="bg" src="assets/fondos/fondo05.webp"
@@ -657,7 +658,6 @@
             <p class="muted" id="programNote"></p>
           </div>
         </article>
-      
         </div>
       </section>
       <section class="scene" aria-label="Confirmación"><img class="bg" src="assets/fondos/fondo06.webp" alt=""
@@ -674,7 +674,6 @@
             <p class="muted">Ven con tiempo y acompaña a los pequeños durante la piñata.</p>
           </div>
         </article>
-      
         </div>
       </section>
       <section class="scene" aria-label="Despedida"><img class="bg" src="assets/fondos/fondo07.webp" alt=""
@@ -691,7 +690,6 @@
             <p class="muted">¡Te esperamos!</p>
           </div>
         </article>
-      
         </div>
       </section>
     </div>
@@ -816,6 +814,71 @@
     document.addEventListener("visibilitychange", () => { if (document.hidden) pauseWhenHidden(); else resumeWhenVisible(); });
     window.addEventListener("resize", adjustHeight, { passive: true }); window.visualViewport?.addEventListener("resize", adjustHeight, { passive: true }); window.addEventListener("orientationchange", adjustHeight, { passive: true });
     window.addEventListener("pageshow", () => { adjustHeight(); if (!started) go(0, false) }); addEventListener("popstate", () => { if (started) exit() });
+    // AJUSTES EDITABLES: distancias en píxeles del lienzo, antes de escalar.
+    const ESPACIO_ELEMENTOS = { separacion:12, flotacion:17, borde:8, paso:6 };
+    function buscarEspacioElemento(ancho,alto,x,y,w,h,obstaculos) {
+      const c = ESPACIO_ELEMENTOS;
+      for (let factor=1; factor>=.04; factor-=.04) {
+        const ew=w*factor, eh=h*factor;
+        const minX=c.borde+ew/2, maxX=ancho-c.borde-ew/2;
+        const minY=c.borde+c.flotacion+eh/2, maxY=alto-c.borde-eh/2;
+        if (maxX<minX || maxY<minY) continue;
+        let mejor=null, distancia=Infinity;
+        const xs=[Math.max(minX,Math.min(maxX,x)),maxX];
+        const ys=[Math.max(minY,Math.min(maxY,y)),maxY];
+        for(let px=minX;px<=maxX;px+=c.paso) xs.push(px);
+        for(let py=minY;py<=maxY;py+=c.paso) ys.push(py);
+        for(const px of xs) for(const py of ys) {
+          const r={left:px-ew/2-c.separacion,right:px+ew/2+c.separacion,
+            top:py-eh/2-c.flotacion-c.separacion,bottom:py+eh/2+c.separacion};
+          if(obstaculos.some(o=>r.left<o.right && r.right>o.left && r.top<o.bottom && r.bottom>o.top)) continue;
+          const d=(px-x)**2+(py-y)**2;
+          if(d<distancia) {distancia=d;mejor={x:px,y:py,w:ew,h:eh};}
+        }
+        if(mejor) return mejor;
+      }
+      return null;
+    }
+    function acomodarElementos() {
+      scenes.forEach(scene => {
+        const lienzo=scene.querySelector('.lienzo-tarjeta');
+        const elemento=lienzo.querySelector('.elemento');
+        if(!elemento || !elemento.complete || !elemento.naturalWidth) return;
+        elemento.classList.remove('ajuste-seguro'); elemento.style.visibility='';
+        const caja=lienzo.getBoundingClientRect();
+        const escala=caja.width/lienzo.clientWidth;
+        if(!escala || !lienzo.clientHeight) return;
+        const estilo=getComputedStyle(elemento);
+        const x=parseFloat(estilo.getPropertyValue('--x'))*lienzo.clientWidth/100;
+        const y=parseFloat(estilo.getPropertyValue('--y'))*lienzo.clientHeight/100;
+        const w=elemento.offsetWidth,h=elemento.offsetHeight;
+        const obstaculos=[...scene.querySelectorAll('.card,.next'),...document.querySelectorAll('.controls button')]
+          .filter(el=>getComputedStyle(el).visibility!=='hidden')
+          .map(el=>{const r=el.getBoundingClientRect();return {left:(r.left-caja.left)/escala,right:(r.right-caja.left)/escala,top:(r.top-caja.top)/escala,bottom:(r.bottom-caja.top)/escala};});
+        const posicion=buscarEspacioElemento(lienzo.clientWidth,lienzo.clientHeight,x,y,w,h,obstaculos);
+        if(!posicion) {elemento.style.visibility='hidden';return;}
+        elemento.style.setProperty('--seguro-x',posicion.x+'px');
+        elemento.style.setProperty('--seguro-y',posicion.y+'px');
+        elemento.style.setProperty('--seguro-ancho',posicion.w+'px');
+        elemento.style.setProperty('--seguro-alto',posicion.h+'px');
+        elemento.classList.add('ajuste-seguro');
+      });
+    }
+    let frameElementos;
+    function programarElementos() {
+      cancelAnimationFrame(frameElementos);
+      frameElementos=requestAnimationFrame(acomodarElementos);
+    }
+    const observadorEspacios=new ResizeObserver(programarElementos);
+    scenes.forEach(scene=>{
+      observadorEspacios.observe(scene.querySelector('.lienzo-tarjeta'));
+      observadorEspacios.observe(scene.querySelector('.card'));
+      scene.querySelector('.elemento').addEventListener('load',programarElementos);
+    });
+    document.fonts.ready.then(programarElementos);
+    $('#start').addEventListener('click',programarElementos);
+    window.addEventListener('resize',programarElementos,{passive:true});
+    programarElementos();
     const observadorLienzo = new ResizeObserver(actualizarLienzoMovil);
     observadorLienzo.observe(pages);
     actualizarLienzoMovil();
