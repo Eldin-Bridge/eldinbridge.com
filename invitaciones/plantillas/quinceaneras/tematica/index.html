@@ -1151,6 +1151,16 @@
     #cerrar-calendarios { position: absolute; right: 12px; top: 8px; background: transparent;
       border: 0; padding: 6px 12px; font-size: 26px; cursor: pointer; }
     [data-control][aria-disabled="true"], .panel-calendarios button:disabled { cursor: default; }
+
+    /* Ninguna regla de revelado puede mostrar la hoja antes de abrir el libro. */
+    .tarjeta-seccion:not(.libro-abierto) .tarjeta > :not(.portada-libro) {
+      opacity:0 !important;
+      visibility:hidden;
+      transition:none;
+    }
+    .tarjeta-seccion.libro-abierto .tarjeta > :not(.portada-libro) {
+      visibility:visible;
+    }
   </style>
 </head>
 <body>
@@ -1570,6 +1580,9 @@
         imagen.src = DATOS_INVITACION.fotos.secciones[i];
       });
       $$(".fondo-tarjeta").forEach((imagen, i) => {
+        // Carga desde el inicio también los fondos 06 y 07, aunque estén lejos del viewport.
+        imagen.loading='eager';
+        imagen.decoding='async';
         imagen.src = DATOS_INVITACION.fondos[i];
       });
       prepararCalendario();
