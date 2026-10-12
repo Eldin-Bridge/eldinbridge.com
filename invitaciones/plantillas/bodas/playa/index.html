@@ -819,34 +819,69 @@
     pantallas.forEach((p, n) => { const b = document.createElement('button'); b.className = 'seguir'; b.type = 'button'; b.textContent = n === pantallas.length - 1 ? 'Volver al inicio ↑' : 'Continuar ↓'; b.dataset.control = n === pantallas.length - 1 ? 'volverInicio' : 'continuar'; b.addEventListener('click', () => irA(n === pantallas.length - 1 ? 0 : n + 1)); p.append(b) });
     const observador = new IntersectionObserver(es => { for (const e of es) { e.target.classList.toggle('visible', e.isIntersecting); if (e.isIntersecting && e.intersectionRatio > .5) indice = pantallas.indexOf(e.target); } }, { root: visor, threshold: [.1, .55] }); pantallas.forEach(p => observador.observe(p));
     function ajustar() { document.documentElement.style.setProperty('--alto', `${Math.round(window.visualViewport?.height || window.innerHeight)}px`); if (iniciado && !ajustando) { ajustando = true; requestAnimationFrame(() => { irA(indice, false); ajustando = false }) } } ajustar(); window.addEventListener('resize', ajustar); window.visualViewport?.addEventListener('resize', ajustar);
+    let reanudarMusica = false;
+    function puedeReproducirMusica() {
+      return iniciado && !document.hidden && DATOS_INVITACION.botones.musica === true && !!DATOS_INVITACION.audio;
+    }
     async function reproducirMusica() {
-      if (!iniciado || DATOS_INVITACION.botones.musica !== true || !DATOS_INVITACION.audio) return;
-      try { await audio.play(); } catch { actualizarBotonMusica(); }
+      if (!puedeReproducirMusica()) return;
+      try {
+        await audio.play();
+        if (!puedeReproducirMusica()) pausarAlOcultar();
+      } catch { }
+      actualizarBotonMusica();
     }
     function actualizarBotonMusica() {
-      const sonando=!audio.paused;
-      $('#musica-boton').textContent=sonando?'Ⅱ':'♫';
-      $('#musica-boton').setAttribute('aria-label',sonando?'Pausar música':'Reproducir música');
+      const sonando = !audio.paused;
+      $('#musica-boton').textContent = sonando ? 'Ⅱ' : '♫';
+      $('#musica-boton').setAttribute('aria-label', sonando ? 'Pausar música' : 'Reproducir música');
+      $('#musica-boton').setAttribute('aria-pressed', String(sonando));
     }
-    audio.addEventListener('play',()=>{
-      if (!iniciado || DATOS_INVITACION.botones.musica !== true) { audio.pause(); return; }
+    function pausarAlOcultar() {
+      if (iniciado && !audio.paused) reanudarMusica = true;
+      audio.pause();
+      actualizarBotonMusica();
+    }
+    function reanudarAlVolver() {
+      if (!puedeReproducirMusica() || !reanudarMusica) return;
+      reanudarMusica = false;
+      reproducirMusica();
+    }
+    audio.addEventListener('play', () => {
+      if (!puedeReproducirMusica()) pausarAlOcultar();
       actualizarBotonMusica();
     });
-    audio.addEventListener('pause',actualizarBotonMusica);
+    audio.addEventListener('pause', actualizarBotonMusica);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) pausarAlOcultar();
+      else reanudarAlVolver();
+    });
+    window.addEventListener('pagehide', pausarAlOcultar);
+    window.addEventListener('pageshow', reanudarAlVolver);
     audio.pause();
     actualizarBotonMusica();
     $('#entrar').addEventListener('click', () => {
-      iniciado=true;
+      iniciado = true;
+      reanudarMusica = false;
       reproducirMusica();
       document.body.classList.add('iniciada');
       $('#entrada').classList.add('oculta');
-      irA(0,false);
+      irA(0, false);
     });
-    function salir() { audio.pause(); window.location.href = DATOS_INVITACION.urlSalida; }
-    $('#salir').addEventListener('click', salir); $('#salir-entrada').addEventListener('click', salir);
-    $('#musica-boton').addEventListener('click',()=>{
-      if (!iniciado || DATOS_INVITACION.botones.musica !== true) return;
-      if (audio.paused) reproducirMusica(); else audio.pause();
+    function salir() {
+      iniciado = false;
+      reanudarMusica = false;
+      audio.pause();
+      audio.currentTime = 0;
+      window.location.href = DATOS_INVITACION.urlSalida;
+    }
+    $('#salir').addEventListener('click', salir);
+    $('#salir-entrada').addEventListener('click', salir);
+    $('#musica-boton').addEventListener('click', () => {
+      if (!puedeReproducirMusica()) return;
+      reanudarMusica = false;
+      if (audio.paused) reproducirMusica();
+      else audio.pause();
     });
     function contador() { const segundos = Math.max(0, Math.floor((new Date(DATOS_INVITACION.fechaISO).getTime() - Date.now()) / 1000));[Math.floor(segundos / 86400), Math.floor(segundos / 3600) % 24, Math.floor(segundos / 60) % 60, segundos % 60].forEach((n, i) => $('#' + ['dias', 'horas', 'minutos', 'segundos'][i]).textContent = String(n).padStart(2, '0')) } contador(); setInterval(contador, 1000);
     function datosCalendario() {
