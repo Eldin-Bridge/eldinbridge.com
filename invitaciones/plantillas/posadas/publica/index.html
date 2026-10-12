@@ -538,6 +538,23 @@
         --size: 27
       }
     }
+    /* Lienzo proporcional: las coordenadas originales se conservan. */
+    .lienzo-tarjeta { position:absolute; inset:0; z-index:2; }
+    @media(max-width:560px) {
+      .lienzo-tarjeta {
+        inset:auto; left:50%; top:50%;
+        width:var(--lienzo-ancho); height:var(--lienzo-alto);
+        transform:translate(-50%,-50%) scale(var(--lienzo-escala));
+        transform-origin:center; container-type:size;
+      }
+      .lienzo-tarjeta .elemento { max-width:43cqw; max-height:25cqh; }
+      .lienzo-tarjeta .card-inner { padding:clamp(39px,5cqh,51px) clamp(22px,6cqw,37px) 31px; }
+      .lienzo-tarjeta .card h2 { font-size:clamp(1.87rem,7.4cqw,2.7rem); }
+      .lienzo-tarjeta .card p { font-size:clamp(.86rem,3.1cqw,.98rem); line-height:1.6; margin:11px 0; }
+      .lienzo-tarjeta .card .lead { font-size:clamp(1.2rem,4.9cqw,1.62rem); line-height:1.31; margin:16px 0; }
+      .lienzo-tarjeta .countdown b { font-size:clamp(1.1rem,5cqw,1.5rem); }
+      .lienzo-tarjeta .monogram { height:auto; width:auto; margin:0 auto 13px; }
+    }
   </style>
 </head>
 <body>
@@ -557,7 +574,8 @@
         aria-label="Reproducir música" aria-pressed="false">♫</button></div>
     <div class="pages" id="pages">
       <section class="scene" aria-label="Bienvenida"><img class="bg" src="assets/fondos/fondo01.webp" alt=""
-          fetchpriority="high"><img class="elemento" src="assets/elementos/elemento01.webp" alt="">
+          fetchpriority="high">
+        <div class="lienzo-tarjeta"><img class="elemento" src="assets/elementos/elemento01.webp" alt="">
         <article class="card">
           <div class="card-inner">
             <p class="series">Las puertas de la plaza se abren · 01</p><span class="monogram"><span>✶</span></span>
@@ -569,9 +587,12 @@
             <p>Ven con tu familia, tus vecinos y tus amigos.</p>
           </div>
         </article>
+      
+        </div>
       </section>
       <section class="scene" aria-label="Mensaje"><img class="bg" src="assets/fondos/fondo02.webp" alt=""
-          loading="lazy"><img class="elemento" src="assets/elementos/elemento02.webp" alt="" loading="lazy">
+          loading="lazy">
+        <div class="lienzo-tarjeta"><img class="elemento" src="assets/elementos/elemento02.webp" alt="" loading="lazy">
         <article class="card">
           <div class="card-inner">
             <p class="series">Gracias por ser parte · 02</p><span class="monogram"><span>❋</span></span>
@@ -581,9 +602,12 @@
             <p class="lead">Tu presencia hará más alegre la plaza.</p>
           </div>
         </article>
+      
+        </div>
       </section>
       <section class="scene" aria-label="Cuenta regresiva"><img class="bg" src="assets/fondos/fondo03.webp" alt=""
-          loading="lazy"><img class="elemento" src="assets/elementos/elemento03.webp" alt="" loading="lazy">
+          loading="lazy">
+        <div class="lienzo-tarjeta"><img class="elemento" src="assets/elementos/elemento03.webp" alt="" loading="lazy">
         <article class="card">
           <div class="card-inner">
             <p class="series">Apunta la fecha · 03</p>
@@ -597,9 +621,12 @@
             </div>
           </div>
         </article>
+      
+        </div>
       </section>
       <section class="scene" aria-label="Ubicación"><img class="bg" src="assets/fondos/fondo04.webp" alt=""
-          loading="lazy"><img class="elemento" src="assets/elementos/elemento04.webp" alt="" loading="lazy">
+          loading="lazy">
+        <div class="lienzo-tarjeta"><img class="elemento" src="assets/elementos/elemento04.webp" alt="" loading="lazy">
         <article class="card">
           <div class="card-inner">
             <p class="series">Punto de encuentro · 04</p><span class="monogram"><span>⌖</span></span>
@@ -614,9 +641,12 @@
                 ubicación ↗</a></div>
           </div>
         </article>
+      
+        </div>
       </section>
       <section class="scene" aria-label="Celebración en la plaza"><img class="bg" src="assets/fondos/fondo05.webp"
-          alt="" loading="lazy"><img class="elemento" src="assets/elementos/elemento05.webp" alt="" loading="lazy">
+          alt="" loading="lazy">
+        <div class="lienzo-tarjeta"><img class="elemento" src="assets/elementos/elemento05.webp" alt="" loading="lazy">
         <article class="card">
           <div class="card-inner">
             <p class="series">En nuestra plaza · 05</p>
@@ -627,9 +657,12 @@
             <p class="muted" id="programNote"></p>
           </div>
         </article>
+      
+        </div>
       </section>
       <section class="scene" aria-label="Confirmación"><img class="bg" src="assets/fondos/fondo06.webp" alt=""
-          loading="lazy"><img class="elemento" src="assets/elementos/elemento06.webp" alt="" loading="lazy">
+          loading="lazy">
+        <div class="lienzo-tarjeta"><img class="elemento" src="assets/elementos/elemento06.webp" alt="" loading="lazy">
         <article class="card">
           <div class="card-inner">
             <p class="series">Nos encantará verte · 06</p><span class="monogram"><span>✉</span></span>
@@ -641,9 +674,12 @@
             <p class="muted">Ven con tiempo y acompaña a los pequeños durante la piñata.</p>
           </div>
         </article>
+      
+        </div>
       </section>
       <section class="scene" aria-label="Despedida"><img class="bg" src="assets/fondos/fondo07.webp" alt=""
-          loading="lazy"><img class="elemento" src="assets/elementos/elemento07.webp" alt="" loading="lazy">
+          loading="lazy">
+        <div class="lienzo-tarjeta"><img class="elemento" src="assets/elementos/elemento07.webp" alt="" loading="lazy">
         <article class="card">
           <div class="card-inner">
             <p class="series">Nos vemos pronto · 07</p><span class="monogram"><span>✶</span></span>
@@ -655,6 +691,8 @@
             <p class="muted">¡Te esperamos!</p>
           </div>
         </article>
+      
+        </div>
       </section>
     </div>
     <div class="progress" id="progress" aria-hidden="true"></div>
@@ -678,6 +716,17 @@
       salida: "../../../index.html#posadas"
     };
     const $ = s => document.querySelector(s);
+    // MEDIDAS EDITABLES: área visible del teléfono donde se acomodó el diseño.
+    const LIENZO_MOVIL = { ancho:390, alto:844 };
+    function actualizarLienzoMovil() {
+      const ancho = pages.clientWidth;
+      const alto = pages.clientHeight;
+      const escala = Math.min(ancho / LIENZO_MOVIL.ancho, alto / LIENZO_MOVIL.alto);
+      const estilo = document.documentElement.style;
+      estilo.setProperty('--lienzo-ancho', LIENZO_MOVIL.ancho + 'px');
+      estilo.setProperty('--lienzo-alto', LIENZO_MOVIL.alto + 'px');
+      estilo.setProperty('--lienzo-escala', String(escala));
+    }
     const pages = $("#pages"), scenes = [...document.querySelectorAll(".scene")], audio = $("#audio");
     let current = 0, started = false, heightTimer;
     $("#organizerWelcome").textContent = DATOS.organizador;
@@ -720,7 +769,7 @@
     function mark(i) { if (i === current && scenes[i].classList.contains("active")) return; current = i; scenes.forEach((scene, n) => scene.classList.toggle("active", n === i)); dots.forEach((dot, n) => dot.classList.toggle("on", n === i)) }
     function go(i, smooth = true) { const target = Math.max(0, Math.min(i, scenes.length - 1)); pages.scrollTo({ left: 0, top: target * pages.clientHeight, behavior: smooth ? "smooth" : "auto" }) }
     function adjustHeight() { if (!matchMedia("(max-width:560px)").matches) { document.documentElement.style.removeProperty("--h"); return } clearTimeout(heightTimer); heightTimer = setTimeout(() => { const h = window.visualViewport?.height || window.innerHeight; document.documentElement.style.setProperty("--h", Math.round(h) + "px"); if (started) go(current, false) }, 250) }
-    scenes.forEach((scene, i) => { const button = document.createElement("button"); button.type = "button"; button.className = "button next"; button.textContent = i === scenes.length - 1 ? "Volver al inicio ↑" : "Continuar ↓"; button.addEventListener("click", () => go(i === scenes.length - 1 ? 0 : i + 1)); scene.append(button) });
+    scenes.forEach((scene, i) => { const button = document.createElement("button"); button.type = "button"; button.className = "button next"; button.textContent = i === scenes.length - 1 ? "Volver al inicio ↑" : "Continuar ↓"; button.addEventListener("click", () => go(i === scenes.length - 1 ? 0 : i + 1)); scene.querySelector(".lienzo-tarjeta").append(button) });
     const observer = new IntersectionObserver(entries => { const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]; if (visible) mark(scenes.indexOf(visible.target)) }, { root: pages, threshold: .65 }); scenes.forEach(scene => observer.observe(scene));
     function musicState(on) { $("#music").textContent = on ? "Ⅱ" : "♫"; $("#music").setAttribute("aria-label", on ? "Pausar música" : "Reproducir música"); $("#music").setAttribute("aria-pressed", String(on)) }
     let resumeMusic = false;
@@ -767,6 +816,9 @@
     document.addEventListener("visibilitychange", () => { if (document.hidden) pauseWhenHidden(); else resumeWhenVisible(); });
     window.addEventListener("resize", adjustHeight, { passive: true }); window.visualViewport?.addEventListener("resize", adjustHeight, { passive: true }); window.addEventListener("orientationchange", adjustHeight, { passive: true });
     window.addEventListener("pageshow", () => { adjustHeight(); if (!started) go(0, false) }); addEventListener("popstate", () => { if (started) exit() });
+    const observadorLienzo = new ResizeObserver(actualizarLienzoMovil);
+    observadorLienzo.observe(pages);
+    actualizarLienzoMovil();
     mark(0); adjustHeight(); go(0, false);
   </script>
 </body>
