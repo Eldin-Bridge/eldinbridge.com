@@ -26,7 +26,7 @@
         }
 
         html {
-            scroll-behavior: smooth;
+            scroll-behavior: auto;
             scroll-snap-type: y mandatory;
         }
 
@@ -784,6 +784,9 @@
                 top: calc(var(--y-movil) * 1%);
                 width: calc(var(--tamano-movil) * 1%);
             }
+        }
+        @media(max-width:560px) {
+            .escena { height:var(--alto-escena,100svh); min-height:var(--alto-escena,100svh); }
         }
     </style>
 </head>
@@ -1592,54 +1595,14 @@
         let ultimaEscenaVisible = "";
         let ultimaCascada = 0;
 
-        let temporizadorViewport = null;
-
-        function alinearEscenaActual() {
-            if (
-                !invitacionAbierta ||
-                editorActivo ||
-                !window.matchMedia("(max-width: 560px)").matches
-            ) {
-                return;
-            }
-
-            const escenaActual = escenas.reduce(
-                (masCercana, escena) => {
-                    const distanciaActual = Math.abs(
-                        escena.getBoundingClientRect().top
-                    );
-
-                    const distanciaAnterior = Math.abs(
-                        masCercana.getBoundingClientRect().top
-                    );
-
-                    return distanciaActual < distanciaAnterior
-                        ? escena
-                        : masCercana;
-                },
-                escenas[0]
-            );
-
-            escenaActual.scrollIntoView({
-                behavior: "auto",
-                block: "start"
-            });
+        let anchoEscenas=0;
+        function estabilizarEscenas() {
+            if(invitacionAbierta && window.innerWidth===anchoEscenas) return;
+            anchoEscenas=window.innerWidth;
+            document.documentElement.style.setProperty('--alto-escena',Math.round(window.innerHeight)+'px');
         }
-
-        if (window.visualViewport) {
-            window.visualViewport.addEventListener(
-                "resize",
-                () => {
-                    clearTimeout(temporizadorViewport);
-
-                    temporizadorViewport = setTimeout(
-                        alinearEscenaActual,
-                        250
-                    );
-                }
-            );
-        }
-
+        estabilizarEscenas();
+        window.addEventListener('resize',estabilizarEscenas,{passive:true});
         $("#boton-salir").addEventListener("click", () => {
             invitacionAbierta = false;
             botonMusica.disabled = true;
@@ -1705,6 +1668,7 @@
             "click",
             () => {
                 if (!invitacionAbierta) return;
+                delete musica.dataset.reanudar;
                 if (musica.paused) {
                     musica.play().catch(() => { });
                 } else {
@@ -1716,9 +1680,10 @@
         musica.addEventListener(
             "play",
             () => {
-                if (!invitacionAbierta) {
+                if (!invitacionAbierta || document.hidden) {
+                    if(invitacionAbierta && document.hidden) musica.dataset.reanudar='1';
+                    else delete musica.dataset.reanudar;
                     musica.pause();
-                    delete musica.dataset.reanudar;
                     return;
                 }
                 botonMusica.textContent = "⏸";
@@ -1732,27 +1697,22 @@
             }
         );
 
-        document.addEventListener(
-            "visibilitychange",
-            () => {
-                if (!invitacionAbierta) {
-                    musica.pause();
-                    delete musica.dataset.reanudar;
-                    return;
-                }
-                if (document.hidden && !musica.paused) {
-                    musica.dataset.reanudar = "1";
-                    musica.pause();
-                } else if (
-                    !document.hidden &&
-                    musica.dataset.reanudar === "1"
-                ) {
-                    musica.play().catch(() => { });
-                    delete musica.dataset.reanudar;
-                }
+        function pausarPorOcultamiento() {
+            if(invitacionAbierta && !musica.paused) musica.dataset.reanudar='1';
+            if(!invitacionAbierta) delete musica.dataset.reanudar;
+            musica.pause();
+        }
+        function reanudarAlVolver() {
+            if(!document.hidden && invitacionAbierta && musica.dataset.reanudar==='1') {
+                delete musica.dataset.reanudar;
+                musica.play().catch(()=>{});
             }
-        );
-
+        }
+        document.addEventListener('visibilitychange',()=>{
+            if(document.hidden) pausarPorOcultamiento(); else reanudarAlVolver();
+        });
+        window.addEventListener('pagehide',pausarPorOcultamiento);
+        window.addEventListener('pageshow',reanudarAlVolver);
         function lanzarConfeti() {
             const colores = [
                 "#ffd56a",
