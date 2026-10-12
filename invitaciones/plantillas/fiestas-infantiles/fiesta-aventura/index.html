@@ -1047,6 +1047,57 @@
         let indiceActivo = 0;
         let temporizadorAjuste;
         let musicaActiva = false;
+        let reanudarMusica = false;
+        let saliendo = false;
+        function invitacionVisible() {
+            return !saliendo && !document.hidden && document.body.classList.contains("invitacion-abierta");
+        }
+        function actualizarBotonMusica() {
+            musicaActiva = !audio.paused;
+            botonMusica.textContent = musicaActiva ? "Ⅱ" : "▶";
+            botonMusica.setAttribute("aria-label", musicaActiva ? "Pausar música" : "Reproducir música");
+            botonMusica.setAttribute("aria-pressed", String(musicaActiva));
+        }
+        async function reproducirMusica() {
+            if (!invitacionVisible()) return;
+            try {
+                await audio.play();
+                if (!invitacionVisible()) pausarAlOcultar();
+            } catch { }
+            actualizarBotonMusica();
+        }
+        function pausarAlOcultar() {
+            if (!saliendo && document.body.classList.contains("invitacion-abierta") && !audio.paused) {
+                reanudarMusica = true;
+            }
+            audio.pause();
+            actualizarBotonMusica();
+        }
+        function reanudarAlVolver() {
+            if (!invitacionVisible() || !reanudarMusica) return;
+            reanudarMusica = false;
+            reproducirMusica();
+        }
+        audio.addEventListener("play", () => {
+            if (!invitacionVisible()) pausarAlOcultar();
+            actualizarBotonMusica();
+        });
+        audio.addEventListener("pause", actualizarBotonMusica);
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) pausarAlOcultar();
+            else reanudarAlVolver();
+        });
+        window.addEventListener("pagehide", pausarAlOcultar);
+        window.addEventListener("pageshow", reanudarAlVolver);
+        salir.addEventListener("click", () => {
+            saliendo = true;
+            reanudarMusica = false;
+            audio.pause();
+            audio.currentTime = 0;
+            actualizarBotonMusica();
+        });
+        audio.pause();
+        actualizarBotonMusica();
         function aplicarDatos() {
             $$('[data-nombre]').forEach(el => el.textContent = CONFIG.nombre);
             $$('[data-edad]').forEach(el => el.textContent = CONFIG.edad);
@@ -1118,36 +1169,16 @@
             });
             void escenas[0].offsetWidth;
             escenas[0].classList.add("activa");
-            try {
-                await audio.play();
-                musicaActiva = true;
-                botonMusica.textContent = "Ⅱ";
-                botonMusica.setAttribute("aria-label", "Pausar música");
-                botonMusica.setAttribute("aria-pressed", "true");
-            } catch {
-                musicaActiva = false;
-                botonMusica.textContent = "▶";
-                botonMusica.setAttribute("aria-label", "Reproducir música");
-                botonMusica.setAttribute("aria-pressed", "false");
-            }
+            saliendo = false;
+            reanudarMusica = false;
+            await reproducirMusica();
         });
         botonMusica.addEventListener("click", async () => {
-            if (audio.paused) {
-                try {
-                    await audio.play();
-                    musicaActiva = true;
-                    botonMusica.textContent = "Ⅱ";
-                    botonMusica.setAttribute("aria-label", "Pausar música");
-                } catch {
-                    musicaActiva = false;
-                }
-            } else {
-                audio.pause();
-                musicaActiva = false;
-                botonMusica.textContent = "▶";
-                botonMusica.setAttribute("aria-label", "Reproducir música");
-            }
-            botonMusica.setAttribute("aria-pressed", String(musicaActiva));
+            if (!invitacionVisible()) return;
+            reanudarMusica = false;
+            if (audio.paused) await reproducirMusica();
+            else audio.pause();
+            actualizarBotonMusica();
         });
         function actualizarCuenta() {
             const diferencia = new Date(CONFIG.fechaEvento).getTime() - Date.now();
