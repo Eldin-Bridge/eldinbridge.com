@@ -758,7 +758,7 @@
         const obstaculos=[...scene.querySelectorAll('.next')].map(el=>{
           const r=el.getBoundingClientRect();return {l:r.left-sr.left,r:r.right-sr.left,t:r.top-sr.top,b:r.bottom-sr.top};
         });
-        document.querySelectorAll('.controls button, .progress').forEach(el=>{
+        document.querySelectorAll('.controls button, .progress i').forEach(el=>{
           const r=el.getBoundingClientRect();
           if(r.width && r.height) obstaculos.push({l:r.left-shell.left,r:r.right-shell.left,t:r.top-shell.top,b:r.bottom-shell.top});
         });
@@ -774,16 +774,17 @@
             !obstaculos.some(z=>rect.l<z.r+sep&&rect.r>z.l-sep&&rect.t<z.b+sep&&rect.b>z.t-sep);
           return {cx,cy,cabe};
         }
-        let posicion=colocar(ancho);
-        if(!posicion.cabe){
-          // Buscar el mayor tamaño que cabe, sin cambiar de posición ni mover la tarjeta.
-          let minimo=0,maximo=ancho;
-          for(let i=0;i<22;i++){
-            const medio=(minimo+maximo)/2;
-            if(colocar(medio).cabe) minimo=medio;else maximo=medio;
-          }
-          if(minimo>0){ancho=minimo;posicion=colocar(ancho);}
+        // Usar el espacio exterior real: los laterales pueden bajar junto al botón.
+        const disponibleVertical=arriba ? caja.t-margen-movimiento : scene.clientHeight-margen-caja.b-movimiento;
+        const disponibleHorizontal=Math.min(caja.r-caja.l,scene.clientWidth-2*margen);
+        let maximo=Math.max(1,Math.min(disponibleHorizontal,disponibleVertical/relacion));
+        // Buscar de mayor a menor: un botón central solo limita si se cruza con la imagen.
+        let posicion=colocar(ancho), encontrado=false;
+        for(let candidato=maximo;candidato>=1;candidato-=1){
+          const prueba=colocar(candidato);
+          if(prueba.cabe){ancho=candidato;posicion=prueba;encontrado=true;break;}
         }
+        if(!encontrado){ancho=Math.min(ancho,maximo);posicion=colocar(ancho);}
         imagen.dataset.anclaje=(arriba?'arriba-':'abajo-')+lado;
         imagen.style.setProperty('--recorrido',movimiento+'px');
         imagen.style.width=ancho+'px';imagen.style.height='auto';imagen.style.maxHeight='none';
