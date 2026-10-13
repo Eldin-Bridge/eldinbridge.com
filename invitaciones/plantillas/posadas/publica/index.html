@@ -543,9 +543,15 @@
       .scene .elemento {
         width:calc(var(--size) * var(--unidad-elemento, 1vw));
         height:auto;
+        animation: flotar-suave 4.8s ease-in-out infinite;
+        transition:none;
         max-width:none;
         max-height:none;
       }
+    }
+    @keyframes flotar-suave {
+      0%, 100% { translate: 0 0; }
+      50% { translate: 0 calc(-1 * var(--recorrido, 4px)); }
     }
   /* PANTALLA DE CIERRE — conserva la paleta y las fuentes de la invitación. */
     #evento-finalizado[hidden] { display: none; }
@@ -725,11 +731,54 @@
     // REFERENCIA EDITABLE para la escala uniforme de los elementos móviles.
     // Cambia estas medidas por el área visible de tu teléfono de referencia.
     const REFERENCIA_ELEMENTOS = { ancho:390, alto:844 };
+    // Borde automático según la zona original. No cambia los valores --x, --y y --size.
+    const ANCLAJE_ELEMENTOS = { penetracion: 50, separacionTexto: 10, movimiento: 4, margenPantalla: 8 };
     function escalarElementosAnclados() {
       scenes.forEach(scene => {
-        const escala=Math.min(scene.clientWidth/REFERENCIA_ELEMENTOS.ancho,
-          scene.clientHeight/REFERENCIA_ELEMENTOS.alto);
-        scene.style.setProperty('--unidad-elemento', (REFERENCIA_ELEMENTOS.ancho*escala/100)+'px');
+        const imagen = scene.querySelector('.elemento'), tarjeta = scene.querySelector('.card');
+        if (!imagen || !tarjeta) return;
+        if (!matchMedia('(max-width:560px)').matches) {
+          ['left','top','width','height','max-height'].forEach(p => imagen.style.removeProperty(p));
+          return;
+        }
+        if (!imagen.naturalWidth || !scene.clientWidth || !tarjeta.offsetWidth) return;
+        const estilo = getComputedStyle(imagen);
+        const x = Number(estilo.getPropertyValue('--x')), y = Number(estilo.getPropertyValue('--y'));
+        const size = Number(estilo.getPropertyValue('--size'));
+        const escala = Math.min(scene.clientWidth / REFERENCIA_ELEMENTOS.ancho, scene.clientHeight / REFERENCIA_ELEMENTOS.alto);
+        const relacion = imagen.naturalHeight / imagen.naturalWidth;
+        let ancho = size * REFERENCIA_ELEMENTOS.ancho * escala / 100;
+        ancho = Math.min(ancho, scene.clientWidth * .42, scene.clientHeight * .28 / relacion);
+        const alto = ancho * relacion;
+        const sr = scene.getBoundingClientRect(), cr = tarjeta.getBoundingClientRect();
+        const caja = { l: cr.left-sr.left, r: cr.right-sr.left, t: cr.top-sr.top, b: cr.bottom-sr.top };
+        const borde = x <= 25 ? 'izquierda' : x >= 75 ? 'derecha' : y <= 50 ? 'arriba' : 'abajo';
+        const margen = ANCLAJE_ELEMENTOS.separacionTexto + ANCLAJE_ELEMENTOS.movimiento;
+        const textos = [...tarjeta.querySelectorAll('.card-inner > *')].map(el => {
+          const r = el.getBoundingClientRect();
+          return { l:r.left-sr.left-margen, r:r.right-sr.left+margen, t:r.top-sr.top-margen, b:r.bottom-sr.top+margen };
+        });
+        const p = Math.max(0, Math.min(50, ANCLAJE_ELEMENTOS.penetracion)) / 100;
+        const limitar = (v,min,max) => Math.max(min, Math.min(max,v));
+        let cx = limitar(x*scene.clientWidth/100, caja.l+ancho/2, caja.r-ancho/2);
+        let cy = limitar(y*scene.clientHeight/100, caja.t+alto/2, caja.b-alto/2);
+        if (borde === 'arriba' || borde === 'abajo') {
+          let dentro = alto*p;
+          textos.filter(r => cx+ancho/2>r.l && cx-ancho/2<r.r).forEach(r => {
+            dentro = Math.min(dentro, Math.max(0, borde==='arriba' ? r.t-caja.t : caja.b-r.b));
+          });
+          cy = borde==='arriba' ? caja.t-alto/2+dentro : caja.b+alto/2-dentro;
+        } else {
+          // El centro queda exactamente sobre el borde: mitad dentro y mitad fuera.
+          cx = borde==='izquierda' ? caja.l : caja.r;
+          // Mantener el tamaño; desplazar hacia dentro solo lo necesario.
+          const margenPantalla = ANCLAJE_ELEMENTOS.margenPantalla;
+          cx = limitar(cx, ancho/2+margenPantalla, scene.clientWidth-ancho/2-margenPantalla);
+        }
+        imagen.style.setProperty('--recorrido', ANCLAJE_ELEMENTOS.movimiento+'px');
+        imagen.style.width = ancho+'px'; imagen.style.height = 'auto';
+        imagen.style.left = cx+'px'; imagen.style.top = cy+'px';
+        imagen.style.maxHeight = 'none';
       });
     }
     const pages = $("#pages"), scenes = [...document.querySelectorAll(".scene")], audio = $("#audio");
@@ -822,8 +871,14 @@
     document.addEventListener("visibilitychange", () => { if (document.hidden) pauseWhenHidden(); else resumeWhenVisible(); });
     window.addEventListener("resize", adjustHeight, { passive: true }); window.visualViewport?.addEventListener("resize", adjustHeight, { passive: true }); window.addEventListener("orientationchange", adjustHeight, { passive: true });
     window.addEventListener("pageshow", () => { adjustHeight(); if (!started) go(0, false) }); addEventListener("popstate", () => { if (started) exit() });
+    // Cargar y calcular todas las decoraciones antes de navegar entre tarjetas.
+    scenes.forEach(scene => {
+      const imagen = scene.querySelector('.elemento');
+      if (imagen) { imagen.loading = 'eager'; imagen.addEventListener('load', escalarElementosAnclados); }
+    });
+    document.fonts.ready.then(escalarElementosAnclados);
     const observadorEscalaElementos=new ResizeObserver(escalarElementosAnclados);
-    scenes.forEach(scene=>observadorEscalaElementos.observe(scene));
+    scenes.forEach(scene => { observadorEscalaElementos.observe(scene); observadorEscalaElementos.observe(scene.querySelector('.card')); });
     escalarElementosAnclados();
     mark(0); adjustHeight(); go(0, false);
     // El cierre comienza a medianoche del día siguiente, independientemente del navegador.
