@@ -656,6 +656,12 @@
         --tamano: 31
       }
     }
+    @media(max-width:560px) {
+      .scene .elemento {
+        width:calc(var(--tamano) * var(--unidad-elemento,1vw));
+        height:auto; max-width:none; max-height:none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -825,6 +831,14 @@
       salida: "../../../index.html#baby-showers"
     };
     const $ = s => document.querySelector(s);
+    // REFERENCIA EDITABLE: área visible del teléfono donde se acomodó el diseño.
+    const REFERENCIA_ELEMENTOS = { ancho:390, alto:844 };
+    function escalarElementosAnclados() {
+      scenes.forEach(scene=>{
+        const escala=Math.min(scene.clientWidth/REFERENCIA_ELEMENTOS.ancho,scene.clientHeight/REFERENCIA_ELEMENTOS.alto);
+        scene.style.setProperty('--unidad-elemento',(REFERENCIA_ELEMENTOS.ancho*escala/100)+'px');
+      });
+    }
     const pages = $("#pages"), scenes = [...document.querySelectorAll(".scene")], audio = $("#audio");
     let current = 0, started = false, heightTimer;
     const names = DATOS.mama + " y " + DATOS.papa;
@@ -962,6 +976,9 @@
     window.addEventListener("orientationchange", adjustHeight, { passive: true });
     window.addEventListener("pageshow", () => { adjustHeight(); if (!started) go(0, false) });
     addEventListener("popstate", () => { if (started) volverAPortada() });
+    const observadorEscalaElementos=new ResizeObserver(escalarElementosAnclados);
+    scenes.forEach(scene=>observadorEscalaElementos.observe(scene));
+    escalarElementosAnclados();
     mark(0); adjustHeight(); go(0, false);
   </script>
 </body>
