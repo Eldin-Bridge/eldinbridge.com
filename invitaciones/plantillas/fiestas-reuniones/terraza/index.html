@@ -696,6 +696,16 @@
         font-size: .71rem;
       }
     }
+          #evento-finalizado[hidden] { display: none; }
+        #evento-finalizado { position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center; overflow-y: auto; padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom)); background: radial-gradient(ellipse at top, #f3dfe4, #d594a5 55%, #a96176); }
+        .cierre-contenido { width: min(100%, 540px); padding: clamp(28px, 6vw, 48px); text-align: center; background: var(--papel); border: 1px solid #a9617680; border-radius: 24px; box-shadow: 0 18px 55px #00000060; }
+        .cierre-adorno { font-size: 42px; color: var(--terracota-oscuro); margin-bottom: 22px; }
+        .cierre-contenido h1 { font-size: clamp(30px, 6vw, 42px); line-height: 1.15; color: var(--terracota-oscuro); margin-bottom: 22px; }
+        .cierre-contenido h2 { font-size: 23px; line-height: 1.4; color: var(--terracota-oscuro); }
+        .cierre-contenido p { font-size: 16px; line-height: 1.7; margin-top: 20px; }
+    .cierre-contenido h1 { font-family: "DM Serif Display", serif; }
+    .cierre-contenido p { color: var(--texto); }
+    .cierre-contenido { color: var(--tinta); }
   </style>
 </head>
 <body>
@@ -987,9 +997,25 @@
     </section>
   </main>
   <div class="particulas" id="particulas" aria-hidden="true"></div>
+    <section id="evento-finalizado" hidden aria-labelledby="cierre-titulo" tabindex="-1">
+        <div class="cierre-contenido">
+            <div class="cierre-adorno" aria-hidden="true">✦ ♡ ✦</div>
+            <h1 id="cierre-titulo"></h1>
+            <h2 id="cierre-gracias"></h2>
+            <p id="cierre-mensaje"></p>
+        </div>
+    </section>
   <script>
     // DATOS EDITABLES: información del cliente y enlaces.
     const CONFIG = {
+      // CIERRE: activar en la invitación real; false mantiene abierta la demo.
+      cierre: {
+        activo: false,
+        desfaseHorario: '-06:00', // Hora de Nuevo León.
+        titulo: 'Una tarde para recordar',
+        agradecimiento: 'Gracias por compartir este encuentro con nosotros',
+        mensaje: 'Nuestra reunión ha terminado, pero las conversaciones, las risas y la calidez de estar juntos se quedan con nosotros. Gracias por acompañarnos y hacer de esta tarde un recuerdo especial.'
+      },
       nombre: "Paty",
       fechaTexto: "Sábado 18 de julio",
       horaTexto: "5:00 p. m.",
@@ -1255,8 +1281,9 @@
     }
         let reanudarMusica = false;
         let saliendo = false;
+        let eventoCerrado = false, temporizadorCierre;
         function invitacionVisible() {
-            return !saliendo && !document.hidden && document.body.classList.contains("invitacion-abierta");
+            return !eventoCerrado && !saliendo && !document.hidden && document.body.classList.contains("invitacion-abierta");
         }
         function actualizarBotonMusica() {
             const musicaActiva = !audio.paused;
@@ -1280,7 +1307,7 @@
             actualizarBotonMusica();
         }
         function reanudarAlVolver() {
-            if (!invitacionVisible() || !reanudarMusica) return;
+            if (comprobarCierre() || !invitacionVisible() || !reanudarMusica) return;
             reanudarMusica = false;
             reproducirMusica();
         }
@@ -1307,6 +1334,7 @@
     $("#entrar").addEventListener(
       "click",
       async () => {
+        if (comprobarCierre()) return;
         document.body.classList.add(
           "invitacion-abierta"
         );
@@ -1537,6 +1565,40 @@
         }
       }
     );
+    // El cierre comienza a medianoche del día siguiente, independientemente del navegador.
+    function calcularFechaCierre() {
+      const partes = /^(\d{4})-(\d{2})-(\d{2})T/.exec(CONFIG.fechaEvento);
+      if (!partes || !/^[+-]\d{2}:\d{2}$/.test(CONFIG.cierre.desfaseHorario)) return NaN;
+      const siguiente = new Date(Date.UTC(Number(partes[1]), Number(partes[2]) - 1, Number(partes[3]) + 1));
+      return new Date(siguiente.toISOString().slice(0, 10) + 'T00:00:00' + CONFIG.cierre.desfaseHorario).getTime();
+    }
+    function comprobarCierre() {
+      if (eventoCerrado) return true;
+      if (!CONFIG.cierre.activo) return false;
+      const limite = calcularFechaCierre();
+      if (!Number.isFinite(limite) || Date.now() < limite) return false;
+      eventoCerrado = true; saliendo = true; reanudarMusica = false;
+      clearTimeout(temporizadorCierre); audio.pause(); audio.currentTime = 0; actualizarBotonMusica();
+      document.body.classList.remove('invitacion-abierta');
+      ['#invitacion', '#entrada', '#musica', '.salir', '#particulas'].forEach(selector => {
+        const elemento = $(selector);
+        if (elemento) { elemento.inert = true; elemento.style.display = 'none'; }
+      });
+      $('#evento-finalizado').hidden = false; $('#evento-finalizado').focus({ preventScroll: true });
+      return true;
+    }
+    function programarCierre() {
+      clearTimeout(temporizadorCierre);
+      if (comprobarCierre() || !CONFIG.cierre.activo) return;
+      const restante = calcularFechaCierre() - Date.now();
+      if (Number.isFinite(restante)) temporizadorCierre = setTimeout(programarCierre, Math.min(Math.max(1, restante), 2147483647));
+    }
+    $('#cierre-titulo').textContent = CONFIG.cierre.titulo;
+    $('#cierre-gracias').textContent = CONFIG.cierre.agradecimiento;
+    $('#cierre-mensaje').textContent = CONFIG.cierre.mensaje;
+    document.addEventListener('visibilitychange', programarCierre);
+    window.addEventListener('pageshow', programarCierre);
+    programarCierre();
   </script>
 </body>
 </html>

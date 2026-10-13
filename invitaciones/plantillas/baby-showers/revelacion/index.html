@@ -662,6 +662,23 @@
         height:auto; max-width:none; max-height:none;
       }
     }
+  /* PANTALLA DE CIERRE — conserva la paleta y las fuentes de la invitación. */
+    #evento-finalizado[hidden] { display: none; }
+    #evento-finalizado {
+      position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center;
+      padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
+      overflow-y: auto; background: radial-gradient(ellipse at top, #f5e9df, #eadfdd);
+    }
+    .cierre-contenido {
+      width: min(100%, 540px); padding: clamp(28px, 6vw, 48px); text-align: center;
+      background: var(--cream); border: 1px solid #c8769266; border-radius: 30px;
+      box-shadow: 0 18px 55px #473b4724;
+    }
+    .cierre-adorno { color: var(--rose); font-size: 40px; letter-spacing: 12px; }
+    .cierre-contenido h1 { font-family: 'Playfair Display', serif; font-weight: 500; font-size: clamp(30px, 6vw, 42px); line-height: 1.15; margin: 22px 0; }
+    .cierre-contenido h2 { font-family: 'Playfair Display', serif; color: var(--rose); font-size: 23px; font-weight: 500; line-height: 1.4; }
+    .cierre-contenido p { font-size: 16px; line-height: 1.7; margin: 20px 0 0; }
+    .cierre-adorno span:last-child { color: var(--blue); }
   </style>
 </head>
 <body>
@@ -809,6 +826,14 @@
     <div class="progress" id="progress" aria-hidden="true"></div>
     <audio id="audio" src="assets/audio/audio01.mp3" loop preload="none"></audio>
   </main>
+  <section id="evento-finalizado" hidden aria-labelledby="cierre-titulo" tabindex="-1">
+    <div class="cierre-contenido">
+      <div class="cierre-adorno" aria-hidden="true"><span>✦</span> ♡ <span>✦</span></div>
+      <h1 id="cierre-titulo"></h1>
+      <h2 id="cierre-gracias"></h2>
+      <p id="cierre-mensaje"></p>
+    </div>
+  </section>
   <script>
     // DATOS EDITABLES — textos, fecha y enlaces para personalizar la invitación.
     const DATOS = {
@@ -817,6 +842,14 @@
       bienvenida: "Queremos compartir contigo un momento que recordaremos siempre. Tu compañía hará aún más especial el día en que descubramos quién viene en camino.",
       mensaje: "Desde que supimos de su llegada, imaginamos sus primeras sonrisas y todo lo que viviremos en familia. ¿Tú qué crees que será?",
       despedida: "Ya contamos los días para reunirnos y descubrir la gran noticia a tu lado. ¡Nos vemos pronto en la celebración!",
+      // CIERRE: activar en la invitación real; la demo permanece abierta con false.
+      cierre: {
+        activo: false,
+        desfaseHorario: '-06:00', // Hora de Cadereyta, Nuevo León.
+        titulo: 'Una sorpresa llena de amor',
+        agradecimiento: 'Gracias por compartir esta gran noticia con nosotros',
+        mensaje: 'Nuestra celebración de revelación ha terminado, pero la emoción y el cariño de este día quedarán en nuestra familia. Gracias por acompañarnos a descubrir quién viene en camino y por llenar este momento de buenos deseos.'
+      },
       fecha: "2027-05-22T17:00:00", // AAAA-MM-DDTHH:MM, hora local
       lugar: "Salón Cielo Abierto",
       direccion: "Cadereyta Jiménez, Nuevo León", // texto mostrado en la tarjeta
@@ -919,7 +952,8 @@
       $("#music").setAttribute("aria-pressed", String(on));
     }
     let resumeMusic = false;
-    function canPlay() { return started && !document.hidden; }
+    let eventoCerrado = false, temporizadorCierre;
+    function canPlay() { return started && !eventoCerrado && !document.hidden; }
     async function play() {
       if (!canPlay()) return;
       try {
@@ -934,7 +968,7 @@
       musicState(false);
     }
     function resumeWhenVisible() {
-      if (!canPlay() || !resumeMusic) return;
+      if (comprobarCierre() || !canPlay() || !resumeMusic) return;
       resumeMusic = false;
       play();
     }
@@ -948,6 +982,7 @@
     window.addEventListener('pagehide', pauseWhenHidden);
     window.addEventListener('pageshow', resumeWhenVisible);
     $("#start").addEventListener("click", () => {
+      if (comprobarCierre()) return;
       started = true; resumeMusic = false;
       history.pushState({ revelacion: "invitacion" }, "");
       $("#shell").classList.add("started");
@@ -959,7 +994,7 @@
     });
     $("#music").addEventListener("click", () => { if (!canPlay()) return; resumeMusic = false; if (audio.paused) play(); else audio.pause(); });
     function volverAPortada() {
-      if (!started) return
+      if (comprobarCierre() || !started) return
       started = false; resumeMusic = false; audio.pause(); musicState(false);
       $("#shell").classList.remove("started");
       $("#entry").classList.remove("closed");
@@ -979,6 +1014,36 @@
     const observadorEscalaElementos=new ResizeObserver(escalarElementosAnclados);
     scenes.forEach(scene=>observadorEscalaElementos.observe(scene));
     escalarElementosAnclados();
+    // El cierre comienza a medianoche del día siguiente, independientemente del navegador.
+    function calcularFechaCierre() {
+      const partes = /^(\d{4})-(\d{2})-(\d{2})T/.exec(DATOS.fecha);
+      if (!partes || !/^[+-]\d{2}:\d{2}$/.test(DATOS.cierre.desfaseHorario)) return NaN;
+      const siguiente = new Date(Date.UTC(Number(partes[1]), Number(partes[2]) - 1, Number(partes[3]) + 1));
+      return new Date(siguiente.toISOString().slice(0, 10) + 'T00:00:00' + DATOS.cierre.desfaseHorario).getTime();
+    }
+    function comprobarCierre() {
+      if (eventoCerrado) return true;
+      if (!DATOS.cierre.activo) return false;
+      const limite = calcularFechaCierre();
+      if (!Number.isFinite(limite) || Date.now() < limite) return false;
+      eventoCerrado = true; started = false; resumeMusic = false;
+      clearTimeout(temporizadorCierre); audio.pause(); audio.currentTime = 0; musicState(false);
+      $('#shell').inert = true; $('#shell').hidden = true;
+      $('#evento-finalizado').hidden = false; $('#evento-finalizado').focus({ preventScroll: true });
+      return true;
+    }
+    function programarCierre() {
+      clearTimeout(temporizadorCierre);
+      if (comprobarCierre() || !DATOS.cierre.activo) return;
+      const restante = calcularFechaCierre() - Date.now();
+      if (Number.isFinite(restante)) temporizadorCierre = setTimeout(programarCierre, Math.min(Math.max(1, restante), 2147483647));
+    }
+    $('#cierre-titulo').textContent = DATOS.cierre.titulo;
+    $('#cierre-gracias').textContent = DATOS.cierre.agradecimiento;
+    $('#cierre-mensaje').textContent = DATOS.cierre.mensaje;
+    document.addEventListener('visibilitychange', programarCierre);
+    window.addEventListener('pageshow', programarCierre);
+    programarCierre();
     mark(0); adjustHeight(); go(0, false);
   </script>
 </body>

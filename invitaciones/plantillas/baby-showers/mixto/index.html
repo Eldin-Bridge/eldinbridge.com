@@ -570,6 +570,22 @@
         translate: none;
       }
     }
+    /* PANTALLA DE CIERRE — conserva la paleta y las fuentes de la invitación. */
+    #evento-finalizado[hidden] { display: none; }
+    #evento-finalizado {
+      position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center;
+      padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
+      overflow-y: auto; background: radial-gradient(ellipse at top, #eee4d4, #d8c9b4);
+    }
+    .cierre-contenido {
+      width: min(100%, 540px); padding: clamp(28px, 6vw, 48px); text-align: center;
+      background: var(--paper); border: 1px solid #ba956580; border-radius: 30px;
+      box-shadow: 0 18px 55px #40362c24;
+    }
+    .cierre-adorno { color: var(--sage); font-size: 40px; letter-spacing: 12px; }
+    .cierre-contenido h1 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(30px, 6vw, 42px); line-height: 1.15; margin: 22px 0; }
+    .cierre-contenido h2 { font-family: 'Fraunces', serif; color: var(--sage); font-size: 23px; font-weight: 500; line-height: 1.4; }
+    .cierre-contenido p { font-size: 16px; line-height: 1.7; margin: 20px 0 0; }
   </style>
 </head>
 <body>
@@ -689,6 +705,14 @@
     <div class="progress" id="progress" aria-hidden="true"></div>
     <audio id="audio" src="assets/audio/audio01.mp3" loop preload="none"></audio>
   </main>
+  <section id="evento-finalizado" hidden aria-labelledby="cierre-titulo" tabindex="-1">
+    <div class="cierre-contenido">
+      <div class="cierre-adorno" aria-hidden="true">✦ ♡ ✦</div>
+      <h1 id="cierre-titulo"></h1>
+      <h2 id="cierre-gracias"></h2>
+      <p id="cierre-mensaje"></p>
+    </div>
+  </section>
   <script>
     // DATOS EDITABLES — esta sección contiene textos, fecha y enlaces de la invitación.
     const DATOS = {
@@ -697,6 +721,14 @@
       bienvenida: 'Nos llena de alegría saber que nos acompañarás. Queremos celebrar contigo la llegada de nuestro bebé y compartir una tarde llena de cariño y sonrisas.',
       mensaje: 'Muy pronto llegará un nuevo integrante a nuestra familia. Cada día imaginamos sus primeras sonrisas y los recuerdos que construiremos juntos.',
       despedida: 'Ya contamos los días para reunirnos contigo y celebrar esta nueva etapa. ¡Nos vemos pronto en el baby shower!',
+      // CIERRE: activar en la invitación real. La demo permanece abierta con false.
+      cierre: {
+        activo: false,
+        desfaseHorario: '-06:00', // Hora de Cadereyta, Nuevo León.
+        titulo: 'Una celebración llena de cariño',
+        agradecimiento: 'Gracias por acompañarnos en esta dulce espera',
+        mensaje: 'Nuestro baby shower ha terminado, pero el cariño y los buenos deseos que compartimos quedarán con nosotros. Gracias por celebrar la llegada de nuestro bebé junto a nuestra familia.'
+      },
       fecha: '2027-05-22T16:00:00', // AAAA-MM-DDTHH:MM, hora local
       lugar: 'Jardín Los Olivos',
       direccion: 'Cadereyta Jiménez, Nuevo León', // texto mostrado en la tarjeta
@@ -772,7 +804,8 @@
     }, { root: pages, threshold: .65 }); scenes.forEach(s => observer.observe(s));
     function musicState(on) { $('#music').textContent = on ? 'Ⅱ' : '♫'; $('#music').setAttribute('aria-label', on ? 'Pausar música' : 'Reproducir música'); $('#music').setAttribute('aria-pressed', String(on)) }
     let resumeMusic = false;
-    function canPlay() { return started && !document.hidden; }
+    let eventoCerrado = false, temporizadorCierre;
+    function canPlay() { return started && !eventoCerrado && !document.hidden; }
     async function play() {
       if (!canPlay()) return;
       try {
@@ -787,7 +820,7 @@
       musicState(false);
     }
     function resumeWhenVisible() {
-      if (!canPlay() || !resumeMusic) return;
+      if (comprobarCierre() || !canPlay() || !resumeMusic) return;
       resumeMusic = false;
       play();
     }
@@ -801,6 +834,7 @@
     window.addEventListener('pagehide', pauseWhenHidden);
     window.addEventListener('pageshow', resumeWhenVisible);
     $('#start').addEventListener('click', () => {
+      if (comprobarCierre()) return;
       started = true; resumeMusic = false; history.pushState({ mixto: 'invitacion' }, '');
       $('#shell').classList.add('started'); go(0, false); $('#entry').classList.add('closed');
       scenes.forEach((scene, i) => scene.classList.toggle('active', i === 0));
@@ -810,7 +844,7 @@
       play();
     });
     $('#music').addEventListener('click', () => { if (!canPlay()) return; resumeMusic = false; if (audio.paused) play(); else audio.pause(); });
-    function volverAPortada() { started = false; resumeMusic = false; audio.pause(); musicState(false); $('#shell').classList.remove('started'); $('#entry').classList.remove('closed'); go(0, false); mark(0) }
+    function volverAPortada() { if (comprobarCierre()) return; started = false; resumeMusic = false; audio.pause(); musicState(false); $('#shell').classList.remove('started'); $('#entry').classList.remove('closed'); go(0, false); mark(0) }
     $('#exit').addEventListener('click', () => { started = false; resumeMusic = false; audio.pause(); audio.currentTime = 0; location.href = DATOS.salida; });
     document.addEventListener('visibilitychange', () => { if (document.hidden) pauseWhenHidden(); else resumeWhenVisible(); });
     window.addEventListener('resize', adjustHeight, { passive: true });
@@ -819,6 +853,36 @@
     window.addEventListener('pageshow', () => { adjustHeight(); if (!started) go(0, false) });
     // Atrás desde una tarjeta abierta vuelve a la portada; Salir abre las plantillas de Baby Showers.
     addEventListener('popstate', () => { if (started) volverAPortada() });
+    // El cierre comienza a medianoche del día siguiente, independientemente del navegador.
+    function calcularFechaCierre() {
+      const partes = /^(\d{4})-(\d{2})-(\d{2})T/.exec(DATOS.fecha);
+      if (!partes || !/^[+-]\d{2}:\d{2}$/.test(DATOS.cierre.desfaseHorario)) return NaN;
+      const siguiente = new Date(Date.UTC(Number(partes[1]), Number(partes[2]) - 1, Number(partes[3]) + 1));
+      return new Date(siguiente.toISOString().slice(0, 10) + 'T00:00:00' + DATOS.cierre.desfaseHorario).getTime();
+    }
+    function comprobarCierre() {
+      if (eventoCerrado) return true;
+      if (!DATOS.cierre.activo) return false;
+      const limite = calcularFechaCierre();
+      if (!Number.isFinite(limite) || Date.now() < limite) return false;
+      eventoCerrado = true; started = false; resumeMusic = false;
+      clearTimeout(temporizadorCierre); audio.pause(); audio.currentTime = 0; musicState(false);
+      $('#shell').inert = true; $('#shell').hidden = true;
+      $('#evento-finalizado').hidden = false; $('#evento-finalizado').focus({ preventScroll: true });
+      return true;
+    }
+    function programarCierre() {
+      clearTimeout(temporizadorCierre);
+      if (comprobarCierre() || !DATOS.cierre.activo) return;
+      const restante = calcularFechaCierre() - Date.now();
+      if (Number.isFinite(restante)) temporizadorCierre = setTimeout(programarCierre, Math.min(Math.max(1, restante), 2147483647));
+    }
+    $('#cierre-titulo').textContent = DATOS.cierre.titulo;
+    $('#cierre-gracias').textContent = DATOS.cierre.agradecimiento;
+    $('#cierre-mensaje').textContent = DATOS.cierre.mensaje;
+    document.addEventListener('visibilitychange', programarCierre);
+    window.addEventListener('pageshow', programarCierre);
+    programarCierre();
     mark(0); adjustHeight(); go(0, false);
   </script>
 </body>

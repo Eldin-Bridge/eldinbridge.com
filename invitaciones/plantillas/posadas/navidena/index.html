@@ -537,6 +537,25 @@
         --size: 26
       }
     }
+  /* PANTALLA DE CIERRE — conserva la paleta y las fuentes de la invitación. */
+    #evento-finalizado[hidden] { display: none; }
+    #evento-finalizado {
+      position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center;
+      padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
+      overflow-y: auto; background: radial-gradient(ellipse at top, #344050, #172b3b);
+    }
+    .cierre-contenido {
+      width: min(100%, 540px); padding: clamp(28px, 6vw, 48px); text-align: center;
+      background: var(--cream); border: 1px solid #c79d6180; border-radius: 30px;
+      box-shadow: 0 18px 55px #00000040;
+    }
+    .cierre-adorno { color: var(--ink); font-size: 40px; letter-spacing: 12px; }
+    .cierre-contenido h1 { font-family: 'Libre Baskerville', serif; font-weight: 500; font-size: clamp(30px, 6vw, 42px); line-height: 1.15; margin: 22px 0; }
+    .cierre-contenido h2 { font-family: 'Libre Baskerville', serif; color: var(--ink); font-size: 23px; font-weight: 500; line-height: 1.4; }
+    .cierre-contenido p { font-size: 16px; line-height: 1.7; margin: 20px 0 0; }
+    .cierre-contenido { color: var(--ink); }
+    .cierre-contenido h1 { font-family: "Marcellus", serif; color: var(--gold); }
+    .cierre-adorno { color: var(--gold); }
   </style>
 </head>
 <body>
@@ -654,11 +673,27 @@
     <div class="progress" id="progress" aria-hidden="true"></div>
     <audio id="audio" src="assets/audio/audio01.mp3" loop preload="none"></audio>
   </main>
+  <section id="evento-finalizado" hidden aria-labelledby="cierre-titulo" tabindex="-1">
+    <div class="cierre-contenido">
+      <div class="cierre-adorno" aria-hidden="true">✦ ❄ ✦</div>
+      <h1 id="cierre-titulo"></h1>
+      <h2 id="cierre-gracias"></h2>
+      <p id="cierre-mensaje"></p>
+    </div>
+  </section>
   <script>
     // DATOS EDITABLES: información de la posada navideña.
     // Deja mapa y telefonoWhatsApp vacíos mientras no tengas los enlaces reales;
     // los botones permanecerán visibles y desactivados.
     const DATOS = {
+      // CIERRE: activar en la invitación real; false mantiene abierta la demo.
+      cierre: {
+        activo: false,
+        desfaseHorario: '-06:00', // Hora de Nuevo León.
+        titulo: 'La magia de compartir',
+        agradecimiento: 'Gracias por celebrar esta Navidad con nosotros',
+        mensaje: 'Nuestra posada ha terminado, pero la alegría, el cariño y los momentos que compartimos seguirán iluminando nuestros recuerdos. Gracias por acompañarnos. ¡Les deseamos una Navidad llena de paz y unas felices fiestas!'
+      },
       organizador: "Comunidad anfitriona",
       mensaje: "Gracias por acompañarnos en el camino de la posada. Con cada voz y gesto de hospitalidad, esta noche tendrá un significado especial.",
       fecha: "2026-12-21T19:00:00",
@@ -721,7 +756,8 @@
     const observer = new IntersectionObserver(entries => { const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]; if (visible) mark(scenes.indexOf(visible.target)) }, { root: pages, threshold: .65 }); scenes.forEach(scene => observer.observe(scene));
     function musicState(on) { $("#music").textContent = on ? "Ⅱ" : "♫"; $("#music").setAttribute("aria-label", on ? "Pausar música" : "Reproducir música"); $("#music").setAttribute("aria-pressed", String(on)) }
     let resumeMusic = false;
-    function canPlay() { return started && !document.hidden; }
+    let eventoCerrado = false, temporizadorCierre;
+    function canPlay() { return started && !eventoCerrado && !document.hidden; }
     async function play() {
       if (!canPlay()) return;
       try {
@@ -736,7 +772,7 @@
       musicState(false);
     }
     function resumeWhenVisible() {
-      if (!canPlay() || !resumeMusic) return;
+      if (comprobarCierre() || !canPlay() || !resumeMusic) return;
       resumeMusic = false;
       play();
     }
@@ -749,9 +785,9 @@
     musicState(false);
     window.addEventListener('pagehide', pauseWhenHidden);
     window.addEventListener('pageshow', resumeWhenVisible);
-    $("#start").addEventListener("click", () => { started = true; resumeMusic = false; history.pushState({ posadaNavidena: "invitacion" }, ""); $("#shell").classList.add("started"); go(0, false); $("#entry").classList.add("closed"); mark(0); play() });
+    $("#start").addEventListener("click", () => { if (comprobarCierre()) return; started = true; resumeMusic = false; history.pushState({ posadaNavidena: "invitacion" }, ""); $("#shell").classList.add("started"); go(0, false); $("#entry").classList.add("closed"); mark(0); play() });
     $("#music").addEventListener("click", () => { if (!canPlay()) return; resumeMusic = false; if (audio.paused) play(); else audio.pause(); });
-    function exit() { if (!started) { if (DATOS.salida) location.href = DATOS.salida; return } started = false; resumeMusic = false; audio.pause(); musicState(false); $("#shell").classList.remove("started"); $("#entry").classList.remove("closed"); go(0, false); mark(0) }
+    function exit() { if (comprobarCierre()) return; if (!started) { if (DATOS.salida) location.href = DATOS.salida; return } started = false; resumeMusic = false; audio.pause(); musicState(false); $("#shell").classList.remove("started"); $("#entry").classList.remove("closed"); go(0, false); mark(0) }
     $("#exit").addEventListener("click", () => {
       if (DATOS.salida) {
         started = false;
@@ -765,6 +801,36 @@
     window.addEventListener("resize", adjustHeight, { passive: true }); window.visualViewport?.addEventListener("resize", adjustHeight, { passive: true }); window.addEventListener("orientationchange", adjustHeight, { passive: true });
     window.addEventListener("pageshow", () => { adjustHeight(); if (!started) go(0, false) }); addEventListener("popstate", () => { if (started) exit() });
     mark(0); adjustHeight(); go(0, false);
+    // El cierre comienza a medianoche del día siguiente, independientemente del navegador.
+    function calcularFechaCierre() {
+      const partes = /^(\d{4})-(\d{2})-(\d{2})T/.exec(DATOS.fecha);
+      if (!partes || !/^[+-]\d{2}:\d{2}$/.test(DATOS.cierre.desfaseHorario)) return NaN;
+      const siguiente = new Date(Date.UTC(Number(partes[1]), Number(partes[2]) - 1, Number(partes[3]) + 1));
+      return new Date(siguiente.toISOString().slice(0, 10) + 'T00:00:00' + DATOS.cierre.desfaseHorario).getTime();
+    }
+    function comprobarCierre() {
+      if (eventoCerrado) return true;
+      if (!DATOS.cierre.activo) return false;
+      const limite = calcularFechaCierre();
+      if (!Number.isFinite(limite) || Date.now() < limite) return false;
+      eventoCerrado = true; started = false; resumeMusic = false;
+      clearTimeout(temporizadorCierre); audio.pause(); audio.currentTime = 0; musicState(false);
+      $('#shell').inert = true; $('#shell').hidden = true;
+      $('#evento-finalizado').hidden = false; $('#evento-finalizado').focus({ preventScroll: true });
+      return true;
+    }
+    function programarCierre() {
+      clearTimeout(temporizadorCierre);
+      if (comprobarCierre() || !DATOS.cierre.activo) return;
+      const restante = calcularFechaCierre() - Date.now();
+      if (Number.isFinite(restante)) temporizadorCierre = setTimeout(programarCierre, Math.min(Math.max(1, restante), 2147483647));
+    }
+    $('#cierre-titulo').textContent = DATOS.cierre.titulo;
+    $('#cierre-gracias').textContent = DATOS.cierre.agradecimiento;
+    $('#cierre-mensaje').textContent = DATOS.cierre.mensaje;
+    document.addEventListener('visibilitychange', programarCierre);
+    window.addEventListener('pageshow', programarCierre);
+    programarCierre();
   </script>
 </body>
 </html>
