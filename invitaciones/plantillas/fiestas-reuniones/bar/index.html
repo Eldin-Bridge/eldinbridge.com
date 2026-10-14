@@ -847,6 +847,23 @@
         .cierre-contenido p { font-size: 16px; line-height: 1.7; margin-top: 20px; }
     .cierre-contenido h1 { font-family: "Bodoni Moda", serif; }
     .cierre-contenido p { color: var(--texto); }
+    /* Centrado vertical real y compactación moderada de las tarjetas 3 y 7. */
+    .escena { padding-block: 0; }
+    #detalles .tarjeta, #final .tarjeta { padding-top: 26px; padding-bottom: 24px; }
+    #detalles .datos { margin: 17px auto 19px; }
+    #detalles .dato { min-height: 96px; padding-block: 10px; }
+    #final .etiqueta { margin-bottom: 11px; }
+    #final .descripcion { margin-top: 13px; }
+    #final .anfitrion { margin-top: 13px; }
+    #final .acciones-finales { margin-top: 16px; }
+    @media(max-width:600px) {
+      #detalles .tarjeta, #final .tarjeta { padding-top: 26px; padding-bottom: 23px; }
+      #detalles .dato { min-height: 85px; padding-block: 8px; }
+    }
+    /* El halo vacío no debe crear una fila y desplazar la tarjeta hacia abajo. */
+    .escena { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); padding-block: 0; }
+    .escena > .halo { position: absolute; inset: 0; pointer-events: none; }
+    .escena > .tarjeta { grid-area: 1 / 1; align-self: center; justify-self: center; }
   </style>
 </head>
 <body>
@@ -930,7 +947,6 @@
       <article class="tarjeta">
         <span class="etiqueta">El ritmo de la noche</span>
         <h2>Sube el volumen <span class="acento">de la noche</span></h2>
-        <p class="descripcion">Nada complicado: llegar, pedir algo rico y dejar que la música haga lo suyo.</p>
         <ul class="lista">
           <li><span class="lista-icono">1</span><span>Una copa para comenzar</span></li>
           <li><span class="lista-icono">2</span><span>Música y mucha conversación</span></li>
@@ -969,7 +985,6 @@
       <article class="tarjeta">
         <span class="etiqueta">Código nocturno</span>
         <h2>Ven con ganas <span class="acento">de pasarla bien</span></h2>
-        <p class="descripcion">El ambiente será relajado, nocturno y entre amigos.</p>
         <ul class="lista">
           <li><span class="lista-icono">✦</span><span>Estilo casual nocturno</span></li>
           <li><span class="lista-icono">✦</span><span>Llega con tiempo para brindar</span></li>
@@ -1126,6 +1141,17 @@
     const $ = (selector, contexto = document) => contexto.querySelector(selector);
     const $$ = (selector, contexto = document) => [...contexto.querySelectorAll(selector)];
     const escenas = $$(".escena");
+    // Cada elemento utiliza su zona: centro superior o esquina inferior alternada.
+    escenas.forEach((escena, indice) => {
+      escena.querySelectorAll('.elemento[data-elemento]').forEach(imagen => {
+        const datos = POSICIONES[escena.id][imagen.dataset.elemento];
+        const arriba = indice === 1 || indice === 6;
+        ['web','movil'].forEach(modo => {
+          datos[modo].x = arriba ? 50 : (indice % 2 === 0 ? 86 : 14);
+          datos[modo].y = arriba ? 18 : 82;
+        });
+      });
+    });
     escenas.forEach(escena => {
       escena.querySelectorAll(".elemento[data-elemento]").forEach(imagen => {
         const datos = POSICIONES[escena.id][imagen.dataset.elemento];
@@ -1138,6 +1164,102 @@
         imagen.style.setProperty("--giro", datos.giro);
       });
     });
+    const limitesElementos = new WeakMap();
+    function obtenerLimitesVisibles(imagen) {
+      const guardado = limitesElementos.get(imagen);
+      if (guardado && guardado.src === imagen.currentSrc) return guardado;
+      const w = imagen.naturalWidth, h = imagen.naturalHeight;
+      let limites = { src: imagen.currentSrc, x: 0, y: 0, ancho: w, alto: h };
+      try {
+        const lienzo = document.createElement('canvas');
+        lienzo.width = w; lienzo.height = h;
+        const ctx = lienzo.getContext('2d', { willReadFrequently: true });
+        ctx.drawImage(imagen, 0, 0);
+        const pixeles = ctx.getImageData(0, 0, w, h).data;
+        let izquierda = w, derecha = -1, arriba = h, abajo = -1;
+        for (let y = 0; y < h; y++) {
+          for (let x = 0; x < w; x++) {
+            if (pixeles[(y * w + x) * 4 + 3] === 0) continue;
+            izquierda = Math.min(izquierda, x); derecha = Math.max(derecha, x);
+            arriba = Math.min(arriba, y); abajo = Math.max(abajo, y);
+          }
+        }
+        if (derecha >= izquierda && abajo >= arriba) {
+          limites = { src: imagen.currentSrc, x: izquierda, y: arriba,
+            ancho: derecha - izquierda + 1, alto: abajo - arriba + 1 };
+        }
+      } catch {
+        // Si el navegador bloquea la lectura, conservar el encaje del archivo completo.
+      }
+      limitesElementos.set(imagen, limites);
+      return limites;
+    }
+    function ajustarElementos() {
+      const marco = document.querySelector('#invitacion').getBoundingClientRect();
+      const controles = [...document.querySelectorAll('.control')].map(el => el.getBoundingClientRect()).filter(r => r.width && r.height);
+      escenas.forEach(escena => {
+        const tarjeta = escena.querySelector('.tarjeta');
+        if (!tarjeta || !escena.clientWidth) return;
+        const w = escena.clientWidth, h = escena.clientHeight;
+        // Medidas estables: no incluyen la animación de entrada ni el desplazamiento al bajar.
+        const top = tarjeta.offsetTop, bottom = top + tarjeta.offsetHeight;
+        escena.querySelectorAll('.elemento[data-elemento]').forEach(imagen => {
+          if (!imagen.naturalWidth) return;
+          const datos = POSICIONES[escena.id][imagen.dataset.elemento];
+          const modo = matchMedia('(max-width:600px)').matches ? datos.movil : datos.web;
+          const arriba = modo.y < 50, izquierda = modo.x < 50;
+          const v = obtenerLimitesVisibles(imagen);
+          const margen = 9, separacion = 10, movimiento = 11;
+          const grados = Number(datos.giro) || 0;
+          const envolventes = [grados-1.5,grados,grados+1.5].map(g => {
+            const r = g*Math.PI/180;
+            return {ancho: Math.abs(Math.cos(r))*v.ancho+Math.abs(Math.sin(r))*v.alto,
+              alto: Math.abs(Math.sin(r))*v.ancho+Math.abs(Math.cos(r))*v.alto};
+          });
+          const anchoVisible = Math.max(...envolventes.map(e => e.ancho))*1.025;
+          const altoVisible = Math.max(...envolventes.map(e => e.alto))*1.025;
+          const capacidad = z => Math.min(Math.max(0,z.r-z.l)/anchoVisible,Math.max(0,z.b-z.t)/altoVisible);
+          let zona;
+          if (arriba) {
+            const banda = {l:margen,r:w-margen,t:margen+movimiento,b:top-separacion};
+            const central = {...banda};
+            controles.forEach(c => {
+              if ((c.left+c.right)/2-marco.left < w/2) central.l=Math.max(central.l,c.right-marco.left+separacion);
+              else central.r=Math.min(central.r,c.left-marco.left-separacion);
+              banda.t=Math.max(banda.t,c.bottom-marco.top+separacion+movimiento);
+            });
+            const mitad=Math.max(0,Math.min(w/2-central.l,central.r-w/2));
+            central.l=w/2-mitad; central.r=w/2+mitad;
+            zona=capacidad(central)>capacidad(banda)?central:banda;
+          } else {
+            zona={l:izquierda?margen:w/2+separacion,
+              r:izquierda?w/2-separacion:w-margen,t:bottom+separacion+movimiento,b:h-margen};
+          }
+          const k=capacidad(zona);
+          const angulo=grados*Math.PI/180;
+          const dx=(v.x+v.ancho/2-imagen.naturalWidth/2)*k;
+          const dy=(v.y+v.alto/2-imagen.naturalHeight/2)*k;
+          const cx=(zona.l+zona.r)/2,cy=(zona.t+zona.b)/2;
+          imagen.style.width=imagen.naturalWidth*k+'px';
+          imagen.style.height=imagen.naturalHeight*k+'px';
+          imagen.style.left=cx-(dx*Math.cos(angulo)-dy*Math.sin(angulo))+'px';
+          imagen.style.top=cy-(dx*Math.sin(angulo)+dy*Math.cos(angulo))+'px';
+        });
+      });
+    }
+    escenas.forEach(escena => {
+      escena.querySelectorAll('.elemento').forEach(imagen => {
+        imagen.loading='eager'; imagen.decoding='async';
+        imagen.addEventListener('load',ajustarElementos);
+      });
+    });
+    const observadorElementos=new ResizeObserver(ajustarElementos);
+    escenas.forEach(escena => {
+      observadorElementos.observe(escena);
+      observadorElementos.observe(escena.querySelector('.tarjeta'));
+    });
+    document.fonts.ready.then(ajustarElementos);
+    ajustarElementos();
     $(".salir").href = CONFIG.salida;
     const invitacion = $("#invitacion");
     const audio = $("#audio");
