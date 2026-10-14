@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <link rel="preload" as="image" href="assets/fondos/fondo01.webp">
     <meta name="description" content="Demostración de invitación infantil temática de EldinBridge.">
     <title>El Reino de las Estrellas | Fiesta Temática</title>
-
     <style>
         :root {
             --azul: #081836;
@@ -18,47 +16,39 @@
             --blanco: #ffffff;
             --suave: #e9e3ff;
         }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-
         html {
             scroll-behavior: auto;
             scroll-snap-type: y mandatory;
         }
-
         body {
             overflow-x: hidden;
             color: var(--blanco);
             background: #030817;
             font-family: Inter, "Segoe UI", Arial, sans-serif;
         }
-
         body:not(.invitacion-abierta):not(.editor-activo) {
             height: 100svh;
             overflow: hidden;
         }
-
         body:not(.invitacion-abierta):not(.editor-activo) #invitacion {
             visibility: hidden;
             pointer-events: none;
             touch-action: none;
         }
-
         button,
         input,
         select {
             font: inherit;
         }
-
         a {
             color: inherit;
             text-decoration: none;
         }
-
         .escena {
             position: relative;
             display: flex;
@@ -71,7 +61,6 @@
             scroll-snap-stop: always;
             isolation: isolate;
         }
-
         .fondo-escena {
             position: absolute;
             inset: 0;
@@ -82,7 +71,6 @@
             object-position: center;
             filter: saturate(.95) brightness(.68);
         }
-
         .velo {
             position: absolute;
             inset: 0;
@@ -93,14 +81,12 @@
                     rgba(3, 8, 24, .48) 55%,
                     rgba(2, 6, 18, .82));
         }
-
         .capa-elementos {
             position: absolute;
             inset: 0;
             z-index: 11;
             pointer-events: none;
         }
-
         .elemento {
             position: absolute;
             left: calc(var(--x) * 1%);
@@ -115,65 +101,53 @@
             user-select: none;
             filter: drop-shadow(0 7px 10px rgba(0, 0, 0, .28));
         }
-
         .editor-activo .elemento {
             pointer-events: auto;
             cursor: grab;
             outline: 1px dashed rgba(255, 213, 106, .7);
         }
-
         .editor-activo .elemento.seleccionado {
             outline: 3px solid var(--oro);
         }
-
         .anim-flotar {
             animation: flotar 3.4s ease-in-out infinite;
         }
-
         .anim-pulso {
             animation: pulso 2.2s ease-in-out infinite;
         }
-
         .anim-girar {
             animation: girar 12s linear infinite;
         }
-
         .anim-deriva {
             animation: deriva 5s ease-in-out infinite;
         }
-
         /* Las animaciones fuera de la pantalla visible se mantienen pausadas. */
         .escena:not(.escena-activa) .elemento,
         .escena:not(.escena-activa) .iconos-magicos span {
             animation-play-state: paused;
         }
-
         @keyframes flotar {
             50% {
                 translate: 0 -14px;
             }
         }
-
         @keyframes pulso {
             50% {
                 scale: 1.08;
                 opacity: .94;
             }
         }
-
         @keyframes girar {
             to {
                 rotate: 360deg;
             }
         }
-
         @keyframes deriva {
             50% {
                 translate: 18px -8px;
                 rotate: 5deg;
             }
         }
-
         .contenido {
             position: relative;
             z-index: auto;
@@ -184,7 +158,6 @@
             text-align: center;
             background: transparent;
         }
-
         .contenido::before {
             content: "";
             position: absolute;
@@ -196,12 +169,10 @@
             box-shadow: 0 24px 80px rgba(0, 0, 0, .42), inset 0 1px rgba(255, 255, 255, .18);
             pointer-events: none;
         }
-
         .contenido>* {
             position: relative;
             z-index: 12;
         }
-
         .etiqueta {
             display: inline-flex;
             align-items: center;
@@ -217,7 +188,6 @@
             letter-spacing: .11em;
             text-transform: uppercase;
         }
-
         .etiqueta::before {
             content: "";
             width: 7px;
@@ -226,31 +196,26 @@
             background: var(--oro);
             box-shadow: 0 0 15px var(--oro);
         }
-
         h1,
         h2 {
             text-wrap: balance;
         }
-
         h1 {
             font-size: clamp(3rem, 14vw, 6.8rem);
             line-height: .88;
             letter-spacing: -.065em;
         }
-
         h1 span {
             display: block;
             margin-top: 10px;
             color: var(--oro);
             font-size: clamp(1.8rem, 8vw, 3.8rem);
         }
-
         h2 {
             font-size: clamp(2.25rem, 10vw, 5rem);
             line-height: .95;
             letter-spacing: -.05em;
         }
-
         .texto {
             max-width: 570px;
             margin: 20px auto 0;
@@ -258,7 +223,6 @@
             font-size: clamp(1rem, 3.7vw, 1.25rem);
             line-height: 1.58;
         }
-
         .botones {
             display: flex;
             flex-wrap: wrap;
@@ -266,7 +230,6 @@
             gap: 11px;
             margin-top: 24px;
         }
-
         .boton {
             display: inline-flex;
             min-height: 50px;
@@ -283,7 +246,6 @@
             font-weight: 850;
             cursor: pointer;
         }
-
         .navegacion-escena {
             position: absolute;
             z-index: 20;
@@ -294,27 +256,23 @@
             max-width: calc(100% - 36px);
             margin: 0;
         }
-
         .boton[aria-disabled="true"] {
             opacity: .65;
             cursor: default;
             pointer-events: none;
         }
-
         .boton-secundario {
             border: 1px solid rgba(255, 255, 255, .2);
             color: white;
             background: rgba(255, 255, 255, .08);
             box-shadow: none;
         }
-
         .contador {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 9px;
             margin-top: 23px;
         }
-
         .tiempo,
         .dato {
             padding: 16px 9px;
@@ -322,14 +280,12 @@
             border-radius: 18px;
             background: rgba(255, 255, 255, .07);
         }
-
         .numero {
             display: block;
             color: var(--oro);
             font-size: clamp(1.5rem, 7vw, 3rem);
             font-weight: 950;
         }
-
         .unidad,
         .dato-titulo {
             display: block;
@@ -340,27 +296,23 @@
             letter-spacing: .08em;
             text-transform: uppercase;
         }
-
         .datos {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 11px;
             margin-top: 22px;
         }
-
         .dato-icono {
             display: block;
             margin-bottom: 6px;
             font-size: 1.55rem;
         }
-
         .dato-texto {
             display: block;
             margin-top: 6px;
             font-weight: 700;
             line-height: 1.42;
         }
-
         .iconos-magicos {
             display: flex;
             justify-content: center;
@@ -368,25 +320,20 @@
             margin: 3px 0 14px;
             font-size: 2.7rem;
         }
-
         .iconos-magicos span:nth-child(1) {
             animation: flotar 2.6s ease-in-out infinite;
         }
-
         .iconos-magicos span:nth-child(2) {
             animation: pulso 2.1s ease-in-out infinite;
         }
-
         .iconos-magicos span:nth-child(3) {
             animation: deriva 3.5s ease-in-out infinite;
         }
-
         .firma {
             margin-top: 19px;
             color: var(--oro);
             font-weight: 850;
         }
-
         .revelar {
             opacity: 0;
             transform: translateY(24px) scale(.96);
@@ -395,12 +342,10 @@
                 transform .7s cubic-bezier(.22, .8, .32, 1);
             will-change: transform, opacity;
         }
-
         .revelar.visible {
             opacity: 1;
             transform: none;
         }
-
         #confeti {
             position: fixed;
             inset: 0;
@@ -408,7 +353,6 @@
             overflow: hidden;
             pointer-events: none;
         }
-
         .confeti {
             position: absolute;
             top: -20px;
@@ -417,13 +361,11 @@
             border-radius: 3px;
             animation: caer linear forwards;
         }
-
         @keyframes caer {
             to {
                 transform: translateY(110vh) rotate(720deg);
             }
         }
-
         .particula-magica {
             position: absolute;
             top: -30px;
@@ -435,22 +377,18 @@
             animation: cascada-magica var(--duracion-particula) linear forwards;
             pointer-events: none;
         }
-
         @keyframes cascada-magica {
             0% {
                 opacity: 0;
                 transform:
                     translate3d(0, -25px, 0) rotate(0deg);
             }
-
             10% {
                 opacity: .9;
             }
-
             85% {
                 opacity: .8;
             }
-
             100% {
                 opacity: 0;
                 transform:
@@ -459,7 +397,6 @@
                         0) rotate(360deg);
             }
         }
-
         .control-musica {
             position: fixed;
             right: 15px;
@@ -477,7 +414,6 @@
             box-shadow: 0 12px 32px rgba(0, 0, 0, .4);
             cursor: pointer;
         }
-
         .boton-salir {
             position: fixed;
             top: max(15px, env(safe-area-inset-top));
@@ -503,18 +439,15 @@
                 transform .2s ease,
                 background .2s ease;
         }
-
         .boton-salir:hover,
         .boton-salir:focus-visible {
             background: rgba(30, 38, 70, .88);
             transform: translateY(-2px);
         }
-
         .control-musica:disabled {
             opacity: .45;
             cursor: not-allowed;
         }
-
         #intro {
             position: fixed;
             inset: 0;
@@ -534,11 +467,9 @@
                     rgba(3, 8, 23, .76)),
                 url("assets/fondos/fondo01.webp") center / cover no-repeat;
         }
-
         #intro.oculto {
             display: none;
         }
-
         .intro-caja {
             width: 100%;
             max-width: 580px;
@@ -550,19 +481,16 @@
             background: rgba(255, 255, 255, .07);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-
             opacity: 0;
             transform: translateY(18px) scale(.97);
             transition:
                 opacity .45s ease-out,
                 transform .65s cubic-bezier(.22, .8, .32, 1);
         }
-
         body.fondo-listo .intro-caja {
             opacity: 1;
             transform: none;
         }
-
         .intro-icono {
             display: block;
             width: 92px;
@@ -573,30 +501,24 @@
             animation: mover-intro-icono 3.2s ease-in-out infinite;
             will-change: transform;
         }
-
         @keyframes mover-intro-icono {
-
             0%,
             100% {
                 transform: translateY(0) rotate(-5deg);
             }
-
             50% {
                 transform: translateY(-10px) rotate(7deg);
             }
         }
-
         .intro-caja h1 {
             color: var(--oro);
             font-size: clamp(2.4rem, 10vw, 5rem);
         }
-
         .intro-caja p {
             margin: 16px auto 0;
             color: var(--suave);
             line-height: 1.55;
         }
-
         .editor {
             position: fixed;
             top: 0;
@@ -611,35 +533,29 @@
             background: #0a1020;
             box-shadow: -15px 0 45px rgba(0, 0, 0, .5);
         }
-
         .editor.visible {
             display: block;
         }
-
         .editor h2 {
             font-size: 1.35rem;
             letter-spacing: -.02em;
         }
-
         .editor-aviso {
             margin: 9px 0 17px;
             color: #aeb8cf;
             font-size: .83rem;
             line-height: 1.45;
         }
-
         .campo {
             display: grid;
             gap: 6px;
             margin-bottom: 13px;
         }
-
         .campo label {
             color: #c8d1e6;
             font-size: .78rem;
             font-weight: 750;
         }
-
         .campo input,
         .campo select {
             width: 100%;
@@ -650,17 +566,14 @@
             color: white;
             background: #111a2d;
         }
-
         .campo input[type="range"] {
             padding: 0;
         }
-
         .fila {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
         }
-
         .editor-boton {
             width: 100%;
             min-height: 42px;
@@ -672,41 +585,33 @@
             font-weight: 800;
             cursor: pointer;
         }
-
         .editor-boton.primario {
             border-color: #8b75e8;
             background: #654bc1;
         }
-
         .editor-boton.peligro {
             border-color: #7d3344;
             color: #ffbdca;
             background: #351722;
         }
-
         .editor-separador {
             margin: 17px 0;
             border: 0;
             border-top: 1px solid #29344c;
         }
-
         @media (min-width: 850px) {
             .editor-activo .escena {
                 padding-right: 408px;
             }
         }
-
         @media (max-width: 560px) {
-
             html {
                 scroll-snap-type: y mandatory;
                 scroll-padding-top: 0;
             }
-
             body {
                 overscroll-behavior-y: none;
             }
-
             .escena {
                 height: 100svh;
                 height: 100dvh;
@@ -715,7 +620,6 @@
                 scroll-snap-align: start;
                 scroll-snap-stop: always;
             }
-
             .boton-salir {
                 top: max(11px, env(safe-area-inset-top));
                 right: max(11px, env(safe-area-inset-right));
@@ -723,55 +627,45 @@
                 padding: 8px 13px;
                 font-size: .76rem;
             }
-
             .contador {
                 grid-template-columns: repeat(4, minmax(0, 1fr));
                 gap: 5px;
             }
-
             .tiempo {
                 min-width: 0;
                 padding: 11px 3px;
                 border-radius: 13px;
             }
-
             .contador .numero {
                 font-size: clamp(1.2rem, 6vw, 1.7rem);
             }
-
             .contador .unidad {
                 overflow: hidden;
                 font-size: .52rem;
                 letter-spacing: .025em;
                 text-overflow: ellipsis;
             }
-
             .datos {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 7px;
             }
-
             .dato {
                 min-width: 0;
                 padding: 12px 6px;
                 border-radius: 14px;
             }
-
             .dato-icono {
                 margin-bottom: 3px;
                 font-size: 1.3rem;
             }
-
             .dato-titulo {
                 font-size: .58rem;
             }
-
             .dato-texto {
                 font-size: .78rem;
                 line-height: 1.32;
             }
         }
-
         /* POSICIONES MÓVIL: variables independientes en configuracion.elementos. */
         @media (max-width: 560px) and (pointer: coarse) {
             .elemento {
@@ -825,34 +719,44 @@
     .cierre-contenido h2 { font-family: inherit; color: var(--oro); font-size: 23px; font-weight: 500; line-height: 1.4; }
     .cierre-contenido p { font-size: 16px; line-height: 1.7; margin: 20px 0 0; }
     .cierre-contenido { color: var(--blanco); }
+        .control-musica {
+            top: max(15px, env(safe-area-inset-top)); left: max(15px, env(safe-area-inset-left));
+            right: auto; bottom: auto; z-index: 100;
+        }
+        @media(max-width:560px) {
+            .control-musica { top: max(12px, env(safe-area-inset-top)); left: max(12px, env(safe-area-inset-left)); }
+            .boton-salir { top: max(12px, env(safe-area-inset-top)); }
+            .elemento { max-width: none; max-height: none; transition: none; }
+        }
+        /* Compactar tarjetas interiores sin reducir el tamaño del texto. */
+        .escena:not(#inicio) .contenido { padding-block: 20px; }
+        .escena:not(#inicio) .etiqueta { margin-bottom: 10px; }
+        .escena:not(#inicio) .texto { margin-top: 12px; line-height: 1.42; }
+        .escena:not(#inicio) .iconos-magicos { margin-bottom: 9px; gap: 16px; }
+        .escena:not(#inicio) .contador, .escena:not(#inicio) .datos { margin-top: 14px; gap: 8px; }
+        .escena:not(#inicio) .tiempo, .escena:not(#inicio) .dato { padding-block: 11px; }
+        .escena:not(#inicio) .contenido .botones { margin-top: 15px; }
+        .escena:not(#inicio) .firma { margin-top: 12px; }
     </style>
 </head>
-
 <body>
     <audio id="musica" src="assets/audio/audio01.mp3" loop preload="auto"></audio>
-
     <a class="boton-salir" id="boton-salir" href="../../../#fiestas-infantiles">
         Salir
     </a>
-
     <button class="control-musica" id="boton-musica" type="button" aria-label="Reproducir o pausar música"
         title="Reproducir o pausar música">
         🎵
     </button>
-
     <div id="confeti"></div>
-
     <div id="intro">
         <div class="intro-caja">
             <img class="intro-icono" src="assets/elementos/elemento01.webp" alt="">
-
             <h1 id="titulo-entrada"></h1>
-
             <p>
                 Una celebración mágica está a punto de comenzar.
                 Toca la estrella para abrir la invitación.
             </p>
-
             <div class="botones">
                 <button class="boton" id="abrir-invitacion" type="button">
                     ⭐ Entrar al reino
@@ -860,195 +764,148 @@
             </div>
         </div>
     </div>
-
     <main id="invitacion">
         <section class="escena" id="inicio" data-escena="inicio">
             <img class="fondo-escena" src="assets/fondos/fondo01.webp" alt="Reino fantástico entre las estrellas"
                 decoding="async" fetchpriority="high">
-
             <div class="velo"></div>
             <div class="capa-elementos"></div>
-
             <div class="contenido revelar">
                 <div class="etiqueta">
                     Una aventura celestial
                 </div>
-
                 <h1>
                     <span id="nombre-festejada"></span>
                     <span id="edad-festejada"></span>
                 </h1>
-
                 <p class="texto">
                     Acompáñame a celebrar un día lleno de estrellas,
                     magia y nuevas aventuras.
                 </p>
-
             </div>
-
             <div class="botones navegacion-escena">
                 <a class="boton" href="#cuenta">
                     Comenzar ↓
                 </a>
             </div>
         </section>
-
         <section class="escena" id="cuenta" data-escena="cuenta">
             <img class="fondo-escena" src="assets/fondos/fondo08.webp" alt="" loading="lazy" decoding="async">
-
             <div class="velo"></div>
             <div class="capa-elementos"></div>
-
             <div class="contenido revelar">
                 <div class="etiqueta">
                     Cuenta regresiva
                 </div>
-
                 <h2>El portal está por abrirse</h2>
-
                 <p class="texto">
                     Cada día falta menos para compartir esta aventura contigo.
                 </p>
-
                 <div class="contador">
                     <div class="tiempo">
                         <span class="numero" id="dias">00</span>
                         <span class="unidad">Días</span>
                     </div>
-
                     <div class="tiempo">
                         <span class="numero" id="horas">00</span>
                         <span class="unidad">Horas</span>
                     </div>
-
                     <div class="tiempo">
                         <span class="numero" id="minutos">00</span>
                         <span class="unidad">Minutos</span>
                     </div>
-
                     <div class="tiempo">
                         <span class="numero" id="segundos">00</span>
                         <span class="unidad">Segundos</span>
                     </div>
                 </div>
-
             </div>
-
             <div class="botones navegacion-escena">
                 <a class="boton" href="#mision">
                     Continuar ↓
                 </a>
             </div>
         </section>
-
         <section class="escena" id="mision" data-escena="mision">
             <img class="fondo-escena" src="assets/fondos/fondo04.webp" alt="" loading="lazy" decoding="async">
-
             <div class="velo"></div>
             <div class="capa-elementos"></div>
-
             <div class="contenido revelar">
                 <div class="etiqueta">
                     Misión especial
                 </div>
-
                 <div class="iconos-magicos">
                     <span>⭐</span>
                 </div>
-
                 <h2>Enciende tu propia estrella</h2>
-
                 <p class="texto">
                     Ven preparado para jugar, descubrir secretos del reino
                     y crear recuerdos que brillarán para siempre.
                 </p>
-
             </div>
-
             <div class="botones navegacion-escena">
                 <a class="boton" href="#atuendo">
                     Continuar ↓
                 </a>
             </div>
         </section>
-
         <section class="escena" id="atuendo" data-escena="atuendo">
             <img class="fondo-escena" src="assets/fondos/fondo06.webp" alt="" loading="lazy" decoding="async">
-
             <div class="velo"></div>
             <div class="capa-elementos"></div>
-
             <div class="contenido revelar">
                 <div class="etiqueta">
                     Detalle temático
                 </div>
-
                 <div class="iconos-magicos">
                     <span>💜</span>
                     <span>💙</span>
                 </div>
-
                 <h2>Trae un toque de magia</h2>
-
                 <p class="texto">
                     Si quieres, acompaña tu atuendo con algún detalle azul,
                     violeta, dorado o brillante.
                 </p>
-
             </div>
-
             <div class="botones navegacion-escena">
                 <a class="boton" href="#regalo">
                     Continuar ↓
                 </a>
             </div>
         </section>
-
         <section class="escena" id="regalo" data-escena="regalo">
             <img class="fondo-escena" src="assets/fondos/fondo05.webp" alt="" loading="lazy" decoding="async">
-
             <div class="velo"></div>
             <div class="capa-elementos"></div>
-
             <div class="contenido revelar">
                 <div class="etiqueta">
                     Regalos
                 </div>
-
                 <div class="iconos-magicos">
                     <span>🎁</span>
                     <span>✉️</span>
                 </div>
-
                 <h2>Tu presencia es el mejor regalo</h2>
-
                 <p class="texto">
                     Si deseas llevar un detalle para <span id="nombre-regalos"></span>,
                     será recibido con muchísimo cariño.
                 </p>
-
             </div>
-
             <div class="botones navegacion-escena">
                 <a class="boton" href="#detalles">
                     Continuar ↓
                 </a>
             </div>
         </section>
-
         <section class="escena" id="detalles" data-escena="detalles">
             <img class="fondo-escena" src="assets/fondos/fondo03.webp" alt="" loading="lazy" decoding="async">
-
             <div class="velo"></div>
             <div class="capa-elementos"></div>
-
             <div class="contenido revelar">
                 <div class="etiqueta">
                     Información del evento
                 </div>
-
                 <h2>La celebración</h2>
-
                 <div class="datos">
                     <div class="dato">
                         <span class="dato-icono">📅</span>
@@ -1057,7 +914,6 @@
                             <span id="fecha-tarjeta"></span>
                         </span>
                     </div>
-
                     <div class="dato">
                         <span class="dato-icono">🕓</span>
                         <span class="dato-titulo">Hora</span>
@@ -1065,7 +921,6 @@
                             <span id="hora-tarjeta"></span>
                         </span>
                     </div>
-
                     <div class="dato">
                         <span class="dato-icono">🏰</span>
                         <span class="dato-titulo">Lugar</span>
@@ -1073,7 +928,6 @@
                             <span id="lugar-tarjeta"></span>
                         </span>
                     </div>
-
                     <div class="dato">
                         <span class="dato-icono">📍</span>
                         <span class="dato-titulo">Dirección</span>
@@ -1082,58 +936,44 @@
                         </span>
                     </div>
                 </div>
-
             </div>
-
             <div class="botones navegacion-escena">
                 <a class="boton" href="#final">
                     Continuar ↓
                 </a>
             </div>
         </section>
-
         <section class="escena" id="final" data-escena="final">
             <img class="fondo-escena" src="assets/fondos/fondo07.webp" alt="" loading="lazy" decoding="async">
-
             <div class="velo"></div>
             <div class="capa-elementos"></div>
-
             <div class="contenido revelar">
                 <div class="etiqueta">
                     Nos vemos pronto
                 </div>
-
                 <h2>¡Tu estrella ya forma parte del reino!</h2>
-
                 <p class="texto">
                     Ven a celebrar conmigo y hagamos de este día
                     un recuerdo inolvidable.
                 </p>
-
                 <div class="firma">
                     Con cariño, <span id="nombre-firma"></span> ⭐
                 </div>
-
                 <div class="botones"><a class="boton boton-secundario" id="ver-ubicacion" target="_blank"
                         rel="noopener noreferrer">📍 Ver ubicación</a></div>
             </div>
-
             <div class="botones navegacion-escena"><a class="boton" href="#inicio">↑ Volver al inicio</a></div>
         </section>
     </main>
-
     <aside class="editor" id="editor" aria-label="Editor de la plantilla">
         <h2>Editor temático</h2>
-
         <p class="editor-aviso">
             Los archivos seleccionados sirven para previsualizar.
             Exporta la configuración y copia después los recursos
             a su carpeta.
         </p>
-
         <div class="campo">
             <label for="editor-escena">Pantalla</label>
-
             <select id="editor-escena">
                 <option value="inicio">Inicio</option>
                 <option value="cuenta">Cuenta regresiva</option>
@@ -1144,66 +984,49 @@
                 <option value="final">Final</option>
             </select>
         </div>
-
         <div class="campo">
             <label for="cargar-fondo">
                 Cargar fondo
             </label>
-
             <input id="cargar-fondo" type="file" accept="image/png,image/jpeg,image/webp">
         </div>
-
         <div class="campo">
             <label for="cargar-elemento">
                 Agregar personaje o elemento transparente
             </label>
-
             <input id="cargar-elemento" type="file" accept="image/png,image/webp">
         </div>
-
         <div class="campo">
             <label for="selector-elemento">
                 Elemento seleccionado
             </label>
-
             <select id="selector-elemento">
                 <option value="">Ninguno</option>
             </select>
         </div>
-
         <hr class="editor-separador">
-
         <div class="fila">
             <div class="campo">
                 <label for="pos-x">Posición X</label>
-
                 <input id="pos-x" type="range" min="0" max="100" value="50">
             </div>
-
             <div class="campo">
                 <label for="pos-y">Posición Y</label>
-
                 <input id="pos-y" type="range" min="0" max="100" value="50">
             </div>
         </div>
-
         <div class="fila">
             <div class="campo">
                 <label for="tamano">Tamaño</label>
-
                 <input id="tamano" type="range" min="5" max="120" value="35">
             </div>
-
             <div class="campo">
                 <label for="capa">Capa</label>
-
                 <input id="capa" type="number" min="1" max="20" value="3">
             </div>
         </div>
-
         <div class="campo">
             <label for="animacion">Animación</label>
-
             <select id="animacion">
                 <option value="ninguna">Ninguna</option>
                 <option value="flotar">Flotar</option>
@@ -1212,33 +1035,26 @@
                 <option value="deriva">Deriva</option>
             </select>
         </div>
-
         <div class="campo">
             <label>
                 <input id="voltear" type="checkbox">
                 Voltear horizontalmente
             </label>
         </div>
-
         <button class="editor-boton peligro" id="eliminar-elemento" type="button">
             Eliminar elemento
         </button>
-
         <hr class="editor-separador">
-
         <div class="campo">
             <label for="cargar-audio">
                 Cargar música para la prueba
             </label>
-
             <input id="cargar-audio" type="file" accept="audio/*">
         </div>
-
         <button class="editor-boton primario" id="exportar" type="button">
             Exportar configuración
         </button>
     </aside>
-
   <section id="evento-finalizado" hidden aria-labelledby="cierre-titulo" tabindex="-1">
     <div class="cierre-contenido">
       <div class="cierre-adorno" aria-hidden="true">✦ ★ ✦</div>
@@ -1269,7 +1085,6 @@
             mapa: "",
             salida: "../../../index.html#fiestas-infantiles"
         };
-
         // POSICIONES EDITABLES DE PERSONAJES Y ELEMENTOS
         // X: 0 = izquierda, 100 = derecha. Y: 0 = arriba, 100 = abajo.
         // tamano: ancho como porcentaje de la pantalla. Web y móvil son independientes.
@@ -1349,11 +1164,9 @@
                 }
             }
         };
-
         // RECURSOS Y EFECTOS: los valores de posición se leen del bloque anterior.
         const configuracion = {
             fondos: {},
-
             elementos: [
                 {
                     id: "personaje-inicio",
@@ -1461,13 +1274,10 @@
                 },
             ]
         };
-
         const $ = selector => document.querySelector(selector);
-
         const escenas = [
             ...document.querySelectorAll(".escena")
         ];
-
         // Todos los textos personales se llenan desde DATOS.
         $("#titulo-entrada").textContent = DATOS.titulo;
         document.title = DATOS.titulo + " | Fiesta Temática";
@@ -1486,35 +1296,129 @@
         const ubicacion = $("#ver-ubicacion");
         if (DATOS.mapa.trim()) ubicacion.href = DATOS.mapa.trim();
         else { ubicacion.removeAttribute("href"); ubicacion.setAttribute("aria-disabled", "true"); ubicacion.tabIndex = -1; }
-
         const editorActivo =
             new URLSearchParams(location.search).get("editor") === "1";
-
         let seleccionado = null;
         let contadorElementos = 0;
-
+    const limitesElementos = new WeakMap();
+    function obtenerLimitesVisibles(imagen) {
+      const guardado = limitesElementos.get(imagen);
+      if (guardado && guardado.src === imagen.currentSrc) return guardado;
+      const w = imagen.naturalWidth, h = imagen.naturalHeight;
+      let limites = { src: imagen.currentSrc, x: 0, y: 0, ancho: w, alto: h };
+      try {
+        const lienzo = document.createElement('canvas');
+        lienzo.width = w; lienzo.height = h;
+        const ctx = lienzo.getContext('2d', { willReadFrequently: true });
+        ctx.drawImage(imagen, 0, 0);
+        const pixeles = ctx.getImageData(0, 0, w, h).data;
+        let izquierda = w, derecha = -1, arriba = h, abajo = -1;
+        for (let y = 0; y < h; y++) {
+          for (let x = 0; x < w; x++) {
+            if (pixeles[(y * w + x) * 4 + 3] === 0) continue;
+            izquierda = Math.min(izquierda, x); derecha = Math.max(derecha, x);
+            arriba = Math.min(arriba, y); abajo = Math.max(abajo, y);
+          }
+        }
+        if (derecha >= izquierda && abajo >= arriba) {
+          limites = { src: imagen.currentSrc, x: izquierda, y: arriba,
+            ancho: derecha - izquierda + 1, alto: abajo - arriba + 1 };
+        }
+      } catch {
+        // Si el navegador bloquea la lectura, conservar el encaje del archivo completo.
+      }
+      limitesElementos.set(imagen, limites);
+      return limites;
+    }
+    function alinearTarjetas() {
+        const primera = escenas[0]?.querySelector('.contenido');
+        if (!primera) return;
+        if (editorActivo) {
+            escenas.forEach(escena => escena.querySelector('.contenido').style.removeProperty('top'));
+            return;
+        }
+        const limite = primera.offsetTop + primera.offsetHeight;
+        escenas.slice(1).forEach(escena => {
+            const tarjeta = escena.querySelector('.contenido');
+            const desplazamientoAnterior = parseFloat(tarjeta.style.top) || 0;
+            const bordeNatural = tarjeta.offsetTop - desplazamientoAnterior + tarjeta.offsetHeight;
+            // Solo subir las que rebasan el borde inferior de la tarjeta 01.
+            const desplazamiento = Math.min(0, limite - bordeNatural);
+            if (Math.abs(desplazamientoAnterior-desplazamiento) > .5) tarjeta.style.top = desplazamiento+'px';
+        });
+    }
+    function ajustarAssets() {
+        alinearTarjetas();
+        escenas.forEach(escena => {
+            const tarjeta = escena.querySelector('.contenido');
+            if (!tarjeta || !escena.clientWidth) return;
+            const w = escena.clientWidth, h = escena.clientHeight;
+            // offsetTop/offsetHeight ignoran translate y scale de la entrada de la tarjeta.
+            const top = tarjeta.offsetTop, bottom = top + tarjeta.offsetHeight;
+            const sr = escena.getBoundingClientRect();
+            const marco = document.querySelector('#invitacion').getBoundingClientRect();
+            const boton = escena.querySelector('.navegacion-escena').getBoundingClientRect();
+            const controles = [...document.querySelectorAll('.boton-salir, .control-musica')].map(el => el.getBoundingClientRect());
+            escena.querySelectorAll('.elemento').forEach(imagen => {
+                if (editorActivo || !matchMedia('(max-width:560px)').matches) {
+                    ['left','top','width','height'].forEach(p => imagen.style.removeProperty(p)); return;
+                }
+                if (!imagen.naturalWidth) return;
+                const v = obtenerLimitesVisibles(imagen);
+                const datos = configuracion.elementos.find(d => d.id === imagen.dataset.id);
+                if (!datos) return;
+                const abajo = datos.yMovil >= 50;
+                const izq = datos.xMovil < 50;
+                // Reservar flotación y una envolvente para la pequeña rotación original.
+                const margen = 8, sep = 8, mov = 14, giro = 1.12;
+                let z = {l:margen,r:w-margen,t:margen+mov,b:top-8};
+                if (abajo) {
+                    z.t = bottom+mov; z.b = h-margen;
+                    if (izq) z.r = boton.left-sr.left-sep;
+                    else z.l = boton.right-sr.left+sep;
+                    const encimaBoton = { l: izq ? margen : w/2+sep,
+                        r: izq ? w/2-sep : w-margen, t: bottom+mov,
+                        b: boton.top-sr.top-sep };
+                    const capacidad = a => Math.min(Math.max(0,a.r-a.l)/(v.ancho*giro),
+                        Math.max(0,a.b-a.t-mov)/(v.alto*giro));
+                    if (capacidad(encimaBoton)>capacidad(z)) z=encimaBoton;
+                } else {
+                    const central = {...z};
+                    controles.forEach(c => {
+                        if ((c.left+c.right)/2-marco.left < w/2) central.l = Math.max(central.l,c.right-marco.left+sep);
+                        else central.r = Math.min(central.r,c.left-marco.left-sep);
+                        z.t = Math.max(z.t,c.bottom-marco.top+sep+mov);
+                    });
+                    const capacidad = a => Math.min(Math.max(0,a.r-a.l)/(v.ancho*giro),Math.max(0,a.b-a.t)/(v.alto*giro));
+                    if (capacidad(central)>capacidad(z)) z=central;
+                }
+                const k = Math.min(Math.max(0,z.r-z.l)/(v.ancho*giro),Math.max(0,z.b-z.t-mov)/(v.alto*giro));
+                const alto = v.alto*k, cx = (z.l+z.r)/2;
+                const cy = abajo ? z.t+alto*giro/2 : z.b-alto*giro/2;
+                const dx = (v.x+v.ancho/2-imagen.naturalWidth/2)*k*(datos.voltear?-1:1);
+                const dy = (v.y+v.alto/2-imagen.naturalHeight/2)*k;
+                imagen.style.width = imagen.naturalWidth*k+'px';
+                imagen.style.height = imagen.naturalHeight*k+'px';
+                imagen.style.left = cx-dx+'px'; imagen.style.top = cy-dy+'px';
+            });
+        });
+    }
         function crearElemento(datos) {
             const escena = document.querySelector(
                 `[data-escena="${datos.escena}"] .capa-elementos`
             );
-
             if (!escena) {
                 return;
             }
-
             const imagen = document.createElement("img");
-
             imagen.src = datos.archivo;
             imagen.alt = "";
-            imagen.loading = "lazy";
+            imagen.loading = "eager";
             imagen.decoding = "async";
-
             imagen.addEventListener("error", () => {
                 imagen.remove();
             });
-
             imagen.dataset.id = datos.id;
-
             imagen.className = `
                 elemento
                 ${datos.archivo.includes("personajes/")
@@ -1524,10 +1428,9 @@
                     ? `anim-${datos.animacion}`
                     : ""}
             `;
-
             aplicarEstilos(imagen, datos);
             escena.appendChild(imagen);
-
+            imagen.addEventListener("load", ajustarAssets);
             if (editorActivo) {
                 imagen.addEventListener(
                     "pointerdown",
@@ -1535,7 +1438,6 @@
                 );
             }
         }
-
         function aplicarEstilos(imagen, datos) {
             imagen.style.setProperty("--x", datos.x);
             imagen.style.setProperty("--y", datos.y);
@@ -1544,13 +1446,11 @@
             imagen.style.setProperty("--x-movil", datos.xMovil ?? datos.x);
             imagen.style.setProperty("--y-movil", datos.yMovil ?? datos.y);
             imagen.style.setProperty("--tamano-movil", datos.tamanoMovil ?? datos.tamano);
-
             imagen.style.setProperty(
                 "--voltear",
                 datos.voltear ? -1 : 1
             );
         }
-
         function cargarPosicion(datos) {
             const posicion = POSICIONES[datos.escena]?.[datos.id];
             if (!posicion) return;
@@ -1561,7 +1461,6 @@
             datos.yMovil = posicion.movil.y;
             datos.tamanoMovil = posicion.movil.tamano;
         }
-
         function guardarPosicion(datos) {
             if (!POSICIONES[datos.escena]) POSICIONES[datos.escena] = {};
             POSICIONES[datos.escena][datos.id] = {
@@ -1569,12 +1468,25 @@
                 movil: {x: datos.xMovil, y: datos.yMovil, tamano: datos.tamanoMovil}
             };
         }
-
+        // Personajes alternados abajo; adornos de tarjetas 3, 6 y 7 abajo en el lado opuesto.
+        escenas.forEach((escena, indice) => {
+            configuracion.elementos.filter(d => d.escena === escena.dataset.escena).forEach(d => {
+                const personaje = d.archivo.includes('personajes/');
+                const posicion = POSICIONES[d.escena][d.id];
+                ['web', 'movil'].forEach(modo => {
+                    posicion[modo].x = personaje ? (indice % 2 === 0 ? 14 : 86) : 50;
+                    posicion[modo].y = personaje ? 80 : 18;
+                    if (!personaje && [2, 5, 6].includes(indice)) {
+                        posicion[modo].x = indice === 5 ? 14 : 86;
+                        posicion[modo].y = 80;
+                    }
+                });
+            });
+        });
         configuracion.elementos.forEach(datos => {
             cargarPosicion(datos);
             crearElemento(datos);
         });
-
         const observador = new IntersectionObserver(
             entradas => {
                 entradas.forEach(entrada => {
@@ -1587,31 +1499,23 @@
                 threshold: .2
             }
         );
-
         document
             .querySelectorAll(".revelar")
             .forEach(elemento => observador.observe(elemento));
-
         const fechaEvento =
             new Date(DATOS.fecha);
-
         function actualizarContador() {
             const diferencia =
                 Math.max(0, fechaEvento - new Date());
-
             const valores = {
                 dias: Math.floor(diferencia / 86400000),
-
                 horas:
                     Math.floor(diferencia / 3600000) % 24,
-
                 minutos:
                     Math.floor(diferencia / 60000) % 60,
-
                 segundos:
                     Math.floor(diferencia / 1000) % 60
             };
-
             Object.entries(valores).forEach(
                 ([id, valor]) => {
                     document.getElementById(id).textContent =
@@ -1619,15 +1523,12 @@
                 }
             );
         }
-
         actualizarContador();
         setInterval(actualizarContador, 1000);
-
         const musica = $("#musica");
         const botonMusica = $("#boton-musica");
         const fondoEntrada = new Image();
         fondoEntrada.src = "assets/fondos/fondo01.webp";
-
         fondoEntrada.decode()
             .catch(() => { })
             .finally(() => {
@@ -1641,7 +1542,6 @@
         let intervaloCascada = null;
         let ultimaEscenaVisible = "";
         let ultimaCascada = 0;
-
         let anchoEscenas=0,altoEscenas=0,ajustePantalla;
         function estabilizarEscenas() {
             const alto=Math.round(window.visualViewport?.height || window.innerHeight);
@@ -1666,18 +1566,14 @@
             botonMusica.disabled = true;
             botonMusica.setAttribute("aria-disabled", "true");
             delete musica.dataset.reanudar;
-
             musica.pause();
             musica.currentTime = 0;
-
             if (intervaloCascada) {
                 clearInterval(intervaloCascada);
                 intervaloCascada = null;
             }
-
             $("#confeti").replaceChildren();
         });
-
         $("#abrir-invitacion").addEventListener(
             "click",
             () => {
@@ -1687,34 +1583,25 @@
                     left: 0,
                     behavior: "auto"
                 });
-
                 $("#invitacion").scrollTop=0;
                 estabilizarEscenas();
                 document.documentElement.scrollTop = 0;
                 document.body.scrollTop = 0;
-
                 document.body.classList.add("invitacion-abierta");
                 $("#intro").classList.add("oculto");
-
                 invitacionAbierta = true;
                 botonMusica.disabled = false;
                 botonMusica.setAttribute("aria-disabled", "false");
-
                 const primeraTarjeta =
                     document.querySelector("#inicio .revelar");
-
                 primeraTarjeta.classList.remove("visible");
                 void primeraTarjeta.offsetWidth;
-
                 requestAnimationFrame(() => {
                     primeraTarjeta.classList.add("visible");
                 });
-
                 lanzarConfeti();
                 lanzarCascadaMagica();
-
                 musica.play().catch(() => { });
-
                 /* Repite la cascada sin saturar el dispositivo. */
                 if (!intervaloCascada) {
                     intervaloCascada = setInterval(
@@ -1724,7 +1611,6 @@
                 }
             }
         );
-
         botonMusica.addEventListener(
             "click",
             () => {
@@ -1737,7 +1623,6 @@
                 }
             }
         );
-
         musica.addEventListener(
             "play",
             () => {
@@ -1750,14 +1635,12 @@
                 botonMusica.textContent = "⏸";
             }
         );
-
         musica.addEventListener(
             "pause",
             () => {
                 botonMusica.textContent = "🎵";
             }
         );
-
         function pausarPorOcultamiento() {
             if(invitacionAbierta && !musica.paused) musica.dataset.reanudar='1';
             if(!invitacionAbierta) delete musica.dataset.reanudar;
@@ -1782,48 +1665,35 @@
                 "#bca6ff",
                 "#ff8dc7"
             ];
-
             for (let indice = 0; indice < 40; indice++) {
                 const pieza = document.createElement("span");
-
                 pieza.className = "confeti";
                 pieza.style.left =
                     Math.random() * 100 + "%";
-
                 pieza.style.background =
                     colores[indice % colores.length];
-
                 pieza.style.animationDuration =
                     2.5 + Math.random() * 2.5 + "s";
-
                 pieza.style.animationDelay =
                     Math.random() * .7 + "s";
-
                 $("#confeti").appendChild(pieza);
-
                 setTimeout(
                     () => pieza.remove(),
                     6000
                 );
             }
         }
-
         function lanzarCascadaMagica() {
             if (eventoCerrado || !invitacionAbierta || document.hidden) {
                 return;
             }
-
             const momentoActual = Date.now();
-
             /* Evita que el intervalo y el cambio de pantalla se superpongan. */
             if (momentoActual - ultimaCascada < 4200) {
                 return;
             }
-
             ultimaCascada = momentoActual;
-
             const contenedor = $("#confeti");
-
             const colores = [
                 "#ffd56a",
                 "#fff1b4",
@@ -1831,7 +1701,6 @@
                 "#bca6ff",
                 "#ff8dc7"
             ];
-
             const simbolos = [
                 "✦",
                 "✧",
@@ -1839,24 +1708,19 @@
                 "✶",
                 "•"
             ];
-
             for (let indice = 0; indice < 16; indice++) {
                 const particula =
                     document.createElement("span");
-
                 particula.className =
                     "particula-magica";
-
                 particula.textContent =
                     simbolos[
                     Math.floor(
                         Math.random() * simbolos.length
                     )
                     ];
-
                 particula.style.left =
                     Math.random() * 100 + "%";
-
                 particula.style.setProperty(
                     "--color-particula",
                     colores[
@@ -1865,34 +1729,27 @@
                     )
                     ]
                 );
-
                 particula.style.setProperty(
                     "--tamano-particula",
                     7 + Math.random() * 9 + "px"
                 );
-
                 particula.style.setProperty(
                     "--duracion-particula",
                     5 + Math.random() * 1.7 + "s"
                 );
-
                 particula.style.setProperty(
                     "--desvio-particula",
                     -25 + Math.random() * 50 + "px"
                 );
-
                 particula.style.animationDelay =
                     Math.random() * .8 + "s";
-
                 contenedor.appendChild(particula);
-
                 setTimeout(
                     () => particula.remove(),
                     7800
                 );
             }
         }
-
         const observadorDeEscenas =
             new IntersectionObserver(
                 entradas => {
@@ -1901,7 +1758,6 @@
                             "escena-activa",
                             entrada.isIntersecting
                         );
-
                         if (
                             entrada.isIntersecting &&
                             invitacionAbierta &&
@@ -1909,7 +1765,6 @@
                         ) {
                             ultimaEscenaVisible =
                                 entrada.target.id;
-
                             lanzarCascadaMagica();
                         }
                     });
@@ -1918,22 +1773,17 @@
                     threshold: .65
                 }
             );
-
         escenas.forEach(escena => {
             observadorDeEscenas.observe(escena);
         });
-
         if (editorActivo) {
             iniciarEditor();
         }
-
         function iniciarEditor() {
             document.body.classList.add("editor-activo");
             $("#editor").classList.add("visible");
             $("#intro").classList.add("oculto");
-
             actualizarSelector();
-
             $("#editor-escena").addEventListener(
                 "change",
                 evento => {
@@ -1942,24 +1792,20 @@
                         .scrollIntoView();
                 }
             );
-
             $("#cargar-fondo").addEventListener(
                 "change",
                 cargarFondo
             );
-
             $("#cargar-elemento").addEventListener(
                 "change",
                 cargarElemento
             );
-
             $("#selector-elemento").addEventListener(
                 "change",
                 evento => {
                     seleccionar(evento.target.value);
                 }
             );
-
             [
                 "pos-x",
                 "pos-y",
@@ -1973,51 +1819,39 @@
                     aplicarControles
                 );
             });
-
             $("#eliminar-elemento").addEventListener(
                 "click",
                 eliminarSeleccionado
             );
-
             $("#exportar").addEventListener(
                 "click",
                 exportarConfiguracion
             );
-
             $("#cargar-audio").addEventListener(
                 "change",
                 cargarAudio
             );
         }
-
         function cargarFondo(evento) {
             const archivo = evento.target.files[0];
-
             if (!archivo) {
                 return;
             }
-
             const escena = $("#editor-escena").value;
-
             const imagen = document.querySelector(
                 `[data-escena="${escena}"] .fondo-escena`
             );
-
             imagen.src = URL.createObjectURL(archivo);
             configuracion.fondos[escena] = archivo.name;
         }
-
         function cargarElemento(evento) {
             const archivo = evento.target.files[0];
-
             if (!archivo) {
                 return;
             }
-
             const datos = {
                 id:
                     `elemento-${Date.now()}-${contadorElementos++}`,
-
                 escena: $("#editor-escena").value,
                 archivo: URL.createObjectURL(archivo),
                 nombreArchivo: archivo.name,
@@ -2031,17 +1865,14 @@
                 animacion: "flotar",
                 voltear: false
             };
-
             configuracion.elementos.push(datos);
             guardarPosicion(datos);
             crearElemento(datos);
             actualizarSelector();
             seleccionar(datos.id);
         }
-
         function actualizarSelector() {
             const selector = $("#selector-elemento");
-
             selector.innerHTML =
                 '<option value="">Ninguno</option>' +
                 configuracion.elementos
@@ -2049,7 +1880,6 @@
                         const nombre =
                             elemento.nombreArchivo ||
                             elemento.archivo.split("/").pop();
-
                         return `
                             <option value="${elemento.id}">
                                 ${elemento.escena} · ${nombre}
@@ -2058,29 +1888,23 @@
                     })
                     .join("");
         }
-
         function seleccionar(id) {
             document
                 .querySelectorAll(".elemento.seleccionado")
                 .forEach(elemento => {
                     elemento.classList.remove("seleccionado");
                 });
-
             seleccionado =
                 configuracion.elementos.find(
                     elemento => elemento.id === id
                 ) || null;
-
             if (!seleccionado) {
                 return;
             }
-
             const imagen = document.querySelector(
                 `[data-id="${id}"]`
             );
-
             imagen?.classList.add("seleccionado");
-
             $("#selector-elemento").value = id;
             const movil = matchMedia("(max-width: 560px) and (pointer: coarse)").matches;
             $("#pos-x").value = movil ? (seleccionado.xMovil ?? seleccionado.x) : seleccionado.x;
@@ -2090,12 +1914,10 @@
             $("#animacion").value = seleccionado.animacion;
             $("#voltear").checked = seleccionado.voltear;
         }
-
         function aplicarControles() {
             if (!seleccionado) {
                 return;
             }
-
             const movil = matchMedia("(max-width: 560px) and (pointer: coarse)").matches;
             seleccionado[movil ? "xMovil" : "x"] = +$("#pos-x").value;
             seleccionado[movil ? "yMovil" : "y"] = +$("#pos-y").value;
@@ -2103,11 +1925,9 @@
             seleccionado.z = +$("#capa").value;
             seleccionado.voltear = $("#voltear").checked;
             seleccionado.animacion = $("#animacion").value;
-
             const imagen = document.querySelector(
                 `[data-id="${seleccionado.id}"]`
             );
-
             imagen.className = `
                 elemento
                 ${seleccionado.archivo.includes("personajes/")
@@ -2118,23 +1938,17 @@
                     : ""}
                 seleccionado
             `;
-
             guardarPosicion(seleccionado);
             aplicarEstilos(imagen, seleccionado);
         }
-
         function iniciarArrastre(evento) {
             evento.preventDefault();
-
             seleccionar(evento.currentTarget.dataset.id);
-
             const escena =
                 evento.currentTarget.closest(".escena");
-
             const mover = movimiento => {
                 const limites =
                     escena.getBoundingClientRect();
-
                 const movil = matchMedia("(max-width: 560px) and (pointer: coarse)").matches;
                 seleccionado[movil ? "xMovil" : "x"] = Math.max(
                     0,
@@ -2146,7 +1960,6 @@
                         ) * 100
                     )
                 );
-
                 seleccionado[movil ? "yMovil" : "y"] = Math.max(
                     0,
                     Math.min(
@@ -2157,84 +1970,67 @@
                         ) * 100
                     )
                 );
-
                 $("#pos-x").value = movil ? seleccionado.xMovil : seleccionado.x;
                 $("#pos-y").value = movil ? seleccionado.yMovil : seleccionado.y;
-
                 guardarPosicion(seleccionado);
                 aplicarEstilos(
                     evento.currentTarget,
                     seleccionado
                 );
             };
-
             const soltar = () => {
                 window.removeEventListener(
                     "pointermove",
                     mover
                 );
-
                 window.removeEventListener(
                     "pointerup",
                     soltar
                 );
             };
-
             window.addEventListener(
                 "pointermove",
                 mover
             );
-
             window.addEventListener(
                 "pointerup",
                 soltar
             );
         }
-
         function eliminarSeleccionado() {
             if (!seleccionado) {
                 return;
             }
-
             document
                 .querySelector(
                     `[data-id="${seleccionado.id}"]`
                 )
                 ?.remove();
-
             configuracion.elementos =
                 configuracion.elementos.filter(
                     elemento =>
                         elemento.id !== seleccionado.id
                 );
-
             delete POSICIONES[seleccionado.escena]?.[seleccionado.id];
             seleccionado = null;
             actualizarSelector();
         }
-
         function cargarAudio(evento) {
             const archivo = evento.target.files[0];
-
             if (!archivo) {
                 return;
             }
-
             musica.src = URL.createObjectURL(archivo);
             musica.dataset.archivo = archivo.name;
-
             botonMusica.disabled = false;
             botonMusica.title =
                 "Reproducir o pausar música";
         }
-
         function exportarConfiguracion() {
             const configuracionLimpia = {
                 fondos: configuracion.fondos,
-
                 audio:
                     musica.dataset.archivo || "",
-
                 elementos:
                     configuracion.elementos.map(
                         ({
@@ -2254,10 +2050,8 @@
                         }) => ({
                             id,
                             escena,
-
                             archivo:
                                 nombreArchivo || archivo,
-
                             x: +x.toFixed(2),
                             y: +y.toFixed(2),
                             tamano: +tamano,
@@ -2270,7 +2064,6 @@
                         })
                     )
             };
-
             const archivo = new Blob(
                 [
                     JSON.stringify(
@@ -2283,21 +2076,15 @@
                     type: "application/json"
                 }
             );
-
             const enlace =
                 document.createElement("a");
-
             enlace.href =
                 URL.createObjectURL(archivo);
-
             enlace.download =
                 "configuracion-fiesta-tematica.json";
-
             enlace.click();
-
             URL.revokeObjectURL(enlace.href);
         }
-
         document
             .querySelectorAll(
                 '.boton[href^="#"]'
@@ -2306,23 +2093,18 @@
                 enlace.addEventListener("click", evento => {
                     const destinoId =
                         enlace.getAttribute("href");
-
                     if (
                         !destinoId ||
                         destinoId === "#"
                     ) {
                         return;
                     }
-
                     const destino =
                         document.querySelector(destinoId);
-
                     if (!destino) {
                         return;
                     }
-
                     evento.preventDefault();
-
                     if (!editorActivo && matchMedia('(max-width: 560px)').matches) {
                         const contenedor = $('#invitacion');
                         contenedor.scrollTo({
@@ -2332,7 +2114,6 @@
                     } else {
                         destino.scrollIntoView({ behavior: "smooth", block: "start" });
                     }
-
                     history.replaceState(
                         null,
                         "",
@@ -2340,7 +2121,6 @@
                     );
                 });
             });
-
     // El cierre comienza a medianoche del día siguiente, independientemente del navegador.
     function calcularFechaCierre() {
       const partes = /^(\d{4})-(\d{2})-(\d{2})T/.exec(DATOS.fecha);
@@ -2378,7 +2158,10 @@
     document.addEventListener('visibilitychange', programarCierre);
     window.addEventListener('pageshow', programarCierre);
     programarCierre();
+        const observadorAssets = new ResizeObserver(ajustarAssets);
+        escenas.forEach(escena => { observadorAssets.observe(escena); observadorAssets.observe(escena.querySelector('.contenido')); });
+        document.fonts.ready.then(ajustarAssets);
+        ajustarAssets();
     </script>
 </body>
-
 </html>
