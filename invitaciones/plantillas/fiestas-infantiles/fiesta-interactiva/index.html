@@ -817,6 +817,18 @@
         .cierre-contenido h1 { font-size: clamp(30px, 6vw, 42px); line-height: 1.15; color: var(--azul); margin-bottom: 22px; }
         .cierre-contenido h2 { font-size: 23px; line-height: 1.4; color: var(--naranja); }
         .cierre-contenido p { font-size: 16px; line-height: 1.7; margin-top: 20px; }
+        .musica { top: max(15px, env(safe-area-inset-top)); left: max(15px, env(safe-area-inset-left)); right: auto; bottom: auto; }
+        #volver-inicio { min-height: 46px; padding: 7px 15px; font-size: .85rem; line-height: 1.15; text-align: center; }
+        @media(max-width:600px) { .asset { max-width: none; max-height: none; } }
+        /* Compactar la tarjeta de datos conservando textos, emojis y colores. */
+        #ubicacion .tarjeta-juego { padding: 16px 17px; }
+        #ubicacion .insignia-nivel { margin-bottom: 9px; padding: 6px 11px; letter-spacing: .08em; }
+        #ubicacion h2 { font-size: clamp(1.75rem, 7.5vw, 2.8rem); line-height: 1.05; }
+        #ubicacion .datos { margin-top: 12px; gap: 7px; }
+        #ubicacion .dato { padding: 8px 7px; border-top-width: 4px; }
+        #ubicacion .dato .dato-icono { display: inline-block; margin: 0 5px 0 0; font-size: 1.15rem; line-height: 1.1; vertical-align: middle; }
+        #ubicacion .dato strong { display: inline-block; font-size: .68rem; line-height: 1.1; letter-spacing: .04em; vertical-align: middle; }
+        #ubicacion .dato span:last-child { margin-top: 5px; font-size: .84rem; line-height: 1.22; overflow-wrap: anywhere; }
     </style>
 </head>
 <body>
@@ -871,7 +883,7 @@
                     </div>
                 </div>
             </div>
-            <button class="boton-juego navegacion-escena siguiente" type="button">Siguiente nivel →</button>
+            <button class="boton-juego navegacion-escena siguiente" type="button">Avanzar →</button>
         </section>
         <section class="escena" id="ubicacion">
             <img class="fondo" src="assets/fondos/fondo03.webp" alt="">
@@ -883,7 +895,7 @@
             </div>
             <div class="tarjeta-juego">
                 <span class="insignia-nivel">Nivel 02 · La cita</span>
-                <h2>¿Dónde será la diversión?</h2>
+                <h2>¿Dónde será<br>la diversión?</h2>
                 <div class="datos">
                     <div class="dato"><span class="dato-icono">📅</span><strong>Fecha</strong><span data-fecha>Sábado 24
                             de octubre</span></div>
@@ -895,7 +907,7 @@
                             data-ciudad>Cadereyta, Nuevo León</span></div>
                 </div>
             </div>
-            <button class="boton-juego navegacion-escena siguiente" type="button">Siguiente zona →</button>
+            <button class="boton-juego navegacion-escena siguiente" type="button">Avanzar →</button>
         </section>
         <section class="escena" id="mision">
             <img class="fondo" src="assets/fondos/fondo04.webp" alt="">
@@ -908,15 +920,13 @@
             <div class="tarjeta-juego">
                 <span class="insignia-nivel">Nivel 03 · Zona interactiva</span>
                 <h2>Tenemos una misión: divertirnos</h2>
-                <p class="texto">Ven a compartir con <span data-nombre>Leo</span> una tarde llena de movimiento y risas.
-                </p>
                 <ul class="lista-juegos">
                     <li>Brincar muy alto</li>
                     <li>Explorar túneles y obstáculos</li>
                     <li>Lanzarnos por los toboganes</li>
                 </ul>
             </div>
-            <button class="boton-juego navegacion-escena siguiente" type="button">Seguir jugando →</button>
+            <button class="boton-juego navegacion-escena siguiente" type="button">Avanzar →</button>
         </section>
         <section class="escena" id="atuendo">
             <img class="fondo" src="assets/fondos/fondo05.webp" alt="">
@@ -945,7 +955,7 @@
                     </li>
                 </ul>
             </div>
-            <button class="boton-juego navegacion-escena siguiente" type="button">Vayamos a comer →</button>
+            <button class="boton-juego navegacion-escena siguiente" type="button">Avanzar →</button>
         </section>
         <section class="escena" id="regalo">
             <img class="fondo" src="assets/fondos/fondo06.webp" alt="">
@@ -963,7 +973,7 @@
                 <div class="separador-color">★</div>
                 <p class="nombre">¡Todavía queda más diversión!</p>
             </div>
-            <button class="boton-juego navegacion-escena siguiente" type="button">Llegar al final →</button>
+            <button class="boton-juego navegacion-escena siguiente" type="button">Avanzar →</button>
         </section>
         <section class="escena" id="final">
             <img class="fondo" src="assets/fondos/fondo07.webp" alt="">
@@ -986,7 +996,7 @@
                     Ver ubicación →
                 </a>
             </div>
-            <button class="boton-juego navegacion-escena" id="volver-inicio" type="button">← Volver al inicio</button>
+            <button class="boton-juego navegacion-escena" id="volver-inicio" type="button"><span>← Volver<br>al inicio</span></button>
         </section>
     </main>
     <section id="evento-finalizado" hidden aria-labelledby="cierre-titulo" tabindex="-1">
@@ -1226,6 +1236,17 @@
         const $ = (selector, contexto = document) => contexto.querySelector(selector);
         const $$ = (selector, contexto = document) => [...contexto.querySelectorAll(selector)];
         const escenas = $$(".escena");
+        // Mismo orden de la referencia, conservando los archivos de esta plantilla.
+        escenas.forEach((escena, indice) => {
+            escena.querySelectorAll('.asset[data-asset]').forEach(imagen => {
+                const datos = POSICIONES[escena.id][imagen.dataset.asset];
+                const personaje = imagen.classList.contains('personaje');
+                ['web','movil'].forEach(modo => {
+                    datos[modo].x = (personaje ? (indice % 2 === 0 ? 86 : 14) : 50) + '%';
+                    datos[modo].y = (personaje ? 80 : 18) + '%';
+                });
+            });
+        });
         escenas.forEach(escena => {
             escena.querySelectorAll(".asset[data-asset]").forEach(imagen => {
                 const datos = POSICIONES[escena.id][imagen.dataset.asset];
@@ -1239,6 +1260,135 @@
                 imagen.style.setProperty("--voltear", datos.voltear ? -1 : 1);
             });
         });
+    const limitesElementos = new WeakMap();
+    function obtenerLimitesVisibles(imagen) {
+      const guardado = limitesElementos.get(imagen);
+      if (guardado && guardado.src === imagen.currentSrc) return guardado;
+      const w = imagen.naturalWidth, h = imagen.naturalHeight;
+      let limites = { src: imagen.currentSrc, x: 0, y: 0, ancho: w, alto: h };
+      try {
+        const lienzo = document.createElement('canvas');
+        lienzo.width = w; lienzo.height = h;
+        const ctx = lienzo.getContext('2d', { willReadFrequently: true });
+        ctx.drawImage(imagen, 0, 0);
+        const pixeles = ctx.getImageData(0, 0, w, h).data;
+        let izquierda = w, derecha = -1, arriba = h, abajo = -1;
+        for (let y = 0; y < h; y++) {
+          for (let x = 0; x < w; x++) {
+            if (pixeles[(y * w + x) * 4 + 3] === 0) continue;
+            izquierda = Math.min(izquierda, x); derecha = Math.max(derecha, x);
+            arriba = Math.min(arriba, y); abajo = Math.max(abajo, y);
+          }
+        }
+        if (derecha >= izquierda && abajo >= arriba) {
+          limites = { src: imagen.currentSrc, x: izquierda, y: arriba,
+            ancho: derecha - izquierda + 1, alto: abajo - arriba + 1 };
+        }
+      } catch {
+        // Si el navegador bloquea la lectura, conservar el encaje del archivo completo.
+      }
+      limitesElementos.set(imagen, limites);
+      return limites;
+    }
+    function alinearTarjetas() {
+        const primera = escenas[0]?.querySelector('.tarjeta-juego');
+        if (!primera) return;
+        const anteriorPrimera = parseFloat(primera.style.top) || 0;
+        const topNaturalPrimera = primera.offsetTop - anteriorPrimera;
+        const subida = Math.min(104, Math.max(56, escenas[0].clientHeight * .12));
+        const marco = document.querySelector('main').getBoundingClientRect();
+        const controles = [...document.querySelectorAll('.salir, .musica')];
+        const bordeControles = Math.max(64, ...controles.map(el => el.getBoundingClientRect().bottom - marco.top));
+        const topPrimera = Math.max(bordeControles + 16, topNaturalPrimera - subida);
+        const desplazamientoPrimera = Math.min(0, topPrimera - topNaturalPrimera);
+        if (Math.abs(anteriorPrimera - desplazamientoPrimera) > .5) primera.style.top = desplazamientoPrimera + 'px';
+        const limite = primera.offsetTop + primera.offsetHeight;
+        escenas.slice(1).forEach(escena => {
+            const tarjeta = escena.querySelector('.tarjeta-juego');
+            const anterior = parseFloat(tarjeta.style.top) || 0;
+            const topNatural = tarjeta.offsetTop - anterior;
+            const desplazamiento = Math.min(0, limite - tarjeta.offsetHeight - topNatural);
+            if (Math.abs(anterior - desplazamiento) > .5) tarjeta.style.top = desplazamiento + 'px';
+        });
+    }
+    function ajustarAssets() {
+        alinearTarjetas();
+        escenas.forEach(escena => {
+            const tarjeta = escena.querySelector('.tarjeta-juego');
+            if (!tarjeta || !escena.clientWidth) return;
+            const w = escena.clientWidth, h = escena.clientHeight;
+            // offsetTop/offsetHeight ignoran translate y scale de la entrada de la tarjeta.
+            const top = tarjeta.offsetTop, bottom = top + tarjeta.offsetHeight;
+            const sr = escena.getBoundingClientRect();
+            const marco = document.querySelector('main').getBoundingClientRect();
+            const boton = escena.querySelector('.navegacion-escena').getBoundingClientRect();
+            const controles = [...document.querySelectorAll('.salir, .musica')].map(el => el.getBoundingClientRect());
+            let tamanoPersonaje = Infinity;
+            [...escena.querySelectorAll('.asset')].sort((a,b) => Number(b.classList.contains('personaje')) - Number(a.classList.contains('personaje'))).forEach(imagen => {
+                if (!matchMedia('(max-width:600px)').matches) {
+                    ['left','top','width','height'].forEach(p => imagen.style.removeProperty(p)); return;
+                }
+                if (!imagen.naturalWidth) return;
+                const v = obtenerLimitesVisibles(imagen);
+                const posicion = POSICIONES[escena.id]?.[imagen.dataset.asset];
+                const datos = posicion ? {...posicion, xMovil:parseFloat(posicion.movil.x), yMovil:parseFloat(posicion.movil.y)} : null;
+                if (!datos) return;
+                const abajo = datos.yMovil >= 50;
+                const izq = datos.xMovil < 50;
+                // Reservar flotación y una envolvente para la pequeña rotación original.
+                const margen = 8, sep = 8, mov = 14, giro = 1.12;
+                let z = {l:margen,r:w-margen,t:margen+mov,b:top-8};
+                if (abajo) {
+                    z.t = bottom+mov; z.b = h-margen;
+                    if (izq) z.r = boton.left-sr.left-sep;
+                    else z.l = boton.right-sr.left+sep;
+                    const encimaBoton = { l: izq ? margen : w/2+sep,
+                        r: izq ? w/2-sep : w-margen, t: bottom+mov,
+                        b: boton.top-sr.top-sep };
+                    const capacidad = a => Math.min(Math.max(0,a.r-a.l)/(v.ancho*giro),
+                        Math.max(0,a.b-a.t-mov)/(v.alto*giro));
+                    if (capacidad(encimaBoton)>capacidad(z)) z=encimaBoton;
+                } else {
+                    const central = {...z};
+                    controles.forEach(c => {
+                        if ((c.left+c.right)/2-marco.left < w/2) central.l = Math.max(central.l,c.right-marco.left+sep);
+                        else central.r = Math.min(central.r,c.left-marco.left-sep);
+                        z.t = Math.max(z.t,c.bottom-marco.top+sep+mov);
+                    });
+                    // Corredor simétrico para centrar el dibujo visible en la pantalla.
+                    const semiancho = Math.max(0, Math.min(w/2-central.l, central.r-w/2));
+                    central.l = w/2-semiancho;
+                    central.r = w/2+semiancho;
+                    const capacidad = a => Math.min(Math.max(0,a.r-a.l)/(v.ancho*giro),Math.max(0,a.b-a.t-mov)/(v.alto*giro));
+                    if (capacidad(central)>capacidad(z)) z=central;
+                }
+                let k = Math.min(Math.max(0,z.r-z.l)/(v.ancho*giro),Math.max(0,z.b-z.t-mov)/(v.alto*giro));
+                if (abajo) tamanoPersonaje = Math.max(v.ancho,v.alto)*k;
+                else k = Math.min(k,tamanoPersonaje*.85/Math.max(v.ancho,v.alto));
+                const alto = v.alto*k, cx = (z.l+z.r)/2;
+                const cy = abajo ? z.t+alto*giro/2 : (z.t+z.b)/2;
+                const dx = (v.x+v.ancho/2-imagen.naturalWidth/2)*k*(datos.voltear?-1:1);
+                const dy = (v.y+v.alto/2-imagen.naturalHeight/2)*k;
+                imagen.style.width = imagen.naturalWidth*k+'px';
+                imagen.style.height = imagen.naturalHeight*k+'px';
+                imagen.style.left = cx-dx+'px'; imagen.style.top = cy-dy+'px';
+            });
+        });
+    }
+        escenas.forEach(escena => {
+            escena.querySelectorAll('.asset').forEach(imagen => {
+                imagen.loading = 'eager';
+                imagen.decoding = 'async';
+                imagen.addEventListener('load', ajustarAssets);
+            });
+        });
+        const observadorAssets = new ResizeObserver(ajustarAssets);
+        escenas.forEach(escena => {
+            observadorAssets.observe(escena);
+            observadorAssets.observe(escena.querySelector('.tarjeta-juego'));
+        });
+        document.fonts.ready.then(ajustarAssets);
+        ajustarAssets();
         $(".salir").href = CONFIG.salida;
         const mapa = $("#ver-ubicacion");
         if (CONFIG.mapa.trim()) {
