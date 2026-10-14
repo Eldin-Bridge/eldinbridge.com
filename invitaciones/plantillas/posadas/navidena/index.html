@@ -403,7 +403,7 @@
     }
     /* POSICIONES WEB: más X = derecha, más Y = abajo, --size = tamaño. */
     .scene:nth-child(1) .elemento {
-      --x: 85;
+      --x: 50;
       --y: 22;
       --size: 27
     }
@@ -424,7 +424,7 @@
     }
     .scene:nth-child(5) .elemento {
       --x: 86;
-      --y: 22;
+      --y: 80;
       --size: 27
     }
     .scene:nth-child(6) .elemento {
@@ -433,8 +433,8 @@
       --size: 25
     }
     .scene:nth-child(7) .elemento {
-      --x: 85;
-      --y: 78;
+      --x: 50;
+      --y: 18;
       --size: 26
     }
     .next {
@@ -502,7 +502,7 @@
     @media(max-width:560px) and (pointer:coarse) {
       /* POSICIONES MÓVIL: independientes de las de web. */
       .scene:nth-child(1) .elemento {
-        --x: 85;
+        --x: 50;
         --y: 21;
         --size: 26
       }
@@ -522,8 +522,8 @@
         --size: 30
       }
       .scene:nth-child(5) .elemento {
-        --x: 85;
-        --y: 19;
+        --x: 86;
+        --y: 80;
         --size: 27
       }
       .scene:nth-child(6) .elemento {
@@ -532,8 +532,8 @@
         --size: 25
       }
       .scene:nth-child(7) .elemento {
-        --x: 87;
-        --y: 78;
+        --x: 50;
+        --y: 18;
         --size: 26
       }
     }
@@ -556,6 +556,43 @@
     .cierre-contenido { color: var(--ink); }
     .cierre-contenido h1 { font-family: "Marcellus", serif; color: var(--gold); }
     .cierre-adorno { color: var(--gold); }
+    /* En móvil, --x y --y eligen la zona; el dibujo visible se encaja dentro de ella. */
+    @media(max-width:560px) {
+      .scene .elemento {
+        width:calc(var(--size) * var(--unidad-elemento, 1vw));
+        height:auto;
+        animation: flotar-suave 4.8s ease-in-out infinite;
+        transition:none;
+        max-width:none;
+        max-height:none;
+      }
+    }
+    @keyframes flotar-suave {
+      0%, 100% { translate: 0 0; }
+      50% { translate: 0 calc(-1 * var(--recorrido, 4px)); }
+    }
+    /* Selector de calendario: mismos colores y fuentes que las tarjetas. */
+    .acciones-calendario { margin-top: 24px; margin-bottom: 8px; }
+    #selector-calendarios {
+      width: min(92vw, 430px); max-height: 88dvh; padding: 0;
+      border: 3px solid var(--gold); border-radius: 8px;
+      background: var(--cream); color: var(--ink);
+      box-shadow: 0 18px 48px #102333b3;
+    }
+    #selector-calendarios::backdrop { background: #102333b3; }
+    .panel-calendarios { position: relative; padding: 34px 24px 24px; }
+    .panel-calendarios h2 { font: 400 1.5rem/1.2 "Libre Baskerville", Georgia, serif; color: var(--night); margin: 8px 0 16px; }
+    .panel-calendarios p { font-size: .9rem; line-height: 1.5; }
+    .panel-calendarios [data-calendario] {
+      display: block; width: 100%; margin-top: 12px; padding: 14px;
+      border: 1px solid var(--gold); border-radius: 4px; background: #f4e9d8;
+      color: var(--ink); text-align: left; font-weight: 700;
+    }
+    .panel-calendarios small { display: block; margin-top: 5px; font-size: .75rem; font-weight: 400; }
+    .panel-calendarios button:disabled { opacity: .6; cursor: default; }
+    #cerrar-calendarios { position: absolute; top: 5px; right: 8px; width: 44px; height: 44px;
+      border: 0; background: transparent; color: var(--night); font-size: 1.8rem; }
+    #selector-calendarios button:focus-visible { outline-color: var(--night); }
   </style>
 </head>
 <body>
@@ -612,6 +649,9 @@
               <div><b id="hours">00</b><small>Horas</small></div>
               <div><b id="minutes">00</b><small>Min</small></div>
               <div><b id="seconds">00</b><small>Seg</small></div>
+            </div>
+            <div class="actions acciones-calendario">
+              <button class="pill" id="agregar-calendario" type="button" aria-haspopup="dialog" aria-controls="selector-calendarios">Agregar al calendario</button>
             </div>
           </div>
         </article>
@@ -681,11 +721,26 @@
       <p id="cierre-mensaje"></p>
     </div>
   </section>
+  <dialog id="selector-calendarios" aria-labelledby="titulo-calendarios">
+    <div class="panel-calendarios">
+      <button type="button" id="cerrar-calendarios" aria-label="Cerrar calendarios">×</button>
+      <h2 id="titulo-calendarios">Agrega el evento a tu calendario</h2>
+      <p id="aviso-calendario" role="status"></p>
+      <button type="button" data-calendario="google">📅 Calendario Google</button>
+      <button type="button" data-calendario="outlook">📆 Outlook / Office 365 <small>Importar archivo de calendario</small></button>
+      <button type="button" data-calendario="apple">🍎 Calendario Apple <small>Importar archivo de calendario</small></button>
+    </div>
+  </dialog>
   <script>
     // DATOS EDITABLES: información de la posada navideña.
     // Deja mapa y telefonoWhatsApp vacíos mientras no tengas los enlaces reales;
     // los botones permanecerán visibles y desactivados.
     const DATOS = {
+      calendario: {
+        activo: false, // Demo: abre el selector, sin guardar eventos.
+        inicio: "", // Vacío: usa DATOS.fecha con el desfase horario de Nuevo León.
+        fin: "" // Completar con la hora final real antes de activar.
+      },
       // CIERRE: activar en la invitación real; false mantiene abierta la demo.
       cierre: {
         activo: false,
@@ -709,6 +764,102 @@
       salida: "../../../index.html#posadas"
     };
     const $ = s => document.querySelector(s);
+    const ANCLAJE_ELEMENTOS = { movimiento: 4, margenPantalla: 8, separacionBotones: 8, tamanoMinimo: 64 };
+    const limitesElementos = new WeakMap();
+    function obtenerLimitesVisibles(imagen) {
+      const guardado = limitesElementos.get(imagen);
+      if (guardado && guardado.src === imagen.currentSrc) return guardado;
+      const w = imagen.naturalWidth, h = imagen.naturalHeight;
+      let limites = { src: imagen.currentSrc, x: 0, y: 0, ancho: w, alto: h };
+      try {
+        const lienzo = document.createElement('canvas');
+        lienzo.width = w; lienzo.height = h;
+        const ctx = lienzo.getContext('2d', { willReadFrequently: true });
+        ctx.drawImage(imagen, 0, 0);
+        const pixeles = ctx.getImageData(0, 0, w, h).data;
+        let izquierda = w, derecha = -1, arriba = h, abajo = -1;
+        for (let y = 0; y < h; y++) {
+          for (let x = 0; x < w; x++) {
+            if (pixeles[(y * w + x) * 4 + 3] === 0) continue;
+            izquierda = Math.min(izquierda, x); derecha = Math.max(derecha, x);
+            arriba = Math.min(arriba, y); abajo = Math.max(abajo, y);
+          }
+        }
+        if (derecha >= izquierda && abajo >= arriba) {
+          limites = { src: imagen.currentSrc, x: izquierda, y: arriba,
+            ancho: derecha - izquierda + 1, alto: abajo - arriba + 1 };
+        }
+      } catch {
+        // Si el navegador bloquea la lectura, conservar el encaje del archivo completo.
+      }
+      limitesElementos.set(imagen, limites);
+      return limites;
+    }
+    function escalarElementosAnclados() {
+      scenes.forEach(scene=>{
+        const imagen=scene.querySelector('.elemento'), tarjeta=scene.querySelector('.card');
+        if(!imagen||!tarjeta) return;
+        if(!matchMedia('(max-width:560px)').matches){
+          ['left','top','width','height','max-height'].forEach(p=>imagen.style.removeProperty(p));return;
+        }
+        if(!imagen.naturalWidth||!scene.clientWidth||!tarjeta.offsetWidth) return;
+        const estilo=getComputedStyle(imagen), x=Number(estilo.getPropertyValue('--x')), y=Number(estilo.getPropertyValue('--y'));
+        const sr=scene.getBoundingClientRect(), cr=tarjeta.getBoundingClientRect();
+        const shell=document.querySelector('#shell').getBoundingClientRect();
+        const m=ANCLAJE_ELEMENTOS.margenPantalla, sep=ANCLAJE_ELEMENTOS.separacionBotones, mov=ANCLAJE_ELEMENTOS.movimiento;
+        const arriba = y <= 50;
+        const lado = arriba ? 'centro' : x < 50 ? 'izquierda' : 'derecha';
+        const visible = obtenerLimitesVisibles(imagen);
+        let zona={l:m,r:scene.clientWidth-m,t:m,b:cr.top-sr.top};
+        if(arriba){
+          const controles = [...document.querySelectorAll('.controls button')].map(el => {
+            const r = el.getBoundingClientRect();
+            return { l: r.left-shell.left, r: r.right-shell.left, b: r.bottom-shell.top };
+          });
+          controles.forEach(r => { zona.t = Math.max(zona.t, r.b+sep); });
+          if (lado === 'centro') {
+            // Regla común para los elementos superiores 01, 04 y 05.
+            const central = { l: m, r: scene.clientWidth-m, t: m+mov, b: zona.b };
+            controles.forEach(r => {
+              if ((r.l+r.r)/2 < scene.clientWidth/2) central.l = Math.max(central.l, r.r+sep);
+              else central.r = Math.min(central.r, r.l-sep);
+            });
+            const capacidad = z => Math.min(Math.max(0,z.r-z.l)/visible.ancho,
+              Math.max(0,z.b-z.t-mov)/visible.alto);
+            // Elegir el encaje mayor: hueco central completo o franja bajo los controles.
+            if (capacidad(central) > capacidad(zona)) zona = central;
+          }
+        }else{
+          const boton=scene.querySelector('.next').getBoundingClientRect();
+          const centro={l:boton.left-sr.left,r:boton.right-sr.left};
+          document.querySelectorAll('.progress i').forEach(el=>{
+            const r=el.getBoundingClientRect();centro.l=Math.min(centro.l,r.left-shell.left);centro.r=Math.max(centro.r,r.right-shell.left);
+          });
+          zona.t=cr.bottom-sr.top+mov;zona.b=scene.clientHeight-m;
+          if(lado==='izquierda')zona.r=centro.l-sep;
+          else if(lado==='derecha')zona.l=centro.r+sep;
+          else zona.b=Math.min(boton.top-sr.top-sep,...[...document.querySelectorAll('.progress i')].map(el=>el.getBoundingClientRect().top-shell.top-sep));
+        }
+        const anchoZona = Math.max(0, zona.r - zona.l);
+        const altoZona = Math.max(0, zona.b - zona.t - mov);
+        const escala = Math.min(anchoZona / visible.ancho, altoZona / visible.alto);
+        const ancho = visible.ancho * escala, alto = visible.alto * escala;
+        const cx = (zona.l + zona.r) / 2;
+        const cy = arriba ? zona.b - alto / 2 : zona.t + alto / 2;
+        // El dibujo llena la zona; el lienzo transparente puede extenderse fuera de ella.
+        // Compensar también los márgenes asimétricos para centrar el contenido real.
+        const desplazamientoX = (visible.x + visible.ancho / 2 - imagen.naturalWidth / 2) * escala;
+        const desplazamientoY = (visible.y + visible.alto / 2 - imagen.naturalHeight / 2) * escala;
+        imagen.dataset.espacioInsuficiente = String(Math.max(ancho, alto) < ANCLAJE_ELEMENTOS.tamanoMinimo);
+        imagen.dataset.anclaje = (arriba ? 'arriba-' : 'abajo-') + lado;
+        imagen.style.setProperty('--recorrido', mov + 'px');
+        imagen.style.width = imagen.naturalWidth * escala + 'px';
+        imagen.style.height = imagen.naturalHeight * escala + 'px';
+        imagen.style.maxHeight = 'none';
+        imagen.style.left = cx - desplazamientoX + 'px';
+        imagen.style.top = cy - desplazamientoY + 'px';
+      });
+    }
     const pages = $("#pages"), scenes = [...document.querySelectorAll(".scene")], audio = $("#audio");
     scenes.forEach((scene, i) => { scene.querySelector(".bg").src = "assets/fondos/" + DATOS.fondos[i] });
     let current = 0, started = false, heightTimer;
@@ -748,8 +899,79 @@
     optionalLink("#map", DATOS.mapa.trim());
     const phone = DATOS.telefonoWhatsApp.replace(/\D/g, "");
     optionalLink("#rsvp", phone ? "https://wa.me/" + phone + "?text=" + encodeURIComponent("Hola, confirmo mi asistencia a la Posada Navideña organizada por " + DATOS.organizador + ".") : "");
+    function datosCalendario() {
+      const fechaInicio = DATOS.calendario.inicio || (/[zZ]$|[+-]\d{2}:\d{2}$/.test(DATOS.fecha)
+        ? DATOS.fecha : DATOS.fecha + DATOS.cierre.desfaseHorario);
+      const inicio = new Date(fechaInicio), fin = new Date(DATOS.calendario.fin);
+      if (!Number.isFinite(inicio.getTime()) || !Number.isFinite(fin.getTime()) || fin <= inicio) {
+        throw new Error("Completa el horario de inicio y fin en DATOS.calendario.");
+      }
+      return { inicio, fin, titulo: "Posada Navideña | " + DATOS.organizador,
+        descripcion: "Una noche de villancicos, nacimiento y convivencia para celebrar nuestras tradiciones.",
+        lugar: DATOS.lugar + ", " + DATOS.direccion };
+    }
+    function fechaCalendario(fecha) {
+      return fecha.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
+    }
+    function crearICS(datos) {
+      const escapar = valor => String(valor).replace(/\\/g, "\\\\")
+        .replace(/\r?\n/g, "\\n").replace(/;/g, "\\;").replace(/,/g, "\\,");
+      const plegar = linea => {
+        let salida = "", actual = "", bytes = 0;
+        for (const caracter of linea) {
+          const longitud = new TextEncoder().encode(caracter).length;
+          if (bytes + longitud > 75) { salida += actual + "\r\n"; actual = " "; bytes = 1; }
+          actual += caracter; bytes += longitud;
+        }
+        return salida + actual;
+      };
+      return ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Eldinbridge//Invitaciones//ES",
+        "CALSCALE:GREGORIAN", "BEGIN:VEVENT",
+        `UID:${fechaCalendario(datos.inicio)}-${encodeURIComponent(DATOS.organizador)}@eldinbridge.com`,
+        `DTSTAMP:${fechaCalendario(new Date())}`, `DTSTART:${fechaCalendario(datos.inicio)}`,
+        `DTEND:${fechaCalendario(datos.fin)}`, `SUMMARY:${escapar(datos.titulo)}`,
+        `DESCRIPTION:${escapar(datos.descripcion)}`, `LOCATION:${escapar(datos.lugar)}`,
+        "END:VEVENT", "END:VCALENDAR"].map(plegar).join("\r\n") + "\r\n";
+    }
+    function prepararCalendario() {
+      const dialogo = $("#selector-calendarios"), aviso = $("#aviso-calendario");
+      const opciones = [...document.querySelectorAll("[data-calendario]")];
+      $("#agregar-calendario").addEventListener("click", () => {
+        const activo = DATOS.calendario.activo === true;
+        aviso.textContent = activo ? "Elige dónde guardar el evento. Confirma los datos en tu calendario."
+          : "Vista de demostración: agregar el evento está desactivado.";
+        opciones.forEach(opcion => { opcion.disabled = !activo; });
+        if (!dialogo.open) dialogo.showModal();
+      });
+      $("#cerrar-calendarios").addEventListener("click", () => dialogo.close());
+      dialogo.addEventListener("click", evento => {
+        const r = dialogo.getBoundingClientRect();
+        if (evento.target === dialogo && (evento.clientX < r.left || evento.clientX > r.right ||
+          evento.clientY < r.top || evento.clientY > r.bottom)) dialogo.close();
+      });
+      opciones.forEach(opcion => opcion.addEventListener("click", () => {
+        if (DATOS.calendario.activo !== true) return;
+        try {
+          const datos = datosCalendario();
+          if (opcion.dataset.calendario === "google") {
+            const parametros = new URLSearchParams({ action: "TEMPLATE", text: datos.titulo,
+              dates: `${fechaCalendario(datos.inicio)}/${fechaCalendario(datos.fin)}`,
+              details: datos.descripcion, location: datos.lugar });
+            window.open(`https://calendar.google.com/calendar/render?${parametros}`, "_blank", "noopener,noreferrer");
+          } else {
+            const url = URL.createObjectURL(new Blob([crearICS(datos)], { type: "text/calendar;charset=utf-8" }));
+            const enlace = document.createElement("a");
+            enlace.href = url; enlace.download = "posada-navidena.ics";
+            document.body.appendChild(enlace); enlace.click(); enlace.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 60000);
+            aviso.textContent = "Abre posada-navidena.ics en tu calendario e importa el evento. En iPhone también puedes abrirlo desde Mail.";
+          }
+        } catch (error) { aviso.textContent = error.message; }
+      }));
+    }
+    prepararCalendario();
     const dots = scenes.map(() => { const dot = document.createElement("i"); $("#progress").append(dot); return dot });
-    function mark(i) { if (i === current && scenes[i].classList.contains("active")) return; current = i; scenes.forEach((scene, n) => scene.classList.toggle("active", n === i)); dots.forEach((dot, n) => dot.classList.toggle("on", n === i)) }
+    function mark(i) { if (i === current && scenes[i].classList.contains("active")) return; current = i; scenes.forEach((scene, n) => scene.classList.toggle("active", n === i)); dots.forEach((dot, n) => dot.classList.toggle("on", n === i)); escalarElementosAnclados() }
     function go(i, smooth = true) { const target = Math.max(0, Math.min(i, scenes.length - 1)); pages.scrollTo({ left: 0, top: target * pages.clientHeight, behavior: smooth ? "smooth" : "auto" }) }
     function adjustHeight() { if (!matchMedia("(max-width:560px)").matches) { document.documentElement.style.removeProperty("--h"); return } clearTimeout(heightTimer); heightTimer = setTimeout(() => { const h = window.visualViewport?.height || window.innerHeight; document.documentElement.style.setProperty("--h", Math.round(h) + "px"); if (started) go(current, false) }, 250) }
     scenes.forEach((scene, i) => { const button = document.createElement("button"); button.type = "button"; button.className = "button next"; button.textContent = i === scenes.length - 1 ? "Volver al inicio ↑" : "Continuar ↓"; button.addEventListener("click", () => go(i === scenes.length - 1 ? 0 : i + 1)); scene.append(button) });
@@ -800,6 +1022,17 @@
     document.addEventListener("visibilitychange", () => { if (document.hidden) pauseWhenHidden(); else resumeWhenVisible(); });
     window.addEventListener("resize", adjustHeight, { passive: true }); window.visualViewport?.addEventListener("resize", adjustHeight, { passive: true }); window.addEventListener("orientationchange", adjustHeight, { passive: true });
     window.addEventListener("pageshow", () => { adjustHeight(); if (!started) go(0, false) }); addEventListener("popstate", () => { if (started) exit() });
+    // Cargar y calcular todas las decoraciones antes de navegar entre tarjetas.
+    scenes.forEach(scene => {
+      const imagen = scene.querySelector('.elemento');
+      if (imagen) { imagen.loading = 'eager'; imagen.addEventListener('load', escalarElementosAnclados); }
+    });
+    document.fonts.ready.then(escalarElementosAnclados);
+    const observadorEscalaElementos=new ResizeObserver(escalarElementosAnclados);
+    scenes.forEach(scene => { observadorEscalaElementos.observe(scene); observadorEscalaElementos.observe(scene.querySelector('.card')); });
+    observadorEscalaElementos.observe($('#progress'));
+    scenes.forEach(scene => observadorEscalaElementos.observe(scene.querySelector('.next')));
+    escalarElementosAnclados();
     mark(0); adjustHeight(); go(0, false);
     // El cierre comienza a medianoche del día siguiente, independientemente del navegador.
     function calcularFechaCierre() {
