@@ -670,7 +670,7 @@
             <p id="address"></p>
             <div class="divider">✦ ✶ ✦</div>
             <p id="accessNote"></p>
-            <div class="actions"><a class="pill" id="map" href="#" target="\\\\\\_blank" rel="noopener noreferrer">Ver
+            <div class="actions"><a class="pill" id="map" href="#" target="\\\\\\\\\\\\_blank" rel="noopener noreferrer">Ver
                 ubicación ↗</a></div>
           </div>
         </article>
@@ -696,7 +696,7 @@
             <h2>¿Te sumas <em>a la posada?</em></h2>
             <p>La entrada es libre. Si piensas venir, puedes avisarnos para preparar mejor la celebración.</p>
             <p class="lead" id="visitorNote"></p>
-            <div class="actions"><a class="pill" id="rsvp" target="\\\\\\_blank" rel="noopener noreferrer">Confirmar por
+            <div class="actions"><a class="pill" id="rsvp" target="\\\\\\\\\\\\_blank" rel="noopener noreferrer">Confirmar por
                 WhatsApp ↗</a></div>
             <p class="muted">Ven con tiempo y acompaña a los pequeños durante la piñata.</p>
           </div>
@@ -822,8 +822,8 @@
             return { l: r.left-shell.left, r: r.right-shell.left, b: r.bottom-shell.top };
           });
           controles.forEach(r => { zona.t = Math.max(zona.t, r.b+sep); });
-          if (scene === scenes[0] || scene === scenes[3]) {
-            // Elementos 01 y 04: aprovechar también el hueco ENTRE los controles.
+          if (scene === scenes[0] || scene === scenes[3] || scene === scenes[4]) {
+            // Elementos 01, 04 y 05: aprovechar también el hueco ENTRE los controles.
             const central = { l: m, r: scene.clientWidth-m, t: m+mov, b: zona.b };
             controles.forEach(r => {
               if ((r.l+r.r)/2 < scene.clientWidth/2) central.l = Math.max(central.l, r.r+sep);
