@@ -737,6 +737,9 @@
         .escena:not(#inicio) .tiempo, .escena:not(#inicio) .dato { padding-block: 11px; }
         .escena:not(#inicio) .contenido .botones { margin-top: 15px; }
         .escena:not(#inicio) .firma { margin-top: 12px; }
+        body:not(.invitacion-abierta):not(.editor-activo) .control-musica { visibility: hidden; pointer-events: none; }
+        .boton.boton-volver { min-height: 46px; padding: 7px 15px; font-size: .85rem; line-height: 1.15; text-align: center; }
+        #regalo .iconos-magicos { justify-content: center; }
     </style>
 </head>
 <body>
@@ -882,7 +885,6 @@
                     Regalos
                 </div>
                 <div class="iconos-magicos">
-                    <span>🎁</span>
                     <span>✉️</span>
                 </div>
                 <h2>Tu presencia es el mejor regalo</h2>
@@ -962,7 +964,7 @@
                 <div class="botones"><a class="boton boton-secundario" id="ver-ubicacion" target="_blank"
                         rel="noopener noreferrer">📍 Ver ubicación</a></div>
             </div>
-            <div class="botones navegacion-escena"><a class="boton" href="#inicio">↑ Volver al inicio</a></div>
+            <div class="botones navegacion-escena"><a class="boton boton-volver" href="#inicio"><span>↑ Volver<br>al inicio</span></a></div>
         </section>
     </main>
     <aside class="editor" id="editor" aria-label="Editor de la plantilla">
