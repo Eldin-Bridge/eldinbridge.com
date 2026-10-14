@@ -732,63 +732,48 @@
     // Cambia estas medidas por el área visible de tu teléfono de referencia.
     const REFERENCIA_ELEMENTOS = { ancho:390, alto:844 };
     // Borde automático según la zona original. No cambia los valores --x, --y y --size.
-    // SEIS POSICIONES EXTERIORES. Mantiene --size como tamaño solicitado.
-    const ANCLAJE_ELEMENTOS = { movimiento: 4, margenPantalla: 8, separacionBotones: 8 };
+    // AJUSTES EDITABLES: tamaño mínimo medido por el lado más largo del elemento.
+    const ANCLAJE_ELEMENTOS = { movimiento: 4, margenPantalla: 8, separacionBotones: 8, tamanoMinimo: 64 };
     function escalarElementosAnclados() {
-      scenes.forEach(scene => {
+      scenes.forEach(scene=>{
         const imagen=scene.querySelector('.elemento'), tarjeta=scene.querySelector('.card');
-        if(!imagen || !tarjeta) return;
+        if(!imagen||!tarjeta) return;
         if(!matchMedia('(max-width:560px)').matches){
-          ['left','top','width','height','max-height'].forEach(p=>imagen.style.removeProperty(p));
-          return;
+          ['left','top','width','height','max-height'].forEach(p=>imagen.style.removeProperty(p));return;
         }
-        if(!imagen.naturalWidth || !scene.clientWidth || !tarjeta.offsetWidth) return;
-        const estilo=getComputedStyle(imagen);
-        const x=Number(estilo.getPropertyValue('--x')), y=Number(estilo.getPropertyValue('--y'));
-        const size=Number(estilo.getPropertyValue('--size'));
+        if(!imagen.naturalWidth||!scene.clientWidth||!tarjeta.offsetWidth) return;
+        const estilo=getComputedStyle(imagen), x=Number(estilo.getPropertyValue('--x')), y=Number(estilo.getPropertyValue('--y'));
         const sr=scene.getBoundingClientRect(), cr=tarjeta.getBoundingClientRect();
-        const caja={l:cr.left-sr.left,r:cr.right-sr.left,t:cr.top-sr.top,b:cr.bottom-sr.top};
-        const arriba=y<=50, lado=x<33 ? 'izquierda' : x>67 ? 'derecha' : 'centro';
-        const margen=ANCLAJE_ELEMENTOS.margenPantalla, movimiento=ANCLAJE_ELEMENTOS.movimiento;
-        const relacion=imagen.naturalHeight/imagen.naturalWidth;
-        const escala=Math.min(scene.clientWidth/REFERENCIA_ELEMENTOS.ancho,scene.clientHeight/REFERENCIA_ELEMENTOS.alto);
-        let ancho=size*REFERENCIA_ELEMENTOS.ancho*escala/100;
-        // Los controles fijos se miden respecto del contenedor, incluso en tarjetas fuera de vista.
         const shell=document.querySelector('#shell').getBoundingClientRect();
-        const obstaculos=[...scene.querySelectorAll('.next')].map(el=>{
-          const r=el.getBoundingClientRect();return {l:r.left-sr.left,r:r.right-sr.left,t:r.top-sr.top,b:r.bottom-sr.top};
-        });
-        document.querySelectorAll('.controls button, .progress i').forEach(el=>{
-          const r=el.getBoundingClientRect();
-          if(r.width && r.height) obstaculos.push({l:r.left-shell.left,r:r.right-shell.left,t:r.top-shell.top,b:r.bottom-shell.top});
-        });
-        function colocar(w){
-          const h=w*relacion;
-          let cx=lado==='izquierda' ? caja.l+w/2 : lado==='derecha' ? caja.r-w/2 : (caja.l+caja.r)/2;
-          cx=Math.max(margen+w/2,Math.min(scene.clientWidth-margen-w/2,cx));
-          // Flota hacia fuera: nunca atraviesa la tarjeta.
-          const cy=arriba ? caja.t-h/2 : caja.b+h/2+movimiento;
-          const rect={l:cx-w/2,r:cx+w/2,t:cy-h/2-movimiento,b:cy+h/2};
-          const sep=ANCLAJE_ELEMENTOS.separacionBotones;
-          const cabe=rect.l>=margen && rect.r<=scene.clientWidth-margen && rect.t>=margen && rect.b<=scene.clientHeight-margen &&
-            !obstaculos.some(z=>rect.l<z.r+sep&&rect.r>z.l-sep&&rect.t<z.b+sep&&rect.b>z.t-sep);
-          return {cx,cy,cabe};
+        const m=ANCLAJE_ELEMENTOS.margenPantalla, sep=ANCLAJE_ELEMENTOS.separacionBotones, mov=ANCLAJE_ELEMENTOS.movimiento;
+        const arriba=y<=50, lado=x<33?'izquierda':x>67?'derecha':'centro';
+        let zona={l:m,r:scene.clientWidth-m,t:m,b:cr.top-sr.top};
+        if(arriba){
+          // Reservar la fila de los controles: toda la imagen queda en la zona superior libre.
+          document.querySelectorAll('.controls button').forEach(el=>{
+            const r=el.getBoundingClientRect();zona.t=Math.max(zona.t,r.bottom-shell.top+sep);
+          });
+        }else{
+          const boton=scene.querySelector('.next').getBoundingClientRect();
+          const centro={l:boton.left-sr.left,r:boton.right-sr.left};
+          document.querySelectorAll('.progress i').forEach(el=>{
+            const r=el.getBoundingClientRect();centro.l=Math.min(centro.l,r.left-shell.left);centro.r=Math.max(centro.r,r.right-shell.left);
+          });
+          zona.t=cr.bottom-sr.top+mov;zona.b=scene.clientHeight-m;
+          if(lado==='izquierda')zona.r=centro.l-sep;
+          else if(lado==='derecha')zona.l=centro.r+sep;
+          else zona.b=Math.min(boton.top-sr.top-sep,...[...document.querySelectorAll('.progress i')].map(el=>el.getBoundingClientRect().top-shell.top-sep));
         }
-        // Usar el espacio exterior real: los laterales pueden bajar junto al botón.
-        const disponibleVertical=arriba ? caja.t-margen-movimiento : scene.clientHeight-margen-caja.b-movimiento;
-        const disponibleHorizontal=Math.min(caja.r-caja.l,scene.clientWidth-2*margen);
-        let maximo=Math.max(1,Math.min(disponibleHorizontal,disponibleVertical/relacion));
-        // Buscar de mayor a menor: un botón central solo limita si se cruza con la imagen.
-        let posicion=colocar(ancho), encontrado=false;
-        for(let candidato=maximo;candidato>=1;candidato-=1){
-          const prueba=colocar(candidato);
-          if(prueba.cabe){ancho=candidato;posicion=prueba;encontrado=true;break;}
-        }
-        if(!encontrado){ancho=Math.min(ancho,maximo);posicion=colocar(ancho);}
+        const relacion=imagen.naturalHeight/imagen.naturalWidth;
+        const anchoZona=Math.max(0,zona.r-zona.l),altoZona=Math.max(0,zona.b-zona.t-mov);
+        const ancho=Math.min(anchoZona,altoZona/relacion),alto=ancho*relacion;
+        // Encajar proporcionalmente usando todo el ancho o alto disponible, sin deformar.
+        const cx=(zona.l+zona.r)/2,cy=arriba?zona.b-alto/2:zona.t+alto/2;
+        imagen.dataset.espacioInsuficiente=String(Math.max(ancho,alto)<ANCLAJE_ELEMENTOS.tamanoMinimo);
         imagen.dataset.anclaje=(arriba?'arriba-':'abajo-')+lado;
-        imagen.style.setProperty('--recorrido',movimiento+'px');
+        imagen.style.setProperty('--recorrido',mov+'px');
         imagen.style.width=ancho+'px';imagen.style.height='auto';imagen.style.maxHeight='none';
-        imagen.style.left=posicion.cx+'px';imagen.style.top=posicion.cy+'px';
+        imagen.style.left=cx+'px';imagen.style.top=cy+'px';
       });
     }
     const pages = $("#pages"), scenes = [...document.querySelectorAll(".scene")], audio = $("#audio");
