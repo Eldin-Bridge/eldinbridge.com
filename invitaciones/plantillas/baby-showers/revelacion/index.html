@@ -517,37 +517,37 @@
     /* POSICIÓN DE ELEMENTOS — escritorio: --x horizontal, --y vertical, --tamano ancho (%). */
     .scene:nth-child(1) .elemento {
       --x: 50;
-      --y: 22;
+      --y: 18;
       --tamano: 27
     }
     .scene:nth-child(2) .elemento {
-      --x: 83;
-      --y: 74;
+      --x: 50;
+      --y: 18;
       --tamano: 23
     }
     .scene:nth-child(3) .elemento {
-      --x: 75;
-      --y: 51;
+      --x: 14;
+      --y: 80;
       --tamano: 26
     }
     .scene:nth-child(4) .elemento {
-      --x: 78;
-      --y: 74;
+      --x: 86;
+      --y: 80;
       --tamano: 29
     }
     .scene:nth-child(5) .elemento {
-      --x: 78;
-      --y: 46;
+      --x: 14;
+      --y: 80;
       --tamano: 27
     }
     .scene:nth-child(6) .elemento {
-      --x: 50;
-      --y: 35;
+      --x: 86;
+      --y: 80;
       --tamano: 27
     }
     .scene:nth-child(7) .elemento {
-      --x: 85;
-      --y: 78;
+      --x: 50;
+      --y: 18;
       --tamano: 29
     }
     .next {
@@ -622,37 +622,37 @@
       /* POSICIÓN DE ELEMENTOS — celular: estos valores reemplazan los de escritorio. */
       .scene:nth-child(1) .elemento {
         --x: 50;
-        --y: 19;
+        --y: 18;
         --tamano: 32
       }
       .scene:nth-child(2) .elemento {
-        --x: 80;
-        --y: 78;
+        --x: 50;
+        --y: 18;
         --tamano: 27
       }
       .scene:nth-child(3) .elemento {
-        --x: 50;
-        --y: 30;
+        --x: 14;
+        --y: 80;
         --tamano: 27
       }
       .scene:nth-child(4) .elemento {
-        --x: 80;
-        --y: 75;
+        --x: 86;
+        --y: 80;
         --tamano: 31
       }
       .scene:nth-child(5) .elemento {
-        --x: 50;
-        --y: 70;
+        --x: 14;
+        --y: 80;
         --tamano: 28
       }
       .scene:nth-child(6) .elemento {
-        --x: 70;
-        --y: 58;
+        --x: 86;
+        --y: 80;
         --tamano: 30
       }
       .scene:nth-child(7) .elemento {
-        --x: 85;
-        --y: 81;
+        --x: 50;
+        --y: 18;
         --tamano: 31
       }
     }
@@ -679,6 +679,21 @@
     .cierre-contenido h2 { font-family: 'Playfair Display', serif; color: var(--rose); font-size: 23px; font-weight: 500; line-height: 1.4; }
     .cierre-contenido p { font-size: 16px; line-height: 1.7; margin: 20px 0 0; }
     .cierre-adorno span:last-child { color: var(--blue); }
+    /* En móvil, --x y --y eligen la zona; el dibujo visible se encaja dentro de ella. */
+    @media(max-width:560px) {
+      .scene .elemento {
+        width:calc(var(--tamano) * var(--unidad-elemento, 1vw));
+        height:auto;
+        animation: flotar-suave 4.8s ease-in-out infinite;
+        transition:none;
+        max-width:none;
+        max-height:none;
+      }
+    }
+    @keyframes flotar-suave {
+      0%, 100% { translate: 0 0; }
+      50% { translate: 0 calc(-1 * var(--recorrido, 4px)); }
+    }
   </style>
 </head>
 <body>
@@ -864,12 +879,100 @@
       salida: "../../../index.html#baby-showers"
     };
     const $ = s => document.querySelector(s);
-    // REFERENCIA EDITABLE: área visible del teléfono donde se acomodó el diseño.
-    const REFERENCIA_ELEMENTOS = { ancho:390, alto:844 };
+    const ANCLAJE_ELEMENTOS = { movimiento: 4, margenPantalla: 8, separacionBotones: 8, tamanoMinimo: 64 };
+    const limitesElementos = new WeakMap();
+    function obtenerLimitesVisibles(imagen) {
+      const guardado = limitesElementos.get(imagen);
+      if (guardado && guardado.src === imagen.currentSrc) return guardado;
+      const w = imagen.naturalWidth, h = imagen.naturalHeight;
+      let limites = { src: imagen.currentSrc, x: 0, y: 0, ancho: w, alto: h };
+      try {
+        const lienzo = document.createElement('canvas');
+        lienzo.width = w; lienzo.height = h;
+        const ctx = lienzo.getContext('2d', { willReadFrequently: true });
+        ctx.drawImage(imagen, 0, 0);
+        const pixeles = ctx.getImageData(0, 0, w, h).data;
+        let izquierda = w, derecha = -1, arriba = h, abajo = -1;
+        for (let y = 0; y < h; y++) {
+          for (let x = 0; x < w; x++) {
+            if (pixeles[(y * w + x) * 4 + 3] === 0) continue;
+            izquierda = Math.min(izquierda, x); derecha = Math.max(derecha, x);
+            arriba = Math.min(arriba, y); abajo = Math.max(abajo, y);
+          }
+        }
+        if (derecha >= izquierda && abajo >= arriba) {
+          limites = { src: imagen.currentSrc, x: izquierda, y: arriba,
+            ancho: derecha - izquierda + 1, alto: abajo - arriba + 1 };
+        }
+      } catch {
+        // Si el navegador bloquea la lectura, conservar el encaje del archivo completo.
+      }
+      limitesElementos.set(imagen, limites);
+      return limites;
+    }
     function escalarElementosAnclados() {
       scenes.forEach(scene=>{
-        const escala=Math.min(scene.clientWidth/REFERENCIA_ELEMENTOS.ancho,scene.clientHeight/REFERENCIA_ELEMENTOS.alto);
-        scene.style.setProperty('--unidad-elemento',(REFERENCIA_ELEMENTOS.ancho*escala/100)+'px');
+        const imagen=scene.querySelector('.elemento'), tarjeta=scene.querySelector('.ticket');
+        if(!imagen||!tarjeta) return;
+        if(!matchMedia('(max-width:560px)').matches){
+          ['left','top','width','height','max-height'].forEach(p=>imagen.style.removeProperty(p));return;
+        }
+        if(!imagen.naturalWidth||!scene.clientWidth||!tarjeta.offsetWidth) return;
+        const estilo=getComputedStyle(imagen), x=Number(estilo.getPropertyValue('--x')), y=Number(estilo.getPropertyValue('--y'));
+        const sr=scene.getBoundingClientRect(), cr=tarjeta.getBoundingClientRect();
+        const shell=document.querySelector('#shell').getBoundingClientRect();
+        const m=ANCLAJE_ELEMENTOS.margenPantalla, sep=ANCLAJE_ELEMENTOS.separacionBotones, mov=ANCLAJE_ELEMENTOS.movimiento;
+        const arriba = y <= 50;
+        const lado = arriba ? 'centro' : x < 50 ? 'izquierda' : 'derecha';
+        const visible = obtenerLimitesVisibles(imagen);
+        let zona={l:m,r:scene.clientWidth-m,t:m,b:cr.top-sr.top};
+        if(arriba){
+          const controles = [...document.querySelectorAll('.controls button')].map(el => {
+            const r = el.getBoundingClientRect();
+            return { l: r.left-shell.left, r: r.right-shell.left, b: r.bottom-shell.top };
+          });
+          controles.forEach(r => { zona.t = Math.max(zona.t, r.b+sep); });
+          if (lado === 'centro') {
+            // Regla común para los elementos superiores 01, 04 y 05.
+            const central = { l: m, r: scene.clientWidth-m, t: m+mov, b: zona.b };
+            controles.forEach(r => {
+              if ((r.l+r.r)/2 < scene.clientWidth/2) central.l = Math.max(central.l, r.r+sep);
+              else central.r = Math.min(central.r, r.l-sep);
+            });
+            const capacidad = z => Math.min(Math.max(0,z.r-z.l)/visible.ancho,
+              Math.max(0,z.b-z.t-mov)/visible.alto);
+            // Elegir el encaje mayor: hueco central completo o franja bajo los controles.
+            if (capacidad(central) > capacidad(zona)) zona = central;
+          }
+        }else{
+          const boton=scene.querySelector('.next').getBoundingClientRect();
+          const centro={l:boton.left-sr.left,r:boton.right-sr.left};
+          document.querySelectorAll('.progress i').forEach(el=>{
+            const r=el.getBoundingClientRect();centro.l=Math.min(centro.l,r.left-shell.left);centro.r=Math.max(centro.r,r.right-shell.left);
+          });
+          zona.t=cr.bottom-sr.top+mov;zona.b=scene.clientHeight-m;
+          if(lado==='izquierda')zona.r=centro.l-sep;
+          else if(lado==='derecha')zona.l=centro.r+sep;
+          else zona.b=Math.min(boton.top-sr.top-sep,...[...document.querySelectorAll('.progress i')].map(el=>el.getBoundingClientRect().top-shell.top-sep));
+        }
+        const anchoZona = Math.max(0, zona.r - zona.l);
+        const altoZona = Math.max(0, zona.b - zona.t - mov);
+        const escala = Math.min(anchoZona / visible.ancho, altoZona / visible.alto);
+        const ancho = visible.ancho * escala, alto = visible.alto * escala;
+        const cx = (zona.l + zona.r) / 2;
+        const cy = arriba ? zona.b - alto / 2 : zona.t + alto / 2;
+        // El dibujo llena la zona; el lienzo transparente puede extenderse fuera de ella.
+        // Compensar también los márgenes asimétricos para centrar el contenido real.
+        const desplazamientoX = (visible.x + visible.ancho / 2 - imagen.naturalWidth / 2) * escala;
+        const desplazamientoY = (visible.y + visible.alto / 2 - imagen.naturalHeight / 2) * escala;
+        imagen.dataset.espacioInsuficiente = String(Math.max(ancho, alto) < ANCLAJE_ELEMENTOS.tamanoMinimo);
+        imagen.dataset.anclaje = (arriba ? 'arriba-' : 'abajo-') + lado;
+        imagen.style.setProperty('--recorrido', mov + 'px');
+        imagen.style.width = imagen.naturalWidth * escala + 'px';
+        imagen.style.height = imagen.naturalHeight * escala + 'px';
+        imagen.style.maxHeight = 'none';
+        imagen.style.left = cx - desplazamientoX + 'px';
+        imagen.style.top = cy - desplazamientoY + 'px';
       });
     }
     const pages = $("#pages"), scenes = [...document.querySelectorAll(".scene")], audio = $("#audio");
@@ -918,6 +1021,7 @@
       current = i;
       scenes.forEach((scene, n) => scene.classList.toggle("active", n === i));
       dots.forEach((dot, n) => dot.classList.toggle("on", n === i));
+      escalarElementosAnclados();
     }
     function go(i, smooth = true) {
       const target = Math.max(0, Math.min(i, scenes.length - 1));
@@ -1011,8 +1115,16 @@
     window.addEventListener("orientationchange", adjustHeight, { passive: true });
     window.addEventListener("pageshow", () => { adjustHeight(); if (!started) go(0, false) });
     addEventListener("popstate", () => { if (started) volverAPortada() });
+    // Cargar y calcular todas las decoraciones antes de navegar entre tarjetas.
+    scenes.forEach(scene => {
+      const imagen = scene.querySelector('.elemento');
+      if (imagen) { imagen.loading = 'eager'; imagen.addEventListener('load', escalarElementosAnclados); }
+    });
+    document.fonts.ready.then(escalarElementosAnclados);
     const observadorEscalaElementos=new ResizeObserver(escalarElementosAnclados);
-    scenes.forEach(scene=>observadorEscalaElementos.observe(scene));
+    scenes.forEach(scene => { observadorEscalaElementos.observe(scene); observadorEscalaElementos.observe(scene.querySelector('.ticket')); });
+    observadorEscalaElementos.observe($('#progress'));
+    scenes.forEach(scene => observadorEscalaElementos.observe(scene.querySelector('.next')));
     escalarElementosAnclados();
     // El cierre comienza a medianoche del día siguiente, independientemente del navegador.
     function calcularFechaCierre() {
