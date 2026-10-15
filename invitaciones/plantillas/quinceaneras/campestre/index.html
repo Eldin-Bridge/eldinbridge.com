@@ -2331,6 +2331,10 @@ module.exports = QRCode;
     }
     document.getElementById('agregar-invitado').addEventListener('click',agregarInvitado);
     agregarInvitado();
+    function presentarNombre(texto){
+      return texto.normalize('NFC').trim().replace(/\s+/gu,' ').toLocaleLowerCase('es-MX')
+        .replace(/(^|[\s\-’'])\p{L}/gu,inicio=>inicio.toLocaleUpperCase('es-MX'));
+    }
     function codificarPase(datos) {
       const bytes = new TextEncoder().encode(JSON.stringify(datos));
       return btoa(String.fromCharCode(...bytes)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
@@ -2381,7 +2385,7 @@ module.exports = QRCode;
       texto(DATOS_INVITACION.recepcion.lugar,'24px sans-serif','#655c50','center',32);y+=26;
       datos.personas.forEach((p,i)=>{
         texto('PERSONA '+(i+1)+' · '+(p.t==='nino'?'NIÑO':'ADULTO'),'bold 23px sans-serif','#58684a','left',30);
-        texto(p.n+' '+p.a,'32px sans-serif','#342f28','left',40);y+=18;
+        texto(presentarNombre(p.n)+' '+presentarNombre(p.a),'32px sans-serif','#342f28','left',40);y+=18;
       });
       y+=4;
       const ninos=datos.personas.filter(p=>p.t==='nino').length,adultos=datos.personas.length-ninos;
@@ -2418,7 +2422,7 @@ module.exports = QRCode;
       const img=document.getElementById('imagen-pase');
       if(img.dataset.url)URL.revokeObjectURL(img.dataset.url);
       img.src=URL.createObjectURL(imagenPaseBlob);img.dataset.url=img.src;
-      img.alt='Pase digital para '+datos.personas.map(p=>p.n+' '+p.a).join(', ');
+      img.alt='Pase digital para '+datos.personas.map(p=>presentarNombre(p.n)+' '+presentarNombre(p.a)).join(', ');
       if(!dialogoPase.open)dialogoPase.showModal();
     }
 
@@ -2497,7 +2501,7 @@ module.exports = QRCode;
     document.getElementById('personas-completas').addEventListener('click',async()=>{
       if(generandoPase||paseGuardado)return;
       if(recuperarPase()){confirmarPersonas.close();return;}
-      const personas=[...filasInvitados.children].map(f=>({n:f.querySelector('[name="nombres"]').value.trim(),a:f.querySelector('[name="apellidos"]').value.trim(),t:f.querySelector('[name="esNino"]').checked?'nino':'adulto'}));
+      const personas=[...filasInvitados.children].map(f=>({n:presentarNombre(f.querySelector('[name="nombres"]').value),a:presentarNombre(f.querySelector('[name="apellidos"]').value),t:f.querySelector('[name="esNino"]').checked?'nino':'adulto'}));
       if(!personas.length||personas.length>5||personas.some(p=>!p.n||!p.a)){
         confirmarPersonas.close();estadoPase.textContent='Completa nombres y apellidos de cada persona.';return;
       }
@@ -2549,7 +2553,7 @@ module.exports = QRCode;
       try{
         const preview=await prepararVistaPase(paseGuardado);
         // Decode the pass before changing size, so the old QR never grows during loading.
-        img.src=preview;img.alt='Pase digital para '+paseGuardado.personas.map(p=>p.n+' '+p.a).join(', ');img.classList.add('pase-en-tarjeta');img.hidden=false;
+        img.src=preview;img.alt='Pase digital para '+paseGuardado.personas.map(p=>presentarNombre(p.n)+' '+presentarNombre(p.a)).join(', ');img.classList.add('pase-en-tarjeta');img.hidden=false;
         paseVisible=true;button.textContent='Ver Código QR';
         asegurarPaseRemoto(paseGuardado).catch(()=>{});
       }catch(error){img.hidden=false;document.getElementById('resumen-pase').textContent=error.message||'No fue posible abrir el pase.';button.textContent='Abrir pase';}
