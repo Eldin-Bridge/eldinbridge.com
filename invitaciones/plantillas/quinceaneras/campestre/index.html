@@ -662,10 +662,12 @@
     #faltan-personas{background:#b52e35;border-color:#b52e35;color:#fff}
     #faltan-personas:hover{background:#98262c;border-color:#98262c}
     #pase-digital .campo-persona{min-width:0}
-    #pase-digital .cabecera-campo{display:flex;align-items:center;justify-content:space-between;gap:3px;min-height:18px}
+    #pase-digital .cabecera-campo{position:relative;display:flex;align-items:center;justify-content:space-between;gap:3px;min-height:18px}
     #pase-digital .cabecera-campo>label{white-space:nowrap}
-    #pase-digital .selector-edad{display:inline-flex;align-items:center;gap:3px;cursor:pointer;font-size:.69rem;line-height:1;flex:none}
-    #pase-digital .fila-invitado .selector-edad input{width:14px;min-width:14px;height:14px;min-height:14px;max-height:14px;margin:0;padding:0;accent-color:var(--sage-dark)}
+    #pase-digital .opciones-edad{position:absolute;right:-28px;top:0;display:inline-flex;align-items:center;gap:2px;white-space:nowrap;height:18px}
+    #pase-digital .selector-edad{display:inline-flex;align-items:center;gap:2px;cursor:pointer;font-size:.65rem;line-height:1;flex:none}
+    #pase-digital .edad-o{font-size:.65rem;line-height:1;color:var(--sage-dark)}
+    #pase-digital .fila-invitado .selector-edad input{width:12px;min-width:12px;height:12px;min-height:12px;max-height:12px;margin:0;padding:0;accent-color:var(--sage-dark)}
     #pase-digital .leyenda-edad{font-size:.7rem;line-height:1.3;color:var(--sage-dark);margin:5px 0 0}
   </style>
 </head>
@@ -812,7 +814,7 @@
         <div class="ornamento revelar" aria-hidden="true">✦ ❧ ✦</div>
         <p class="sobrelinea revelar">Tu entrada a la celebración</p>
         <h2 class="titulo revelar">Pase Digital</h2>
-        <p class="texto revelar">Registra hasta cinco personas, incluyéndote, con nombres y apellidos.</p><p class="leyenda-edad">Sin marcar: adulto · Marca Niño si corresponde.</p>
+        <p class="texto revelar">Registra hasta cinco personas, incluyéndote, con nombres y apellidos.</p><p class="leyenda-edad">Selecciona Niño o Adulto para cada persona.</p>
         <form id="formulario-pase" class="formulario-pase">
           <div id="filas-invitados"></div>
           <p id="cantidad-invitados" class="cantidad-personas"></p>
@@ -2288,7 +2290,7 @@ module.exports = QRCode;
     function actualizarFormularioPase() {
       const filas = [...filasInvitados.children];
       botonGenerar.hidden=false;
-      botonGenerar.disabled=!!paseGuardado||!filas.some(f=>[...f.querySelectorAll('input')].filter(i=>i.name!=='esNino').every(i=>i.validity.valid&&i.value.trim()));
+      botonGenerar.disabled=!!paseGuardado||!filas.some(f=>[...f.querySelectorAll('input')].filter(i=>i.name!=='esNino'&&i.name!=='esAdulto').every(i=>i.validity.valid&&i.value.trim()));
       document.getElementById('agregar-invitado').disabled = filas.length >= OPCIONES_EXTRAS.maxInvitados;
       document.getElementById('cantidad-invitados').textContent = `${filas.length} de ${OPCIONES_EXTRAS.maxInvitados} personas`;
     }
@@ -2308,10 +2310,17 @@ module.exports = QRCode;
         input.addEventListener('input',()=>{input.setCustomValidity(input.value.trim()?'':'Completa este campo.');actualizarFormularioPase();});
         cabecera.appendChild(label);
         if(tipo==='apellidos'){
-          const selector=document.createElement('label');selector.className='selector-edad';selector.title='Marca si es niño; sin marcar se registra como adulto';
-          const check=document.createElement('input');check.type='checkbox';check.name='esNino';check.value='nino';
-          check.setAttribute('aria-label','Registrar esta persona como niño');
-          const texto=document.createElement('span');texto.textContent='Niño';selector.appendChild(check);selector.appendChild(texto);cabecera.appendChild(selector);
+          const grupo=document.createElement('span');grupo.className='opciones-edad';grupo.setAttribute('role','group');grupo.setAttribute('aria-label','Tipo de persona');
+          const opcionNino=document.createElement('label');opcionNino.className='selector-edad';
+          const nino=document.createElement('input');nino.type='checkbox';nino.name='esNino';nino.value='nino';nino.setAttribute('aria-label','Niño');
+          const textoNino=document.createElement('span');textoNino.textContent='Niño';opcionNino.appendChild(nino);opcionNino.appendChild(textoNino);
+          const separador=document.createElement('span');separador.className='edad-o';separador.textContent='o';separador.setAttribute('aria-hidden','true');
+          const opcionAdulto=document.createElement('label');opcionAdulto.className='selector-edad';
+          const adulto=document.createElement('input');adulto.type='checkbox';adulto.name='esAdulto';adulto.value='adulto';adulto.checked=true;adulto.setAttribute('aria-label','Adulto');
+          const textoAdulto=document.createElement('span');textoAdulto.textContent='Adulto';opcionAdulto.appendChild(textoAdulto);opcionAdulto.appendChild(adulto);
+          function seleccionarEdad(esNino){nino.checked=esNino;adulto.checked=!esNino;}
+          nino.addEventListener('change',()=>seleccionarEdad(true));adulto.addEventListener('change',()=>seleccionarEdad(false));
+          grupo.appendChild(opcionNino);grupo.appendChild(separador);grupo.appendChild(opcionAdulto);cabecera.appendChild(grupo);
         }
         campo.appendChild(cabecera);campo.appendChild(input);fila.appendChild(campo);
       });
