@@ -3148,10 +3148,33 @@
     });
     document.getElementById('cerrar-pase').addEventListener('click', () => { if (document.body.classList.contains('solo-pase')) { const url = new URL(location.href); url.hash = ''; location.href = url.href; } else dialogoPase.close(); });
     const enlaceAlbum = document.getElementById('ver-album');
+    const regresoAlbum = new URL(location.href);
+    regresoAlbum.hash = 'album-fotos';
+
     const direccionAlbum = new URL(OPCIONES_EXTRAS.urlAlbum);
-    direccionAlbum.searchParams.set('volver', location.href);
+    direccionAlbum.searchParams.set('volver', regresoAlbum.href);
+
     enlaceAlbum.href = direccionAlbum.href;
     enlaceAlbum.innerHTML = iconoCamara + '<span>Ver Álbum De Fotos</span>';
+
+    if (location.hash === '#album-fotos') {
+      document.body.classList.add('iniciada');
+      entrada.classList.add('oculta');
+      saliendo = false;
+      ajustarAltura(true);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const indice = secciones.findIndex(
+            seccion => seccion.id === 'album-fotos'
+          );
+          if (indice !== -1) irA(indice, false);
+        });
+      });
+
+      clearInterval(intervaloParticulas);
+      intervaloParticulas = setInterval(crearLuz, 950);
+    }
     window.addEventListener('storage', e => { if (e.key !== CLAVE_PASE) return; if (e.newValue) { try { aplicarPaseGuardado(leerPase(e.newValue)); } catch { } } else reiniciarPase(false); });
     document.querySelectorAll('.foto-extra').forEach((seccion, i) => {
       const imagen = seccion.querySelector('img');
