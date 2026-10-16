@@ -1231,6 +1231,22 @@
       accent-color: var(--sage-dark)
     }
   </style>
+
+  <script>
+    if (location.hash === '#album-fotos') {
+      document.documentElement.classList.add('regresando-album');
+    }
+  </script>
+  <style>
+    html.regresando-album body {
+      visibility: hidden !important;
+    }
+
+    html.regresando-album #entrada {
+      display: none !important;
+      transition: none !important;
+    }
+  </style>
 </head>
 
 <body>
@@ -3169,6 +3185,7 @@
             seccion => seccion.id === 'album-fotos'
           );
           if (indice !== -1) irA(indice, false);
+          document.documentElement.classList.remove('regresando-album');
         });
       });
 
