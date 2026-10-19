@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor de Quintas</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <header class="encabezado">
+    <h1>Editor de Quintas</h1>
+    <span>Diseño de terrenos</span>
+  </header>
+
+  <main>
+    <!-- Configuración inicial -->
+    <section id="configuracion">
+      <h2>Configurar terreno</h2>
+      <p>Introduce las dimensiones reales en metros.</p>
+
+      <form id="formTerreno">
+        <label for="ancho">Ancho (máximo 35 m)</label>
+        <input id="ancho" type="number"
+               min="1" max="35" step="0.01"
+               value="35" required>
+
+        <label for="largo">Largo (máximo 65 m)</label>
+        <input id="largo" type="number"
+               min="1" max="65" step="0.01"
+               value="65" required>
+
+        <button type="submit">Crear terreno</button>
+      </form>
+    </section>
+
+    <!-- Editor -->
+    <section id="editor" hidden>
+      <aside class="herramientas">
+        <h2>Materiales</h2>
+
+        <button data-material="pasto">Pasto</button>
+        <button data-material="tierra">Tierra</button>
+        <button data-material="piso">Piso</button>
+        <button data-material="vitropiso">Vitropiso</button>
+
+        <h2>Cuadrícula</h2>
+        <label for="tamCelda">Separación (metros)</label>
+        <select id="tamCelda">
+          <option value="1">1 m</option>
+          <option value="0.5">50 cm</option>
+          <option value="0.25">25 cm</option>
+        </select>
+
+        <label>
+          <input type="checkbox" id="mostrarGrid" checked>
+          Mostrar cuadrícula
+        </label>
+
+        <h2>Herramientas</h2>
+        <button id="modoPincel">Pincel</button>
+        <button id="modoArea">Seleccionar área</button>
+        <button id="deshacer">Deshacer</button>
+        <button id="guardar">Guardar</button>
+        <button id="exportar">Exportar proyecto</button>
+      </aside>
+
+      <div class="zonaPlano">
+        <div class="barraPlano">
+          <span id="infoTerreno"></span>
+          <button id="zoomMenos">−</button>
+          <button id="zoomMas">+</button>
+          <button id="volverConfig">Medidas</button>
+        </div>
+
+        <div class="lienzo">
+          <canvas id="plano"></canvas>
+        </div>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
