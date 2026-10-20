@@ -23,11 +23,12 @@
   let mode = 'brush', material = 'pasto', zoom = 1, scale = 10, showGrid = true, showCotas = true;
   let view = 'horizontal', objectDimensions = 'todos';
   let chainPoint=null,lastWall=null,dimensionPoints=[];
-  let separationPoints=[];
+  let separationPoints=[],separationClicks=[],separationAxis='x';
+  let pendingErase=null,dimensionHits=[],activeDimensionId=null;
   let referenceImage=null,detectedWalls=[];
   const uid=()=> 'o'+Date.now().toString(36)+Math.random().toString(36).slice(2);
   const snap=p=>({x:round(clamp(Math.round(p.x/state.step)*state.step,0,state.width)),y:round(clamp(Math.round(p.y/state.step)*state.step,0,state.length))});
-  function endTools(){chainPoint=null;lastWall=null;dimensionPoints=[];separationPoints=[];$('cotaEnPlano').hidden=true;if($('puntosSeparacion'))$('puntosSeparacion').textContent='Pulsa una pared de referencia y después el lado del objeto que deseas mover.';}
+  function endTools(){chainPoint=null;lastWall=null;dimensionPoints=[];separationPoints=[];separationClicks=[];$('cotaEnPlano').hidden=true;if($('puntosSeparacion'))$('puntosSeparacion').textContent='Pulsa una pared de referencia y después el lado del objeto que deseas mover.';}
   function edgePoint(ref){const o=state.objects.find(o=>o.id===ref.id);if(!o)return null;const b=bounds(o);return ref.side==='left'?{x:b.x,y:b.y+b.h*ref.t}:ref.side==='right'?{x:b.x+b.w,y:b.y+b.h*ref.t}:ref.side==='top'?{x:b.x+b.w*ref.t,y:b.y}:{x:b.x+b.w*ref.t,y:b.y+b.h};}
   function refreshDimensions(){state.dimensions=state.dimensions.filter(q=>{if(!q.link)return true;const a=edgePoint(q.link.a),b=edgePoint(q.link.b);if(!a||!b)return false;q.x1=a.x;q.x2=q.axis==='x'?b.x:a.x;q.y1=a.y;q.y2=q.axis==='y'?b.y:a.y;return true;});}
   function linkedCount(axis){return state.dimensions.filter(q=>q.link&&q.axis===axis).length;}
@@ -63,33 +64,33 @@
   function sync() {
     $('ancho').value=state.width; $('largo').value=state.length; $('tamCelda').value=state.step;
     $('deshacer').disabled=!undo.length; $('rehacer').disabled=!redo.length;
-    $('eliminarObjeto').disabled=!selected;
-    $('seleccionInfo').textContent=selected?'Objeto seleccionado. Arrastra o edita sus medidas.':'Sin objeto seleccionado.';
-    $('aplicarObjeto').textContent=selected?'Aplicar cambios':'Agregar con estas medidas';
+    $('seleccionInfo').textContent=selected?'Objeto seleccionado: arrastra para moverlo; cambia sus medidas aquí. Agregar coloca otro objeto.':'Selecciona un objeto en el plano para moverlo o editar sus medidas.';
+    $('aplicarObjeto').textContent='Agregar';for(const [id,on] of [['borradorPlano',mode==='erase'],['seleccionarPlano',mode==='select']]){$(id).classList.toggle('activo',on);$(id).setAttribute('aria-pressed',String(on));}
     $('zoomMas').disabled=zoom>=3; $('zoomMenos').disabled=zoom<=.2;
     const list=$('listaCotas'),chosen=list.value;list.replaceChildren();const blank=document.createElement('option');blank.value='';blank.textContent='Elige una cota';list.appendChild(blank);
     for(const q of state.dimensions){const option=document.createElement('option');option.value=q.id;option.textContent=`${q.axis==='x'?'X':'Y'} · ${fmt(Math.abs(q.axis==='x'?q.x2-q.x1:q.y2-q.y1))} m`;list.appendChild(option);}list.value=chosen;
     document.querySelectorAll('[data-material]').forEach(b=>{const active=b.dataset.material===material; b.classList.toggle('activo',active);b.setAttribute('aria-pressed',String(active));});
     document.querySelectorAll('[data-mode]').forEach(b=>{const active=b.dataset.mode===mode;b.classList.toggle('activo',active);b.setAttribute('aria-pressed',String(active));});
-    $('instruccion').textContent=mode==='select'?'Seleccionar / mover · Haz clic en un objeto y arrastra. Suprimir elimina la selección.':`${names[material]} · ${mode==='area'?'Área: arrastra un rectángulo':'Pincel: arrastra sobre el terreno'}.`;
+    $('instruccion').textContent=mode==='select'?'Seleccionar / mover · Haz clic en un objeto y arrastra. Suprimir pide confirmar el borrado.':`${names[material]} · ${mode==='area'?'Área: arrastra un rectángulo':'Pincel: arrastra sobre el terreno'}.`;
     canvas.style.cursor=mode==='select'?'grab':'crosshair';
+    if(mode==='erase')$('instruccion').textContent='Borrador · Pulsa un objeto, superficie o cota y confirma con Sí o No.';
     if(mode==='wall')$('instruccion').textContent='Paredes · Pulsa el inicio y después el final de cada tramo. Puedes girar cambiando de eje. Escape termina.';
     if(mode==='dimension')$('instruccion').textContent='Cota manual · 1: inicio · 2: final · 3: posición de la línea de cota (puede ser exterior).';
-    if(mode==='separation')$('instruccion').textContent='Separación · Pulsa el lado de la referencia y luego el lado del objeto; abre Cotas para escribir la distancia.';
+    if(mode==='separation')$('instruccion').textContent='Separación · Pulsa el lado de la referencia y luego el lado del objeto; escribe la distancia aquí mismo.';
   }
   function fillForm(o) {
-    $('tipo').value=o.type; $('objX').value=o.x; $('objY').value=o.y; $('objW').value=o.w; $('objH').value=o.h; $('rotacion').value=o.rotation;
+    $('tipo').value=o.type; $('objW').value=o.w; $('objH').value=o.h; $('rotacion').value=o.rotation;
     constraints();
   }
   function constraints() {
     const type=$('tipo').value, min=defaults[type][2], thin=['pared','puerta','ventana'].includes(type);
     $('objW').min=min; $('objH').min=thin?.2:min; $('objH').readOnly=thin;
     if(thin) $('objH').value=.2;
-    $('objAyuda').textContent=(thin?'Grosor fijo: 0.20 m. ':'')+`Medida mínima: ${fmt(min)} m. X/Y: esquina superior izquierda; sin ajuste a la cuadrícula.`;
+    $('objAyuda').textContent=(thin?'Grosor fijo: 0.20 m. ':'')+`Medida mínima: ${fmt(min)} m. Selecciona un objeto para editar estas medidas.`;
   }
   function fresh() {selected=null; const t=$('tipo').value,base={id:uid(),type:t,x:0,y:0,w:defaults[t][0],h:defaults[t][1],rotation:0},placed=freePosition(base);fillForm(placed||base);if(!placed)say('No queda espacio para este tamaño. Reduce sus medidas.');sync();render();}
   function render() {
-    refreshDimensions();
+    refreshDimensions();dimensionHits=[];activeDimensionId=null;
     const host=canvas.parentElement;
     const projected=projection();
     if(host.clientWidth<1||host.clientHeight<1)return;
@@ -114,7 +115,8 @@
     if(showCotas){const center=screen(state.width/2,state.length/2);dimension(screen(0,0),screen(state.width,0),state.width,center,29+24*linkedCount('x'));dimension(screen(0,0),screen(0,state.length),state.length,center,29+24*linkedCount('y'));}
     if(objectDimensions!=='ninguno')for(const o of state.objects){if(objectDimensions==='seleccion'&&o.id!==selected)continue;const b=bounds(o),center=screen(b.x+b.w/2,b.y+b.h/2);dimension(screen(b.x,b.y),screen(b.x+b.w,b.y),b.w,center,13,o.id===selected);dimension(screen(b.x+b.w,b.y),screen(b.x+b.w,b.y+b.h),b.h,center,13,o.id===selected);}
     const lanes={x:0,y:0};
-    for(const q of state.dimensions){if(q.link){drawSeparation(q,lanes[q.axis]++);continue;}const a=screen(q.x1,q.y1),b=screen(q.x2,q.y2),side=q.axis==='x'?screen(q.x1,q.y1+q.offset):screen(q.x1+q.offset,q.y1);const center={x:2*a.x-side.x,y:2*a.y-side.y};const dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy),gap=len?Math.abs((side.x-a.x)*(-dy/len)+(side.y-a.y)*(dx/len)):0;dimension(a,b,Math.abs(q.axis==='x'?q.x2-q.x1:q.y2-q.y1),center,gap,true);}
+    for(const q of state.dimensions){activeDimensionId=q.id;if(q.link){drawSeparation(q,lanes[q.axis]++);continue;}const a=screen(q.x1,q.y1),b=screen(q.x2,q.y2),side=q.axis==='x'?screen(q.x1,q.y1+q.offset):screen(q.x1+q.offset,q.y1);const center={x:2*a.x-side.x,y:2*a.y-side.y};const dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy),gap=len?Math.abs((side.x-a.x)*(-dy/len)+(side.y-a.y)*(dx/len)):0;dimension(a,b,Math.abs(q.axis==='x'?q.x2-q.x1:q.y2-q.y1),center,gap,true);}
+    activeDimensionId=null;
     for(const p of [chainPoint,...dimensionPoints,...separationPoints.map(edgePoint)].filter(Boolean)){const q=screen(p.x,p.y);ctx.fillStyle='#ffe06b';ctx.beginPath();ctx.arc(q.x,q.y,5,0,Math.PI*2);ctx.fill();}
     $('infoTerreno').textContent=`${fmt(state.width)} × ${fmt(state.length)} m · ${fmt(state.width*state.length)} m² · ${Math.round(zoom*100)}%`;
   }
@@ -128,7 +130,7 @@
   function dimension(a,b,value,center,gap,active=false){
     const dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy);if(len<.01)return;
     let nx=-dy/len,ny=dx/len;const mid={x:(a.x+b.x)/2,y:(a.y+b.y)/2};if(nx*(mid.x-center.x)+ny*(mid.y-center.y)<0){nx=-nx;ny=-ny;}
-    const p={x:a.x+nx*gap,y:a.y+ny*gap},q={x:b.x+nx*gap,y:b.y+ny*gap};
+    const p={x:a.x+nx*gap,y:a.y+ny*gap},q={x:b.x+nx*gap,y:b.y+ny*gap};if(activeDimensionId)dimensionHits.push({id:activeDimensionId,a:p,b:q});
     ctx.save();ctx.strokeStyle=active?'#ffe06b':'#bdd6ee';ctx.fillStyle=ctx.strokeStyle;ctx.lineWidth=1;ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(a.x+nx*4,a.y+ny*4);ctx.lineTo(p.x+nx*5,p.y+ny*5);ctx.moveTo(b.x+nx*4,b.y+ny*4);ctx.lineTo(q.x+nx*5,q.y+ny*5);ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);
     for(const t of [p,q]){ctx.moveTo(t.x-dx/len*3-nx*3,t.y-dy/len*3-ny*3);ctx.lineTo(t.x+dx/len*3+nx*3,t.y+dy/len*3+ny*3);}ctx.stroke();
     let angle=Math.atan2(dy,dx);if(angle>Math.PI/2||angle< -Math.PI/2)angle+=Math.PI;
@@ -183,7 +185,7 @@
     else{endTools();say(stopped?'Pared conectada con otra pared. Cadena terminada.':'Pared colocada. Pulsa un nuevo inicio.');}render();
   }
   function placeDimension(p){
-    if(dimensionPoints.length<2){if(p.x<0||p.y<0||p.x>state.width||p.y>state.length)return say('Marca los extremos dentro del terreno o en su borde.');p=snap(p);
+    if(dimensionPoints.length<2){if(p.x< -1e-8||p.y< -1e-8||p.x>state.width+1e-8||p.y>state.length+1e-8)return say('Marca los extremos dentro del terreno o en su borde.');p=snap(p);
       if(dimensionPoints.length){const a=dimensionPoints[0];if(Math.abs(p.x-a.x)>=Math.abs(p.y-a.y))p.y=a.y;else p.x=a.x;if(p.x===a.x&&p.y===a.y)return say('Elige un final distinto del inicio.');}
       dimensionPoints.push(p);render();say(dimensionPoints.length===1?'Marca el final de la cota.':'Pulsa por fuera para colocar la línea de cota.');return;
     }
@@ -192,21 +194,15 @@
     if(Math.abs(offset)<.01)return say('Aleja la línea de cota de los extremos.');
     action(()=>{state.dimensions.push({id:uid(),axis,x1:a.x,y1:a.y,x2:b.x,y2:b.y,offset});});dimensionPoints=[];say('Cota colocada en metros. Puedes colocar otra o cambiar de herramienta.');render();
   }
-  function chooseSeparation(p){
-    const axis=$('ejeSeparacion').value,hit=[...state.objects].reverse().find(o=>{const b=bounds(o),pad=Math.max(.1,6/scale);return p.x>=b.x-pad&&p.x<=b.x+b.w+pad&&p.y>=b.y-pad&&p.y<=b.y+b.h+pad;});
-    if(!hit)return say('Pulsa un lado de una pared u objeto.');
-    if(separationPoints.length===2)separationPoints=[];
-    if(separationPoints[0]?.id===hit.id)return say('El segundo punto debe pertenecer a otro objeto.');
-    const b=bounds(hit),side=axis==='x'?(Math.abs(p.x-b.x)<Math.abs(p.x-b.x-b.w)?'left':'right'):(Math.abs(p.y-b.y)<Math.abs(p.y-b.y-b.h)?'top':'bottom');
-    separationPoints.push({id:hit.id,side,t:clamp(axis==='x'?(p.y-b.y)/b.h:(p.x-b.x)/b.w,0,1)});
-    $('puntosSeparacion').textContent=separationPoints.length===1?'Referencia elegida. Pulsa el lado del objeto que deseas mover.':'Dos lados elegidos. Escribe la separación y pulsa Aplicar separación.';
-    if(separationPoints.length===2){const a=edgePoint(separationPoints[0]),c=edgePoint(separationPoints[1]),v=round(Math.abs(a[axis]-c[axis]));$('distanciaSeparacion').value=v;$('metrosEnPlano').value=v;closeMenus();const panel=$('cotaEnPlano'),host=canvas.parentElement,sp=screen(c.x,c.y);panel.style.left=clamp((canvas.offsetLeft||0)+sp.x+12,(host.scrollLeft||0)+12,(host.scrollLeft||0)+Math.max(12,host.clientWidth-320))+'px';panel.style.top=clamp((canvas.offsetTop||0)+sp.y+12,(host.scrollTop||0)+12,(host.scrollTop||0)+Math.max(12,host.clientHeight-100))+'px';panel.hidden=false;$('metrosEnPlano').focus();$('metrosEnPlano').select();}
-    render();say($('puntosSeparacion').textContent);
+  function anchorFor(o,p,axis){const b=bounds(o),side=axis==='x'?(Math.abs(p.x-b.x)<Math.abs(p.x-b.x-b.w)?'left':'right'):(Math.abs(p.y-b.y)<Math.abs(p.y-b.y-b.h)?'top':'bottom');return {id:o.id,side,t:clamp(axis==='x'?(p.y-b.y)/b.h:(p.x-b.x)/b.w,0,1)};}
+  function showDistanceEditor(){const [ra,rb]=separationPoints,a=edgePoint(ra),b=edgePoint(rb);if(!a||!b)return;const v=round(Math.abs(a[separationAxis]-b[separationAxis]));$('metrosEnPlano').value=v;closeMenus();const panel=$('cotaEnPlano'),host=canvas.parentElement,sp=screen(b.x,b.y);panel.style.left=clamp((canvas.offsetLeft||0)+sp.x+12,(host.scrollLeft||0)+12,(host.scrollLeft||0)+Math.max(12,host.clientWidth-320))+'px';panel.style.top=clamp((canvas.offsetTop||0)+sp.y+12,(host.scrollTop||0)+12,(host.scrollTop||0)+Math.max(12,host.clientHeight-100))+'px';panel.hidden=false;$('metrosEnPlano').focus();$('metrosEnPlano').select();}
+  function chooseSeparation(p){const hit=[...state.objects].reverse().find(o=>{const b=bounds(o),pad=Math.max(.1,6/scale);return p.x>=b.x-pad&&p.x<=b.x+b.w+pad&&p.y>=b.y-pad&&p.y<=b.y+b.h+pad;});if(!hit)return say('Pulsa un punto del lado de una pared u objeto.');if(separationPoints.length===2){separationPoints=[];separationClicks=[];$('cotaEnPlano').hidden=true;}if(separationPoints[0]?.id===hit.id)return say('El segundo punto debe pertenecer a otro objeto.');
+    if(!separationPoints.length){const b=bounds(hit),nearX=Math.min(Math.abs(p.x-b.x),Math.abs(p.x-b.x-b.w)),nearY=Math.min(Math.abs(p.y-b.y),Math.abs(p.y-b.y-b.h));separationClicks=[p];separationPoints=[anchorFor(hit,p,nearX<=nearY?'x':'y')];say('Referencia elegida. Pulsa el lado del objeto que deseas separar.');}
+    else{const first=separationClicks[0];separationAxis=Math.abs(p.x-first.x)>=Math.abs(p.y-first.y)?'x':'y';const reference=state.objects.find(o=>o.id===separationPoints[0].id);separationPoints=[anchorFor(reference,first,separationAxis),anchorFor(hit,p,separationAxis)];separationClicks.push(p);showDistanceEditor();say('Escribe la separación en metros sobre el plano.');}render();
   }
-  $('ejeSeparacion').addEventListener('change',()=>{endTools();render();});
-  $('formSeparacion').addEventListener('submit',e=>{
-    e.preventDefault();if(separationPoints.length!==2)return say('Primero elige una referencia y el lado de otro objeto.');
-    const axis=$('ejeSeparacion').value,dist=Number($('distanciaSeparacion').value);if(!Number.isFinite(dist)||dist<0||dist>65)return say('Introduce una distancia de 0 a 65 m.');
+  function applySeparation(distance){
+if(separationPoints.length!==2)return say('Primero elige una referencia y el lado de otro objeto.');
+    const axis=separationAxis,dist=Number(distance);if(!Number.isFinite(dist)||dist<0||dist>65)return say('Introduce una distancia de 0 a 65 m.');
     const [ref,target]=separationPoints,a=edgePoint(ref),b=edgePoint(target),original=state.objects.find(o=>o.id===target.id);if(!a||!b||!original)return say('Selecciona nuevamente los dos lados.');
     const sign=Math.sign(b[axis]-a[axis])||(target.side==='left'||target.side==='top'?1:-1),next={...original,[axis]:round(original[axis]+a[axis]+sign*dist-b[axis])};
     if(!fits(next))return say('Esa separación dejaría el objeto fuera del terreno. Introduce una distancia menor.');
@@ -214,9 +210,13 @@
     const refs=JSON.parse(JSON.stringify({a:ref,b:target}));
     action(()=>{state.objects=state.objects.map(o=>o.id===next.id?next:o);state.dimensions=state.dimensions.filter(q=>!(q.link&&q.axis===axis&&q.link.a.id===ref.id&&q.link.a.side===ref.side&&q.link.b.id===target.id&&q.link.b.side===target.side));state.dimensions.push({id:uid(),axis,x1:a.x,y1:a.y,x2:axis==='x'?a.x+sign*dist:a.x,y2:axis==='y'?a.y+sign*dist:a.y,offset:0,link:refs});selected=next.id;fillForm(next);});
     closeMenus();$('cotaEnPlano').hidden=true;say(`Objeto separado ${fmt(dist)} m entre los lados elegidos. Cota colocada bajo la cota total.`);
-  });
-  $('cotaEnPlano').addEventListener('submit',e=>{e.preventDefault();$('distanciaSeparacion').value=$('metrosEnPlano').value;$('formSeparacion').requestSubmit();});
+  }
+
+  $('cotaEnPlano').addEventListener('submit',e=>{e.preventDefault();applySeparation($('metrosEnPlano').value);});
   $('cancelarCotaPlano').addEventListener('click',()=>{endTools();render();});
+  $('listaCotas').addEventListener('change',()=>{const q=state.dimensions.find(q=>q.id===$('listaCotas').value);if(q?.link){cancel();mode='separation';separationAxis=q.axis;separationPoints=JSON.parse(JSON.stringify([q.link.a,q.link.b]));separationClicks=separationPoints.map(edgePoint);$('tipoCota').value='separation';sync();render();showDistanceEditor();}});
+  function activateCota(){cancel();endTools();mode=$('tipoCota').value;sync();closeMenus();render();}
+  $('tipoCota').addEventListener('change',activateCota);$('activarCota').addEventListener('click',activateCota);
   function imageFrame(){return {x:Number($('imagenX').value),y:Number($('imagenY').value),w:Number($('imagenW').value),h:Number($('imagenH').value),opacity:Number($('imagenOpacidad').value)};}
   function validFrame(r){return [r.x,r.y,r.w,r.h,r.opacity].every(Number.isFinite)&&r.w>0&&r.h>0&&r.x>=0&&r.y>=0&&r.x+r.w<=state.width+1e-8&&r.y+r.h<=state.length+1e-8&&r.opacity>=0&&r.opacity<=1;}
   $('imagenPlano').addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>15*1024*1024){say('Carga una imagen PNG, JPG o WebP de hasta 15 MB.');e.target.value='';return;}const url=URL.createObjectURL(file),image=new Image();image.onload=()=>{URL.revokeObjectURL(url);referenceImage={image,x:0,y:0,w:state.width,h:state.length,opacity:.5};detectedWalls=[];$('aplicarDeteccion').disabled=true;$('imagenW').value=state.width;$('imagenH').value=state.length;$('imagenX').value=0;$('imagenY').value=0;render();say('Imagen cargada. Ajusta sus medidas reales y detecta paredes o dibuja sobre ella.');};image.onerror=()=>{URL.revokeObjectURL(url);say('No se pudo leer la imagen.');};image.src=url;e.target.value='';});
@@ -238,17 +238,26 @@
   }
   $('detectarParedes').addEventListener('click',()=>{if(!referenceImage)return say('Primero carga una imagen.');try{const image=referenceImage.image,factor=Math.min(1,1200/Math.max(image.naturalWidth,image.naturalHeight)),w=Math.max(1,Math.round(image.naturalWidth*factor)),h=Math.max(1,Math.round(image.naturalHeight*factor)),temp=document.createElement('canvas');temp.width=w;temp.height=h;const c=temp.getContext('2d',{willReadFrequently:true});c.fillStyle='#fff';c.fillRect(0,0,w,h);c.drawImage(image,0,0,w,h);detectedWalls=extractWalls(c.getImageData(0,0,w,h).data,w,h,referenceImage);$('aplicarDeteccion').disabled=!detectedWalls.length;$('infoImagen').textContent=`${detectedWalls.length} tramos en borrador amarillo. Revisa escala y posición antes de agregarlos. La imagen es temporal; las paredes agregadas sí se guardan en el JSON.`;render();say('Detección terminada. Revisa el borrador amarillo.');}catch{say('No se pudo procesar esta imagen. Prueba otra imagen más pequeña.');}});
   $('aplicarDeteccion').addEventListener('click',()=>{let count=0;action(()=>{for(const o of detectedWalls)if(!collision(o)){state.objects.push(o);count++;}});detectedWalls=[];$('aplicarDeteccion').disabled=true;render();say(`${count} paredes agregadas. Se omitieron las que encimaban otros elementos. Puedes deshacer esta acción.`);});
-  $('listaCotas').addEventListener('change',()=>{const q=state.dimensions.find(q=>q.id===$('listaCotas').value);if(q?.link){separationPoints=JSON.parse(JSON.stringify([q.link.a,q.link.b]));$('ejeSeparacion').value=q.axis;$('distanciaSeparacion').value=round(Math.abs(q.axis==='x'?q.x2-q.x1:q.y2-q.y1));$('puntosSeparacion').textContent='Cota elegida. Cambia los metros y aplica para mover el segundo objeto.';}});
   $('dibujarPared').addEventListener('click',()=>{cancel();endTools();mode='wall';selected=null;sync();closeMenus();render();});
   $('terminarCadena').addEventListener('click',()=>{endTools();render();say('Cadena terminada.');});
   $('encadenar').addEventListener('change',()=>{endTools();});
-  $('borrarCota').addEventListener('click',()=>{const id=$('listaCotas').value;if(id)action(()=>{state.dimensions=state.dimensions.filter(q=>q.id!==id);say('Cota eliminada.');});});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){endTools();render();}});
+  function segmentDistance(p,a,b){const dx=b.x-a.x,dy=b.y-a.y,t=clamp(((p.x-a.x)*dx+(p.y-a.y)*dy)/(dx*dx+dy*dy||1),0,1);return Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy);}
+  function askErase(target){cancel();endTools();pendingErase=target;const description=target.kind==='object'?'Objeto seleccionado':target.kind==='dimension'?'Cota seleccionada':target.kind==='surface'?'Superficie seleccionada':'Imagen de referencia';$('detalleBorrar').textContent=description;$('confirmarBorrado').showModal();}
+  function eraseAt(p){const sp=screen(p.x,p.y),dim=[...dimensionHits].reverse().find(d=>segmentDistance(sp,d.a,d.b)<12);if(dim)return askErase({kind:'dimension',id:dim.id});const hit=[...state.objects].sort((a,b)=>(['puerta','ventana'].includes(a.type)?1:0)-(['puerta','ventana'].includes(b.type)?1:0)).reverse().find(o=>{const b=bounds(o);return p.x>=b.x&&p.x<=b.x+b.w&&p.y>=b.y&&p.y<=b.y+b.h;});if(hit)return askErase({kind:'object',id:hit.id});
+    if(p.x>=0&&p.y>=0&&p.x<state.width&&p.y<state.length){const r=area(p,p),keys=[...cells.keys()].filter(k=>{const [x,y]=k.split(':').map(Number);return x*unit<r.x+r.w&&x*unit+unit>r.x&&y*unit<r.y+r.h&&y*unit+unit>r.y;});if(keys.length)return askErase({kind:'surface',keys});}
+    if(referenceImage&&p.x>=referenceImage.x&&p.x<=referenceImage.x+referenceImage.w&&p.y>=referenceImage.y&&p.y<=referenceImage.y+referenceImage.h)return askErase({kind:'image'});say('No hay un elemento para borrar en ese punto.');}
+  $('borradorPlano').addEventListener('click',()=>{cancel();endTools();mode=mode==='erase'?'select':'erase';sync();closeMenus();render();});
+  $('seleccionarPlano').addEventListener('click',()=>{cancel();endTools();mode='select';sync();closeMenus();render();});
+  function dismissErase(){pendingErase=null;$('confirmarBorrado').close();}
+  $('noBorrar').addEventListener('click',dismissErase);$('confirmarBorrado').addEventListener('cancel',()=>{pendingErase=null;});$('confirmarBorrado').addEventListener('close',()=>{pendingErase=null;});
+  $('siBorrar').addEventListener('click',()=>{const target=pendingErase;if(!target)return;pendingErase=null;$('confirmarBorrado').close();action(()=>{if(target.kind==='object'){state.objects=state.objects.filter(o=>o.id!==target.id);if(selected===target.id)selected=null;}else if(target.kind==='dimension')state.dimensions=state.dimensions.filter(q=>q.id!==target.id);else if(target.kind==='surface')for(const key of target.keys)cells.delete(key);else{referenceImage=null;detectedWalls=[];$('aplicarDeteccion').disabled=true;}say('Elemento borrado.');});});
   canvas.addEventListener('pointerdown',e=>{
     if(e.button!==0||drag)return;const p=point(e,false);
+    if(mode==='erase'){eraseAt(p);return;}
     if(mode==='dimension'){placeDimension(p);return;}
     if(mode==='separation'){chooseSeparation(p);return;}
-    if(p.x<0||p.y<0||p.x>state.width||p.y>state.length)return;
+    if(p.x< -1e-8||p.y< -1e-8||p.x>state.width+1e-8||p.y>state.length+1e-8)return;
     if(mode==='wall'){placeWall(snap(p));return;}
     e.preventDefault();canvas.setPointerCapture(e.pointerId);drag={id:e.pointerId,start:p,current:p,before:serialize()};
     if(mode==='select'){
@@ -258,7 +267,7 @@
   });
   function moving(e){if(!drag||e.pointerId!==drag.id)return;const p=point(e);
     if(mode==='brush')stroke(drag.current,p);
-    if(mode==='select'&&drag.object){const o=state.objects.find(o=>o.id===selected),b=bounds(o);let next={x:drag.object.x+p.x-drag.start.x,y:drag.object.y+p.y-drag.start.y};if($('ajusteMovimiento').value==='grid'){next=snap(next);next.x=Math.min(next.x,Math.floor((state.width-b.w)/state.step)*state.step);next.y=Math.min(next.y,Math.floor((state.length-b.h)/state.step)*state.step);}if($('ejeMovimiento').value==='x')next.y=drag.object.y;if($('ejeMovimiento').value==='y')next.x=drag.object.x;let candidate=magnet({...o,x:round(clamp(next.x,0,state.width-b.w)),y:round(clamp(next.y,0,state.length-b.h))});if($('ejeMovimiento').value==='x')candidate.y=o.y;if($('ejeMovimiento').value==='y')candidate.x=o.x;const start={...o};if(collision(start)&&!collision(candidate)){o.x=candidate.x;o.y=candidate.y;}else{const steps=Math.max(1,Math.ceil(Math.hypot(candidate.x-start.x,candidate.y-start.y)/.05));for(let i=1;i<=steps;i++){const part={...o,x:round(start.x+(candidate.x-start.x)*i/steps),y:round(start.y+(candidate.y-start.y)*i/steps)};if(collision(part)){if($('ajusteMovimiento').value==='grid'){o.x=start.x;o.y=start.y;}break;}o.x=part.x;o.y=part.y;}}fillForm(o);}
+    if(mode==='select'&&drag.object){const o=state.objects.find(o=>o.id===selected),b=bounds(o);let next={x:drag.object.x+p.x-drag.start.x,y:drag.object.y+p.y-drag.start.y};if($('ajusteMovimiento').value==='grid'){next=snap(next);next.x=Math.min(next.x,Math.floor((state.width-b.w)/state.step)*state.step);next.y=Math.min(next.y,Math.floor((state.length-b.h)/state.step)*state.step);}let candidate=magnet({...o,x:round(clamp(next.x,0,state.width-b.w)),y:round(clamp(next.y,0,state.length-b.h))});const start={...o};if(collision(start)&&!collision(candidate)){o.x=candidate.x;o.y=candidate.y;}else{const steps=Math.max(1,Math.ceil(Math.hypot(candidate.x-start.x,candidate.y-start.y)/.05));for(let i=1;i<=steps;i++){const part={...o,x:round(start.x+(candidate.x-start.x)*i/steps),y:round(start.y+(candidate.y-start.y)*i/steps)};if(collision(part)){if($('ajusteMovimiento').value==='grid'){o.x=start.x;o.y=start.y;}break;}o.x=part.x;o.y=part.y;}}fillForm(o);}
     drag.current=p;render();
   }
   canvas.addEventListener('pointermove',moving);
@@ -269,14 +278,14 @@
   document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{cancel();endTools();mode=b.dataset.mode;sync();render();}));
   $('tamCelda').addEventListener('change',()=>action(()=>{state.step=Number($('tamCelda').value);say('Separación cambiada. Las superficies conservan su posición.');}));
   $('formTerreno').addEventListener('submit',e=>{e.preventDefault();const w=Number($('ancho').value),h=Number($('largo').value);if(!Number.isFinite(w)||!Number.isFinite(h)||w<1||w>35||h<1||h>65)return say('Ancho: 1–35 m. Largo: 1–65 m.');if(state.dimensions.some(q=>q.x1>w||q.x2>w||q.y1>h||q.y2>h))return say('Hay cotas fuera de las nuevas medidas. Elimínalas antes de reducir el terreno.');if(state.objects.some(o=>!fits(o,w,h)))return say('Hay objetos fuera de las nuevas medidas. Muévelos o elimínalos antes de reducir el terreno.');action(()=>{state.width=w;state.length=h;cells=new Map([...cells].filter(([k])=>{const [x,y]=k.split(':').map(Number);return x*unit<w&&y*unit<h;}));say('Medidas actualizadas. El recorte de superficies se puede deshacer.');});});
-  $('tipo').addEventListener('change',fresh);$('nuevoObjeto').addEventListener('click',fresh);
-  $('formObjeto').addEventListener('submit',e=>{e.preventDefault();const type=$('tipo').value,o={id:selected||('o'+Date.now().toString(36)+Math.random().toString(36).slice(2)),type,x:Number($('objX').value),y:Number($('objY').value),w:Number($('objW').value),h:Number($('objH').value),rotation:Number($('rotacion').value)};if(!validObject(o)||!fits(o))return say('Revisa las medidas mínimas y que el objeto quede dentro del terreno.');if(collision(o))return say('El objeto se encimaría con otro. Muévelo o pulsa Nuevo objeto para buscar espacio.');action(()=>{if(selected)state.objects=state.objects.map(a=>a.id===selected?o:a);else state.objects.push(o);selected=o.id;mode='select';fillForm(o);say('Objeto colocado. Puedes moverlo o editar sus medidas.');});});
-  $('otroObjeto').addEventListener('click',()=>{const base={id:uid(),type:$('tipo').value,x:0,y:0,w:Number($('objW').value),h:Number($('objH').value),rotation:Number($('rotacion').value)};if(!validObject(base))return say('Revisa las medidas.');const next=freePosition(base);if(!next)return say('No queda espacio libre para otro objeto de ese tamaño.');selected=null;fillForm(next);$('formObjeto').requestSubmit();});
-  function remove(){if(!selected)return;action(()=>{state.objects=state.objects.filter(o=>o.id!==selected);selected=null;say('Objeto eliminado.');});}
-  $('eliminarObjeto').addEventListener('click',remove);
+  $('tipo').addEventListener('change',fresh);
+  function objectFromForm(id){return {id,type:$('tipo').value,x:0,y:0,w:Number($('objW').value),h:Number($('objH').value),rotation:Number($('rotacion').value)};}
+  $('formObjeto').addEventListener('submit',e=>{e.preventDefault();cancel();const base=objectFromForm(uid());if(!validObject(base))return say('Revisa las medidas mínimas.');const next=freePosition(base);if(!next)return say('No queda espacio libre para ese tamaño.');action(()=>{state.objects.push(next);selected=next.id;mode='select';endTools();fillForm(next);say('Objeto agregado. Arrastra para moverlo o vuelve a pulsar Agregar para colocar otro.');});closeMenus();});
+  for(const id of ['objW','objH','rotacion'])$(id).addEventListener('change',()=>{constraints();const original=state.objects.find(o=>o.id===selected);if(!original)return;const next={...original,w:Number($('objW').value),h:Number($('objH').value),rotation:Number($('rotacion').value)};if(!validObject(next)||!fits(next)||collision(next)){fillForm(original);return say('El cambio no cabe en el terreno o encimaría otro objeto.');}action(()=>{state.objects=state.objects.map(o=>o.id===next.id?next:o);fillForm(next);say('Medidas del objeto actualizadas.');});});
+  function remove(){if(selected)askErase({kind:'object',id:selected});}
   function history(back){cancel();const from=back?undo:redo,to=back?redo:undo;if(!from.length)return;to.push(serialize());restore(JSON.parse(from.pop()));render();say(back?'Acción deshecha.':'Acción rehecha.');}
   $('deshacer').addEventListener('click',()=>history(true));$('rehacer').addEventListener('click',()=>history(false));
-  window.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName))return;if(e.key==='Escape'){cancel();selected=null;sync();render();}if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();remove();}if((e.ctrlKey||e.metaKey)&&['z','y'].includes(e.key.toLowerCase())){e.preventDefault();history(e.key.toLowerCase()==='z'&&!e.shiftKey);}});
+  window.addEventListener('keydown',e=>{if($('confirmarBorrado').open)return;if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName))return;if(e.key==='Escape'){cancel();selected=null;sync();render();}if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();remove();}if((e.ctrlKey||e.metaKey)&&['z','y'].includes(e.key.toLowerCase())){e.preventDefault();history(e.key.toLowerCase()==='z'&&!e.shiftKey);}});
   for(const [id,delta] of [['zoomMas',20],['zoomMenos',-20],['ajustar',0]])$(id).addEventListener('click',()=>{zoom=delta?clamp(Math.round(zoom*100)+delta,20,300)/100:1;sync();render();});
   $('mostrarGrid').addEventListener('change',e=>{showGrid=e.target.checked;render();});$('mostrarCotas').addEventListener('change',e=>{showCotas=e.target.checked;render();});
   $('vista').addEventListener('change',e=>{cancel();view=e.target.value;zoom=1;sync();render();canvas.parentElement.scrollTop=0;canvas.parentElement.scrollLeft=0;say('Vista '+view+'. Las coordenadas y medidas reales se conservan.');});
