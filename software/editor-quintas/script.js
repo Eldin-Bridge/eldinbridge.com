@@ -3,6 +3,17 @@
 (() => {
   const $ = id => document.getElementById(id);
   const canvas = $('plano'), ctx = canvas.getContext('2d');
+  const menus = [...document.querySelectorAll('.herramientas details')];
+  const closeMenus = () => menus.forEach(menu => { menu.open = false; });
+  menus.forEach(menu => menu.addEventListener('toggle', () => {
+    if (menu.open) menus.forEach(other => { if (other !== menu) other.open = false; });
+  }));
+  document.addEventListener('pointerdown', e => {
+    if (!e.target.closest('.herramientas')) closeMenus();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { const current = menus.find(menu => menu.open); closeMenus(); current?.querySelector('summary').focus(); }
+  });
   const materials = {pasto:'#70b85f', tierra:'#b18a60', piso:'#b7bcc4', vitropiso:'#fff', agua:'#279ed6'};
   const names = {pasto:'Pasto', tierra:'Tierra', piso:'Piso', vitropiso:'Vitropiso blanco / negro', agua:'Agua', borrar:'Borrador'};
   const defaults = {pared:[3,.2,.2], puerta:[1,.2,.6], ventana:[1.2,.2,.3], arbol:[2,2,.5], palapa:[4,4,1], casa:[6,8,2], alberca:[3,5,1]};
