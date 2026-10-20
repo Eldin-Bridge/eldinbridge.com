@@ -1,86 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Editor de Quintas</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
-</head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Editor de Quintas · V2</title><link rel="stylesheet" href="styles.css"><script src="script.js" defer></script></head>
 <body>
-
-  <header class="encabezado">
-    <h1>Editor de Quintas</h1>
-    <span>Diseño de terrenos</span>
-  </header>
-
-  <main>
-    <!-- Configuración inicial -->
-    <section id="configuracion">
-      <h2>Configurar terreno</h2>
-      <p>Introduce las dimensiones reales en metros.</p>
-
-      <form id="formTerreno">
-        <label for="ancho">Ancho (máximo 35 m)</label>
-        <input id="ancho" type="number"
-               min="1" max="35" step="0.01"
-               value="35" required>
-
-        <label for="largo">Largo (máximo 65 m)</label>
-        <input id="largo" type="number"
-               min="1" max="65" step="0.01"
-               value="65" required>
-
-        <button type="submit">Crear terreno</button>
-      </form>
-    </section>
-
-    <!-- Editor -->
-    <section id="editor" hidden>
-      <aside class="herramientas">
-        <h2>Materiales</h2>
-
-        <button data-material="pasto">Pasto</button>
-        <button data-material="tierra">Tierra</button>
-        <button data-material="piso">Piso</button>
-        <button data-material="vitropiso">Vitropiso</button>
-
-        <h2>Cuadrícula</h2>
-        <label for="tamCelda">Separación (metros)</label>
-        <select id="tamCelda">
-          <option value="1">1 m</option>
-          <option value="0.5">50 cm</option>
-          <option value="0.25">25 cm</option>
-        </select>
-
-        <label>
-          <input type="checkbox" id="mostrarGrid" checked>
-          Mostrar cuadrícula
-        </label>
-
-        <h2>Herramientas</h2>
-        <button id="modoPincel">Pincel</button>
-        <button id="modoArea">Seleccionar área</button>
-        <button id="deshacer">Deshacer</button>
-        <button id="guardar">Guardar</button>
-        <button id="exportar">Exportar proyecto</button>
-      </aside>
-
-      <div class="zonaPlano">
-        <div class="barraPlano">
-          <span id="infoTerreno"></span>
-          <button id="zoomMenos">−</button>
-          <button id="zoomMas">+</button>
-          <button id="volverConfig">Medidas</button>
-        </div>
-
-        <div class="lienzo">
-          <canvas id="plano"></canvas>
-        </div>
-      </div>
-    </section>
-  </main>
-
-</body>
-</html>
+<header class="encabezado"><h1>Editor de Quintas <small>V2</small></h1><span>Diseña tu terreno · medidas en metros</span><button id="pantalla">Pantalla completa</button></header>
+<main id="editor">
+<aside class="herramientas">
+<details open><summary>Terreno</summary><form id="formTerreno"><div class="doble"><label>Ancho · máx. 35 m<input id="ancho" type="number" min="1" max="35" step="0.01" value="35" required></label><label>Largo · máx. 65 m<input id="largo" type="number" min="1" max="65" step="0.01" value="65" required></label></div><button>Aplicar medidas</button></form></details>
+<details open><summary>Superficies</summary><div class="doble materiales"><button data-material="pasto">🟩 Pasto</button><button data-material="tierra">🟫 Tierra</button><button data-material="piso">⬜ Piso</button><button data-material="vitropiso">▦ Vitropiso B/N</button><button data-material="agua">🟦 Agua</button><button data-material="borrar">⌫ Borrador</button></div><div class="doble"><button data-mode="brush">Pincel</button><button data-mode="area">Área</button></div><p class="ayuda">Arrastra para pintar o borrar superficies. Un trazo = una acción.</p><label>Tamaño de pincel / área<select id="tamCelda"><option value="1">1 m</option><option value="0.5">0.50 m</option><option value="0.25">0.25 m</option></select></label></details>
+<details open><summary>Objetos y selección</summary><button data-mode="select">↖ Seleccionar / mover</button><form id="formObjeto"><label>Elemento<select id="tipo"><option value="pared">Pared</option><option value="puerta">Puerta</option><option value="ventana">Ventana</option><option value="arbol">Árbol</option><option value="palapa">Palapa</option><option value="casa">Casa</option><option value="alberca">Alberca</option></select></label><div class="doble"><label>X (desde izquierda)<input id="objX" type="number" step="0.01" min="0" value="0" required></label><label>Y (desde arriba)<input id="objY" type="number" step="0.01" min="0" value="0" required></label><label>Ancho (m)<input id="objW" type="number" step="0.01" min="0.20" value="3" required></label><label>Fondo (m)<input id="objH" type="number" step="0.01" min="0.20" value="0.20" required></label></div><label>Orientación<select id="rotacion"><option value="0">Horizontal · 0°</option><option value="90">Vertical · 90°</option></select></label><p class="ayuda" id="objAyuda">Pared de 0.20 m de grosor. X/Y indican la esquina superior izquierda.</p><button id="aplicarObjeto">Agregar con estas medidas</button></form><div class="doble"><button id="nuevoObjeto">Nuevo objeto</button><button id="eliminarObjeto" disabled>Eliminar selección</button></div><p id="seleccionInfo" class="ayuda">Sin objeto seleccionado.</p></details>
+<details><summary>Vista y proyecto</summary><label class="check"><input id="mostrarGrid" type="checkbox" checked> Mostrar cuadrícula</label><label class="check"><input id="mostrarCotas" type="checkbox" checked> Mostrar cotas exteriores</label><div class="doble"><button id="guardar">Guardar</button><button id="cargar">Cargar guardado</button><button id="exportar">Exportar JSON</button><button id="importar">Importar JSON</button></div><input id="archivo" type="file" accept=".json,application/json" hidden><p class="ayuda">Guardar conserva el proyecto en este navegador. Exporta una copia para llevarla a otra computadora.</p></details>
+</aside>
+<section class="zonaPlano" aria-label="Plano del terreno"><div class="barraPlano"><span id="infoTerreno"></span><button id="deshacer" title="Ctrl+Z">↶ Deshacer</button><button id="rehacer" title="Ctrl+Y">↷ Rehacer</button><button id="zoomMenos" aria-label="Alejar">−</button><button id="ajustar">Ajustar</button><button id="zoomMas" aria-label="Acercar">+</button></div><p id="instruccion">Pasto · Pincel. Arrastra sobre el terreno.</p><div class="lienzo"><canvas id="plano" aria-label="Plano editable. Usa los campos de coordenadas para agregar o modificar objetos con precisión."></canvas></div><div id="estado" role="status" aria-live="polite">Listo. Las coordenadas y dimensiones se expresan en metros.</div></section>
+</main></body></html>
