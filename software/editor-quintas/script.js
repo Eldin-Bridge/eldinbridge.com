@@ -56,7 +56,6 @@ function quintaParking(o){
     matrix = view==='vertical'?[1,0,0,1]:view==='horizontal'?[0,-1,1,0]:[Math.sqrt(3)/2,.5,-Math.sqrt(3)/2,.5];
     const [a,b,c,d]=matrix;
     const points=[[0,0],[state.width,0],[state.width,state.length],[0,state.length]];
-    for(const q of state.dimensions||[]){if(q.link)continue;if(q.axis==='x')points.push([q.x1,q.y1+q.offset],[q.x2,q.y1+q.offset]);else points.push([q.x1+q.offset,q.y1],[q.x1+q.offset,q.y2]);}
     const corners=points.map(([x,y])=>({x:a*x+c*y,y:b*x+d*y}));
     const minX=Math.min(...corners.map(p=>p.x)),minY=Math.min(...corners.map(p=>p.y));
     return {minX,minY,w:Math.max(...corners.map(p=>p.x))-minX,h:Math.max(...corners.map(p=>p.y))-minY};
@@ -121,7 +120,7 @@ function quintaParking(o){
     const host=canvas.parentElement;
     const projected=projection();
     if(host.clientWidth<1||host.clientHeight<1)return;
-    const padding=margin+24*Math.max(linkedCount('x'),linkedCount('y'));
+    const padding=margin+26*Math.max(1,...Object.values(dimensionLayout().counts));
     scale=clamp(Math.min(Math.max(30,host.clientWidth-2*padding-26)/projected.w,Math.max(30,host.clientHeight-2*padding-26)/projected.h)*zoom,.1,Infinity);
     const w=state.width*scale,h=state.length*scale,cw=Math.ceil(Math.max(projected.w*scale+padding*2,host.clientWidth-26)),ch=Math.ceil(Math.max(projected.h*scale+padding*2,host.clientHeight-26)),dpr=Math.min(window.devicePixelRatio||1,2);
     offset={x:(cw-projected.w*scale)/2-projected.minX*scale+pan.x,y:(ch-projected.h*scale)/2-projected.minY*scale+pan.y};
@@ -140,21 +139,47 @@ function quintaParking(o){
     ctx.restore();ctx.strokeStyle='#b7cce1';ctx.lineWidth=1.5;ctx.strokeRect(0,0,w,h);
     ctx.restore();
     if(drag?.marquee){const r=marqueeRect();ctx.save();ctx.fillStyle='#4b9dff33';ctx.strokeStyle='#75b4ff';ctx.lineWidth=1.5;ctx.setLineDash([6,4]);ctx.fillRect(r.x,r.y,r.w,r.h);ctx.strokeRect(r.x,r.y,r.w,r.h);ctx.restore();}
-    if(showCotas){const center=screen(state.width/2,state.length/2);dimension(screen(0,0),screen(state.width,0),state.width,center,29+24*linkedCount('x'));dimension(screen(0,0),screen(0,state.length),state.length,center,29+24*linkedCount('y'));}
     if(objectDimensions!=='ninguno')for(const o of state.objects){if(objectDimensions==='seleccion'&&!selectedIds.has(o.id))continue;const b=bounds(o),center=screen(b.x+b.w/2,b.y+b.h/2);dimension(screen(b.x,b.y),screen(b.x+b.w,b.y),b.w,center,13,selectedIds.has(o.id));dimension(screen(b.x+b.w,b.y),screen(b.x+b.w,b.y+b.h),b.h,center,13,o.id===selected);}
-    const lanes={x:0,y:0};
-    for(const q of state.dimensions){activeDimensionId=q.id;if(q.link){drawSeparation(q,lanes[q.axis]++);continue;}const a=screen(q.x1,q.y1),b=screen(q.x2,q.y2),side=q.axis==='x'?screen(q.x1,q.y1+q.offset):screen(q.x1+q.offset,q.y1);const center={x:2*a.x-side.x,y:2*a.y-side.y};const dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy),gap=len?Math.abs((side.x-a.x)*(-dy/len)+(side.y-a.y)*(dx/len)):0;dimension(a,b,Math.abs(q.axis==='x'?q.x2-q.x1:q.y2-q.y1),center,gap,true);}
+    drawPlanDimensions();
     activeDimensionId=null;
     if(terrainHover&&!separationPoints.length&&mode==='separation'){const p=edgePoint(terrainHover),q=screen(p.x,p.y);ctx.fillStyle='#ff4d4d';ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.beginPath();ctx.arc(q.x,q.y,7,0,Math.PI*2);ctx.fill();ctx.stroke();}
     if(chainPoint){const q=screen(chainPoint.x,chainPoint.y);ctx.fillStyle='#ffe06b';ctx.beginPath();ctx.arc(q.x,q.y,5,0,Math.PI*2);ctx.fill();}for(const p of [...dimensionPoints,...separationPoints.map(edgePoint)].filter(Boolean)){const q=screen(p.x,p.y);ctx.fillStyle='#ff4d4d';ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(q.x,q.y,6,0,Math.PI*2);ctx.fill();ctx.stroke();}
     $('infoTerreno').textContent=`${fmt(state.width)} × ${fmt(state.length)} m · ${fmt(state.width*state.length)} m² · ${Math.round(zoom*100)}%`;
   }
   // Dimensions are drawn in screen space so labels remain readable in all views.
-  function drawSeparation(q,lane){
-    const a=edgePoint(q.link.a),b=edgePoint(q.link.b);if(!a||!b)return;
-    const start=q.axis==='x'?screen(a.x,0):screen(0,a.y),end=q.axis==='x'?screen(b.x,0):screen(0,b.y),center=screen(state.width/2,state.length/2);
-    ctx.save();ctx.strokeStyle='#7894af';ctx.lineWidth=.7;ctx.setLineDash([3,3]);ctx.beginPath();const pa=screen(a.x,a.y),pb=screen(b.x,b.y);ctx.moveTo(pa.x,pa.y);ctx.lineTo(start.x,start.y);ctx.moveTo(pb.x,pb.y);ctx.lineTo(end.x,end.y);ctx.stroke();ctx.restore();
-    dimension(start,end,Math.abs(q.axis==='x'?a.x-b.x:a.y-b.y),center,29+lane*24,true);
+  // All dimensions on a side share baselines. Overlapping or enclosing spans
+  // use an outer lane; disjoint spans (including equal spans) share one lane.
+  function dimensionSide(q){
+    if(q.side)return q.side;
+    if(!q.link)return q.axis==='x'?(q.offset<0?'top':'bottom'):(q.offset<0?'left':'right');
+    const a=edgePoint(q.link.a),b=edgePoint(q.link.b);
+    return q.axis==='x'?((a.y+b.y)/2<=state.length/2?'top':'bottom'):((a.x+b.x)/2<=state.width/2?'left':'right');
+  }
+  function dimensionLayout(){
+    const groups={top:[],bottom:[],left:[],right:[]},counts={top:0,bottom:0,left:0,right:0};
+    for(const q of state.dimensions){const side=dimensionSide(q),horizontal=['top','bottom'].includes(side),a=q.link?edgePoint(q.link.a):{x:q.x1,y:q.y1},b=q.link?edgePoint(q.link.b):{x:q.x2,y:q.y2};if(!a||!b)continue;const lo=Math.min(horizontal?a.x:a.y,horizontal?b.x:b.y),hi=Math.max(horizontal?a.x:a.y,horizontal?b.x:b.y);groups[side].push({q,a,b,lo,hi,size:q.free?Math.hypot(b.x-a.x,b.y-a.y):Math.abs(horizontal?b.x-a.x:b.y-a.y)});}
+    for(const side in groups){const lanes=[];groups[side].sort((a,b)=>a.size-b.size||a.lo-b.lo);for(const item of groups[side]){let lane=0;while(lanes[lane]?.some(other=>Math.min(item.hi,other.hi)-Math.max(item.lo,other.lo)>1e-6))lane++;(lanes[lane]??=[]).push(item);item.lane=lane;}counts[side]=lanes.length;}
+    return {groups,counts};
+  }
+  function drawPlanDimensions(){
+    const {groups,counts}=dimensionLayout(),center=screen(state.width/2,state.length/2);
+    const edges={top:[[0,0],[state.width,0]],bottom:[[0,state.length],[state.width,state.length]],left:[[0,0],[0,state.length]],right:[[state.width,0],[state.width,state.length]]};
+    for(const side in groups){const [ea,eb]=edges[side],sa=screen(...ea),sb=screen(...eb);
+      for(const item of groups[side]){
+        const {q,a,b,lane}=item,pa=screen(a.x,a.y),pb=screen(b.x,b.y);
+        let start,end,value;
+        if(q.free){start=pa;end=pb;value=Math.hypot(b.x-a.x,b.y-a.y);}
+        else {const horizontal=['top','bottom'].includes(side);start=horizontal?screen(a.x,ea[1]):screen(ea[0],a.y);end=horizontal?screen(b.x,ea[1]):screen(ea[0],b.y);value=Math.abs(horizontal?b.x-a.x:b.y-a.y);}
+        const dx=end.x-start.x,dy=end.y-start.y,len=Math.hypot(dx,dy);if(len<.01)continue;
+        let nx=-dy/len,ny=dx/len;const edgeMid={x:(sa.x+sb.x)/2,y:(sa.y+sb.y)/2};if(nx*(edgeMid.x-center.x)+ny*(edgeMid.y-center.y)<0){nx=-nx;ny=-ny;}
+        const boundary=Math.max(...[[0,0],[state.width,0],[state.width,state.length],[0,state.length]].map(p=>{const sp=screen(...p);return sp.x*nx+sp.y*ny;}));
+        const gap=boundary-(start.x*nx+start.y*ny)+29+lane*26;
+        if(!q.free){ctx.save();ctx.strokeStyle='#7894af';ctx.setLineDash([3,3]);ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(start.x,start.y);ctx.moveTo(pb.x,pb.y);ctx.lineTo(end.x,end.y);ctx.stroke();ctx.restore();}
+        activeDimensionId=q.id;dimension(start,end,value,{x:start.x-nx,y:start.y-ny},gap,true);
+      }
+      activeDimensionId=null;
+      if(showCotas&&(side==='top'||side==='left'||groups[side].length))dimension(sa,sb,['top','bottom'].includes(side)?state.width:state.length,center,29+counts[side]*26);
+    }
   }
   function dimension(a,b,value,center,gap,active=false){
     const dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy);if(len<.01)return;
@@ -162,8 +187,8 @@ function quintaParking(o){
     const p={x:a.x+nx*gap,y:a.y+ny*gap},q={x:b.x+nx*gap,y:b.y+ny*gap};if(activeDimensionId)dimensionHits.push({id:activeDimensionId,a:p,b:q});
     ctx.save();ctx.strokeStyle=active?'#ff6767':'#bdd6ee';ctx.fillStyle=ctx.strokeStyle;ctx.lineWidth=1;ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(a.x+nx*4,a.y+ny*4);ctx.lineTo(p.x+nx*5,p.y+ny*5);ctx.moveTo(b.x+nx*4,b.y+ny*4);ctx.lineTo(q.x+nx*5,q.y+ny*5);ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);
     for(const t of [p,q]){ctx.moveTo(t.x-dx/len*3-nx*3,t.y-dy/len*3-ny*3);ctx.lineTo(t.x+dx/len*3+nx*3,t.y+dy/len*3+ny*3);}ctx.stroke();
-    let angle=Math.atan2(dy,dx);if(angle>Math.PI/2||angle< -Math.PI/2)angle+=Math.PI;
-    ctx.translate((p.x+q.x)/2+nx*8,(p.y+q.y)/2+ny*8);ctx.rotate(angle);ctx.font='12px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';const label=fmt(value)+' m',textWidth=ctx.measureText(label).width;ctx.fillStyle='#101b2bee';ctx.fillRect(-textWidth/2-4,-8,textWidth+8,16);ctx.fillStyle=active?'#ffe06b':'#e3efff';ctx.fillText(label,0,0);ctx.restore();
+    let angle=Math.atan2(dy,dx);while(angle>=Math.PI/2-1e-8)angle-=Math.PI;while(angle< -Math.PI/2-1e-8)angle+=Math.PI;
+    ctx.translate((p.x+q.x)/2+nx*8,(p.y+q.y)/2+ny*8);ctx.rotate(angle);ctx.font='12px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';const label=fmt(value)+' m',textWidth=ctx.measureText(label).width;ctx.fillStyle='#101b2bee';ctx.fillRect(-textWidth/2-4,-8,textWidth+8,16);ctx.fillStyle=active?'#ff8585':'#e3efff';ctx.fillText(label,0,0);ctx.restore();
   }
   function drawObject(o){
     const b=bounds(o),x=b.x*scale,y=b.y*scale,w=b.w*scale,h=b.h*scale;
@@ -218,14 +243,18 @@ function quintaParking(o){
     else{endTools();say(stopped?'Pared conectada con otra pared. Cadena terminada.':'Pared colocada. Pulsa un nuevo inicio.');}render();
   }
   function placeDimension(p){
-    if(dimensionPoints.length<2){if(p.x< -1e-8||p.y< -1e-8||p.x>state.width+1e-8||p.y>state.length+1e-8)return say('Marca los extremos dentro del terreno o en su borde.');p=snap(p);
-      if(dimensionPoints.length){const a=dimensionPoints[0];if(Math.abs(p.x-a.x)>=Math.abs(p.y-a.y))p.y=a.y;else p.x=a.x;if(p.x===a.x&&p.y===a.y)return say('Elige un final distinto del inicio.');}
-      dimensionPoints.push(p);render();say(dimensionPoints.length===1?'Marca el final de la cota.':'Pulsa por fuera para colocar la línea de cota.');return;
+    if(dimensionPoints.length<2){
+      if(p.x< -1e-8||p.y< -1e-8||p.x>state.width+1e-8||p.y>state.length+1e-8)return say('Marca los extremos dentro del terreno o en su borde.');
+      let border=terrainSnap(p);if(border){const bp=edgePoint(border),sp=screen(p.x,p.y),sb=screen(bp.x,bp.y);if(Math.hypot(sp.x-sb.x,sp.y-sb.y)>6)border=null;}let nearest=border?edgePoint(border):null,best=nearest?Math.hypot(screen(p.x,p.y).x-screen(nearest.x,nearest.y).x,screen(p.x,p.y).y-screen(nearest.x,nearest.y).y):10;
+      if(!border)for(const o of state.objects){const b=bounds(o);for(const candidate of [{x:b.x,y:clamp(p.y,b.y,b.y+b.h)},{x:b.x+b.w,y:clamp(p.y,b.y,b.y+b.h)},{x:clamp(p.x,b.x,b.x+b.w),y:b.y},{x:clamp(p.x,b.x,b.x+b.w),y:b.y+b.h}]){const sp=screen(p.x,p.y),sc=screen(candidate.x,candidate.y),d=Math.hypot(sp.x-sc.x,sp.y-sc.y);if(d<best){best=d;nearest=candidate;}}}
+      p=nearest||snap(p);p={x:round(clamp(p.x,0,state.width)),y:round(clamp(p.y,0,state.length))};
+      if(dimensionPoints.length&&Math.hypot(p.x-dimensionPoints[0].x,p.y-dimensionPoints[0].y)<.001)return say('Elige un final distinto del inicio.');
+      dimensionPoints.push(p);render();say(dimensionPoints.length===1?'Marca cualquier otro punto del plano.':'Pulsa fuera del terreno en el lado donde deseas la cota.');return;
     }
-    const [a,b]=dimensionPoints,axis=a.y===b.y?'x':'y',delta=axis==='x'?p.y-a.y:p.x-a.x;
-    const offset=round(clamp(Math.round(delta/state.step)*state.step,-65,65));
-    if(Math.abs(offset)<.01)return say('Aleja la línea de cota de los extremos.');
-    action(()=>{state.dimensions.push({id:uid(),axis,x1:a.x,y1:a.y,x2:b.x,y2:b.y,offset});});dimensionPoints=[];say('Cota colocada en metros. Puedes colocar otra o cambiar de herramienta.');render();
+    const choices=[{side:'left',d:-p.x},{side:'right',d:p.x-state.width},{side:'top',d:-p.y},{side:'bottom',d:p.y-state.length}].sort((a,b)=>b.d-a.d);
+    if(choices[0].d<=0)return say('Pulsa fuera del terreno: arriba, abajo, izquierda o derecha.');
+    const [a,b]=dimensionPoints,side=choices[0].side,axis=['top','bottom'].includes(side)?'x':'y';
+    action(()=>state.dimensions.push({id:uid(),axis,x1:a.x,y1:a.y,x2:b.x,y2:b.y,offset:0,side,free:true}));dimensionPoints=[];say('Cota colocada. Las medidas mayores se ordenan hacia afuera.');render();
   }
   function anchorFor(ref,p,axis){if(ref.kind==='terrain'&&ref.side&&Number.isFinite(ref.t))return ref;const b=referenceBounds(ref),side=ref.kind==='terrain'&&ref.side?ref.side:axis==='x'?(Math.abs(p.x-b.x)<Math.abs(p.x-b.x-b.w)?'left':'right'):(Math.abs(p.y-b.y)<Math.abs(p.y-b.y-b.h)?'top':'bottom');return {...ref,side,t:clamp(axis==='x'?(p.y-b.y)/b.h:(p.x-b.x)/b.w,0,1)};}
   function terrainSnap(p){const cursor=screen(p.x,p.y),edges=[['left',[0,0],[0,state.length]],['right',[state.width,0],[state.width,state.length]],['top',[0,0],[state.width,0]],['bottom',[0,state.length],[state.width,state.length]]];let best=null;for(const [side,aa,bb] of edges){const a=screen(...aa),b=screen(...bb),dx=b.x-a.x,dy=b.y-a.y,t=clamp(((cursor.x-a.x)*dx+(cursor.y-a.y)*dy)/(dx*dx+dy*dy||1),0,1),distance=Math.hypot(cursor.x-a.x-t*dx,cursor.y-a.y-t*dy);if(distance<=14&&(!best||distance<best.distance))best={kind:'terrain',side,t,distance};}return best?{kind:'terrain',side:best.side,t:best.t}:null;}
@@ -341,7 +370,7 @@ if(separationPoints.length!==2)return say('Primero elige una referencia y el lad
   document.querySelectorAll('[data-material]').forEach(b=>b.addEventListener('click',()=>{cancel();endTools();material=b.dataset.material;if(!['brush','area'].includes(mode))mode='brush';sync();render();}));
   document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{cancel();endTools();mode=b.dataset.mode;sync();render();}));
   $('tamCelda').addEventListener('change',()=>action(()=>{state.step=Number($('tamCelda').value);say('Separación cambiada. Las superficies conservan su posición.');}));
-  $('formTerreno').addEventListener('submit',e=>{e.preventDefault();const w=Number($('ancho').value),h=Number($('largo').value);if(!Number.isFinite(w)||!Number.isFinite(h)||w<1||w>35||h<1||h>65)return say('Ancho: 1–35 m. Largo: 1–65 m.');if(state.objects.some(o=>!fits(o,w,h)))return say('Hay objetos fuera de las nuevas medidas. Muévelos o elimínalos antes de reducir el terreno.');action(()=>{state.width=w;state.length=h;state.dimensions=state.dimensions.filter(q=>{if(q.link)return true;q.x1=clamp(q.x1,0,w);q.x2=clamp(q.x2,0,w);q.y1=clamp(q.y1,0,h);q.y2=clamp(q.y2,0,h);return q.axis==='x'?q.x1!==q.x2:q.y1!==q.y2;});cells=new Map([...cells].filter(([k])=>{const [x,y]=k.split(':').map(Number);return x*unit<w&&y*unit<h;}));say('Medidas actualizadas; las cotas se adaptaron. Puedes deshacer el cambio.');});});
+  $('formTerreno').addEventListener('submit',e=>{e.preventDefault();const w=Number($('ancho').value),h=Number($('largo').value);if(!Number.isFinite(w)||!Number.isFinite(h)||w<1||w>35||h<1||h>65)return say('Ancho: 1–35 m. Largo: 1–65 m.');if(state.objects.some(o=>!fits(o,w,h)))return say('Hay objetos fuera de las nuevas medidas. Muévelos o elimínalos antes de reducir el terreno.');action(()=>{state.width=w;state.length=h;state.dimensions=state.dimensions.filter(q=>{if(q.link)return true;q.x1=clamp(q.x1,0,w);q.x2=clamp(q.x2,0,w);q.y1=clamp(q.y1,0,h);q.y2=clamp(q.y2,0,h);return Math.hypot(q.x2-q.x1,q.y2-q.y1)>.0001;});cells=new Map([...cells].filter(([k])=>{const [x,y]=k.split(':').map(Number);return x*unit<w&&y*unit<h;}));say('Medidas actualizadas; las cotas se adaptaron. Puedes deshacer el cambio.');});});
   $('tipo').addEventListener('change',fresh);
   function objectFromForm(id){return {id,type:$('tipo').value,x:0,y:0,w:Number($('objW').value),h:Number($('objH').value),rotation:Number($('rotacion').value)};}
   $('formObjeto').addEventListener('submit',e=>{e.preventDefault();cancel();if($('tipo').value==='pared'&&$('encadenar').checked){endTools();mode='wall';selected=null;sync();closeMenus();render();say('Paredes encadenadas: pulsa el inicio y los siguientes puntos; Escape termina.');return;}const base=objectFromForm(uid());if(!validObject(base))return say('Revisa las medidas mínimas.');const next=freePosition(base);if(!next)return say('No queda espacio libre para ese tamaño.');action(()=>{state.objects.push(next);selected=next.id;mode='select';endTools();fillForm(next);say('Objeto agregado. Arrastra para moverlo o vuelve a pulsar Agregar para colocar otro.');});closeMenus();});
@@ -361,11 +390,11 @@ if(separationPoints.length!==2)return say('Primero elige una referencia y el lad
     if(!raw||![1,2].includes(raw.version)||![raw.width,raw.length,raw.step].every(Number.isFinite)||raw.width<1||raw.width>35||raw.length<1||raw.length>65||![1,.5,.25].includes(raw.step)||!Array.isArray(raw.cells)||raw.cells.length>40000)throw Error('Formato o medidas del proyecto no válidos.');
     const converted=new Map();for(const entry of raw.cells){if(!Array.isArray(entry)||entry.length!==2)throw Error('Celda no válida.');const [k,v]=entry;if(typeof k!=='string'||!/^\d{1,3}:\d{1,3}$/.test(k)||!Object.hasOwn(materials,v))throw Error('Material o coordenada no válido.');const [x,y]=k.split(':').map(Number),s=raw.version===1?raw.step:unit;if(x*s>=raw.width||y*s>=raw.length)throw Error('Superficie fuera del terreno.');for(let yy=y*s;yy<Math.min((y+1)*s,raw.length)-1e-8;yy+=unit)for(let xx=x*s;xx<Math.min((x+1)*s,raw.width)-1e-8;xx+=unit)converted.set(Math.round(xx/unit)+':'+Math.round(yy/unit),v);}
     const objects=raw.version===1?[]:raw.objects;if(!Array.isArray(objects)||objects.length>2000||objects.some(o=>!validObject(o)||!fits(o,raw.width,raw.length))||new Set(objects.map(o=>o.id)).size!==objects.length)throw Error('Objetos o dimensiones no válidos.');
-    const dimensions=raw.dimensions??[];if(!Array.isArray(dimensions)||dimensions.length>1000||dimensions.some(q=>!q||typeof q.id!=='string'||q.id.length>100||!['x','y'].includes(q.axis)||![q.x1,q.y1,q.x2,q.y2,q.offset].every(Number.isFinite)||Math.abs(q.offset)>65||q.x1<0||q.x2<0||q.y1<0||q.y2<0||q.x1>raw.width||q.x2>raw.width||q.y1>raw.length||q.y2>raw.length||(q.axis==='x'?(q.y1!==q.y2||(!q.link&&q.x1===q.x2)):(q.x1!==q.x2||(!q.link&&q.y1===q.y2))))||new Set(dimensions.map(q=>q.id)).size!==dimensions.length)throw Error('Cotas no válidas.');
+    const dimensions=raw.dimensions??[];if(!Array.isArray(dimensions)||dimensions.length>1000||dimensions.some(q=>!q||typeof q.id!=='string'||q.id.length>100||!['x','y'].includes(q.axis)||![q.x1,q.y1,q.x2,q.y2,q.offset].every(Number.isFinite)||Math.abs(q.offset)>65||q.x1<0||q.x2<0||q.y1<0||q.y2<0||q.x1>raw.width||q.x2>raw.width||q.y1>raw.length||q.y2>raw.length||(q.side!==undefined&&!['top','bottom','left','right'].includes(q.side))||(q.free!==undefined&&typeof q.free!=='boolean')||(q.free?Math.hypot(q.x2-q.x1,q.y2-q.y1)<.0001:(q.axis==='x'?(q.y1!==q.y2||(!q.link&&q.x1===q.x2)):(q.x1!==q.x2||(!q.link&&q.y1===q.y2)))))||new Set(dimensions.map(q=>q.id)).size!==dimensions.length)throw Error('Cotas no válidas.');
     function validRef(r,axis,target=false){if(!r||!(axis==='x'?['left','right']:['top','bottom']).includes(r.side)||!Number.isFinite(r.t)||r.t<0||r.t>1)return false;if(!r.kind)return typeof r.id==='string'&&objects.some(o=>o.id===r.id);if(target)return false;if(r.kind==='terrain')return true;if(r.kind==='surface')return [r.x,r.y,r.w,r.h].every(Number.isFinite)&&r.x>=0&&r.y>=0&&r.w>0&&r.h>0&&r.x+r.w<=raw.width+1e-8&&r.y+r.h<=raw.length+1e-8&&typeof r.key==='string'&&converted.has(r.key);return false;}
     for(const q of dimensions)if(q.link){if(!validRef(q.link.a,q.axis)||!validRef(q.link.b,q.axis,true)||(!q.link.a.kind&&q.link.a.id===q.link.b.id))throw Error('Referencias de cota no válidas.');}
     function cleanRef(r){return {side:r.side,t:r.t,...(r.kind==='terrain'?{kind:'terrain'}:r.kind==='surface'?{kind:'surface',id:'surface:'+r.x+':'+r.y+':'+r.w+':'+r.h,key:r.key,x:r.x,y:r.y,w:r.w,h:r.h}:{id:r.id})};}
-    return {version:2,width:raw.width,length:raw.length,step:raw.step,cells:[...converted],objects:objects.map(({id,type,x,y,w,h,rotation})=>({id,type,x,y,w,h,rotation})),dimensions:dimensions.map(({id,axis,x1,y1,x2,y2,offset,link})=>({id,axis,x1,y1,x2,y2,offset,...(link?{link:{a:cleanRef(link.a),b:cleanRef(link.b)}}:{})}))};
+    return {version:2,width:raw.width,length:raw.length,step:raw.step,cells:[...converted],objects:objects.map(({id,type,x,y,w,h,rotation})=>({id,type,x,y,w,h,rotation})),dimensions:dimensions.map(({id,axis,x1,y1,x2,y2,offset,link,side,free})=>({id,axis,x1,y1,x2,y2,offset,...(side?{side}:{}),...(free?{free:true}:{}),...(link?{link:{a:cleanRef(link.a),b:cleanRef(link.b)}}:{})}))};
   }
   function load(raw){const p=validate(raw);action(()=>{restore(p);say('Proyecto cargado. Puedes deshacer la importación.');});centerDrawing();}
   $('abrir3D').addEventListener('click',()=>{cancel();closeMenus();window.quinta3D.open(project());});
