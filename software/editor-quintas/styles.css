@@ -10,3 +10,5 @@
 #menuContextual{position:fixed;z-index:40;width:160px;padding:5px;background:var(--panel);border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 28px #0008}#menuContextual button{width:100%;text-align:left;border:0;background:transparent;color:#ffb4b4}#menuContextual button:hover{background:#56333e}
 
 .cabeceraInspector{cursor:grab;touch-action:none;user-select:none}.cabeceraInspector button{cursor:pointer}#opcionesDesplazamiento{margin:8px 0}
+
+.barraPlano #opcionesDesplazamiento{margin:0;gap:7px;white-space:nowrap;padding:6px 8px}

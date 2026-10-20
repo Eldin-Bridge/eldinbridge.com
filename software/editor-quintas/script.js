@@ -147,7 +147,7 @@ function quintaParking(o){
   $('cerrarInspector').addEventListener('click',()=>{finishInspector();selected=null;sync();render();});
   document.addEventListener('pointerdown',e=>{if(!e.target.closest('#inspectorObjeto'))finishInspector();});
   function constraints() {
-    $('opcionesPared').hidden=$('tipo').value!=='pared';$('opcionesDesplazamiento').hidden=$('tipo').value==='pared';
+    $('opcionesPared').hidden=$('tipo').value!=='pared';
     const type=$('tipo').value, min=defaults[type][2], thin=['pared','puerta','ventana'].includes(type);
     $('objW').min=min; $('objH').min=thin?.2:min; $('objH').readOnly=thin;
     if(thin) $('objH').value=.2;
