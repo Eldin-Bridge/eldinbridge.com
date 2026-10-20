@@ -21,6 +21,16 @@
   let state = {version:2,width:35,length:65,step:1,cells:[],objects:[]};
   let cells = new Map(), undo = [], redo = [], selected = null, drag = null;
   let mode = 'brush', material = 'pasto', zoom = 1, scale = 10, showGrid = true, showCotas = true;
+  let view = 'horizontal', objectDimensions = 'todos';
+  let matrix = [0,-1,1,0], offset = {x:margin,y:margin};
+  function projection() {
+    matrix = view==='vertical'?[1,0,0,1]:view==='horizontal'?[0,-1,1,0]:[Math.sqrt(3)/2,.5,-Math.sqrt(3)/2,.5];
+    const [a,b,c,d]=matrix;
+    const corners=[[0,0],[state.width,0],[state.width,state.length],[0,state.length]].map(([x,y])=>({x:a*x+c*y,y:b*x+d*y}));
+    const minX=Math.min(...corners.map(p=>p.x)),minY=Math.min(...corners.map(p=>p.y));
+    return {minX,minY,w:Math.max(...corners.map(p=>p.x))-minX,h:Math.max(...corners.map(p=>p.y))-minY};
+  }
+  function screen(x,y){const [a,b,c,d]=matrix;return {x:offset.x+(a*x+c*y)*scale,y:offset.y+(b*x+d*y)*scale};}
   const clamp = (n,a,b) => Math.max(a,Math.min(b,n));
   const round = n => Math.round(n*100)/100;
   const fmt = n => Number(n.toFixed(2)).toLocaleString('es-MX');
@@ -59,11 +69,14 @@
   function fresh() {selected=null; const t=$('tipo').value;fillForm({type:t,x:0,y:0,w:defaults[t][0],h:defaults[t][1],rotation:0});sync();render();}
   function render() {
     const host=canvas.parentElement;
-    scale=clamp(Math.min(Math.max(100,host.clientWidth-2*margin-26)/state.width,Math.max(100,host.clientHeight-2*margin-26)/state.length)*zoom,1,100);
-    const w=state.width*scale,h=state.length*scale,cw=Math.ceil(w+margin*2),ch=Math.ceil(h+margin*2),dpr=Math.min(window.devicePixelRatio||1,2);
+    const projected=projection();
+    if(host.clientWidth<1||host.clientHeight<1)return;
+    scale=clamp(Math.min(Math.max(30,host.clientWidth-2*margin-26)/projected.w,Math.max(30,host.clientHeight-2*margin-26)/projected.h)*zoom,.1,100);
+    offset={x:margin-projected.minX*scale,y:margin-projected.minY*scale};
+    const w=state.width*scale,h=state.length*scale,cw=Math.ceil(projected.w*scale+margin*2),ch=Math.ceil(projected.h*scale+margin*2),dpr=Math.min(window.devicePixelRatio||1,2);
     // Resize only when needed: changing canvas dimensions during a stroke can lose pointer capture in some browsers.
     if(canvas.width!==Math.round(cw*dpr)||canvas.height!==Math.round(ch*dpr)){canvas.width=Math.round(cw*dpr);canvas.height=Math.round(ch*dpr);canvas.style.width=cw+'px';canvas.style.height=ch+'px';}
-    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.fillStyle='#101b2b';ctx.fillRect(0,0,cw,ch);ctx.save();ctx.translate(margin,margin);
+    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.fillStyle='#101b2b';ctx.fillRect(0,0,cw,ch);ctx.save();ctx.translate(offset.x,offset.y);ctx.transform(...matrix,0,0);
     ctx.save();ctx.beginPath();ctx.rect(0,0,w,h);ctx.clip();ctx.fillStyle='#d9d2b8';ctx.fillRect(0,0,w,h);
     for(const [key,value] of cells){const [x,y]=key.split(':').map(Number);ctx.fillStyle=value==='vitropiso'?((x+y)%2?'#20232a':'#fff'):materials[value];ctx.fillRect(x*unit*scale,y*unit*scale,unit*scale+.2,unit*scale+.2);}
     if(showGrid){ctx.strokeStyle='rgba(24,47,57,.25)';ctx.lineWidth=.6;ctx.beginPath();for(let x=0;x<=state.width+1e-8;x+=state.step){ctx.moveTo(x*scale,0);ctx.lineTo(x*scale,h);}for(let y=0;y<=state.length+1e-8;y+=state.step){ctx.moveTo(0,y*scale);ctx.lineTo(w,y*scale);}ctx.stroke();}
@@ -72,8 +85,20 @@
     for(const o of objects) drawObject(o);
     if(drag&&mode==='area'){const r=area(drag.start,drag.current);ctx.fillStyle='#4191ff44';ctx.strokeStyle='#257cff';ctx.lineWidth=2;ctx.fillRect(r.x*scale,r.y*scale,r.w*scale,r.h*scale);ctx.strokeRect(r.x*scale,r.y*scale,r.w*scale,r.h*scale);}
     ctx.restore();ctx.strokeStyle='#b7cce1';ctx.lineWidth=1.5;ctx.strokeRect(0,0,w,h);
-    if(showCotas){ctx.strokeStyle='#9bb8d4';ctx.fillStyle='#e3efff';ctx.lineWidth=1;ctx.font='13px system-ui';ctx.textAlign='center';ctx.beginPath();ctx.moveTo(0,-12);ctx.lineTo(0,-34);ctx.moveTo(w,-12);ctx.lineTo(w,-34);ctx.moveTo(0,-26);ctx.lineTo(w,-26);ctx.moveTo(-12,0);ctx.lineTo(-34,0);ctx.moveTo(-12,h);ctx.lineTo(-34,h);ctx.moveTo(-26,0);ctx.lineTo(-26,h);ctx.stroke();ctx.fillText(fmt(state.width)+' m',w/2,-35);ctx.save();ctx.translate(-35,h/2);ctx.rotate(-Math.PI/2);ctx.fillText(fmt(state.length)+' m',0,0);ctx.restore();ctx.fillText('0, 0',0,h+27);ctx.textAlign='right';ctx.fillText('metros',w,h+27);}
-    ctx.restore();$('infoTerreno').textContent=`${fmt(state.width)} × ${fmt(state.length)} m · ${fmt(state.width*state.length)} m² · ${Math.round(zoom*100)}%`;
+    ctx.restore();
+    if(showCotas){const center=screen(state.width/2,state.length/2);dimension(screen(0,0),screen(state.width,0),state.width,center,29);dimension(screen(0,0),screen(0,state.length),state.length,center,29);}
+    if(objectDimensions!=='ninguno')for(const o of state.objects){if(objectDimensions==='seleccion'&&o.id!==selected)continue;const b=bounds(o),center=screen(b.x+b.w/2,b.y+b.h/2);dimension(screen(b.x,b.y),screen(b.x+b.w,b.y),b.w,center,13,o.id===selected);dimension(screen(b.x+b.w,b.y),screen(b.x+b.w,b.y+b.h),b.h,center,13,o.id===selected);}
+    $('infoTerreno').textContent=`${fmt(state.width)} × ${fmt(state.length)} m · ${fmt(state.width*state.length)} m² · ${Math.round(zoom*100)}%`;
+  }
+  // Dimensions are drawn in screen space so labels remain readable in all views.
+  function dimension(a,b,value,center,gap,active=false){
+    const dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy);if(len<.01)return;
+    let nx=-dy/len,ny=dx/len;const mid={x:(a.x+b.x)/2,y:(a.y+b.y)/2};if(nx*(mid.x-center.x)+ny*(mid.y-center.y)<0){nx=-nx;ny=-ny;}
+    const p={x:a.x+nx*gap,y:a.y+ny*gap},q={x:b.x+nx*gap,y:b.y+ny*gap};
+    ctx.save();ctx.strokeStyle=active?'#ffe06b':'#bdd6ee';ctx.fillStyle=ctx.strokeStyle;ctx.lineWidth=1;ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(a.x+nx*4,a.y+ny*4);ctx.lineTo(p.x+nx*5,p.y+ny*5);ctx.moveTo(b.x+nx*4,b.y+ny*4);ctx.lineTo(q.x+nx*5,q.y+ny*5);ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);
+    for(const t of [p,q]){ctx.moveTo(t.x-dx/len*3-nx*3,t.y-dy/len*3-ny*3);ctx.lineTo(t.x+dx/len*3+nx*3,t.y+dy/len*3+ny*3);}ctx.stroke();
+    let angle=Math.atan2(dy,dx);if(angle>Math.PI/2||angle< -Math.PI/2)angle+=Math.PI;
+    ctx.translate((p.x+q.x)/2+nx*8,(p.y+q.y)/2+ny*8);ctx.rotate(angle);ctx.font='12px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';const label=fmt(value)+' m',textWidth=ctx.measureText(label).width;ctx.fillStyle='#101b2bee';ctx.fillRect(-textWidth/2-4,-8,textWidth+8,16);ctx.fillStyle=active?'#ffe06b':'#e3efff';ctx.fillText(label,0,0);ctx.restore();
   }
   function drawObject(o){
     const b=bounds(o),x=b.x*scale,y=b.y*scale,w=b.w*scale,h=b.h*scale;
@@ -91,7 +116,7 @@
     if(o.id===selected){ctx.setLineDash([5,3]);ctx.strokeStyle='#ffe06b';ctx.lineWidth=3;ctx.strokeRect(x-3,y-3,w+6,h+6);}
     ctx.restore();
   }
-  function point(e,limit=true){const r=canvas.getBoundingClientRect();const p={x:(e.clientX-r.left)*parseFloat(canvas.style.width)/r.width/scale-margin/scale,y:(e.clientY-r.top)*parseFloat(canvas.style.height)/r.height/scale-margin/scale};return limit?{x:clamp(p.x,0,state.width-.00001),y:clamp(p.y,0,state.length-.00001)}:p;}
+  function point(e,limit=true){const r=canvas.getBoundingClientRect(),sx=((e.clientX-r.left)*parseFloat(canvas.style.width)/r.width-offset.x)/scale,sy=((e.clientY-r.top)*parseFloat(canvas.style.height)/r.height-offset.y)/scale;const [a,b,c,d]=matrix,det=a*d-b*c;const p={x:(d*sx-c*sy)/det,y:(a*sy-b*sx)/det};return limit?{x:clamp(p.x,0,state.width-.00001),y:clamp(p.y,0,state.length-.00001)}:p;}
   function area(a,b){const s=state.step,x=Math.floor(Math.min(a.x,b.x)/s)*s,y=Math.floor(Math.min(a.y,b.y)/s)*s;return {x,y,w:Math.min(state.width,(Math.floor(Math.max(a.x,b.x)/s)+1)*s)-x,h:Math.min(state.length,(Math.floor(Math.max(a.y,b.y)/s)+1)*s)-y};}
   function paintRect(r){for(let y=Math.floor(r.y/unit);y<Math.ceil((r.y+r.h)/unit-1e-8);y++)for(let x=Math.floor(r.x/unit);x<Math.ceil((r.x+r.w)/unit-1e-8);x++){const k=x+':'+y;if(material==='borrar')cells.delete(k);else cells.set(k,material);}}
   function stroke(a,b){const count=Math.max(1,Math.ceil(Math.hypot(a.x-b.x,a.y-b.y)/(unit/2)));for(let i=0;i<=count;i++){const p={x:a.x+(b.x-a.x)*i/count,y:a.y+(b.y-a.y)*i/count};paintRect(area(p,p));}}
@@ -125,6 +150,8 @@
   window.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName))return;if(e.key==='Escape'){cancel();selected=null;sync();render();}if(e.key==='Delete'||e.key==='Backspace'){e.preventDefault();remove();}if((e.ctrlKey||e.metaKey)&&['z','y'].includes(e.key.toLowerCase())){e.preventDefault();history(e.key.toLowerCase()==='z'&&!e.shiftKey);}});
   for(const [id,factor] of [['zoomMas',1.25],['zoomMenos',.8],['ajustar',0]])$(id).addEventListener('click',()=>{zoom=factor?clamp(zoom*factor,.3,6):1;render();});
   $('mostrarGrid').addEventListener('change',e=>{showGrid=e.target.checked;render();});$('mostrarCotas').addEventListener('change',e=>{showCotas=e.target.checked;render();});
+  $('vista').addEventListener('change',e=>{cancel();view=e.target.value;zoom=1;render();canvas.parentElement.scrollTop=0;canvas.parentElement.scrollLeft=0;say('Vista '+view+'. Las coordenadas y medidas reales se conservan.');});
+  $('cotasObjetos').addEventListener('change',e=>{objectDimensions=e.target.value;render();});
   $('pantalla').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{say('Pantalla completa no disponible. Puedes ampliar con F11.');}});
   function validObject(o){return o&&typeof o.id==='string'&&o.id.length<100&&Object.hasOwn(defaults,o.type)&&[o.x,o.y,o.w,o.h,o.rotation].every(Number.isFinite)&&[0,90].includes(o.rotation)&&o.w>=defaults[o.type][2]&&o.h>=(['pared','puerta','ventana'].includes(o.type)?.2:defaults[o.type][2])&&(!['pared','puerta','ventana'].includes(o.type)||Math.abs(o.h-.2)<1e-8);}
   function validate(raw){
@@ -139,6 +166,10 @@
   $('exportar').addEventListener('click',()=>{const url=URL.createObjectURL(new Blob([JSON.stringify(project(),null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='quinta-proyecto-v2.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);say('Proyecto exportado como JSON.');});
   $('importar').addEventListener('click',()=>$('archivo').click());$('archivo').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{if(file.size>8*1024*1024)throw Error('El archivo supera 8 MB.');load(JSON.parse(await file.text()));}catch(err){say('No se pudo importar: '+err.message);}finally{e.target.value='';}});
   window.addEventListener('resize',render);
+  window.addEventListener('load',render);
+  document.addEventListener('fullscreenchange',render);
+  if(typeof ResizeObserver!=='undefined')new ResizeObserver(()=>render()).observe(canvas.parentElement);
   try{const saved=localStorage.getItem(storageKey)||localStorage.getItem('editor-quintas-v1');if(saved){restore(validate(JSON.parse(saved)));say('Se recuperó tu proyecto guardado.');}}catch{say('El guardado anterior no se pudo leer. Puedes importar otro JSON.');}
   fresh();sync();render();
+  if(typeof requestAnimationFrame==='function')requestAnimationFrame(()=>requestAnimationFrame(render));
 })();
