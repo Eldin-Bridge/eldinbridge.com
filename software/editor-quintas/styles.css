@@ -14,3 +14,5 @@
 .barraPlano #opcionesDesplazamiento{margin:0;gap:7px;white-space:nowrap;padding:6px 8px}
 
 #menuContextual #terminarParedes{color:#bddcff}#menuContextual #terminarParedes:hover{background:#254a70}
+
+.colorCurva{display:flex;align-items:center;gap:6px}.colorCurva input{width:38px;height:34px;padding:2px;border:1px solid var(--border);background:var(--panel);border-radius:6px}

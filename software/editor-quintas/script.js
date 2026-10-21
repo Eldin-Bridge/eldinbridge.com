@@ -31,7 +31,7 @@ function quintaParking(o){
   });
   const materials = {pasto:'#70b85f', tierra:'#b18a60', piso:'#b7bcc4', vitropiso:'#fff', agua:'#279ed6'};
   const names = {pasto:'Pasto', tierra:'Tierra', piso:'Piso', vitropiso:'Vitropiso blanco / negro', agua:'Agua', borrar:'Borrador'};
-  const defaults = {bombaAgua:[1,.6,.3],pared:[3,.2,.2], puerta:[1,.2,.6], ventana:[1.2,.2,.3], arbol:[2,2,.5],arbolAlcorque:[2.5,2.5,1.2],farol:[.6,.6,.3],mesaConBancas:[2.4,2,1], palapa:[4,4,1], casa:[6,8,2], alberca:[3,5,1], bano:[2,2,1],regaderas:[2,3,1],arbusto:[1,1,.3],fuente:[2,2,.5],flores:[1,1,.2],gallinero:[3,3,1],fogatero:[2,2,.5],estacionamiento:[12,11,1],cocina:[5,4,1],juegos:[8,3,1],pista:[6,6,1],escenario:[6,3,1]};
+  const defaults = {circulo:[3,3,.2],semicirculo:[3,3,.2],bombaAgua:[1,.6,.3],pared:[3,.2,.2], puerta:[1,.2,.6], ventana:[1.2,.2,.3], arbol:[2,2,.5],arbolAlcorque:[2.5,2.5,1.2],farol:[.6,.6,.3],mesaConBancas:[2.4,2,1], palapa:[4,4,1], casa:[6,8,2], alberca:[3,5,1], bano:[2,2,1],regaderas:[2,3,1],arbusto:[1,1,.3],fuente:[2,2,.5],flores:[1,1,.2],gallinero:[3,3,1],fogatero:[2,2,.5],estacionamiento:[12,11,1],cocina:[5,4,1],juegos:[8,3,1],pista:[6,6,1],escenario:[6,3,1]};
   const storageKey = 'editor-quintas-v2', unit = .25, margin = 56;
   let state = {version:2,width:35,length:65,step:1,cells:[],objects:[],dimensions:[]};
   let selectedIds=new Set();
@@ -39,7 +39,7 @@ function quintaParking(o){
   let mode = 'select', material = 'pasto', zoom = 1, scale = 10, showGrid = true, showCotas = true;
   let view = 'horizontal', objectDimensions = 'todos';
   let pan={x:0,y:0},panDrag=null;
-  let chainPoint=null,lastWall=null,dimensionPoints=[],dimensionRefs=[];
+  let chainPoint=null,lastWall=null,dimensionPoints=[],dimensionRefs=[],curvePoints=[];
   let freeDimensionSide=null;
   let separationPoints=[],separationClicks=[],separationAxis='x';
   let inspectorEdit=null;
@@ -48,8 +48,8 @@ function quintaParking(o){
   let referenceImage=null,detectedWalls=[];
   const uid=()=> 'o'+Date.now().toString(36)+Math.random().toString(36).slice(2);
   const snap=p=>({x:round(clamp(Math.round(p.x/state.step)*state.step,0,state.width)),y:round(clamp(Math.round(p.y/state.step)*state.step,0,state.length))});
-  function endTools(){terrainHover=null;chainPoint=null;lastWall=null;dimensionPoints=[];dimensionRefs=[];freeDimensionSide=null;separationPoints=[];separationClicks=[];$('cotaEnPlano').hidden=true;if($('puntosSeparacion'))$('puntosSeparacion').textContent='Pulsa una pared de referencia y después el lado del objeto que deseas mover.';}
-  function referenceBounds(ref){if(ref.kind==='terrain')return {x:0,y:0,w:state.width,h:state.length};if(ref.kind==='surface')return cells.has(ref.key)?{x:ref.x,y:ref.y,w:ref.w,h:ref.h}:null;const o=state.objects.find(o=>o.id===ref.id);return o?bounds(o):null;}
+  function endTools(){curvePoints=[];terrainHover=null;chainPoint=null;lastWall=null;dimensionPoints=[];dimensionRefs=[];freeDimensionSide=null;separationPoints=[];separationClicks=[];$('cotaEnPlano').hidden=true;if($('puntosSeparacion'))$('puntosSeparacion').textContent='Pulsa una pared de referencia y después el lado del objeto que deseas mover.';}
+  function referenceBounds(ref){if(ref.kind==='point')return {x:ref.x,y:ref.y,w:0,h:0};if(ref.kind==='terrain')return {x:0,y:0,w:state.width,h:state.length};if(ref.kind==='surface')return cells.has(ref.key)?{x:ref.x,y:ref.y,w:ref.w,h:ref.h}:null;const o=state.objects.find(o=>o.id===ref.id);return o?bounds(o):null;}
   function edgePoint(ref){const b=referenceBounds(ref);if(!b)return null;return ref.side==='left'?{x:b.x,y:b.y+b.h*ref.t}:ref.side==='right'?{x:b.x+b.w,y:b.y+b.h*ref.t}:ref.side==='top'?{x:b.x+b.w*ref.t,y:b.y}:{x:b.x+b.w*ref.t,y:b.y+b.h};}
   function refreshDimensions(){state.dimensions=state.dimensions.filter(q=>{if(!q.link)return true;const a=edgePoint(q.link.a),b=edgePoint(q.link.b);if(!a||!b)return false;q.x1=a.x;q.x2=q.axis==='x'?b.x:a.x;q.y1=a.y;q.y2=q.axis==='y'?b.y:a.y;return true;});}
   function linkedCount(axis){return state.dimensions.filter(q=>q.link&&q.axis===axis).length;}
@@ -113,7 +113,7 @@ function quintaParking(o){
     canvas.style.cursor=toolCursor();
     if(mode==='pan')$('instruccion').textContent='Mano · Mantén el clic izquierdo y arrastra para desplazar el plano. Centrar vuelve a colocar el dibujo en medio.';
     if(mode==='erase')$('instruccion').textContent='Borrador · Pulsa un objeto, superficie o cota y confirma con Sí o No.';
-    if(mode==='wall')$('instruccion').textContent='Paredes · Mantén el clic izquierdo y arrastra por los cuadros. Clic derecho → Terminar paredes; Escape termina.';
+    if(mode==='shape')$('instruccion').textContent='Figura curva · Marca dos extremos del diámetro y escribe los metros.';if(mode==='wall')$('instruccion').textContent='Paredes · Mantén el clic izquierdo y arrastra por los cuadros. Clic derecho → Terminar paredes; Escape termina.';
     if(mode==='dimension')$('instruccion').textContent='Cota libre · Marca dos puntos, escribe la medida y pulsa Aplicar.';
     if(mode==='separation')$('instruccion').textContent='Separación · Pulsa el lado de la referencia y luego el lado del objeto; escribe la distancia aquí mismo.';
   }
@@ -191,7 +191,7 @@ function quintaParking(o){
     drawPlanDimensions();
     activeDimensionId=null;
     if(terrainHover&&!separationPoints.length&&mode==='separation'){const p=edgePoint(terrainHover),q=screen(p.x,p.y);ctx.fillStyle='#ff4d4d';ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.beginPath();ctx.arc(q.x,q.y,7,0,Math.PI*2);ctx.fill();ctx.stroke();}
-    if(chainPoint){const q=screen(chainPoint.x,chainPoint.y);ctx.fillStyle='#ffe06b';ctx.beginPath();ctx.arc(q.x,q.y,5,0,Math.PI*2);ctx.fill();}for(const p of [...dimensionPoints,...separationPoints.map(edgePoint)].filter(Boolean)){const q=screen(p.x,p.y);ctx.fillStyle='#ff4d4d';ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(q.x,q.y,6,0,Math.PI*2);ctx.fill();ctx.stroke();}
+    if(chainPoint){const q=screen(chainPoint.x,chainPoint.y);ctx.fillStyle='#ffe06b';ctx.beginPath();ctx.arc(q.x,q.y,5,0,Math.PI*2);ctx.fill();}for(const p of [...curvePoints,...dimensionPoints,...separationPoints.map(edgePoint)].filter(Boolean)){const q=screen(p.x,p.y);ctx.fillStyle='#ff4d4d';ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(q.x,q.y,6,0,Math.PI*2);ctx.fill();ctx.stroke();}
     $('infoTerreno').textContent=`${fmt(state.width)} × ${fmt(state.length)} m · ${fmt(state.width*state.length)} m² · ${Math.round(zoom*100)}%`;
   }
   // Dimensions are drawn in screen space so labels remain readable in all views.
@@ -211,7 +211,7 @@ function quintaParking(o){
   }
   function drawMetreRulers(){
     const center=screen(state.width/2,state.length/2);
-    for(const edge of [[[0,0],[state.width,0],state.width],[[0,0],[0,state.length],state.length]]){
+    for(const edge of [[[0,0],[state.width,0],state.width],[[0,0],[0,state.length],state.length],[[0,state.length],[state.width,state.length],state.width],[[state.width,0],[state.width,state.length],state.length]]){
       const [aa,bb,length]=edge,a=screen(...aa),b=screen(...bb),dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy);if(!len)continue;let nx=-dy/len,ny=dx/len;const mid={x:(a.x+b.x)/2,y:(a.y+b.y)/2};if(nx*(mid.x-center.x)+ny*(mid.y-center.y)<0){nx=-nx;ny=-ny;}
       const stride=scale>=17?1:scale>=9?2:5;ctx.save();ctx.font='10px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';ctx.strokeStyle='#7290a9';ctx.fillStyle='#b5cce0';ctx.lineWidth=.7;
       for(let m=0;m<=length+1e-7;m++){const x=a.x+dx*m/length,y=a.y+dy*m/length;ctx.beginPath();ctx.moveTo(x+nx*2,y+ny*2);ctx.lineTo(x+nx*6,y+ny*6);ctx.stroke();if(m%stride===0||Math.abs(m-length)<1e-7)ctx.fillText(String(m),x+nx*13,y+ny*13);}
@@ -255,9 +255,10 @@ function quintaParking(o){
   function drawObjectGeometry(o){
     const b=bounds(o),x=b.x*scale,y=b.y*scale,w=b.w*scale,h=b.h*scale;
     ctx.save();ctx.lineWidth=1;ctx.strokeStyle='#203142';
-    const colors={bombaAgua:'#348eab',pared:'#556577',puerta:'#b97b45',ventana:'#a9e5ff',arbol:'#39843f',arbolAlcorque:'#3b8a4c',farol:'#e6c35e',mesaConBancas:'#b8b8af',palapa:'#d3a65b',casa:'#c57c65',alberca:'#29b9e8',bano:'#d5dcec',regaderas:'#b6dfe3',arbusto:'#4c9f52',fuente:'#8fd7eb',flores:'#dc7eb2',gallinero:'#c9ad6f',fogatero:'#9e8675',estacionamiento:'#828d9d',cocina:'#cda87a',juegos:'#9fbd65',pista:'#af8056',escenario:'#797b9c'};
-    ctx.fillStyle=colors[o.type];
-    if(o.type==='arbol'){ctx.beginPath();ctx.ellipse(x+w/2,y+h/2,w/2,h/2,0,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.fillStyle='#715039';ctx.beginPath();ctx.arc(x+w/2,y+h/2,Math.max(1,Math.min(w,h)*.1),0,Math.PI*2);ctx.fill();}
+    const colors={circulo:'#73a45a',semicirculo:'#73a45a',bombaAgua:'#348eab',pared:'#556577',puerta:'#b97b45',ventana:'#a9e5ff',arbol:'#39843f',arbolAlcorque:'#3b8a4c',farol:'#e6c35e',mesaConBancas:'#b8b8af',palapa:'#d3a65b',casa:'#c57c65',alberca:'#29b9e8',bano:'#d5dcec',regaderas:'#b6dfe3',arbusto:'#4c9f52',fuente:'#8fd7eb',flores:'#dc7eb2',gallinero:'#c9ad6f',fogatero:'#9e8675',estacionamiento:'#828d9d',cocina:'#cda87a',juegos:'#9fbd65',pista:'#af8056',escenario:'#797b9c'};
+    ctx.fillStyle=o.shapeColor||colors[o.type];
+    if(['circulo','semicirculo'].includes(o.type)){ctx.save();ctx.translate(x+w/2,y+h/2);ctx.rotate(o.shapeAngle||0);ctx.beginPath();ctx.ellipse(0,0,w/2,h/2,0,o.type==='circulo'?0:Math.PI,Math.PI*2);ctx.closePath();ctx.fill();ctx.stroke();ctx.restore();}
+    else if(o.type==='arbol'){ctx.beginPath();ctx.ellipse(x+w/2,y+h/2,w/2,h/2,0,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.fillStyle='#715039';ctx.beginPath();ctx.arc(x+w/2,y+h/2,Math.max(1,Math.min(w,h)*.1),0,Math.PI*2);ctx.fill();}
     else {if(!['farol','mesaConBancas','arbolAlcorque'].includes(o.type)){ctx.fillRect(x,y,w,h);ctx.strokeRect(x,y,w,h);}
       if(['casa','palapa'].includes(o.type)){ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+w/2,y+h/2);ctx.lineTo(x+w,y);ctx.moveTo(x,y+h);ctx.lineTo(x+w/2,y+h/2);ctx.lineTo(x+w,y+h);ctx.stroke();}
       if(o.type==='alberca'&&w>8&&h>8){ctx.strokeStyle='#ddf9ff';ctx.strokeRect(x+3,y+3,w-6,h-6);}
@@ -297,6 +298,22 @@ function quintaParking(o){
     render();
   }
   function finishWallChain(){if(drag?.wall){const before=drag.before;drag=null;commit(before);}endTools();mode='select';selected=null;sync();render();say('Paredes terminadas. Puedes seleccionar o borrar elementos.');}
+  function placeCurve(p){
+    if(curvePoints.length>=2)return say('Escribe el diámetro y pulsa Aplicar, o cancela para empezar de nuevo.');
+    p=snap(p);if(p.x<0||p.y<0||p.x>state.width||p.y>state.length)return;
+    if(curvePoints.length&&Math.hypot(p.x-curvePoints[0].x,p.y-curvePoints[0].y)<.01)return say('Marca un segundo punto diferente.');curvePoints.push(p);render();
+    if(curvePoints.length===1)return say('Marca el otro extremo del diámetro.');
+    const [a,b]=curvePoints,panel=$('cotaEnPlano'),host=canvas.parentElement,sp=screen(b.x,b.y);$('tituloMedidaCota').textContent='Diámetro (m)';$('metrosEnPlano').min='.2';$('metrosEnPlano').max='65';$('metrosEnPlano').value=round(Math.hypot(b.x-a.x,b.y-a.y));panel.style.left=clamp(sp.x+12,12,Math.max(12,host.clientWidth-320))+'px';panel.style.top=clamp(sp.y+12,12,Math.max(12,host.clientHeight-100))+'px';panel.hidden=false;$('metrosEnPlano').focus();$('metrosEnPlano').select();say('Escribe el diámetro real y pulsa Aplicar.');
+  }
+  function applyCurve(raw){
+    const diameter=Number(raw);if(curvePoints.length!==2||!Number.isFinite(diameter)||diameter<.2||diameter>65)return say('Introduce un diámetro de 0.20 a 65 m.');
+    const [a,b]=curvePoints,angle=Math.atan2(b.y-a.y,b.x-a.x),cx=a.x+Math.cos(angle)*diameter/2,cy=a.y+Math.sin(angle)*diameter/2;
+    const o={id:uid(),type:$('figuraCurva').value,x:round(cx-diameter/2),y:round(cy-diameter/2),w:diameter,h:diameter,rotation:0,shapeAngle:angle,shapeColor:$('colorCurva').value};
+    if(!validObject(o)||!fits(o))return say('La figura no cabe en esa posición. Elige otros puntos o un diámetro menor.');
+    if(!canMoveOver(o)&&collision(o))return say('La figura se cruza con otro elemento. Marca Desplazamiento libre para superponerla.');
+    action(()=>{state.objects.push(o);selected=o.id;mode='select';endTools();fillForm(o);});say('Figura agregada con el diámetro indicado. Puedes moverla, girarla o voltearla.');
+  }
+  $('colocarCurva').addEventListener('click',()=>{finishInspector();cancel();endTools();mode='shape';sync();render();say('Marca dos puntos para definir el diámetro.');});
   function placeDimension(p){
     if(dimensionPoints.length<2){
       if(p.x< -1e-8||p.y< -1e-8||p.x>state.width+1e-8||p.y>state.length+1e-8)return say('Marca los extremos dentro del terreno o en su borde.');
@@ -320,7 +337,7 @@ function quintaParking(o){
     dimensionPoints=[];dimensionRefs=[];freeDimensionSide=null;$('cotaEnPlano').hidden=true;render();say('Cota colocada. Las medidas mayores que se cruzan quedan más afuera.');
   }
   function nearestAnchor(ref,p){
-    if(ref.kind==='terrain')return ref;
+    if(ref.kind==='terrain'||ref.kind==='point')return ref;
     const b=referenceBounds(ref);if(!b)return null;
     const candidates=[{...ref,side:'left',t:clamp((p.y-b.y)/b.h,0,1)},{...ref,side:'right',t:clamp((p.y-b.y)/b.h,0,1)},{...ref,side:'top',t:clamp((p.x-b.x)/b.w,0,1)},{...ref,side:'bottom',t:clamp((p.x-b.x)/b.w,0,1)}],sp=screen(p.x,p.y);
     return candidates.sort((a,b)=>{const pa=edgePoint(a),pb=edgePoint(b),sa=screen(pa.x,pa.y),sb=screen(pb.x,pb.y);return Math.hypot(sa.x-sp.x,sa.y-sp.y)-Math.hypot(sb.x-sp.x,sb.y-sp.y);})[0];
@@ -331,7 +348,7 @@ function quintaParking(o){
     // Fixed elements are references, regardless of which one was clicked first.
     const fixed=o=>o&&['puerta','ventana','pared'].includes(o.type);
     if((b?.kind&&object(a))||(fixed(object(b))&&object(a)&&!fixed(object(a))))[a,b]=[b,a];
-    if(!a||!object(b)||(!a.kind&&a.id===b.id))return null;
+    if(!a&&object(b)){const p=dimensionPoints[0],q=dimensionPoints[1],axis=Math.abs(q.x-p.x)>=Math.abs(q.y-p.y)?'x':'y';a={kind:'point',x:p.x,y:p.y,side:axis==='x'?'right':'bottom',t:0};}if(!a||!object(b)||(!a.kind&&a.id===b.id))return null;
     const axis=['left','right'].includes(a.side)?'x':'y',click=dimensionRefs[1]===b?dimensionPoints[1]:dimensionPoints[0];
     return {a,b:anchorFor({id:b.id},click,axis),axis};
   }
@@ -347,8 +364,8 @@ function quintaParking(o){
   function hitObject(p){return [...state.objects].sort((a,b)=>(selectedIds.has(a.id)?1:0)-(selectedIds.has(b.id)?1:0)||(['puerta','ventana'].includes(a.type)?1:0)-(['puerta','ventana'].includes(b.type)?1:0)||b.w*b.h-a.w*a.h).reverse().find(o=>{const b=bounds(o),pad=Math.max(.08,3/scale);return p.x>=b.x-pad&&p.x<=b.x+b.w+pad&&p.y>=b.y-pad&&p.y<=b.y+b.h+pad;});}
   function showDistanceEditor(){const free=mode==='dimension',[ra,rb]=separationPoints,a=free?dimensionPoints[0]:edgePoint(ra),b=free?dimensionPoints[1]:edgePoint(rb);if(!a||!b)return;const pair=free?dimensionPair():null;const v=round(pair?Math.abs(edgePoint(pair.a)[pair.axis]-edgePoint(pair.b)[pair.axis]):free?Math.hypot(b.x-a.x,b.y-a.y):Math.abs(a[separationAxis]-b[separationAxis]));$('tituloMedidaCota').textContent=free&&!pair?'Medida de la cota (m)':'Separación (m)';$('metrosEnPlano').min=free?'0.01':'0';$('metrosEnPlano').max=free?'1000':'65';$('metrosEnPlano').value=v;closeMenus();const panel=$('cotaEnPlano'),host=canvas.parentElement,sp=screen(b.x,b.y);panel.style.left=clamp((canvas.offsetLeft||0)+sp.x+12,(host.scrollLeft||0)+12,(host.scrollLeft||0)+Math.max(12,host.clientWidth-320))+'px';panel.style.top=clamp((canvas.offsetTop||0)+sp.y+12,(host.scrollTop||0)+12,(host.scrollTop||0)+Math.max(12,host.clientHeight-100))+'px';panel.hidden=false;$('metrosEnPlano').focus();$('metrosEnPlano').select();}
   function chooseSeparation(p){if(separationPoints.length===2){separationPoints=[];separationClicks=[];$('cotaEnPlano').hidden=true;}
-    if(!separationPoints.length){const ref=separationReference(p);if(!ref)return say('Pulsa el borde del terreno, una pared o un cuadro de superficie pintada.');const b=referenceBounds(ref),nearX=Math.min(Math.abs(p.x-b.x),Math.abs(p.x-b.x-b.w)),nearY=Math.min(Math.abs(p.y-b.y),Math.abs(p.y-b.y-b.h));separationPoints=[nearestAnchor(ref,p)];separationClicks=[edgePoint(separationPoints[0])];terrainHover=null;say('Referencia elegida. Mantén la referencia y pulsa el lado del objeto que deseas separar.');}
-    else{const hit=hitObject(p);if(!hit)return say('El segundo punto debe ser un objeto que se pueda mover.');if(!separationPoints[0].kind&&separationPoints[0].id===hit.id)return say('Elige un objeto diferente de la referencia.');const first=separationClicks[0];separationAxis=['left','right'].includes(separationPoints[0].side)?'x':'y';separationPoints=[separationPoints[0],anchorFor({id:hit.id},p,separationAxis)];separationClicks.push(p);showDistanceEditor();say('Escribe la separación en metros sobre el plano.');}render();
+    if(!separationPoints.length){const ref=separationReference(p)||{kind:'point',x:round(p.x),y:round(p.y),side:'right',t:0};const b=referenceBounds(ref),nearX=Math.min(Math.abs(p.x-b.x),Math.abs(p.x-b.x-b.w)),nearY=Math.min(Math.abs(p.y-b.y),Math.abs(p.y-b.y-b.h));separationPoints=[nearestAnchor(ref,p)];separationClicks=[edgePoint(separationPoints[0])];terrainHover=null;say('Referencia elegida. Mantén la referencia y pulsa el lado del objeto que deseas separar.');}
+    else{const hit=hitObject(p);if(!hit)return say('El segundo punto debe ser un objeto que se pueda mover.');if(!separationPoints[0].kind&&separationPoints[0].id===hit.id)return say('Elige un objeto diferente de la referencia.');const first=separationClicks[0];separationAxis=separationPoints[0].kind==='point'?(Math.abs(p.x-first.x)>=Math.abs(p.y-first.y)?'x':'y'):(['left','right'].includes(separationPoints[0].side)?'x':'y');if(separationPoints[0].kind==='point')separationPoints[0].side=separationAxis==='x'?'right':'bottom';separationPoints=[separationPoints[0],anchorFor({id:hit.id},p,separationAxis)];separationClicks.push(p);showDistanceEditor();say('Escribe la separación en metros sobre el plano.');}render();
   }
   function applySeparation(distance){
 if(separationPoints.length!==2)return say('Primero elige una referencia y el lado de otro objeto.');
@@ -362,7 +379,7 @@ if(separationPoints.length!==2)return say('Primero elige una referencia y el lad
     closeMenus();$('cotaEnPlano').hidden=true;say(`Objeto separado ${fmt(dist)} m entre los lados elegidos. Cota colocada.`);return true;
   }
 
-  $('cotaEnPlano').addEventListener('submit',e=>{e.preventDefault();if(mode==='dimension')applyFreeDimension($('metrosEnPlano').value);else applySeparation($('metrosEnPlano').value);});
+  $('cotaEnPlano').addEventListener('submit',e=>{e.preventDefault();if(mode==='shape')applyCurve($('metrosEnPlano').value);else if(mode==='dimension')applyFreeDimension($('metrosEnPlano').value);else applySeparation($('metrosEnPlano').value);});
   $('cancelarCotaPlano').addEventListener('click',()=>{endTools();render();});
   function activateCota(){cancel();endTools();mode=$('tipoCota').value;sync();closeMenus();render();}
   $('tipoCota').addEventListener('change',activateCota);$('activarCota').addEventListener('click',activateCota);
@@ -427,7 +444,7 @@ if(separationPoints.length!==2)return say('Primero elige una referencia y el lad
   canvas.addEventListener('pointerdown',e=>{
     if(mode==='pan'||e.button!==0||drag)return;finishInspector();const p=point(e,false);
     if(mode==='erase'){eraseAt(p);return;}
-    if(mode==='dimension'){placeDimension(p);return;}
+    if(mode==='shape'){placeCurve(p);return;}if(mode==='dimension'){placeDimension(p);return;}
     if(mode==='separation'){chooseSeparation(p);return;}
     if(mode!=='select'&&(p.x< -1e-8||p.y< -1e-8||p.x>state.width+1e-8||p.y>state.length+1e-8))return;
     if(mode==='wall'){e.preventDefault();canvas.setPointerCapture(e.pointerId);drag={id:e.pointerId,wall:true,start:p,current:p,before:serialize()};if(!chainPoint)chainPoint=chainSnap(p);else extendWallChain(p);render();return;}
@@ -471,7 +488,7 @@ if(separationPoints.length!==2)return say('Primero elige una referencia y el lad
     const oldCells=cells,keyMap=new Map();cells=new Map();for(const [key,material]of oldCells){const [x,y]=key.split(':').map(Number),nx=axis==='x'?Math.max(0,Math.floor((state.width-(x+.5)*unit)/unit)):x,ny=axis==='y'?Math.max(0,Math.floor((state.length-(y+.5)*unit)/unit)):y,nk=nx+':'+ny;keyMap.set(key,nk);cells.set(nk,material);}
     state.objects=state.objects.map(o=>{const b=bounds(o);return {...mirrorObject(o,axis),x:axis==='x'?round(state.width-b.x-b.w):o.x,y:axis==='y'?round(state.length-b.y-b.h):o.y};});
     const swap=side=>axis==='x'?({left:'right',right:'left'}[side]||side):({top:'bottom',bottom:'top'}[side]||side);
-    function ref(r){const next={...r,side:swap(r.side)};if((axis==='x'&&['top','bottom'].includes(r.side))||(axis==='y'&&['left','right'].includes(r.side)))next.t=1-r.t;if(r.kind==='surface'){next.x=axis==='x'?round(state.width-r.x-r.w):r.x;next.y=axis==='y'?round(state.length-r.y-r.h):r.y;next.key=keyMap.get(r.key)||r.key;next.id='surface:'+next.x+':'+next.y+':'+next.w+':'+next.h;}return next;}
+    function ref(r){const next={...r,side:swap(r.side)};if((axis==='x'&&['top','bottom'].includes(r.side))||(axis==='y'&&['left','right'].includes(r.side)))next.t=1-r.t;if(r.kind==='point'){next.x=axis==='x'?round(state.width-r.x):r.x;next.y=axis==='y'?round(state.length-r.y):r.y;}if(r.kind==='surface'){next.x=axis==='x'?round(state.width-r.x-r.w):r.x;next.y=axis==='y'?round(state.length-r.y-r.h):r.y;next.key=keyMap.get(r.key)||r.key;next.id='surface:'+next.x+':'+next.y+':'+next.w+':'+next.h;}return next;}
     state.dimensions=state.dimensions.map(q=>({...q,x1:axis==='x'?round(state.width-q.x1):q.x1,x2:axis==='x'?round(state.width-q.x2):q.x2,y1:axis==='y'?round(state.length-q.y1):q.y1,y2:axis==='y'?round(state.length-q.y2):q.y2,...(q.side?{side:swap(q.side)}:{}),offset:(axis==='x'&&q.axis==='y'||axis==='y'&&q.axis==='x')?-q.offset:q.offset,...(q.link?{link:{a:ref(q.link.a),b:ref(q.link.b)}}:{})}));
     imageGeneratedIds=[];imageGroundChanges=[];fillForm(state.objects.find(o=>o.id===selected)||{type:$('tipo').value,w:Number($('objW').value),h:Number($('objH').value),rotation:Number($('rotacion').value)});
   });say('Plano volteado en espejo; textos y cotas conservan su lectura.');}
@@ -500,16 +517,16 @@ if(separationPoints.length!==2)return say('Primero elige una referencia y el lad
   $('vista').addEventListener('change',e=>{cancel();view=e.target.value;zoom=1;pan={x:0,y:0};sync();render();canvas.parentElement.scrollTop=0;canvas.parentElement.scrollLeft=0;say('Vista '+view+'. Las coordenadas y medidas reales se conservan.');});
   $('cotasObjetos').addEventListener('change',e=>{objectDimensions=e.target.value;render();});
   $('pantalla').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{say('Pantalla completa no disponible. Puedes ampliar con F11.');}});
-  function validObject(o){return o&&typeof o.id==='string'&&o.id.length<100&&Object.hasOwn(defaults,o.type)&&['flipX','flipY'].every(k=>o[k]===undefined||typeof o[k]==='boolean')&&[o.x,o.y,o.w,o.h,o.rotation].every(Number.isFinite)&&[0,90,180,270].includes(o.rotation)&&o.w>=defaults[o.type][2]&&o.h>=(['pared','puerta','ventana'].includes(o.type)?.2:defaults[o.type][2])&&(!['pared','puerta','ventana'].includes(o.type)||Math.abs(o.h-.2)<1e-8);}
+  function validObject(o){return o&&typeof o.id==='string'&&o.id.length<100&&Object.hasOwn(defaults,o.type)&&(o.shapeColor===undefined||typeof o.shapeColor==='string'&&/^#[0-9a-f]{6}$/i.test(o.shapeColor))&&(o.shapeAngle===undefined||Number.isFinite(o.shapeAngle)&&Math.abs(o.shapeAngle)<=Math.PI*2)&&['flipX','flipY'].every(k=>o[k]===undefined||typeof o[k]==='boolean')&&[o.x,o.y,o.w,o.h,o.rotation].every(Number.isFinite)&&[0,90,180,270].includes(o.rotation)&&o.w>=defaults[o.type][2]&&o.h>=(['pared','puerta','ventana'].includes(o.type)?.2:defaults[o.type][2])&&(!['pared','puerta','ventana'].includes(o.type)||Math.abs(o.h-.2)<1e-8);}
   function validate(raw){
     if(!raw||![1,2].includes(raw.version)||![raw.width,raw.length,raw.step].every(Number.isFinite)||raw.width<1||raw.width>35||raw.length<1||raw.length>65||![1,.5,.25].includes(raw.step)||!Array.isArray(raw.cells)||raw.cells.length>40000)throw Error('Formato o medidas del proyecto no válidos.');
     const converted=new Map();for(const entry of raw.cells){if(!Array.isArray(entry)||entry.length!==2)throw Error('Celda no válida.');const [k,v]=entry;if(typeof k!=='string'||!/^\d{1,3}:\d{1,3}$/.test(k)||!Object.hasOwn(materials,v))throw Error('Material o coordenada no válido.');const [x,y]=k.split(':').map(Number),s=raw.version===1?raw.step:unit;if(x*s>=raw.width||y*s>=raw.length)throw Error('Superficie fuera del terreno.');for(let yy=y*s;yy<Math.min((y+1)*s,raw.length)-1e-8;yy+=unit)for(let xx=x*s;xx<Math.min((x+1)*s,raw.width)-1e-8;xx+=unit)converted.set(Math.round(xx/unit)+':'+Math.round(yy/unit),v);}
     const objects=raw.version===1?[]:raw.objects;if(!Array.isArray(objects)||objects.length>2000||objects.some(o=>!validObject(o)||!fits(o,raw.width,raw.length))||new Set(objects.map(o=>o.id)).size!==objects.length)throw Error('Objetos o dimensiones no válidos.');
     const dimensions=raw.dimensions??[];if(!Array.isArray(dimensions)||dimensions.length>1000||dimensions.some(q=>!q||typeof q.id!=='string'||q.id.length>100||!['x','y'].includes(q.axis)||![q.x1,q.y1,q.x2,q.y2,q.offset].every(Number.isFinite)||Math.abs(q.offset)>65||q.x1<0||q.x2<0||q.y1<0||q.y2<0||q.x1>raw.width||q.x2>raw.width||q.y1>raw.length||q.y2>raw.length||(q.color!==undefined&&q.color!=='blue')||(q.side!==undefined&&!['top','bottom','left','right'].includes(q.side))||(q.measurement!==undefined&&(!q.free||!Number.isFinite(q.measurement)||q.measurement<=0||q.measurement>1000))||(q.free!==undefined&&typeof q.free!=='boolean')||(q.free?Math.hypot(q.x2-q.x1,q.y2-q.y1)<.0001:(q.axis==='x'?(q.y1!==q.y2||(!q.link&&q.x1===q.x2)):(q.x1!==q.x2||(!q.link&&q.y1===q.y2)))))||new Set(dimensions.map(q=>q.id)).size!==dimensions.length)throw Error('Cotas no válidas.');
-    function validRef(r,axis,target=false){if(!r||!(axis==='x'?['left','right']:['top','bottom']).includes(r.side)||!Number.isFinite(r.t)||r.t<0||r.t>1)return false;if(!r.kind)return typeof r.id==='string'&&objects.some(o=>o.id===r.id);if(target)return false;if(r.kind==='terrain')return true;if(r.kind==='surface')return [r.x,r.y,r.w,r.h].every(Number.isFinite)&&r.x>=0&&r.y>=0&&r.w>0&&r.h>0&&r.x+r.w<=raw.width+1e-8&&r.y+r.h<=raw.length+1e-8&&typeof r.key==='string'&&converted.has(r.key);return false;}
+    function validRef(r,axis,target=false){if(!r||!(axis==='x'?['left','right']:['top','bottom']).includes(r.side)||!Number.isFinite(r.t)||r.t<0||r.t>1)return false;if(!r.kind)return typeof r.id==='string'&&objects.some(o=>o.id===r.id);if(target)return false;if(r.kind==='point')return Number.isFinite(r.x)&&Number.isFinite(r.y)&&r.x>=0&&r.y>=0&&r.x<=raw.width&&r.y<=raw.length;if(r.kind==='terrain')return true;if(r.kind==='surface')return [r.x,r.y,r.w,r.h].every(Number.isFinite)&&r.x>=0&&r.y>=0&&r.w>0&&r.h>0&&r.x+r.w<=raw.width+1e-8&&r.y+r.h<=raw.length+1e-8&&typeof r.key==='string'&&converted.has(r.key);return false;}
     for(const q of dimensions)if(q.link){if(!validRef(q.link.a,q.axis)||!validRef(q.link.b,q.axis,true)||(!q.link.a.kind&&q.link.a.id===q.link.b.id))throw Error('Referencias de cota no válidas.');}
-    function cleanRef(r){return {side:r.side,t:r.t,...(r.kind==='terrain'?{kind:'terrain'}:r.kind==='surface'?{kind:'surface',id:'surface:'+r.x+':'+r.y+':'+r.w+':'+r.h,key:r.key,x:r.x,y:r.y,w:r.w,h:r.h}:{id:r.id})};}
-    return {version:2,width:raw.width,length:raw.length,step:raw.step,cells:[...converted],objects:objects.map(({id,type,x,y,w,h,rotation,flipX,flipY})=>({id,type,x,y,w,h,rotation,...(flipX!==undefined?{flipX}:{}),...(flipY!==undefined?{flipY}:{} )})),dimensions:dimensions.map(({id,axis,x1,y1,x2,y2,offset,link,side,free,measurement,color})=>({id,axis,x1,y1,x2,y2,offset,...(color?{color}:{}),...(side?{side}:{}),...(free?{free:true}:{}),...(measurement!==undefined?{measurement}:{}),...(link?{link:{a:cleanRef(link.a),b:cleanRef(link.b)}}:{})}))};
+    function cleanRef(r){return {side:r.side,t:r.t,...(r.kind==='point'?{kind:'point',x:r.x,y:r.y}:r.kind==='terrain'?{kind:'terrain'}:r.kind==='surface'?{kind:'surface',id:'surface:'+r.x+':'+r.y+':'+r.w+':'+r.h,key:r.key,x:r.x,y:r.y,w:r.w,h:r.h}:{id:r.id})};}
+    return {version:2,width:raw.width,length:raw.length,step:raw.step,cells:[...converted],objects:objects.map(({id,type,x,y,w,h,rotation,flipX,flipY,shapeAngle,shapeColor})=>({id,type,x,y,w,h,rotation,...(shapeColor!==undefined?{shapeColor}:{}),...(shapeAngle!==undefined?{shapeAngle}:{}),...(flipX!==undefined?{flipX}:{}),...(flipY!==undefined?{flipY}:{} )})),dimensions:dimensions.map(({id,axis,x1,y1,x2,y2,offset,link,side,free,measurement,color})=>({id,axis,x1,y1,x2,y2,offset,...(color?{color}:{}),...(side?{side}:{}),...(free?{free:true}:{}),...(measurement!==undefined?{measurement}:{}),...(link?{link:{a:cleanRef(link.a),b:cleanRef(link.b)}}:{})}))};
   }
   function load(raw){const p=validate(raw);action(()=>{restore(p);say('Proyecto cargado. Puedes deshacer la importación.');});centerDrawing();}
   $('abrir3D').addEventListener('click',()=>{cancel();closeMenus();window.quinta3D.open(project());});
@@ -547,6 +564,7 @@ if(separationPoints.length!==2)return say('Primero elige una referencia y el lad
   function shade(hex,k){const n=parseInt(hex.slice(1),16);return '#'+[n>>16,(n>>8)&255,n&255].map(v=>Math.round(clamp(v*k,0,255)).toString(16).padStart(2,'0')).join('');}
   function model(o){const start=faces.length;modelGeometry({...o,x:0,y:0,rotation:0,flipX:false,flipY:false});for(let i=start;i<faces.length;i++)faces[i].points=faces[i].points.map(p=>{const q=quintaPoint(o,p[0],p[1]);return [q.x,q.y,p[2]];});}
   function modelGeometry(o){const x=o.x,y=o.y,w=o.rotation%180===90?o.h:o.w,l=o.rotation%180===90?o.w:o.h,c=palette[o.type]||'#b7aaa0';
+    if(['circulo','semicirculo'].includes(o.type)){const begin=o.type==='circulo'?0:Math.PI,angle=o.shapeAngle||0,center=[x+w/2,y+l/2,.025],n=48;for(let i=0;i<n;i++){const points=[center];for(const t of [begin+(Math.PI*2-begin)*i/n,begin+(Math.PI*2-begin)*(i+1)/n]){const px=Math.cos(t)*w/2,py=Math.sin(t)*l/2;points.push([center[0]+px*Math.cos(angle)-py*Math.sin(angle),center[1]+px*Math.sin(angle)+py*Math.cos(angle),.025]);}face(points,o.shapeColor||'#73a45a');faces[faces.length-1].underlay=true;}return;}
     if(o.type==='bombaAgua'){function part(r,z,h,color){const b=quintaRect(o,r);box(b.x,b.y,z,b.w,b.h,h,color);}part({x:0,y:0,w:o.w,h:o.h},0,.1,'#a5acaf');part({x:o.w*.32,y:o.h*.22,w:o.w*.56,h:o.h*.56},.1,.35,c);part({x:o.w*.14,y:o.h*.15,w:o.w*.22,h:o.h*.7},.1,.4,'#246781');part({x:0,y:o.h*.4,w:o.w*.2,h:o.h*.2},.2,.12,'#a5c9d6');part({x:o.w*.2,y:o.h*.38,w:o.w*.12,h:o.h*.24},.5,.3,'#a5c9d6');return;}
     if(o.type==='farol'){const d=Math.min(w,l);box(x+w*.35,y+l*.35,0,w*.3,l*.3,.18,'#777c7e');box(x+w/2-d*.06,y+l/2-d*.06,.18,d*.12,d*.12,2.6,'#424c58');box(x+w*.18,y+l*.18,2.78,w*.64,l*.64,.4,night?'#ffe69b':'#ecd8a0');roof(x+w*.15,y+l*.15,w*.7,l*.7,3.18,'#46515c');return;}
     if(o.type==='mesaConBancas'){function part(r,z,h,color){const b=quintaRect(o,r);box(b.x,b.y,z,b.w,b.h,h,color);}const concrete='#b9b9ac';part({x:o.w*.34,y:o.h*.05,w:o.w*.32,h:o.h*.9},.78,.1,concrete);for(const bx of [.08,.78]){part({x:o.w*bx,y:o.h*.06,w:o.w*.14,h:o.h*.88},.43,.09,concrete);for(const by of [.18,.7])part({x:o.w*(bx+.035),y:o.h*by,w:o.w*.07,h:o.h*.1},0,.43,'#95998d');}for(const by of [.15,.72])part({x:o.w*.45,y:o.h*by,w:o.w*.1,h:o.h*.12},0,.78,'#95998d');return;}
