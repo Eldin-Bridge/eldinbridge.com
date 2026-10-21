@@ -12,3 +12,5 @@
 .cabeceraInspector{cursor:grab;touch-action:none;user-select:none}.cabeceraInspector button{cursor:pointer}#opcionesDesplazamiento{margin:8px 0}
 
 .barraPlano #opcionesDesplazamiento{margin:0;gap:7px;white-space:nowrap;padding:6px 8px}
+
+#menuContextual #terminarParedes{color:#bddcff}#menuContextual #terminarParedes:hover{background:#254a70}

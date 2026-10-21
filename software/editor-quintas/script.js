@@ -113,7 +113,7 @@ function quintaParking(o){
     canvas.style.cursor=toolCursor();
     if(mode==='pan')$('instruccion').textContent='Mano · Mantén el clic izquierdo y arrastra para desplazar el plano. Centrar vuelve a colocar el dibujo en medio.';
     if(mode==='erase')$('instruccion').textContent='Borrador · Pulsa un objeto, superficie o cota y confirma con Sí o No.';
-    if(mode==='wall')$('instruccion').textContent='Paredes · Pulsa el inicio y después el final de cada tramo. Puedes girar cambiando de eje. Escape termina.';
+    if(mode==='wall')$('instruccion').textContent='Paredes · Mantén el clic izquierdo y arrastra por los cuadros. Clic derecho → Terminar paredes; Escape termina.';
     if(mode==='dimension')$('instruccion').textContent='Cota libre · Marca dos puntos, escribe la medida y pulsa Aplicar.';
     if(mode==='separation')$('instruccion').textContent='Separación · Pulsa el lado de la referencia y luego el lado del objeto; escribe la distancia aquí mismo.';
   }
@@ -151,7 +151,7 @@ function quintaParking(o){
     const type=$('tipo').value, min=defaults[type][2], thin=['pared','puerta','ventana'].includes(type);
     $('objW').min=min; $('objH').min=thin?.2:min; $('objH').readOnly=thin;
     if(thin) $('objH').value=.2;
-    $('objAyuda').textContent=(thin?'Grosor fijo: 0.20 m. ':'')+`Medida mínima: ${fmt(min)} m. Selecciona un objeto para editar estas medidas.${type==='pared'?' Encadenar: pulsa Agregar y marca el recorrido. Sin marcar: coloca una pared libre.':''}`;
+    $('objAyuda').textContent=(thin?'Grosor fijo: 0.20 m. ':'')+`Medida mínima: ${fmt(min)} m. Selecciona un objeto para editar estas medidas.${type==='pared'?' Encadenar: pulsa Agregar y arrastra por los cuadros; clic derecho para terminar. Sin marcar: coloca una pared libre.':''}`;
   }
   function fresh() {finishInspector();selected=null;$('encadenar').checked=false; const t=$('tipo').value,base={id:uid(),type:t,x:0,y:0,w:defaults[t][0],h:defaults[t][1],rotation:0},placed=freePosition(base);fillForm(placed||base);if(!placed)say('No queda espacio para este tamaño. Reduce sus medidas.');sync();render();}
   function render() {
@@ -179,7 +179,14 @@ function quintaParking(o){
     ctx.restore();
     for(const o of state.objects){const b=bounds(o);if(b.w*scale<35||b.h*scale<20)continue;const p=screen(b.x+b.w/2,b.y+b.h/2);ctx.save();ctx.font='11px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';const label=o.type==='estacionamiento'?quintaParking(o).capacity+' vehículos':o.type==='bano'?'Baño':o.type==='bombaAgua'?'Bomba de agua':o.type;const width=ctx.measureText(label).width;ctx.fillStyle='#101b2bcc';ctx.fillRect(p.x-width/2-3,p.y-8,width+6,16);ctx.fillStyle='#fff';ctx.fillText(label,p.x,p.y);ctx.restore();}
     if(drag?.marquee){const r=marqueeRect();ctx.save();ctx.fillStyle='#4b9dff33';ctx.strokeStyle='#75b4ff';ctx.lineWidth=1.5;ctx.setLineDash([6,4]);ctx.fillRect(r.x,r.y,r.w,r.h);ctx.strokeRect(r.x,r.y,r.w,r.h);ctx.restore();}
-    if(objectDimensions!=='ninguno')for(const o of state.objects){if(objectDimensions==='seleccion'&&!selectedIds.has(o.id))continue;const b=bounds(o),center=screen(b.x+b.w/2,b.y+b.h/2);dimension(screen(b.x,b.y),screen(b.x+b.w,b.y),b.w,center,13,selectedIds.has(o.id));dimension(screen(b.x+b.w,b.y),screen(b.x+b.w,b.y+b.h),b.h,center,13,o.id===selected);}
+    if(objectDimensions!=='ninguno')for(const o of state.objects){
+      if(objectDimensions==='seleccion'&&!selectedIds.has(o.id))continue;
+      const b=bounds(o),center=screen(b.x+b.w/2,b.y+b.h/2),eps=.011;
+      const horizontal=[];if(b.y<=eps)horizontal.push(b.y);if(b.y+b.h>=state.length-eps)horizontal.push(b.y+b.h);if(!horizontal.length)horizontal.push(b.y);
+      const vertical=[];if(b.x<=eps)vertical.push(b.x);if(b.x+b.w>=state.width-eps)vertical.push(b.x+b.w);if(!vertical.length)vertical.push(b.x+b.w);
+      for(const y of horizontal)dimension(screen(b.x,y),screen(b.x+b.w,y),b.w,center,13,selectedIds.has(o.id));
+      for(const x of vertical)dimension(screen(x,b.y),screen(x,b.y+b.h),b.h,center,13,selectedIds.has(o.id));
+    }
     drawPlanDimensions();
     activeDimensionId=null;
     if(terrainHover&&!separationPoints.length&&mode==='separation'){const p=edgePoint(terrainHover),q=screen(p.x,p.y);ctx.fillStyle='#ff4d4d';ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.beginPath();ctx.arc(q.x,q.y,7,0,Math.PI*2);ctx.fill();ctx.stroke();}
@@ -266,27 +273,20 @@ function quintaParking(o){
   function area(a,b){const s=state.step,x=Math.floor(Math.min(a.x,b.x)/s)*s,y=Math.floor(Math.min(a.y,b.y)/s)*s;return {x,y,w:Math.min(state.width,(Math.floor(Math.max(a.x,b.x)/s)+1)*s)-x,h:Math.min(state.length,(Math.floor(Math.max(a.y,b.y)/s)+1)*s)-y};}
   function paintRect(r){for(let y=Math.floor(r.y/unit);y<Math.ceil((r.y+r.h)/unit-1e-8);y++)for(let x=Math.floor(r.x/unit);x<Math.ceil((r.x+r.w)/unit-1e-8);x++){const k=x+':'+y;if(material==='borrar')cells.delete(k);else cells.set(k,material);}}
   function stroke(a,b){const count=Math.max(1,Math.ceil(Math.hypot(a.x-b.x,a.y-b.y)/(unit/2)));for(let i=0;i<=count;i++){const p={x:a.x+(b.x-a.x)*i/count,y:a.y+(b.y-a.y)*i/count};paintRect(area(p,p));}}
-  function placeWall(p){
-    p={x:clamp(p.x,.1,state.width-.1),y:clamp(p.y,.1,state.length-.1)};
-    if(!chainPoint){chainPoint=p;render();say('Inicio de pared marcado. Pulsa el final del primer tramo.');return;}
-    const start={...chainPoint},horizontal=Math.abs(p.x-start.x)>=Math.abs(p.y-start.y),axis=horizontal?'x':'y',cross=horizontal?'y':'x';
-    let end=p[axis],from=start[axis];if(Math.abs(end-from)<.01)return;
-    const sign=Math.sign(end-from);let stopped=false;
-    for(const wall of state.objects){if(wall.type!=='pared'||wall.id===lastWall)continue;const b=bounds(wall),lo=horizontal?b.x:b.y,hi=lo+(horizontal?b.w:b.h),crossLo=horizontal?b.y:b.x,crossHi=crossLo+(horizontal?b.h:b.w);
-      if(start[cross]+.1<=crossLo+1e-8||start[cross]-.1>=crossHi-1e-8)continue;
-      // A junction may start on an existing wall; travel away from that junction is allowed.
-      if(from>=lo-.10001&&from<=hi+.10001)continue;
-      const stop=sign>0?lo-.1:hi+.1;
-      if(sign*(stop-from)>0&&sign*(end-stop)>=-1e-8){end=stop;stopped=true;}
-    }
-    if(Math.abs(end-from)<.01){endTools();say('La pared se detuvo al encontrar otra pared.');render();return;}
-    const target={...start,[axis]:end},distance=Math.abs(end-from);
-    const o={id:uid(),type:'pared',x:round(Math.min(start.x,target.x)-.1),y:round(Math.min(start.y,target.y)-.1),w:round(distance+.2),h:.2,rotation:horizontal?0:90};
-    if(!fits(o))return say('El tramo debe quedar dentro del terreno.');if(collision(o))return say('El tramo se encimaría con otro objeto.');
-    action(()=>{state.objects.push(o);selected=o.id;fillForm(o);});
-    if($('encadenar').checked&&!stopped){chainPoint=target;lastWall=o.id;say('Tramo agregado. Pulsa el siguiente punto para continuar o girar.');}
-    else{endTools();say(stopped?'Pared conectada con otra pared. Cadena terminada.':'Pared colocada. Pulsa un nuevo inicio.');}render();
+  function chainSnap(p){return {x:round(clamp(Math.round(p.x/state.step)*state.step,.1,state.width-.1)),y:round(clamp(Math.round(p.y/state.step)*state.step,.1,state.length-.1))};}
+  function extendWallChain(p){
+    if(!chainPoint||drag?.blocked)return;
+    const target=chainSnap(p),order=Math.abs(target.x-chainPoint.x)>=Math.abs(target.y-chainPoint.y)?['x','y']:['y','x'];
+    for(const axis of order){let guard=0;while(Math.abs(target[axis]-chainPoint[axis])>.001&&guard++<300){
+      const sign=Math.sign(target[axis]-chainPoint[axis]),grid=(sign>0?Math.floor((chainPoint[axis]+1e-7)/state.step)+1:Math.ceil((chainPoint[axis]-1e-7)/state.step)-1)*state.step;
+      const end={...chainPoint,[axis]:round(sign>0?Math.min(target[axis],grid):Math.max(target[axis],grid))};if(Math.abs(end[axis]-chainPoint[axis])<.001)break;
+      const o={id:uid(),type:'pared',x:round(Math.min(chainPoint.x,end.x)-.1),y:round(Math.min(chainPoint.y,end.y)-.1),w:round(Math.abs(end[axis]-chainPoint[axis])+.2),h:.2,rotation:axis==='x'?0:90};
+      if(!fits(o)||collision(o)){if(drag)drag.blocked=true;say('La pared se detuvo al encontrar otro elemento. Clic derecho para terminar.');return;}
+      state.objects.push(o);lastWall=o.id;chainPoint=end;
+    }}
+    render();
   }
+  function finishWallChain(){if(drag?.wall){const before=drag.before;drag=null;commit(before);}endTools();mode='select';selected=null;sync();render();say('Paredes terminadas. Puedes seleccionar o borrar elementos.');}
   function placeDimension(p){
     if(dimensionPoints.length<2){
       if(p.x< -1e-8||p.y< -1e-8||p.x>state.width+1e-8||p.y>state.length+1e-8)return say('Marca los extremos dentro del terreno o en su borde.');
@@ -369,7 +369,7 @@ if(separationPoints.length!==2)return say('Primero elige una referencia y el lad
   }
   $('desplazamientoLibre').addEventListener('change',()=>{cancel();say($('desplazamientoLibre').checked?'Desplazamiento libre: los objetos pueden pasar sobre otros; las paredes conservan sus topes.':'Topes activados al mover objetos.');sync();render();});
   $('encadenar').addEventListener('change',()=>{endTools();if(!$('encadenar').checked&&mode==='wall')mode='select';sync();render();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'){endTools();render();}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(mode==='wall')finishWallChain();else{endTools();render();}}});
   function segmentDistance(p,a,b){const dx=b.x-a.x,dy=b.y-a.y,t=clamp(((p.x-a.x)*dx+(p.y-a.y)*dy)/(dx*dx+dy*dy||1),0,1);return Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy);}
   function askErase(target){finishInspector();cancel();endTools();pendingErase=target;const description=target.kind==='objects'?target.ids.length+' objetos seleccionados':target.kind==='object'?'Objeto seleccionado':target.kind==='dimension'?'Cota seleccionada':target.kind==='surface'?'Superficie seleccionada':'Imagen de referencia';$('detalleBorrar').textContent=description;$('confirmarBorrado').showModal();}
   function eraseAt(p){const sp=screen(p.x,p.y),dim=[...dimensionHits].reverse().find(d=>segmentDistance(sp,d.a,d.b)<12);if(dim)return askErase({kind:'dimension',id:dim.id});const hit=[...state.objects].sort((a,b)=>(selectedIds.has(a.id)?1:0)-(selectedIds.has(b.id)?1:0)||(['puerta','ventana'].includes(a.type)?1:0)-(['puerta','ventana'].includes(b.type)?1:0)||b.w*b.h-a.w*a.h).reverse().find(o=>{const b=bounds(o);return p.x>=b.x&&p.x<=b.x+b.w&&p.y>=b.y&&p.y<=b.y+b.h;});if(hit)return askErase({kind:'object',id:hit.id});
@@ -382,7 +382,8 @@ if(separationPoints.length!==2)return say('Primero elige una referencia y el lad
   for(const name of ['pointerup','pointercancel','lostpointercapture'])panHost.addEventListener(name,()=>{if(!panDrag)return;panDrag=null;canvas.style.cursor=toolCursor();});
   let contextErase=null;
   function closeContext(){ $('menuContextual').hidden=true;contextErase=null; }
-  canvas.addEventListener('contextmenu',e=>{e.preventDefault();finishInspector();cancel();endTools();const p=point(e,false),hit=hitObject(p),dim=[...dimensionHits].reverse().find(d=>segmentDistance(screen(p.x,p.y),d.a,d.b)<12);normalizeSelection();if(!dim&&selectedIds.size&&(!hit||selectedIds.has(hit.id))){const ids=[...selectedIds];contextErase=()=>askErase(ids.length>1?{kind:'objects',ids}:{kind:'object',id:ids[0]});}else contextErase=()=>eraseAt(p);const menu=$('menuContextual');menu.style.left=clamp(e.clientX,8,window.innerWidth-170)+'px';menu.style.top=clamp(e.clientY,8,window.innerHeight-65)+'px';menu.hidden=false;$('borrarContextual').focus();});
+  canvas.addEventListener('contextmenu',e=>{e.preventDefault();finishInspector();const chaining=mode==='wall';if(drag?.wall){const before=drag.before;drag=null;commit(before);}else cancel();if(!chaining)endTools();$('terminarParedes').hidden=!chaining;const p=point(e,false),hit=hitObject(p),dim=[...dimensionHits].reverse().find(d=>segmentDistance(screen(p.x,p.y),d.a,d.b)<12);normalizeSelection();if(!dim&&selectedIds.size&&(!hit||selectedIds.has(hit.id))){const ids=[...selectedIds];contextErase=()=>askErase(ids.length>1?{kind:'objects',ids}:{kind:'object',id:ids[0]});}else contextErase=()=>eraseAt(p);const menu=$('menuContextual');menu.style.left=clamp(e.clientX,8,window.innerWidth-170)+'px';menu.style.top=clamp(e.clientY,8,window.innerHeight-(chaining?110:65))+'px';menu.hidden=false;$('borrarContextual').focus();});
+  $('terminarParedes').addEventListener('click',()=>{closeContext();finishWallChain();});
   $('borrarContextual').addEventListener('click',()=>{const run=contextErase;closeContext();if(run)run();});document.addEventListener('pointerdown',e=>{if(!e.target.closest('#menuContextual'))closeContext();});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeContext();});
   canvas.addEventListener('dblclick',e=>{if(mode==='pan'||mode==='erase')return;const p=point(e,false),hit=dimensionHits.find(d=>segmentDistance(screen(p.x,p.y),d.a,d.b)<12),q=state.dimensions.find(q=>q.id===hit?.id);if(q?.link){finishInspector();cancel();endTools();mode='separation';separationAxis=q.axis;separationPoints=JSON.parse(JSON.stringify([q.link.a,q.link.b]));separationClicks=separationPoints.map(edgePoint);$('tipoCota').value='separation';sync();render();showDistanceEditor();}});
   $('borradorPlano').addEventListener('click',()=>{normalizeSelection();if(selectedIds.size){remove();return;}cancel();endTools();mode=mode==='erase'?'select':'erase';sync();closeMenus();render();});
@@ -396,7 +397,7 @@ if(separationPoints.length!==2)return say('Primero elige una referencia y el lad
     if(mode==='dimension'){placeDimension(p);return;}
     if(mode==='separation'){chooseSeparation(p);return;}
     if(mode!=='select'&&(p.x< -1e-8||p.y< -1e-8||p.x>state.width+1e-8||p.y>state.length+1e-8))return;
-    if(mode==='wall'){placeWall(snap(p));return;}
+    if(mode==='wall'){e.preventDefault();canvas.setPointerCapture(e.pointerId);drag={id:e.pointerId,wall:true,start:p,current:p,before:serialize()};if(!chainPoint)chainPoint=chainSnap(p);else extendWallChain(p);render();return;}
     e.preventDefault();canvas.setPointerCapture(e.pointerId);drag={id:e.pointerId,start:p,current:p,before:serialize()};
     if(mode==='select'){
       const hit=hitObject(p);
@@ -410,7 +411,7 @@ if(separationPoints.length!==2)return say('Primero elige una referencia y el lad
     for(let i=1;i<=steps;i++){const offset={x:round(start.x+(dx-start.x)*i/steps),y:round(start.y+(dy-start.y)*i/steps)},proposed=source.map(o=>({...o,x:round(o.x+offset.x),y:round(o.y+offset.y)}));if(proposed.some(o=>!fits(o)||(!canMoveOver(o)&&collision(o,obstacles)))){if($('ajusteMovimiento').value==='grid')accepted=start;break;}accepted=offset;}
     const moved=new Map(source.map(o=>[o.id,{...o,x:round(o.x+accepted.x),y:round(o.y+accepted.y)}]));state.objects=state.objects.map(o=>moved.get(o.id)||o);drag.applied=accepted;canvas.style.cursor='move';
   }
-  function moving(e){if(!drag||e.pointerId!==drag.id)return;const p=point(e,!drag.marquee);if(mode==='select'&&drag.marquee){drag.current=p;updateMarquee();sync();render();return;}if(mode==='select'&&drag.group){moveGroup(p);drag.current=p;sync();render();return;}
+  function moving(e){if(!drag||e.pointerId!==drag.id)return;const p=point(e,!drag.marquee);if(drag.wall){extendWallChain(p);drag.current=p;return;}if(mode==='select'&&drag.marquee){drag.current=p;updateMarquee();sync();render();return;}if(mode==='select'&&drag.group){moveGroup(p);drag.current=p;sync();render();return;}
     if(mode==='brush')stroke(drag.current,p);
     if(mode==='select'&&drag.object){canvas.style.cursor='move';const o=state.objects.find(o=>o.id===selected),b=bounds(o);let next={x:drag.object.x+p.x-drag.start.x,y:drag.object.y+p.y-drag.start.y};if($('ajusteMovimiento').value==='grid'){next=snap(next);next.x=Math.min(next.x,Math.floor((state.width-b.w)/state.step)*state.step);next.y=Math.min(next.y,Math.floor((state.length-b.h)/state.step)*state.step);}let candidate=magnet({...o,x:round(clamp(next.x,0,state.width-b.w)),y:round(clamp(next.y,0,state.length-b.h))});const start={...o};if(canMoveOver(o)||(collision(start)&&!collision(candidate))){o.x=candidate.x;o.y=candidate.y;}else{const steps=Math.max(1,Math.ceil(Math.hypot(candidate.x-start.x,candidate.y-start.y)/.05));for(let i=1;i<=steps;i++){const part={...o,x:round(start.x+(candidate.x-start.x)*i/steps),y:round(start.y+(candidate.y-start.y)*i/steps)};if(collision(part)){if($('ajusteMovimiento').value==='grid'){o.x=start.x;o.y=start.y;}break;}o.x=part.x;o.y=part.y;}}fillForm(o);}
     drag.current=p;render();
@@ -447,7 +448,7 @@ if(separationPoints.length!==2)return say('Primero elige una referencia y el lad
   $('voltearObjeto').addEventListener('click',()=>transformObjects('mirror',$('ejeVoltearObjeto').value));
   $('voltearTerreno').addEventListener('click',()=>mirrorPlan($('ejeVoltearTerreno').value));
   function objectFromForm(id){return {id,type:$('tipo').value,x:0,y:0,w:Number($('objW').value),h:Number($('objH').value),rotation:Number($('rotacion').value)};}
-  $('formObjeto').addEventListener('submit',e=>{e.preventDefault();cancel();if($('tipo').value==='pared'&&$('encadenar').checked){endTools();mode='wall';selected=null;sync();closeMenus();render();say('Paredes encadenadas: pulsa el inicio y los siguientes puntos; Escape termina.');return;}const base=objectFromForm(uid());if(!validObject(base))return say('Revisa las medidas mínimas.');const next=freePosition(base);if(!next)return say(base.type==='pared'?'No queda espacio libre para ese tamaño.': 'No queda espacio libre para ese tamaño. Reduce las medidas o marca Desplazamiento libre para colocarlo sobre otro elemento.');action(()=>{state.objects.push(next);selected=next.id;mode='select';endTools();fillForm(next);say('Objeto agregado. Arrastra para moverlo o vuelve a pulsar Agregar para colocar otro.');});closeMenus();});
+  $('formObjeto').addEventListener('submit',e=>{e.preventDefault();cancel();if($('tipo').value==='pared'&&$('encadenar').checked){endTools();mode='wall';selected=null;sync();closeMenus();render();say('Paredes encadenadas: arrastra con clic izquierdo; clic derecho → Terminar paredes.');return;}const base=objectFromForm(uid());if(!validObject(base))return say('Revisa las medidas mínimas.');const next=freePosition(base);if(!next)return say(base.type==='pared'?'No queda espacio libre para ese tamaño.': 'No queda espacio libre para ese tamaño. Reduce las medidas o marca Desplazamiento libre para colocarlo sobre otro elemento.');action(()=>{state.objects.push(next);selected=next.id;mode='select';endTools();fillForm(next);say('Objeto agregado. Arrastra para moverlo o vuelve a pulsar Agregar para colocar otro.');});closeMenus();});
   for(const id of ['objW','objH','rotacion'])$(id).addEventListener('change',()=>{constraints();if(selectedIds.size>1)return say('Selecciona un solo objeto para editar sus medidas.');const original=state.objects.find(o=>o.id===selected);if(!original)return;const next=editedObject(original,{...original,w:Number($('objW').value),h:Number($('objH').value),rotation:Number($('rotacion').value)});if(!next){fillForm(original);return say('El giro o las medidas no caben aquí. Mueve el objeto o marca Desplazamiento libre si se cruza con otro.');}action(()=>{state.objects=state.objects.map(o=>o.id===next.id?next:o);fillForm(next);say('Medidas del objeto actualizadas.');});});
   function remove(){if(selectedIds.size>1)askErase({kind:'objects',ids:[...selectedIds]});else if(selected)askErase({kind:'object',id:selected});}
   function history(back){finishInspector();cancel();const from=back?undo:redo,to=back?redo:undo;if(!from.length)return;to.push(serialize());restore(JSON.parse(from.pop()),true);render();say(back?'Acción deshecha.':'Acción rehecha.');}
