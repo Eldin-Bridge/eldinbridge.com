@@ -18,3 +18,5 @@
 .colorCurva{display:flex;align-items:center;gap:6px}.colorCurva input{width:38px;height:34px;padding:2px;border:1px solid var(--border);background:var(--panel);border-radius:6px}
 
 .menuPanel .colorCurva{margin:10px 0}.menuPanel #colocarCurva{width:100%;margin:10px 0}.figuraSuperficie{margin-top:12px}
+
+#arrastrar3D[aria-pressed="true"]{background:#245da2;border-color:#79b9ff;color:#fff}
