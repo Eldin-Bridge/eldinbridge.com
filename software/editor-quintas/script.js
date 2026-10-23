@@ -110,7 +110,7 @@ function quintaParking(o){
   const freshObjects=new Set();let keyboardEdit=null,autoPanPointer=null,autoPanActive=false;
   let cells = new Map(), undo = [], redo = [], selected = null, drag = null;
   let mode = 'select', material = 'pasto', zoom = 1, scale = 10, showGrid = true, showCotas = true;
-  let view = 'horizontal', objectDimensions = 'todos';
+  let view = 'horizontal', objectDimensions = 'todos', showObjectNames=true;
   let pan={x:0,y:0},panDrag=null;
   let chainPoint=null,lastWall=null,dimensionPoints=[],dimensionRefs=[],curvePoints=[];
   let freeDimensionSide=null;
@@ -281,10 +281,10 @@ function quintaParking(o){
     if(drag&&mode==='area'){const r=area(drag.start,drag.current);ctx.fillStyle='#4191ff44';ctx.strokeStyle='#257cff';ctx.lineWidth=2;ctx.fillRect(r.x*scale,r.y*scale,r.w*scale,r.h*scale);ctx.strokeRect(r.x*scale,r.y*scale,r.w*scale,r.h*scale);}
     ctx.restore();ctx.strokeStyle='#b7cce1';ctx.lineWidth=1.5;ctx.strokeRect(0,0,w,h);
     ctx.restore();
-    for(const o of state.objects){const b=bounds(o);if(b.w*scale<35||b.h*scale<20)continue;const p=screen(b.x+b.w/2,b.y+b.h/2);ctx.save();ctx.font='11px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';const label=o.type==='estacionamiento'?quintaParking(o).capacity+' vehículos':o.type==='banoDoble'?'Doble baño + lavabo':o.type==='bano'?'Baño':o.type==='bombaAgua'?'Bomba de agua':quintaNombre(o.type);const width=ctx.measureText(label).width;ctx.fillStyle='#101b2bcc';ctx.fillRect(p.x-width/2-3,p.y-8,width+6,16);ctx.fillStyle='#fff';ctx.fillText(label,p.x,p.y);ctx.restore();}
+    if(showObjectNames)for(const o of state.objects){const b=bounds(o);if(b.w*scale<35||b.h*scale<20)continue;const p=screen(b.x+b.w/2,b.y+b.h/2);ctx.save();ctx.font='11px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';const label=o.type==='estacionamiento'?quintaParking(o).capacity+' vehículos':o.type==='banoDoble'?'Doble baño + lavabo':o.type==='bano'?'Baño':o.type==='bombaAgua'?'Bomba de agua':quintaNombre(o.type);const width=ctx.measureText(label).width;ctx.fillStyle='#101b2bcc';ctx.fillRect(p.x-width/2-3,p.y-8,width+6,16);ctx.fillStyle='#fff';ctx.fillText(label,p.x,p.y);ctx.restore();}
     if(drag?.marquee){const r=marqueeRect();ctx.save();ctx.fillStyle='#4b9dff33';ctx.strokeStyle='#75b4ff';ctx.lineWidth=1.5;ctx.setLineDash([6,4]);ctx.fillRect(r.x,r.y,r.w,r.h);ctx.strokeRect(r.x,r.y,r.w,r.h);ctx.restore();}
     if(objectDimensions!=='ninguno')for(const o of state.objects){
-      if(objectDimensions==='seleccion'&&!selectedIds.has(o.id))continue;if(objectDimensions==='sinJardineria'&&['arbusto','arbol','arbolAlcorque','palmeraAlta','flores'].includes(o.type))continue;
+      if(objectDimensions==='seleccion'&&!selectedIds.has(o.id))continue;if(objectDimensions==='sinJardineria'&&['arbusto','arbol','arbolAlcorque','palmeraAlta','flores','farol'].includes(o.type))continue;
       const b=bounds(o),center=screen(b.x+b.w/2,b.y+b.h/2),eps=.011;
       const horizontal=[];if(b.y<=eps)horizontal.push(b.y);if(b.y+b.h>=state.length-eps)horizontal.push(b.y+b.h);if(!horizontal.length)horizontal.push(b.y);
       const vertical=[];if(b.x<=eps)vertical.push(b.x);if(b.x+b.w>=state.width-eps)vertical.push(b.x+b.w);if(!vertical.length)vertical.push(b.x+b.w);
@@ -721,6 +721,7 @@ if(separationPoints.length!==2)return say('Primero elige una referencia y el lad
     const pos=screen(anchor.x,anchor.y),rect=canvas.getBoundingClientRect();pan.x+=e.clientX-rect.left-pos.x;pan.y+=e.clientY-rect.top-pos.y;render();
   },{passive:false});
   $('vista').addEventListener('change',e=>{cancel();view=e.target.value;zoom=1;pan={x:0,y:0};sync();render();canvas.parentElement.scrollTop=0;canvas.parentElement.scrollLeft=0;say('Vista '+view+'. Las coordenadas y medidas reales se conservan.');});
+  $('ocultarNombres').addEventListener('change',e=>{showObjectNames=!e.target.checked;render();});
   $('cotasObjetos').addEventListener('change',e=>{objectDimensions=e.target.value;render();});
   $('pantalla').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{say('Pantalla completa no disponible. Puedes ampliar con F11.');}});
   function validObject(o){return o&&typeof o.id==='string'&&o.id.length<100&&Object.hasOwn(defaults,o.type)&&(o.height===undefined||['arco','arbusto','pared','mediaPared'].includes(o.type)&&Number.isFinite(o.height)&&o.height>=(['arbusto','pared','mediaPared'].includes(o.type)?.1:.5)&&o.height<=15)&&(o.innerSidewalk===undefined||typeof o.innerSidewalk==='boolean')&&(o.shapeColor===undefined||typeof o.shapeColor==='string'&&/^#[0-9a-f]{6}$/i.test(o.shapeColor))&&(o.shapeAngle===undefined||Number.isFinite(o.shapeAngle)&&Math.abs(o.shapeAngle)<=Math.PI*2)&&['flipX','flipY'].every(k=>o[k]===undefined||typeof o[k]==='boolean')&&[o.x,o.y,o.w,o.h,o.rotation].every(Number.isFinite)&&[0,90,180,270].includes(o.rotation)&&o.w>=defaults[o.type][2]&&o.h>=(['pared','mediaPared','puerta','ventana'].includes(o.type)?.2:defaults[o.type][2])&&(!['pared','mediaPared','puerta','ventana'].includes(o.type)||Math.abs(o.h-.2)<1e-8);}
