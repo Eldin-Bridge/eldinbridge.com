@@ -22,3 +22,5 @@
 #desplazar3D[aria-pressed="true"],#girarVista3D[aria-pressed="true"]{background:#245da2;border-color:#79b9ff;color:#fff}
 
 .herramientas{flex-wrap:wrap}
+
+#visor3D:fullscreen,#visor3D.pantallaCompleta{width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;border:0;border-radius:0}#visor3D.pantallaCompleta{position:fixed;inset:0}
