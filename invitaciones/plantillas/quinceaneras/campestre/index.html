@@ -1428,8 +1428,8 @@
         <p class="sobrelinea revelar">Recuerdos que nos unen</p>
         <h2 class="titulo revelar">Álbum De Fotos</h2>
         <p class="texto revelar">Compartamos las sonrisas, los abrazos y los momentos de esta noche especial.</p>
-        <a id="ver-album" class="boton-extra revelar" href="https://albumes.eldinbridge.com/sofia-martinez-xv"
-          target="_blank" rel="noopener noreferrer">Ver Álbum De Fotos</a>
+        <a id="ver-album" class="boton-extra revelar" data-control="verAlbum" role="link" tabindex="0"
+          aria-disabled="true" title="Álbum no disponible en esta plantilla de muestra">Ver Álbum De Fotos</a>
       </article>
     </section>
     <section class="seccion foto-pantalla foto-extra" data-foto="9">
@@ -2463,6 +2463,7 @@
         ubicacionIglesia: false,
         ubicacionEvento: false,
         confirmacionWhatsApp: false,
+        verAlbum: false, // false: bloquea el botón; true: permite abrir el álbum.
         selectorCalendarios: true,
         agregarCalendario: false // Demo: muestra el selector, sin guardar eventos.
       },
@@ -2635,6 +2636,7 @@
         "mapa-iglesia": "ubicacionIglesia",
         "mapa-salon": "ubicacionEvento",
         "confirmar-whatsapp": "confirmacionWhatsApp",
+        "ver-album": "verAlbum",
         "agregar-calendario": "selectorCalendarios"
       };
       Object.entries(controles).forEach(([id, clave]) => {
@@ -3170,7 +3172,19 @@
     const direccionAlbum = new URL(OPCIONES_EXTRAS.urlAlbum);
     direccionAlbum.searchParams.set('volver', regresoAlbum.href);
 
-    enlaceAlbum.href = direccionAlbum.href;
+    const albumHabilitado = DATOS_INVITACION.botones.verAlbum === true;
+    enlaceAlbum.setAttribute('aria-disabled', String(!albumHabilitado));
+    if (albumHabilitado) {
+      enlaceAlbum.href = direccionAlbum.href;
+      enlaceAlbum.target = '_blank';
+      enlaceAlbum.rel = 'noopener noreferrer';
+      enlaceAlbum.title = 'Ver Álbum De Fotos';
+    } else {
+      enlaceAlbum.removeAttribute('href');
+      enlaceAlbum.removeAttribute('target');
+      enlaceAlbum.removeAttribute('rel');
+      enlaceAlbum.title = 'Álbum no disponible en esta plantilla de muestra';
+    }
     enlaceAlbum.innerHTML = iconoCamara + '<span>Ver Álbum De Fotos</span>';
 
     if (location.hash === '#album-fotos') {
