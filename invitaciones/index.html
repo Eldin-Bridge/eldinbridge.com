@@ -60,7 +60,7 @@
             align-items: center;
             justify-content: space-between;
             min-height: 76px;
-            border-bottom: 1px solid rgba(255, 255, 255, .07);
+            border-bottom: 1px solid rgba(255,255,255,.2);
         }
         .volver {
             display: inline-flex;
@@ -887,7 +887,8 @@
         }
         .ver-modelos { margin: 20px 0 24px; text-align: center; color: #fff; }
         .ver-modelos hr { border: 0; border-top: 1px solid rgba(255,255,255,.2); margin: 0 0 18px; }
-        .ver-modelos p { margin: 0; font-weight: 750; font-size: 1.1rem; }
+        .cotizacion-categoria:has(.cotizacion-desplegable[hidden]) + .ver-modelos hr { display: none; }
+        .ver-modelos p { margin: 0 auto; max-width: 850px; font-weight: 750; font-size: clamp(.85rem, 2vw, 1.05rem); line-height: 1.6; }
         .modelos-triangulo { display: block; width: 0; height: 0; margin: 10px auto 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 10px solid #c4b5fd; }
         @media (max-width: 580px) {
             .cotizar-barra { gap: 8px; }
@@ -998,7 +999,7 @@
             Precios
         </span>
         <div class="cotizar-barra" id="cotizar-barra">
-            <button type="button" class="ver-catalogo cotizacion-toggle" id="cotizar-barra-boton" aria-expanded="false">Cotizar</button>
+            <button type="button" class="ver-catalogo cotizacion-toggle" id="cotizar-barra-boton" aria-expanded="false">COTIZAR PRECIOS</button>
             <span class="cotizar-flecha" aria-hidden="true">←</span>
         </div>
         <a class="volver" id="boton-volver" href="../">
@@ -1115,7 +1116,7 @@
                 </div>
                 </div>
             </div>
-            <div class="ver-modelos"><hr><p>Ver Modelos</p><span class="modelos-triangulo" aria-hidden="true"></span></div>
+            <div class="ver-modelos"><hr><p>Desliza hacia abajo para ver los modelos disponibles y presiona el botón &quot;ver invitación&quot; para acceder a la demostración</p><span class="modelos-triangulo" aria-hidden="true"></span></div>
             <div class="modelos-infantiles">
                 <!-- Fiesta Temática -->
                 <article class="modelo-infantil">
@@ -1227,7 +1228,7 @@
                 </div>
                 </div>
             </div>
-            <div class="ver-modelos"><hr><p>Ver Modelos</p><span class="modelos-triangulo" aria-hidden="true"></span></div>
+            <div class="ver-modelos"><hr><p>Desliza hacia abajo para ver los modelos disponibles y presiona el botón &quot;ver invitación&quot; para acceder a la demostración</p><span class="modelos-triangulo" aria-hidden="true"></span></div>
             <div class="modelos-reuniones">
                 <!-- Quinta -->
                 <article class="modelo-infantil modelo-reunion">
@@ -1340,7 +1341,7 @@
                 </div>
                 </div>
             </div>
-            <div class="ver-modelos"><hr><p>Ver Modelos</p><span class="modelos-triangulo" aria-hidden="true"></span></div>
+            <div class="ver-modelos"><hr><p>Desliza hacia abajo para ver los modelos disponibles y presiona el botón &quot;ver invitación&quot; para acceder a la demostración</p><span class="modelos-triangulo" aria-hidden="true"></span></div>
             <div class="modelos-quinceaneras">
                 <!-- Campestre -->
                 <article class="modelo-infantil modelo-quinceanera">
@@ -1453,7 +1454,7 @@
                 </div>
                 </div>
             </div>
-            <div class="ver-modelos"><hr><p>Ver Modelos</p><span class="modelos-triangulo" aria-hidden="true"></span></div>
+            <div class="ver-modelos"><hr><p>Desliza hacia abajo para ver los modelos disponibles y presiona el botón &quot;ver invitación&quot; para acceder a la demostración</p><span class="modelos-triangulo" aria-hidden="true"></span></div>
             <div class="modelos-infantiles modelos-bodas">
                 <!-- Boda Civil -->
                 <article class="modelo-infantil">
@@ -1566,7 +1567,7 @@
                 </div>
                 </div>
             </div>
-            <div class="ver-modelos"><hr><p>Ver Modelos</p><span class="modelos-triangulo" aria-hidden="true"></span></div>
+            <div class="ver-modelos"><hr><p>Desliza hacia abajo para ver los modelos disponibles y presiona el botón &quot;ver invitación&quot; para acceder a la demostración</p><span class="modelos-triangulo" aria-hidden="true"></span></div>
             <div class="modelos-infantiles modelos-baby-showers">
                 <!-- Baby Shower Mixto -->
                 <article class="modelo-infantil">
@@ -1679,7 +1680,7 @@
                 </div>
                 </div>
             </div>
-            <div class="ver-modelos"><hr><p>Ver Modelos</p><span class="modelos-triangulo" aria-hidden="true"></span></div>
+            <div class="ver-modelos"><hr><p>Desliza hacia abajo para ver los modelos disponibles y presiona el botón &quot;ver invitación&quot; para acceder a la demostración</p><span class="modelos-triangulo" aria-hidden="true"></span></div>
             <div class="modelos-infantiles modelos-posadas">
                 <!-- Posada Empresarial -->
                 <article class="modelo-infantil">
@@ -2280,7 +2281,7 @@
             const boton = document.getElementById('cotizar-barra-boton');
             const panel = document.querySelector('main > section[id^="catalogo-"].activo .cotizacion-desplegable');
             const abierto = !!panel && !panel.hidden;
-            boton.textContent = abierto ? 'Ocultar Cotización' : 'Cotizar';
+            boton.textContent = abierto ? 'OCULTAR COTIZACIÓN' : 'COTIZAR PRECIOS';
             boton.setAttribute('aria-expanded', String(abierto));
             if (panel) boton.setAttribute('aria-controls', panel.id);
             else boton.removeAttribute('aria-controls');
