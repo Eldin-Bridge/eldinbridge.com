@@ -910,6 +910,11 @@
             .cotizacion-boton { font-size: .67rem; }
         }
         .cotizacion-whatsapp-logo { width: 22px; height: 22px; flex: 0 0 22px; color: #25d366; }
+
+        /* Acercar las categorías abiertas a la raya de la barra superior. */
+        body:has(main > section[id^="catalogo-"].activo) main {
+            padding-top: 8px;
+        }
     </style>
 </head>
 <body>
