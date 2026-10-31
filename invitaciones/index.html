@@ -915,6 +915,28 @@
         body:has(main > section[id^="catalogo-"].activo) main {
             padding-top: 8px;
         }
+
+        /* Acercar la vista de las seis categorías a la barra superior. */
+        body:has(main > .presentacion:not(.vista-oculta)) main {
+            padding-top: 8px;
+        }
+        main > section[aria-labelledby="titulo-categorias"] > .nota,
+        main > section[aria-labelledby="titulo-categorias"] > .nota strong {
+            color: #fff;
+            font-weight: 750;
+        }
+        @media(max-width:600px) {
+            #titulo-principal {
+                max-width: 100%;
+                font-size: clamp(1.1rem, 6.9vw, 2.6rem);
+                line-height: 1.1;
+                letter-spacing: -.04em;
+            }
+            #titulo-principal > span {
+                display: block;
+                white-space: nowrap;
+            }
+        }
     </style>
 </head>
 <body>
@@ -929,11 +951,8 @@
     <main class="contenedor">
         <section class="presentacion vista-oculta" aria-labelledby="titulo-principal">
             <h1 id="titulo-principal">
-                Una invitación para cada <span class="degradado">momento especial.</span>
+                <span class="titulo-principal-linea">Una invitación para cada</span> <span class="degradado">momento especial.</span>
             </h1>
-            <p>
-                Cada diseño podrá personalizarse con la información, colores y detalles de tu evento.
-            </p>
         </section>
         <section id="vista-precios" aria-labelledby="titulo-precios">
             <div class="precios-acciones"><span class="dedo-catalogo" aria-hidden="true">👉</span><button class="ver-catalogo" id="ver-catalogo" type="button">Ver catálogo</button></div>
@@ -1013,8 +1032,7 @@
                 </button>
             </div>
             <div class="nota">
-                <strong>El catálogo está en preparación.</strong>
-                Añadiremos invitaciones de muestra dentro de cada categoría.
+                <strong>Cada diseño podrá personalizarse con la información, colores y detalles de tu evento.</strong>
             </div>
         </section>
         <section id="catalogo-infantil" class="catalogo-infantil vista-oculta" aria-labelledby="titulo-infantiles">
