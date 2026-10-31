@@ -937,6 +937,36 @@
                 white-space: nowrap;
             }
         }
+
+        /* Encabezado centrado en dos líneas y ajustado al ancho del contenedor. */
+        main > .presentacion[aria-labelledby="titulo-principal"] {
+            width: 100%;
+            max-width: none;
+            margin-inline: auto;
+            text-align: center;
+            container-type: inline-size;
+        }
+        #titulo-principal {
+            width: 100%;
+            max-width: none;
+            margin-inline: auto;
+            text-align: center;
+            font-size: clamp(1.2rem, 7.6vw, 6.3rem);
+            font-size: 8.6cqw;
+            line-height: 1.08;
+            letter-spacing: -.04em;
+        }
+        #titulo-principal > span {
+            display: block;
+            white-space: nowrap;
+        }
+        main > section[aria-labelledby="titulo-categorias"] > .encabezado {
+            justify-content: center;
+            text-align: center;
+        }
+        #titulo-categorias { width: 100%; text-align: center; }
+        main > section[aria-labelledby="titulo-categorias"] > .nota,
+        .nota-categoria { text-align: center; }
     </style>
 </head>
 <body>
