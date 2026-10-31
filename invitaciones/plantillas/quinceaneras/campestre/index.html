@@ -631,45 +631,14 @@
       }
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
 
-      .revelar,
-      .foto-marco {
-        transition-duration: .01ms;
-      }
 
-      .foto-pantalla.visible img {
-        animation: none;
-        transform: scale(1.02);
-      }
-
-      .particulas {
-        display: none;
-      }
-    }
-
-    /* WEB: fotos completas ajustadas a la altura disponible, sin recorte. */
+    /* WEB: conservar el encuadre completo y los efectos de las fotos. */
     @media (min-width: 760px) {
-
       .entrada-foto,
       .foto-pantalla img {
         object-fit: contain;
         object-position: center;
-        transform: none;
-      }
-
-      .foto-pantalla.visible img,
-      .foto-pantalla:nth-of-type(even).visible img {
-        animation: none;
-        transform: none;
-      }
-
-      .foto-marco,
-      .foto-pantalla.visible .foto-marco {
-        transform: none;
       }
     }
 

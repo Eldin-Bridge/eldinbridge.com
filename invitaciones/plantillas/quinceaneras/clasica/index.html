@@ -827,35 +827,13 @@
         font-size: .96rem;
       }
     }
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-      .revelar,
-      .foto-marco {
-        transition-duration: .01ms;
-      }
-      .foto-pantalla.visible img {
-        animation: none;
-        transform: scale(1.02);
-      }
-      .particulas {
-        display: none;
-      }
-    }
-    /* Fotos completas en web; móvil conserva el ajuste original. */
+
+    /* Fotos completas en web, con sus animaciones y transiciones activas. */
     @media (min-width: 760px) {
       .entrada-foto, .foto-pantalla img {
         object-fit: contain;
         object-position: center;
-        transform: none;
       }
-      .foto-pantalla.visible img,
-      .foto-pantalla:nth-of-type(even).visible img {
-        animation: none;
-        transform: none;
-      }
-      .foto-marco, .foto-pantalla.visible .foto-marco { transform: none; }
     }
     .iconos-vestimenta { display: flex; justify-content: center; align-items: center; gap: 16px; }
     .iconos-vestimenta img { width: var(--tamano-icono-vestimenta, 52px); height: var(--tamano-icono-vestimenta, 52px); object-fit: contain; }
