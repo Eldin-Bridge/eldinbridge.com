@@ -873,10 +873,30 @@
             #vista-precios #ver-catalogo { padding: 11px 18px; }
         }
 
-        .cotizacion-toggle { display: flex; margin: 0 auto; min-width: 150px; font-size: 1.1rem; }
+        .cotizar-barra { display: none; align-items: center; gap: 12px; min-width: 0; }
+        body:has(main > section[id^="catalogo-"].activo) .cotizar-barra { display: flex; }
+        body:has(main > section[id^="catalogo-"].activo) #etiqueta-barra { display: none; }
+        .cotizacion-toggle { padding: 9px 15px; border-radius: 12px; font-size: .88rem; white-space: nowrap; }
+        .cotizacion-toggle[aria-expanded="false"] { animation: cotizar-pulsacion 1.7s ease-in-out infinite; }
+        .cotizacion-toggle[aria-expanded="true"] { border-color: #f87171; background: linear-gradient(120deg,#dc2626,#b91c1c); }
+        .cotizar-flecha { color: #c4b5fd; font-size: 2rem; line-height: 1; }
+        .cotizacion-toggle[aria-expanded="true"] + .cotizar-flecha { visibility: hidden; }
+        @keyframes cotizar-pulsacion {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 #8b5cf650; }
+            50% { transform: scale(1.04); box-shadow: 0 0 0 7px #8b5cf600; }
+        }
+        .ver-modelos { margin: 20px 0 24px; text-align: center; color: #fff; }
+        .ver-modelos hr { border: 0; border-top: 1px solid rgba(255,255,255,.2); margin: 0 0 18px; }
+        .ver-modelos p { margin: 0; font-weight: 750; font-size: 1.1rem; }
+        .modelos-triangulo { display: block; width: 0; height: 0; margin: 10px auto 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 10px solid #c4b5fd; }
+        @media (max-width: 580px) {
+            .cotizar-barra { gap: 8px; }
+            .cotizacion-toggle { padding: 8px 10px; font-size: .74rem; }
+            .cotizar-flecha { font-size: 1.6rem; }
+        }
         .cotizacion-desplegable { margin-top: 18px; }
         .cotizacion-desplegable[hidden] { display: none; }
-        .cotizacion-categoria { margin-bottom: 30px; }
+        .cotizacion-categoria { margin-bottom: 0; }
         .cotizacion-titulo { text-align: center; color: #fff; font-size: clamp(1.05rem, 2.4vw, 1.4rem); font-weight: 750; margin-bottom: 20px; }
         .cotizacion-pasos { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
         .cotizacion-paso { min-width: 0; margin: 0; padding: 20px; border: 1px solid rgba(139,92,246,.32); border-radius: 20px; background: linear-gradient(135deg,rgba(139,92,246,.11),rgba(56,189,248,.04)); }
@@ -977,6 +997,10 @@
         <span class="etiqueta etiqueta-barra" id="etiqueta-barra">
             Precios
         </span>
+        <div class="cotizar-barra" id="cotizar-barra">
+            <button type="button" class="ver-catalogo cotizacion-toggle" id="cotizar-barra-boton" aria-expanded="false">Cotizar</button>
+            <span class="cotizar-flecha" aria-hidden="true">←</span>
+        </div>
         <a class="volver" id="boton-volver" href="../">
             ← Volver
         </a>
@@ -1070,7 +1094,6 @@
         </section>
         <section id="catalogo-infantil" class="catalogo-infantil vista-oculta" aria-labelledby="titulo-infantiles">
             <div class="cotizacion-categoria">
-                <button type="button" class="ver-catalogo cotizacion-toggle" data-cotizar-toggle aria-expanded="false" aria-controls="panel-cotizar-infantiles">Cotizar</button>
                 <div class="cotizacion-desplegable" id="panel-cotizar-infantiles" hidden>
                 <h2 class="cotizacion-titulo" id="titulo-infantiles">Contacto</h2>
                 <div class="cotizacion-pasos">
@@ -1092,6 +1115,7 @@
                 </div>
                 </div>
             </div>
+            <div class="ver-modelos"><hr><p>Ver Modelos</p><span class="modelos-triangulo" aria-hidden="true"></span></div>
             <div class="modelos-infantiles">
                 <!-- Fiesta Temática -->
                 <article class="modelo-infantil">
@@ -1182,7 +1206,6 @@
         </section>
         <section id="catalogo-reuniones" class="catalogo-reuniones vista-oculta" aria-labelledby="titulo-reuniones">
             <div class="cotizacion-categoria">
-                <button type="button" class="ver-catalogo cotizacion-toggle" data-cotizar-toggle aria-expanded="false" aria-controls="panel-cotizar-reuniones">Cotizar</button>
                 <div class="cotizacion-desplegable" id="panel-cotizar-reuniones" hidden>
                 <h2 class="cotizacion-titulo" id="titulo-reuniones">Contacto</h2>
                 <div class="cotizacion-pasos">
@@ -1204,6 +1227,7 @@
                 </div>
                 </div>
             </div>
+            <div class="ver-modelos"><hr><p>Ver Modelos</p><span class="modelos-triangulo" aria-hidden="true"></span></div>
             <div class="modelos-reuniones">
                 <!-- Quinta -->
                 <article class="modelo-infantil modelo-reunion">
@@ -1295,7 +1319,6 @@
         <section id="catalogo-quinceaneras" class="catalogo-quinceaneras vista-oculta"
             aria-labelledby="titulo-quinceaneras">
             <div class="cotizacion-categoria">
-                <button type="button" class="ver-catalogo cotizacion-toggle" data-cotizar-toggle aria-expanded="false" aria-controls="panel-cotizar-quinceaneras">Cotizar</button>
                 <div class="cotizacion-desplegable" id="panel-cotizar-quinceaneras" hidden>
                 <h2 class="cotizacion-titulo" id="titulo-quinceaneras">Contacto</h2>
                 <div class="cotizacion-pasos">
@@ -1317,6 +1340,7 @@
                 </div>
                 </div>
             </div>
+            <div class="ver-modelos"><hr><p>Ver Modelos</p><span class="modelos-triangulo" aria-hidden="true"></span></div>
             <div class="modelos-quinceaneras">
                 <!-- Campestre -->
                 <article class="modelo-infantil modelo-quinceanera">
@@ -1408,7 +1432,6 @@
         <section id="catalogo-bodas" class="catalogo-infantil catalogo-bodas vista-oculta"
             aria-labelledby="titulo-bodas">
             <div class="cotizacion-categoria">
-                <button type="button" class="ver-catalogo cotizacion-toggle" data-cotizar-toggle aria-expanded="false" aria-controls="panel-cotizar-bodas">Cotizar</button>
                 <div class="cotizacion-desplegable" id="panel-cotizar-bodas" hidden>
                 <h2 class="cotizacion-titulo" id="titulo-bodas">Contacto</h2>
                 <div class="cotizacion-pasos">
@@ -1430,6 +1453,7 @@
                 </div>
                 </div>
             </div>
+            <div class="ver-modelos"><hr><p>Ver Modelos</p><span class="modelos-triangulo" aria-hidden="true"></span></div>
             <div class="modelos-infantiles modelos-bodas">
                 <!-- Boda Civil -->
                 <article class="modelo-infantil">
@@ -1521,7 +1545,6 @@
         <section id="catalogo-baby-showers" class="catalogo-infantil catalogo-baby-showers vista-oculta"
             aria-labelledby="titulo-baby-showers">
             <div class="cotizacion-categoria">
-                <button type="button" class="ver-catalogo cotizacion-toggle" data-cotizar-toggle aria-expanded="false" aria-controls="panel-cotizar-baby-showers">Cotizar</button>
                 <div class="cotizacion-desplegable" id="panel-cotizar-baby-showers" hidden>
                 <h2 class="cotizacion-titulo" id="titulo-baby-showers">Contacto</h2>
                 <div class="cotizacion-pasos">
@@ -1543,6 +1566,7 @@
                 </div>
                 </div>
             </div>
+            <div class="ver-modelos"><hr><p>Ver Modelos</p><span class="modelos-triangulo" aria-hidden="true"></span></div>
             <div class="modelos-infantiles modelos-baby-showers">
                 <!-- Baby Shower Mixto -->
                 <article class="modelo-infantil">
@@ -1634,7 +1658,6 @@
         <section id="catalogo-posadas" class="catalogo-infantil catalogo-posadas vista-oculta"
             aria-labelledby="titulo-posadas">
             <div class="cotizacion-categoria">
-                <button type="button" class="ver-catalogo cotizacion-toggle" data-cotizar-toggle aria-expanded="false" aria-controls="panel-cotizar-posadas">Cotizar</button>
                 <div class="cotizacion-desplegable" id="panel-cotizar-posadas" hidden>
                 <h2 class="cotizacion-titulo" id="titulo-posadas">Contacto</h2>
                 <div class="cotizacion-pasos">
@@ -1656,6 +1679,7 @@
                 </div>
                 </div>
             </div>
+            <div class="ver-modelos"><hr><p>Ver Modelos</p><span class="modelos-triangulo" aria-hidden="true"></span></div>
             <div class="modelos-infantiles modelos-posadas">
                 <!-- Posada Empresarial -->
                 <article class="modelo-infantil">
@@ -2118,6 +2142,7 @@
             );
             etiquetaBarra.textContent =
                 catalogo.etiqueta;
+            actualizarBotonCotizar();
             if (registrarHistorial) {
                 history.pushState(
                     {
@@ -2251,15 +2276,26 @@
         }
         mostrarVistaSegunDireccion();
 
+        function actualizarBotonCotizar() {
+            const boton = document.getElementById('cotizar-barra-boton');
+            const panel = document.querySelector('main > section[id^="catalogo-"].activo .cotizacion-desplegable');
+            const abierto = !!panel && !panel.hidden;
+            boton.textContent = abierto ? 'Ocultar Cotización' : 'Cotizar';
+            boton.setAttribute('aria-expanded', String(abierto));
+            if (panel) boton.setAttribute('aria-controls', panel.id);
+            else boton.removeAttribute('aria-controls');
+        }
+        document.getElementById('cotizar-barra-boton').addEventListener('click', () => {
+            const panel = document.querySelector('main > section[id^="catalogo-"].activo .cotizacion-desplegable');
+            if (!panel) return;
+            panel.hidden = !panel.hidden;
+            actualizarBotonCotizar();
+        });
+        actualizarBotonCotizar();
+
         const DATOS_COTIZACION = {"catalogo-infantil": {"nombre": "Fiestas infantiles", "plantillas": ["Fiesta Temática", "Fiesta Aventura", "Fiesta Interactiva", "Fiesta Acuática"]}, "catalogo-reuniones": {"nombre": "Fiestas y reuniones", "plantillas": ["Quinta", "Terraza", "Bar", "Restaurant"]}, "catalogo-quinceaneras": {"nombre": "Quinceañeras", "plantillas": ["Campestre", "Clásica", "Moderna", "Temática"]}, "catalogo-bodas": {"nombre": "Bodas", "plantillas": ["Civil", "Clásica", "Playa", "Temática"]}, "catalogo-baby-showers": {"nombre": "Baby Showers", "plantillas": ["Mixto", "Revelación", "Temático", "Tradicional"]}, "catalogo-posadas": {"nombre": "Posadas", "plantillas": ["Empresarial", "Familiar", "Pública", "Navideña"]}};
         const CONTACTO_COTIZACION = { whatsapp: '528281436194', correo: 'contacto.eldinbridge@gmail.com' };
         document.querySelectorAll('.cotizacion-categoria').forEach(panel => {
-            const toggle = panel.querySelector('[data-cotizar-toggle]');
-            const desplegable = panel.querySelector('.cotizacion-desplegable');
-            toggle.addEventListener('click', () => {
-                desplegable.hidden = !desplegable.hidden;
-                toggle.setAttribute('aria-expanded', String(!desplegable.hidden));
-            });
             const categoria = panel.querySelector('[data-cotizar-categoria]');
             const plantilla = panel.querySelector('[data-cotizar-plantilla]');
             const whatsapp = panel.querySelector('[data-cotizar-whatsapp]');
