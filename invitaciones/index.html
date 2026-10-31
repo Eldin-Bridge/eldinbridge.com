@@ -838,6 +838,40 @@
             .precios-movil tbody th { padding-block: 2px; white-space: normal; }
             .precios-movil .texto-precio-grupo { display: inline-block; white-space: nowrap; }
         }
+
+        /* Invitación visual a abrir el catálogo, en móvil y computadora. */
+        #vista-precios .precios-acciones {
+            align-items: center;
+            gap: 18px;
+            padding: 6px 8px;
+        }
+        #vista-precios #ver-catalogo {
+            flex-shrink: 0;
+            font-size: clamp(1.1rem, 2.6vw, 1.35rem);
+            font-weight: 800;
+            padding: 13px 24px;
+            animation: pulsacion-catalogo 1.7s ease-in-out infinite;
+        }
+        .dedo-catalogo {
+            display: inline-block;
+            flex-shrink: 0;
+            font-size: clamp(2rem, 5vw, 2.7rem);
+            line-height: 1;
+            pointer-events: none;
+            user-select: none;
+            animation: senalar-catalogo 1s ease-in-out infinite;
+        }
+        @keyframes pulsacion-catalogo {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(139,92,246,.4); }
+            50% { transform: scale(1.045); box-shadow: 0 0 0 9px rgba(139,92,246,0), 0 0 24px rgba(139,92,246,.36); }
+        }
+        @keyframes senalar-catalogo {
+            0%, 100% { transform: translateX(-7px); }
+            50% { transform: translateX(5px); }
+        }
+        @media(max-width:600px) {
+            #vista-precios #ver-catalogo { padding: 11px 18px; }
+        }
     </style>
 </head>
 <body>
@@ -859,7 +893,7 @@
             </p>
         </section>
         <section id="vista-precios" aria-labelledby="titulo-precios">
-            <div class="precios-acciones"><button class="ver-catalogo" id="ver-catalogo" type="button">Ver catálogo →</button></div>
+            <div class="precios-acciones"><span class="dedo-catalogo" aria-hidden="true">👉</span><button class="ver-catalogo" id="ver-catalogo" type="button">Ver catálogo</button></div>
             <h1 id="titulo-precios" class="solo-lectores">Precio de invitaciones digitales</h1>
             <div class="tabla-precios-wrap" tabindex="0" role="region" aria-label="Comparación de precios y características">
                 <table class="tabla-precios">
