@@ -1175,8 +1175,8 @@
         </div>
       </article>
     </section>
-    <section class="pantalla foto foto-extra" hidden>
-      <img alt="Lucía y Mateo comparten un momento de su boda" decoding="async">
+    <section class="pantalla foto foto-extra" id="foto-extra-9">
+      <img src="assets/fotos/foto09.webp" loading="eager" alt="Lucía y Mateo comparten un momento de su boda" decoding="async">
       <p class="foto-numero">08 / Un nuevo comienzo</p>
       <p class="leyenda">Una historia que seguimos escribiendo</p>
     </section>
@@ -1191,8 +1191,8 @@
           aria-disabled="true" title="Álbum no disponible en esta plantilla de muestra">Ver Álbum Y Audio Recuerdos</a>
       </article>
     </section>
-    <section class="pantalla foto foto-extra" hidden>
-      <img alt="Lucía y Mateo celebran su nueva etapa juntos" decoding="async">
+    <section class="pantalla foto foto-extra" id="foto-extra-10">
+      <img src="assets/fotos/foto10.webp" loading="eager" alt="Lucía y Mateo celebran su nueva etapa juntos" decoding="async">
       <p class="foto-numero">09 / Para siempre</p>
       <p class="leyenda">Gracias por ser parte de nuestros recuerdos</p>
     </section>
@@ -2539,6 +2539,7 @@
       apiPases: 'https://albumes.eldinbridge.com/lucia-mateo-boda/pases',
       maxInvitados: 5,
       fotosExtra: ['assets/fotos/foto09.webp', 'assets/fotos/foto10.webp'],
+      fotosReserva: ['assets/fotos/foto07.webp', 'assets/fotos/foto08.webp'],
       fondosExtra: ['assets/fondos/fondo07.webp', 'assets/fondos/fondo07.webp']
     };
     const iconoCamara = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 7h4l2-3h6l2 3h4v13H3z"/><circle cx="12" cy="13" r="4"/></svg>';
@@ -2855,19 +2856,37 @@
       }));
     }
     window.addEventListener('storage', e => { if (e.key !== CLAVE_PASE) return; if (e.newValue) { try { aplicarPaseGuardado(leerPase(e.newValue)); } catch { } } else reiniciarPase(false); });
-    // Las fotos nuevas aparecen solamente cuando sus archivos están disponibles.
+    // Mantener la secuencia de fotos visible; usar un respaldo si falta la foto nueva.
     document.querySelectorAll('.foto-extra').forEach((seccion, i) => {
       const imagen = seccion.querySelector('img');
-      const actualizarFoto = visible => {
-        seccion.hidden = !visible;
+      const principal = OPCIONES_EXTRAS.fotosExtra[i];
+      const reserva = OPCIONES_EXTRAS.fotosReserva[i];
+      let usandoReserva = false;
+      seccion.hidden = false;
+      imagen.loading = 'eager';
+      const actualizarFoto = () => {
+        seccion.hidden = false;
+        seccion.dataset.estadoFoto = usandoReserva ? 'reserva' : 'principal';
         actualizarBotonesContinuar();
-        if (document.body.classList.contains('iniciada')) {
-          requestAnimationFrame(() => irA(indice, false));
-        }
+        if (iniciado) requestAnimationFrame(() => irA(indice, false));
       };
-      imagen.addEventListener('load', () => actualizarFoto(true));
-      imagen.addEventListener('error', () => actualizarFoto(false));
-      imagen.src = OPCIONES_EXTRAS.fotosExtra[i];
+      imagen.addEventListener('load', actualizarFoto);
+      imagen.addEventListener('error', () => {
+        // No ocultar ni saltar la pantalla por un fallo del archivo provisional.
+        seccion.hidden = false;
+        if (!usandoReserva && reserva) {
+          usandoReserva = true;
+          seccion.dataset.estadoFoto = 'cargando-reserva';
+          imagen.src = reserva;
+        } else {
+          seccion.dataset.estadoFoto = 'no-disponible';
+          console.warn('Revisa la imagen de esta sección:', principal, reserva);
+        }
+        actualizarBotonesContinuar();
+      });
+      imagen.src = principal;
+      // La imagen del HTML puede haberse cargado desde caché antes de este script.
+      if (imagen.complete && imagen.naturalWidth > 0) actualizarFoto();
     });
     actualizarBotonesContinuar();
     document.querySelectorAll('.fondo-extra').forEach((img, i) => img.src = OPCIONES_EXTRAS.fondosExtra[i]);
