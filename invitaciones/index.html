@@ -873,6 +873,9 @@
             #vista-precios #ver-catalogo { padding: 11px 18px; }
         }
 
+        .cotizacion-toggle { display: flex; margin: 0 auto; min-width: 150px; font-size: 1.1rem; }
+        .cotizacion-desplegable { margin-top: 18px; }
+        .cotizacion-desplegable[hidden] { display: none; }
         .cotizacion-categoria { margin-bottom: 30px; }
         .cotizacion-titulo { text-align: center; color: #fff; font-size: clamp(1.05rem, 2.4vw, 1.4rem); font-weight: 750; margin-bottom: 20px; }
         .cotizacion-pasos { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
@@ -1067,7 +1070,9 @@
         </section>
         <section id="catalogo-infantil" class="catalogo-infantil vista-oculta" aria-labelledby="titulo-infantiles">
             <div class="cotizacion-categoria">
-                <h2 class="cotizacion-titulo" id="titulo-infantiles">Cotizar invitación digital</h2>
+                <button type="button" class="ver-catalogo cotizacion-toggle" data-cotizar-toggle aria-expanded="false" aria-controls="panel-cotizar-infantiles">Cotizar</button>
+                <div class="cotizacion-desplegable" id="panel-cotizar-infantiles" hidden>
+                <h2 class="cotizacion-titulo" id="titulo-infantiles">Contacto</h2>
                 <div class="cotizacion-pasos">
                     <fieldset class="cotizacion-paso">
                         <legend><span>01.</span> Selecciona</legend>
@@ -1077,13 +1082,14 @@
                         </div>
                     </fieldset>
                     <fieldset class="cotizacion-paso cotizacion-contacto">
-                        <legend><span>02.</span> Contacto</legend>
+                        <legend><span>02.</span> Preguntar</legend>
                         <div class="cotizacion-canales">
                             <button type="button" class="cotizacion-boton cotizacion-whatsapp" data-cotizar-whatsapp disabled><svg class="cotizacion-whatsapp-logo" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.8 11.8 0 0 0 1.9 17.7L.2 24l6.5-1.7A11.8 11.8 0 0 0 24 11.8c0-3.1-1.2-6.1-3.5-8.3ZM12.2 21.6a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.8 1 1-3.7-.3-.4a9.8 9.8 0 1 1 8.5 4.7Zm5.4-7.3c-.3-.1-1.7-.8-2-.9-.2-.1-.4-.1-.6.2l-.9 1.1c-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.5-.9-.8-1.5-1.7-1.7-2-.2-.3 0-.4.1-.6l.4-.5.3-.4c.1-.2 0-.4 0-.5l-.9-2c-.2-.6-.5-.5-.6-.5h-.6c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3.1 4.9 4.4.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.3.2-.6.2-1.2.2-1.3 0-.2-.2-.3-.5-.4Z"/></svg><span>Enviar WhatsApp</span></button>
-                            <button type="button" class="cotizacion-boton cotizacion-correo" data-cotizar-correo disabled><span class="cotizacion-icono" aria-hidden="true">✉</span>Enviar correo</button>
+                            <button type="button" class="cotizacion-boton cotizacion-correo" data-cotizar-correo disabled><span class="cotizacion-icono" aria-hidden="true">✉️</span><span>Enviar Correo</span></button>
                         </div>
-                        <p class="cotizacion-ayuda" role="status">Elige una categoría y una plantilla para activar el contacto.</p>
+                        <p class="cotizacion-ayuda" role="status">Elige una categoría y plantilla para activar el envío de mensajes</p>
                     </fieldset>
+                </div>
                 </div>
             </div>
             <div class="modelos-infantiles">
@@ -1176,7 +1182,9 @@
         </section>
         <section id="catalogo-reuniones" class="catalogo-reuniones vista-oculta" aria-labelledby="titulo-reuniones">
             <div class="cotizacion-categoria">
-                <h2 class="cotizacion-titulo" id="titulo-reuniones">Cotizar invitación digital</h2>
+                <button type="button" class="ver-catalogo cotizacion-toggle" data-cotizar-toggle aria-expanded="false" aria-controls="panel-cotizar-reuniones">Cotizar</button>
+                <div class="cotizacion-desplegable" id="panel-cotizar-reuniones" hidden>
+                <h2 class="cotizacion-titulo" id="titulo-reuniones">Contacto</h2>
                 <div class="cotizacion-pasos">
                     <fieldset class="cotizacion-paso">
                         <legend><span>01.</span> Selecciona</legend>
@@ -1186,13 +1194,14 @@
                         </div>
                     </fieldset>
                     <fieldset class="cotizacion-paso cotizacion-contacto">
-                        <legend><span>02.</span> Contacto</legend>
+                        <legend><span>02.</span> Preguntar</legend>
                         <div class="cotizacion-canales">
                             <button type="button" class="cotizacion-boton cotizacion-whatsapp" data-cotizar-whatsapp disabled><svg class="cotizacion-whatsapp-logo" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.8 11.8 0 0 0 1.9 17.7L.2 24l6.5-1.7A11.8 11.8 0 0 0 24 11.8c0-3.1-1.2-6.1-3.5-8.3ZM12.2 21.6a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.8 1 1-3.7-.3-.4a9.8 9.8 0 1 1 8.5 4.7Zm5.4-7.3c-.3-.1-1.7-.8-2-.9-.2-.1-.4-.1-.6.2l-.9 1.1c-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.5-.9-.8-1.5-1.7-1.7-2-.2-.3 0-.4.1-.6l.4-.5.3-.4c.1-.2 0-.4 0-.5l-.9-2c-.2-.6-.5-.5-.6-.5h-.6c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3.1 4.9 4.4.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.3.2-.6.2-1.2.2-1.3 0-.2-.2-.3-.5-.4Z"/></svg><span>Enviar WhatsApp</span></button>
-                            <button type="button" class="cotizacion-boton cotizacion-correo" data-cotizar-correo disabled><span class="cotizacion-icono" aria-hidden="true">✉</span>Enviar correo</button>
+                            <button type="button" class="cotizacion-boton cotizacion-correo" data-cotizar-correo disabled><span class="cotizacion-icono" aria-hidden="true">✉️</span><span>Enviar Correo</span></button>
                         </div>
-                        <p class="cotizacion-ayuda" role="status">Elige una categoría y una plantilla para activar el contacto.</p>
+                        <p class="cotizacion-ayuda" role="status">Elige una categoría y plantilla para activar el envío de mensajes</p>
                     </fieldset>
+                </div>
                 </div>
             </div>
             <div class="modelos-reuniones">
@@ -1286,7 +1295,9 @@
         <section id="catalogo-quinceaneras" class="catalogo-quinceaneras vista-oculta"
             aria-labelledby="titulo-quinceaneras">
             <div class="cotizacion-categoria">
-                <h2 class="cotizacion-titulo" id="titulo-quinceaneras">Cotizar invitación digital</h2>
+                <button type="button" class="ver-catalogo cotizacion-toggle" data-cotizar-toggle aria-expanded="false" aria-controls="panel-cotizar-quinceaneras">Cotizar</button>
+                <div class="cotizacion-desplegable" id="panel-cotizar-quinceaneras" hidden>
+                <h2 class="cotizacion-titulo" id="titulo-quinceaneras">Contacto</h2>
                 <div class="cotizacion-pasos">
                     <fieldset class="cotizacion-paso">
                         <legend><span>01.</span> Selecciona</legend>
@@ -1296,13 +1307,14 @@
                         </div>
                     </fieldset>
                     <fieldset class="cotizacion-paso cotizacion-contacto">
-                        <legend><span>02.</span> Contacto</legend>
+                        <legend><span>02.</span> Preguntar</legend>
                         <div class="cotizacion-canales">
                             <button type="button" class="cotizacion-boton cotizacion-whatsapp" data-cotizar-whatsapp disabled><svg class="cotizacion-whatsapp-logo" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.8 11.8 0 0 0 1.9 17.7L.2 24l6.5-1.7A11.8 11.8 0 0 0 24 11.8c0-3.1-1.2-6.1-3.5-8.3ZM12.2 21.6a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.8 1 1-3.7-.3-.4a9.8 9.8 0 1 1 8.5 4.7Zm5.4-7.3c-.3-.1-1.7-.8-2-.9-.2-.1-.4-.1-.6.2l-.9 1.1c-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.5-.9-.8-1.5-1.7-1.7-2-.2-.3 0-.4.1-.6l.4-.5.3-.4c.1-.2 0-.4 0-.5l-.9-2c-.2-.6-.5-.5-.6-.5h-.6c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3.1 4.9 4.4.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.3.2-.6.2-1.2.2-1.3 0-.2-.2-.3-.5-.4Z"/></svg><span>Enviar WhatsApp</span></button>
-                            <button type="button" class="cotizacion-boton cotizacion-correo" data-cotizar-correo disabled><span class="cotizacion-icono" aria-hidden="true">✉</span>Enviar correo</button>
+                            <button type="button" class="cotizacion-boton cotizacion-correo" data-cotizar-correo disabled><span class="cotizacion-icono" aria-hidden="true">✉️</span><span>Enviar Correo</span></button>
                         </div>
-                        <p class="cotizacion-ayuda" role="status">Elige una categoría y una plantilla para activar el contacto.</p>
+                        <p class="cotizacion-ayuda" role="status">Elige una categoría y plantilla para activar el envío de mensajes</p>
                     </fieldset>
+                </div>
                 </div>
             </div>
             <div class="modelos-quinceaneras">
@@ -1396,7 +1408,9 @@
         <section id="catalogo-bodas" class="catalogo-infantil catalogo-bodas vista-oculta"
             aria-labelledby="titulo-bodas">
             <div class="cotizacion-categoria">
-                <h2 class="cotizacion-titulo" id="titulo-bodas">Cotizar invitación digital</h2>
+                <button type="button" class="ver-catalogo cotizacion-toggle" data-cotizar-toggle aria-expanded="false" aria-controls="panel-cotizar-bodas">Cotizar</button>
+                <div class="cotizacion-desplegable" id="panel-cotizar-bodas" hidden>
+                <h2 class="cotizacion-titulo" id="titulo-bodas">Contacto</h2>
                 <div class="cotizacion-pasos">
                     <fieldset class="cotizacion-paso">
                         <legend><span>01.</span> Selecciona</legend>
@@ -1406,13 +1420,14 @@
                         </div>
                     </fieldset>
                     <fieldset class="cotizacion-paso cotizacion-contacto">
-                        <legend><span>02.</span> Contacto</legend>
+                        <legend><span>02.</span> Preguntar</legend>
                         <div class="cotizacion-canales">
                             <button type="button" class="cotizacion-boton cotizacion-whatsapp" data-cotizar-whatsapp disabled><svg class="cotizacion-whatsapp-logo" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.8 11.8 0 0 0 1.9 17.7L.2 24l6.5-1.7A11.8 11.8 0 0 0 24 11.8c0-3.1-1.2-6.1-3.5-8.3ZM12.2 21.6a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.8 1 1-3.7-.3-.4a9.8 9.8 0 1 1 8.5 4.7Zm5.4-7.3c-.3-.1-1.7-.8-2-.9-.2-.1-.4-.1-.6.2l-.9 1.1c-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.5-.9-.8-1.5-1.7-1.7-2-.2-.3 0-.4.1-.6l.4-.5.3-.4c.1-.2 0-.4 0-.5l-.9-2c-.2-.6-.5-.5-.6-.5h-.6c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3.1 4.9 4.4.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.3.2-.6.2-1.2.2-1.3 0-.2-.2-.3-.5-.4Z"/></svg><span>Enviar WhatsApp</span></button>
-                            <button type="button" class="cotizacion-boton cotizacion-correo" data-cotizar-correo disabled><span class="cotizacion-icono" aria-hidden="true">✉</span>Enviar correo</button>
+                            <button type="button" class="cotizacion-boton cotizacion-correo" data-cotizar-correo disabled><span class="cotizacion-icono" aria-hidden="true">✉️</span><span>Enviar Correo</span></button>
                         </div>
-                        <p class="cotizacion-ayuda" role="status">Elige una categoría y una plantilla para activar el contacto.</p>
+                        <p class="cotizacion-ayuda" role="status">Elige una categoría y plantilla para activar el envío de mensajes</p>
                     </fieldset>
+                </div>
                 </div>
             </div>
             <div class="modelos-infantiles modelos-bodas">
@@ -1506,7 +1521,9 @@
         <section id="catalogo-baby-showers" class="catalogo-infantil catalogo-baby-showers vista-oculta"
             aria-labelledby="titulo-baby-showers">
             <div class="cotizacion-categoria">
-                <h2 class="cotizacion-titulo" id="titulo-baby-showers">Cotizar invitación digital</h2>
+                <button type="button" class="ver-catalogo cotizacion-toggle" data-cotizar-toggle aria-expanded="false" aria-controls="panel-cotizar-baby-showers">Cotizar</button>
+                <div class="cotizacion-desplegable" id="panel-cotizar-baby-showers" hidden>
+                <h2 class="cotizacion-titulo" id="titulo-baby-showers">Contacto</h2>
                 <div class="cotizacion-pasos">
                     <fieldset class="cotizacion-paso">
                         <legend><span>01.</span> Selecciona</legend>
@@ -1516,13 +1533,14 @@
                         </div>
                     </fieldset>
                     <fieldset class="cotizacion-paso cotizacion-contacto">
-                        <legend><span>02.</span> Contacto</legend>
+                        <legend><span>02.</span> Preguntar</legend>
                         <div class="cotizacion-canales">
                             <button type="button" class="cotizacion-boton cotizacion-whatsapp" data-cotizar-whatsapp disabled><svg class="cotizacion-whatsapp-logo" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.8 11.8 0 0 0 1.9 17.7L.2 24l6.5-1.7A11.8 11.8 0 0 0 24 11.8c0-3.1-1.2-6.1-3.5-8.3ZM12.2 21.6a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.8 1 1-3.7-.3-.4a9.8 9.8 0 1 1 8.5 4.7Zm5.4-7.3c-.3-.1-1.7-.8-2-.9-.2-.1-.4-.1-.6.2l-.9 1.1c-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.5-.9-.8-1.5-1.7-1.7-2-.2-.3 0-.4.1-.6l.4-.5.3-.4c.1-.2 0-.4 0-.5l-.9-2c-.2-.6-.5-.5-.6-.5h-.6c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3.1 4.9 4.4.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.3.2-.6.2-1.2.2-1.3 0-.2-.2-.3-.5-.4Z"/></svg><span>Enviar WhatsApp</span></button>
-                            <button type="button" class="cotizacion-boton cotizacion-correo" data-cotizar-correo disabled><span class="cotizacion-icono" aria-hidden="true">✉</span>Enviar correo</button>
+                            <button type="button" class="cotizacion-boton cotizacion-correo" data-cotizar-correo disabled><span class="cotizacion-icono" aria-hidden="true">✉️</span><span>Enviar Correo</span></button>
                         </div>
-                        <p class="cotizacion-ayuda" role="status">Elige una categoría y una plantilla para activar el contacto.</p>
+                        <p class="cotizacion-ayuda" role="status">Elige una categoría y plantilla para activar el envío de mensajes</p>
                     </fieldset>
+                </div>
                 </div>
             </div>
             <div class="modelos-infantiles modelos-baby-showers">
@@ -1616,7 +1634,9 @@
         <section id="catalogo-posadas" class="catalogo-infantil catalogo-posadas vista-oculta"
             aria-labelledby="titulo-posadas">
             <div class="cotizacion-categoria">
-                <h2 class="cotizacion-titulo" id="titulo-posadas">Cotizar invitación digital</h2>
+                <button type="button" class="ver-catalogo cotizacion-toggle" data-cotizar-toggle aria-expanded="false" aria-controls="panel-cotizar-posadas">Cotizar</button>
+                <div class="cotizacion-desplegable" id="panel-cotizar-posadas" hidden>
+                <h2 class="cotizacion-titulo" id="titulo-posadas">Contacto</h2>
                 <div class="cotizacion-pasos">
                     <fieldset class="cotizacion-paso">
                         <legend><span>01.</span> Selecciona</legend>
@@ -1626,13 +1646,14 @@
                         </div>
                     </fieldset>
                     <fieldset class="cotizacion-paso cotizacion-contacto">
-                        <legend><span>02.</span> Contacto</legend>
+                        <legend><span>02.</span> Preguntar</legend>
                         <div class="cotizacion-canales">
                             <button type="button" class="cotizacion-boton cotizacion-whatsapp" data-cotizar-whatsapp disabled><svg class="cotizacion-whatsapp-logo" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.8 11.8 0 0 0 1.9 17.7L.2 24l6.5-1.7A11.8 11.8 0 0 0 24 11.8c0-3.1-1.2-6.1-3.5-8.3ZM12.2 21.6a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.8 1 1-3.7-.3-.4a9.8 9.8 0 1 1 8.5 4.7Zm5.4-7.3c-.3-.1-1.7-.8-2-.9-.2-.1-.4-.1-.6.2l-.9 1.1c-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.5-.9-.8-1.5-1.7-1.7-2-.2-.3 0-.4.1-.6l.4-.5.3-.4c.1-.2 0-.4 0-.5l-.9-2c-.2-.6-.5-.5-.6-.5h-.6c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3.1 4.9 4.4.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.3.2-.6.2-1.2.2-1.3 0-.2-.2-.3-.5-.4Z"/></svg><span>Enviar WhatsApp</span></button>
-                            <button type="button" class="cotizacion-boton cotizacion-correo" data-cotizar-correo disabled><span class="cotizacion-icono" aria-hidden="true">✉</span>Enviar correo</button>
+                            <button type="button" class="cotizacion-boton cotizacion-correo" data-cotizar-correo disabled><span class="cotizacion-icono" aria-hidden="true">✉️</span><span>Enviar Correo</span></button>
                         </div>
-                        <p class="cotizacion-ayuda" role="status">Elige una categoría y una plantilla para activar el contacto.</p>
+                        <p class="cotizacion-ayuda" role="status">Elige una categoría y plantilla para activar el envío de mensajes</p>
                     </fieldset>
+                </div>
                 </div>
             </div>
             <div class="modelos-infantiles modelos-posadas">
@@ -2233,6 +2254,12 @@
         const DATOS_COTIZACION = {"catalogo-infantil": {"nombre": "Fiestas infantiles", "plantillas": ["Fiesta Temática", "Fiesta Aventura", "Fiesta Interactiva", "Fiesta Acuática"]}, "catalogo-reuniones": {"nombre": "Fiestas y reuniones", "plantillas": ["Quinta", "Terraza", "Bar", "Restaurant"]}, "catalogo-quinceaneras": {"nombre": "Quinceañeras", "plantillas": ["Campestre", "Clásica", "Moderna", "Temática"]}, "catalogo-bodas": {"nombre": "Bodas", "plantillas": ["Civil", "Clásica", "Playa", "Temática"]}, "catalogo-baby-showers": {"nombre": "Baby Showers", "plantillas": ["Mixto", "Revelación", "Temático", "Tradicional"]}, "catalogo-posadas": {"nombre": "Posadas", "plantillas": ["Empresarial", "Familiar", "Pública", "Navideña"]}};
         const CONTACTO_COTIZACION = { whatsapp: '528281436194', correo: 'contacto.eldinbridge@gmail.com' };
         document.querySelectorAll('.cotizacion-categoria').forEach(panel => {
+            const toggle = panel.querySelector('[data-cotizar-toggle]');
+            const desplegable = panel.querySelector('.cotizacion-desplegable');
+            toggle.addEventListener('click', () => {
+                desplegable.hidden = !desplegable.hidden;
+                toggle.setAttribute('aria-expanded', String(!desplegable.hidden));
+            });
             const categoria = panel.querySelector('[data-cotizar-categoria]');
             const plantilla = panel.querySelector('[data-cotizar-plantilla]');
             const whatsapp = panel.querySelector('[data-cotizar-whatsapp]');
@@ -2246,7 +2273,7 @@
             function actualizarContacto() {
                 const elegida = seleccion();
                 whatsapp.disabled = correo.disabled = !elegida;
-                ayuda.textContent = elegida ? 'Tu consulta incluirá: ' + elegida.categoria + ' · ' + elegida.plantilla + '.' : 'Elige una categoría y una plantilla para activar el contacto.';
+                ayuda.textContent = elegida ? 'Tu consulta incluirá: ' + elegida.categoria + ' · ' + elegida.plantilla + '.' : 'Elige una categoría y plantilla para activar el envío de mensajes';
             }
             categoria.addEventListener('change', () => {
                 const datos = DATOS_COTIZACION[categoria.value];
