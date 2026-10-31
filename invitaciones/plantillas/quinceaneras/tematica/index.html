@@ -1813,7 +1813,7 @@
       <p class="foto-leyenda" id="firma-final"></p>
     </section>
     <section class="seccion tarjeta-seccion" id="pase-digital">
-      <img class="fondo-tarjeta fondo-extra" alt="" loading="lazy">
+      <img class="fondo-tarjeta fondo-extra" src="assets/fondos/fondo08.webp" alt="" loading="lazy">
       <article class="tarjeta">
         <p class="numero-tarjeta revelar"><strong>VIII</strong> Pase Digital</p>
         <p class="sobrelinea revelar">Tu entrada a la celebración</p>
@@ -1836,12 +1836,12 @@
         </div>
       </article>
     </section>
-    <section class="seccion foto-pantalla foto-extra" hidden data-indice="CAPÍTULO / IX">
-      <div class="foto-marco"><img alt="Una nueva etapa de la quinceañera" decoding="async"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / IX"><defs><path id="arco-capitulo-8" d="M 20 20 Q 210 -20 400 20" /></defs><text><textPath href="#arco-capitulo-8" startOffset="50%" text-anchor="middle">CAPÍTULO / IX</textPath></text></svg></div>
+    <section class="seccion foto-pantalla foto-extra" data-indice="CAPÍTULO / IX">
+      <div class="foto-marco"><img src="assets/fotos/foto09.webp" alt="Una nueva etapa de la quinceañera" decoding="async" loading="eager"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / IX"><defs><path id="arco-capitulo-8" d="M 20 20 Q 210 -20 400 20" /></defs><text><textPath href="#arco-capitulo-8" startOffset="50%" text-anchor="middle">CAPÍTULO / IX</textPath></text></svg></div>
       <p class="foto-leyenda">Una celebración para compartir</p>
     </section>
     <section class="seccion tarjeta-seccion" id="album-fotos">
-      <img class="fondo-tarjeta fondo-extra" alt="" loading="lazy">
+      <img class="fondo-tarjeta fondo-extra" src="assets/fondos/fondo09.webp" alt="" loading="lazy">
       <article class="tarjeta">
         <p class="numero-tarjeta revelar"><strong>IX</strong> Álbum De Fotos</p>
         <p class="sobrelinea revelar">Recuerdos que nos unen</p>
@@ -1851,8 +1851,8 @@
           aria-disabled="true" title="Álbum no disponible en esta plantilla de muestra">Ver Álbum De Fotos</a>
       </article>
     </section>
-    <section class="seccion foto-pantalla foto-extra" hidden data-indice="CAPÍTULO / X">
-      <div class="foto-marco"><img alt="Retrato de la quinceañera para el álbum de recuerdos" decoding="async"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / X"><defs><path id="arco-capitulo-9" d="M 20 20 Q 210 -20 400 20" /></defs><text><textPath href="#arco-capitulo-9" startOffset="50%" text-anchor="middle">CAPÍTULO / X</textPath></text></svg></div>
+    <section class="seccion foto-pantalla foto-extra" data-indice="CAPÍTULO / X">
+      <div class="foto-marco"><img src="assets/fotos/foto10.webp" alt="Retrato de la quinceañera para el álbum de recuerdos" decoding="async" loading="eager"><svg class="foto-capitulo-arco" viewBox="0 0 420 90" role="img" aria-label="CAPÍTULO / X"><defs><path id="arco-capitulo-9" d="M 20 20 Q 210 -20 400 20" /></defs><text><textPath href="#arco-capitulo-9" startOffset="50%" text-anchor="middle">CAPÍTULO / X</textPath></text></svg></div>
       <p class="foto-leyenda">Instantes que se quedan contigo</p>
     </section>
   </main>
@@ -3443,7 +3443,7 @@
       apiPases: '', // Demo: QR con enlace a esta invitación. Configura aquí la API propia al contratar.
       maxInvitados: 5,
       fotosExtra: ['assets/fotos/foto09.webp', 'assets/fotos/foto10.webp'],
-      fondosExtra: ['assets/fondos/fondo07.webp', 'assets/fondos/fondo07.webp']
+      fondosExtra: ['assets/fondos/fondo08.webp', 'assets/fondos/fondo09.webp']
     };
     const iconoCamara = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 7h4l2-3h6l2 3h4v13H3z"/><circle cx="12" cy="13" r="4"/></svg>';
     const filasInvitados = document.getElementById('filas-invitados');
@@ -3771,18 +3771,17 @@
       intervaloParticulas = setInterval(crearDestello, 1200);
     }
     window.addEventListener('storage', e => { if (e.key !== CLAVE_PASE) return; if (e.newValue) { try { aplicarPaseGuardado(leerPase(e.newValue)); } catch { } } else reiniciarPase(false); });
-    // Las fotos nuevas aparecen solamente cuando sus archivos están disponibles.
+    // Conservar las dos fotos intercaladas visibles durante la carga.
     document.querySelectorAll('.foto-extra').forEach((seccion, i) => {
       const imagen = seccion.querySelector('img');
-      const actualizarFoto = visible => {
-        seccion.hidden = !visible;
-        actualizarBotonesContinuar();
-        if (document.body.classList.contains('iniciada')) {
-          requestAnimationFrame(() => irA(indiceActivo, false));
-        }
-      };
-      imagen.addEventListener('load', () => actualizarFoto(true));
-      imagen.addEventListener('error', () => actualizarFoto(false));
+      seccion.hidden = false;
+      imagen.loading = 'eager';
+      let usandoReserva = false;
+      imagen.addEventListener('error', () => {
+        if (usandoReserva) return;
+        usandoReserva = true;
+        imagen.src = ['assets/fotos/foto07.webp', 'assets/fotos/foto08.webp'][i];
+      });
       imagen.src = OPCIONES_EXTRAS.fotosExtra[i];
     });
     actualizarBotonesContinuar();
