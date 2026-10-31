@@ -872,6 +872,29 @@
         @media(max-width:600px) {
             #vista-precios #ver-catalogo { padding: 11px 18px; }
         }
+
+        .cotizacion-categoria { margin-bottom: 30px; }
+        .cotizacion-titulo { color: #fff; font-size: clamp(1.05rem, 2.4vw, 1.4rem); font-weight: 750; margin-bottom: 20px; }
+        .cotizacion-pasos { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+        .cotizacion-paso { min-width: 0; margin: 0; padding: 20px; border: 1px solid rgba(139,92,246,.32); border-radius: 20px; background: linear-gradient(135deg,rgba(139,92,246,.11),rgba(56,189,248,.04)); }
+        .cotizacion-paso legend { padding: 0 8px; color: #fff; font-size: .9rem; font-weight: 750; }
+        .cotizacion-paso legend span { color: #c4b5fd; margin-right: 6px; }
+        .cotizacion-selectores { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .cotizacion-selectores label { display: grid; gap: 8px; font-size: .85rem; color: #d5d9ea; }
+        .cotizacion-selectores select { width: 100%; min-width: 0; min-height: 48px; padding: 10px; border: 1px solid rgba(255,255,255,.2); border-radius: 11px; color: #fff; background: #151a2b; font: inherit; font-size: 16px; color-scheme: dark; }
+        .cotizacion-selectores select:disabled { opacity: .5; }
+        .cotizacion-canales { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .cotizacion-boton { display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 54px; padding: 12px; border: 1px solid #25d36666; border-radius: 12px; background: #25d36618; color: #fff; font: inherit; font-weight: 750; font-size: .85rem; cursor: pointer; transition: transform .2s, background .2s; }
+        .cotizacion-correo { border-color: #38bdf866; background: #38bdf818; }
+        .cotizacion-boton:disabled { opacity: .35; cursor: default; }
+        .cotizacion-boton:not(:disabled):hover { transform: translateY(-2px); background: #25d36630; }
+        .cotizacion-correo:not(:disabled):hover { background: #38bdf830; }
+        .cotizacion-icono { font-size: 1.3rem; flex-shrink: 0; }
+        .cotizacion-ayuda { color: var(--secundario); font-size: .78rem; line-height: 1.5; margin-top: 12px; }
+        .nota-categoria, .nota-categoria strong { color: #fff; font-weight: 750; }
+        .cotizacion-categoria :focus-visible { outline: 3px solid var(--azul); outline-offset: 3px; }
+        @media(max-width:800px) { .cotizacion-pasos { grid-template-columns: 1fr; } }
+        @media(max-width:420px) { .cotizacion-selectores, .cotizacion-canales { grid-template-columns: 1fr; } .cotizacion-paso { padding: 16px; } }
     </style>
 </head>
 <body>
@@ -975,15 +998,25 @@
             </div>
         </section>
         <section id="catalogo-infantil" class="catalogo-infantil vista-oculta" aria-labelledby="titulo-infantiles">
-            <div class="presentacion">
-                <h1 id="titulo-infantiles">
-                    Diseños para hacer su día
-                    <span class="degradado">inolvidable.</span>
-                </h1>
-                <p>
-                    Cada invitación tiene animaciones, música y una personalidad propia, la cuál se adaptará a los
-                    detalles de tu celebración.
-                </p>
+            <div class="cotizacion-categoria">
+                <h2 class="cotizacion-titulo" id="titulo-infantiles">Cotizar invitación digital</h2>
+                <div class="cotizacion-pasos">
+                    <fieldset class="cotizacion-paso">
+                        <legend><span>01.</span> Elige tu invitación</legend>
+                        <div class="cotizacion-selectores">
+                            <label for="categoria-catalogo-infantil">Categoría<select id="categoria-catalogo-infantil" data-cotizar-categoria><option value="">Elige una categoría</option></select></label>
+                            <label for="plantilla-catalogo-infantil">Plantilla<select id="plantilla-catalogo-infantil" data-cotizar-plantilla disabled><option value="">Primero elige una categoría</option></select></label>
+                        </div>
+                    </fieldset>
+                    <fieldset class="cotizacion-paso cotizacion-contacto">
+                        <legend><span>02.</span> Elige cómo contactarnos</legend>
+                        <div class="cotizacion-canales">
+                            <button type="button" class="cotizacion-boton cotizacion-whatsapp" data-cotizar-whatsapp disabled><span class="cotizacion-icono" aria-hidden="true">💬</span>Contactar por WhatsApp</button>
+                            <button type="button" class="cotizacion-boton cotizacion-correo" data-cotizar-correo disabled><span class="cotizacion-icono" aria-hidden="true">✉</span>Enviar correo</button>
+                        </div>
+                        <p class="cotizacion-ayuda" role="status">Elige una categoría y una plantilla para activar el contacto.</p>
+                    </fieldset>
+                </div>
             </div>
             <div class="modelos-infantiles">
                 <!-- Fiesta Temática -->
@@ -1071,22 +1104,28 @@
                     </a>
                 </article>
             </div>
-            <div class="nota">
-                <strong>Estamos construyendo las demostraciones.</strong>
-                Cada teléfono mostrará una vista real del diseño y tendrá
-                su botón para abrir la invitación completa.
-            </div>
+            <div class="nota nota-categoria"><strong>Cada invitación tiene animaciones, música y una personalidad propia, la cual se adaptará a los detalles de tu celebración.</strong></div>
         </section>
         <section id="catalogo-reuniones" class="catalogo-reuniones vista-oculta" aria-labelledby="titulo-reuniones">
-            <div class="presentacion">
-                <h1 id="titulo-reuniones">
-                    Momentos para compartir y
-                    <span class="degradado">celebrar juntos.</span>
-                </h1>
-                <p>
-                    Diseños pensados para reuniones entre amigos y familiares,
-                    desde una tarde casual hasta una cena elegante.
-                </p>
+            <div class="cotizacion-categoria">
+                <h2 class="cotizacion-titulo" id="titulo-reuniones">Cotizar invitación digital</h2>
+                <div class="cotizacion-pasos">
+                    <fieldset class="cotizacion-paso">
+                        <legend><span>01.</span> Elige tu invitación</legend>
+                        <div class="cotizacion-selectores">
+                            <label for="categoria-catalogo-reuniones">Categoría<select id="categoria-catalogo-reuniones" data-cotizar-categoria><option value="">Elige una categoría</option></select></label>
+                            <label for="plantilla-catalogo-reuniones">Plantilla<select id="plantilla-catalogo-reuniones" data-cotizar-plantilla disabled><option value="">Primero elige una categoría</option></select></label>
+                        </div>
+                    </fieldset>
+                    <fieldset class="cotizacion-paso cotizacion-contacto">
+                        <legend><span>02.</span> Elige cómo contactarnos</legend>
+                        <div class="cotizacion-canales">
+                            <button type="button" class="cotizacion-boton cotizacion-whatsapp" data-cotizar-whatsapp disabled><span class="cotizacion-icono" aria-hidden="true">💬</span>Contactar por WhatsApp</button>
+                            <button type="button" class="cotizacion-boton cotizacion-correo" data-cotizar-correo disabled><span class="cotizacion-icono" aria-hidden="true">✉</span>Enviar correo</button>
+                        </div>
+                        <p class="cotizacion-ayuda" role="status">Elige una categoría y una plantilla para activar el contacto.</p>
+                    </fieldset>
+                </div>
             </div>
             <div class="modelos-reuniones">
                 <!-- Quinta -->
@@ -1174,22 +1213,29 @@
                     </a>
                 </article>
             </div>
-            <div class="nota">
-                <strong>Cuatro estilos para celebrar a tu manera.</strong>
-                Cada diseño tendrá animaciones, música y una ambientación diferente.
-            </div>
+            <div class="nota nota-categoria"><strong>Diseños pensados para reuniones entre amigos y familiares, desde una tarde casual hasta una cena elegante.</strong></div>
         </section>
         <section id="catalogo-quinceaneras" class="catalogo-quinceaneras vista-oculta"
             aria-labelledby="titulo-quinceaneras">
-            <div class="presentacion">
-                <h1 id="titulo-quinceaneras">
-                    Una celebración para recordar
-                    <span class="degradado">toda la vida.</span>
-                </h1>
-                <p>
-                    Invitaciones creadas para presentar cada detalle de sus quince años
-                    con fotografías, música, animaciones y un estilo único.
-                </p>
+            <div class="cotizacion-categoria">
+                <h2 class="cotizacion-titulo" id="titulo-quinceaneras">Cotizar invitación digital</h2>
+                <div class="cotizacion-pasos">
+                    <fieldset class="cotizacion-paso">
+                        <legend><span>01.</span> Elige tu invitación</legend>
+                        <div class="cotizacion-selectores">
+                            <label for="categoria-catalogo-quinceaneras">Categoría<select id="categoria-catalogo-quinceaneras" data-cotizar-categoria><option value="">Elige una categoría</option></select></label>
+                            <label for="plantilla-catalogo-quinceaneras">Plantilla<select id="plantilla-catalogo-quinceaneras" data-cotizar-plantilla disabled><option value="">Primero elige una categoría</option></select></label>
+                        </div>
+                    </fieldset>
+                    <fieldset class="cotizacion-paso cotizacion-contacto">
+                        <legend><span>02.</span> Elige cómo contactarnos</legend>
+                        <div class="cotizacion-canales">
+                            <button type="button" class="cotizacion-boton cotizacion-whatsapp" data-cotizar-whatsapp disabled><span class="cotizacion-icono" aria-hidden="true">💬</span>Contactar por WhatsApp</button>
+                            <button type="button" class="cotizacion-boton cotizacion-correo" data-cotizar-correo disabled><span class="cotizacion-icono" aria-hidden="true">✉</span>Enviar correo</button>
+                        </div>
+                        <p class="cotizacion-ayuda" role="status">Elige una categoría y una plantilla para activar el contacto.</p>
+                    </fieldset>
+                </div>
             </div>
             <div class="modelos-quinceaneras">
                 <!-- Campestre -->
@@ -1277,25 +1323,29 @@
                     </a>
                 </article>
             </div>
-            <div class="nota">
-                <strong>
-                    Cuatro maneras de contar una historia inolvidable.
-                </strong>
-                Cada diseño combinará fotografías, música y animaciones
-                con una ambientación diferente.
-            </div>
+            <div class="nota nota-categoria"><strong>Invitaciones creadas para presentar cada detalle de sus quince años con fotografías, música, animaciones y un estilo único.</strong></div>
         </section>
         <section id="catalogo-bodas" class="catalogo-infantil catalogo-bodas vista-oculta"
             aria-labelledby="titulo-bodas">
-            <div class="presentacion">
-                <h1 id="titulo-bodas">
-                    El comienzo de una
-                    <span class="degradado">historia para siempre.</span>
-                </h1>
-                <p>
-                    Diseños creados para anunciar su boda con una
-                    presentación especial, elegante y llena de personalidad.
-                </p>
+            <div class="cotizacion-categoria">
+                <h2 class="cotizacion-titulo" id="titulo-bodas">Cotizar invitación digital</h2>
+                <div class="cotizacion-pasos">
+                    <fieldset class="cotizacion-paso">
+                        <legend><span>01.</span> Elige tu invitación</legend>
+                        <div class="cotizacion-selectores">
+                            <label for="categoria-catalogo-bodas">Categoría<select id="categoria-catalogo-bodas" data-cotizar-categoria><option value="">Elige una categoría</option></select></label>
+                            <label for="plantilla-catalogo-bodas">Plantilla<select id="plantilla-catalogo-bodas" data-cotizar-plantilla disabled><option value="">Primero elige una categoría</option></select></label>
+                        </div>
+                    </fieldset>
+                    <fieldset class="cotizacion-paso cotizacion-contacto">
+                        <legend><span>02.</span> Elige cómo contactarnos</legend>
+                        <div class="cotizacion-canales">
+                            <button type="button" class="cotizacion-boton cotizacion-whatsapp" data-cotizar-whatsapp disabled><span class="cotizacion-icono" aria-hidden="true">💬</span>Contactar por WhatsApp</button>
+                            <button type="button" class="cotizacion-boton cotizacion-correo" data-cotizar-correo disabled><span class="cotizacion-icono" aria-hidden="true">✉</span>Enviar correo</button>
+                        </div>
+                        <p class="cotizacion-ayuda" role="status">Elige una categoría y una plantilla para activar el contacto.</p>
+                    </fieldset>
+                </div>
             </div>
             <div class="modelos-infantiles modelos-bodas">
                 <!-- Boda Civil -->
@@ -1383,22 +1433,29 @@
                     </a>
                 </article>
             </div>
-            <div class="nota">
-                <strong>Cuatro estilos para comenzar una nueva historia.</strong>
-                Cada diseño tendrá música, animaciones y una ambientación diferente.
-            </div>
+            <div class="nota nota-categoria"><strong>Diseños creados para anunciar su boda con una presentación especial, elegante y llena de personalidad.</strong></div>
         </section>
         <section id="catalogo-baby-showers" class="catalogo-infantil catalogo-baby-showers vista-oculta"
             aria-labelledby="titulo-baby-showers">
-            <div class="presentacion">
-                <h1 id="titulo-baby-showers">
-                    Una dulce espera para
-                    <span class="degradado">celebrar juntos.</span>
-                </h1>
-                <p>
-                    Invitaciones alegres y especiales para compartir
-                    la emoción por la llegada de un nuevo integrante.
-                </p>
+            <div class="cotizacion-categoria">
+                <h2 class="cotizacion-titulo" id="titulo-baby-showers">Cotizar invitación digital</h2>
+                <div class="cotizacion-pasos">
+                    <fieldset class="cotizacion-paso">
+                        <legend><span>01.</span> Elige tu invitación</legend>
+                        <div class="cotizacion-selectores">
+                            <label for="categoria-catalogo-baby-showers">Categoría<select id="categoria-catalogo-baby-showers" data-cotizar-categoria><option value="">Elige una categoría</option></select></label>
+                            <label for="plantilla-catalogo-baby-showers">Plantilla<select id="plantilla-catalogo-baby-showers" data-cotizar-plantilla disabled><option value="">Primero elige una categoría</option></select></label>
+                        </div>
+                    </fieldset>
+                    <fieldset class="cotizacion-paso cotizacion-contacto">
+                        <legend><span>02.</span> Elige cómo contactarnos</legend>
+                        <div class="cotizacion-canales">
+                            <button type="button" class="cotizacion-boton cotizacion-whatsapp" data-cotizar-whatsapp disabled><span class="cotizacion-icono" aria-hidden="true">💬</span>Contactar por WhatsApp</button>
+                            <button type="button" class="cotizacion-boton cotizacion-correo" data-cotizar-correo disabled><span class="cotizacion-icono" aria-hidden="true">✉</span>Enviar correo</button>
+                        </div>
+                        <p class="cotizacion-ayuda" role="status">Elige una categoría y una plantilla para activar el contacto.</p>
+                    </fieldset>
+                </div>
             </div>
             <div class="modelos-infantiles modelos-baby-showers">
                 <!-- Baby Shower Mixto -->
@@ -1486,22 +1543,29 @@
                     </a>
                 </article>
             </div>
-            <div class="nota">
-                <strong>Cuatro formas de celebrar la dulce espera.</strong>
-                Cada diseño tendrá una personalidad, música y ambientación diferente.
-            </div>
+            <div class="nota nota-categoria"><strong>Invitaciones alegres y especiales para compartir la emoción por la llegada de un nuevo integrante.</strong></div>
         </section>
         <section id="catalogo-posadas" class="catalogo-infantil catalogo-posadas vista-oculta"
             aria-labelledby="titulo-posadas">
-            <div class="presentacion">
-                <h1 id="titulo-posadas">
-                    Tradición, alegría y momentos para
-                    <span class="degradado">compartir.</span>
-                </h1>
-                <p>
-                    Invitaciones para reunir a familiares, amigos,
-                    compañeros de trabajo o toda una comunidad.
-                </p>
+            <div class="cotizacion-categoria">
+                <h2 class="cotizacion-titulo" id="titulo-posadas">Cotizar invitación digital</h2>
+                <div class="cotizacion-pasos">
+                    <fieldset class="cotizacion-paso">
+                        <legend><span>01.</span> Elige tu invitación</legend>
+                        <div class="cotizacion-selectores">
+                            <label for="categoria-catalogo-posadas">Categoría<select id="categoria-catalogo-posadas" data-cotizar-categoria><option value="">Elige una categoría</option></select></label>
+                            <label for="plantilla-catalogo-posadas">Plantilla<select id="plantilla-catalogo-posadas" data-cotizar-plantilla disabled><option value="">Primero elige una categoría</option></select></label>
+                        </div>
+                    </fieldset>
+                    <fieldset class="cotizacion-paso cotizacion-contacto">
+                        <legend><span>02.</span> Elige cómo contactarnos</legend>
+                        <div class="cotizacion-canales">
+                            <button type="button" class="cotizacion-boton cotizacion-whatsapp" data-cotizar-whatsapp disabled><span class="cotizacion-icono" aria-hidden="true">💬</span>Contactar por WhatsApp</button>
+                            <button type="button" class="cotizacion-boton cotizacion-correo" data-cotizar-correo disabled><span class="cotizacion-icono" aria-hidden="true">✉</span>Enviar correo</button>
+                        </div>
+                        <p class="cotizacion-ayuda" role="status">Elige una categoría y una plantilla para activar el contacto.</p>
+                    </fieldset>
+                </div>
             </div>
             <div class="modelos-infantiles modelos-posadas">
                 <!-- Posada Empresarial -->
@@ -1589,10 +1653,7 @@
                     </a>
                 </article>
             </div>
-            <div class="nota">
-                <strong>Cuatro maneras de conservar nuestras tradiciones.</strong>
-                Cada invitación tendrá música, animaciones y una ambientación diferente.
-            </div>
+            <div class="nota nota-categoria"><strong>Invitaciones para reunir a familiares, amigos, compañeros de trabajo o toda una comunidad.</strong></div>
         </section>
     </main>
     <footer>
@@ -2100,6 +2161,47 @@
             );
         }
         mostrarVistaSegunDireccion();
+
+        const DATOS_COTIZACION = {"catalogo-infantil": {"nombre": "Fiestas infantiles", "plantillas": ["Fiesta Temática", "Fiesta Aventura", "Fiesta Interactiva", "Fiesta Acuática"]}, "catalogo-reuniones": {"nombre": "Fiestas y reuniones", "plantillas": ["Quinta", "Terraza", "Bar", "Restaurant"]}, "catalogo-quinceaneras": {"nombre": "Quinceañeras", "plantillas": ["Campestre", "Clásica", "Moderna", "Temática"]}, "catalogo-bodas": {"nombre": "Bodas", "plantillas": ["Civil", "Clásica", "Playa", "Temática"]}, "catalogo-baby-showers": {"nombre": "Baby Showers", "plantillas": ["Mixto", "Revelación", "Temático", "Tradicional"]}, "catalogo-posadas": {"nombre": "Posadas", "plantillas": ["Empresarial", "Familiar", "Pública", "Navideña"]}};
+        const CONTACTO_COTIZACION = { whatsapp: '528281436194', correo: 'contacto.eldinbridge@gmail.com' };
+        document.querySelectorAll('.cotizacion-categoria').forEach(panel => {
+            const categoria = panel.querySelector('[data-cotizar-categoria]');
+            const plantilla = panel.querySelector('[data-cotizar-plantilla]');
+            const whatsapp = panel.querySelector('[data-cotizar-whatsapp]');
+            const correo = panel.querySelector('[data-cotizar-correo]');
+            const ayuda = panel.querySelector('.cotizacion-ayuda');
+            Object.entries(DATOS_COTIZACION).forEach(([valor, datos]) => categoria.add(new Option(datos.nombre, valor)));
+            const seleccion = () => {
+                const datos = DATOS_COTIZACION[categoria.value];
+                return datos && datos.plantillas.includes(plantilla.value) ? { categoria: datos.nombre, plantilla: plantilla.value } : null;
+            };
+            function actualizarContacto() {
+                const elegida = seleccion();
+                whatsapp.disabled = correo.disabled = !elegida;
+                ayuda.textContent = elegida ? 'Tu consulta incluirá: ' + elegida.categoria + ' · ' + elegida.plantilla + '.' : 'Elige una categoría y una plantilla para activar el contacto.';
+            }
+            categoria.addEventListener('change', () => {
+                const datos = DATOS_COTIZACION[categoria.value];
+                plantilla.replaceChildren(new Option(datos ? 'Elige una plantilla' : 'Primero elige una categoría', ''));
+                plantilla.disabled = !datos;
+                if (datos) datos.plantillas.forEach(nombre => plantilla.add(new Option(nombre, nombre)));
+                actualizarContacto();
+            });
+            plantilla.addEventListener('change', actualizarContacto);
+            function contactar(canal) {
+                const elegida = seleccion();
+                if (!elegida) return;
+                const mensaje = 'Hola, me gustaría cotizar una invitación digital.\nCategoría: ' + elegida.categoria + '\nPlantilla: ' + elegida.plantilla + '.';
+                if (canal === 'whatsapp') {
+                    window.open('https://wa.me/' + CONTACTO_COTIZACION.whatsapp + '?text=' + encodeURIComponent(mensaje), '_blank', 'noopener,noreferrer');
+                } else {
+                    window.location.href = 'mailto:' + CONTACTO_COTIZACION.correo + '?subject=' + encodeURIComponent('Cotización de invitación digital · ' + elegida.categoria) + '&body=' + encodeURIComponent(mensaje);
+                }
+            }
+            whatsapp.addEventListener('click', () => contactar('whatsapp'));
+            correo.addEventListener('click', () => contactar('correo'));
+            actualizarContacto();
+        });
     </script>
 </body>
 </html>
