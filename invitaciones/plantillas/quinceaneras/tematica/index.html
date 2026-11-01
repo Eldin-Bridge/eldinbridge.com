@@ -1655,11 +1655,14 @@
 
     #pase-digital .tarjeta { padding-top: 36px; }
     #pase-digital .boton-extra { font-size: .85rem; }
-    @media(max-width:360px) { #pase-digital .tarjeta { width: 100%; padding-inline: 14px; } }
+    @media(max-width:360px) { #pase-digital .tarjeta { padding-inline: 14px; } }
 
     /* Pase Digital: el formulario se adapta al ancho disponible, sin desplazamiento lateral. */
-    #pase-digital { padding-inline: 12px; }
-    #pase-digital .tarjeta { width: min(100%, 680px); min-width: 0; overflow-x: hidden; }
+    #pase-digital .tarjeta { min-width: 0; overflow-x: hidden; }
+    #pase-digital .titulo,
+    #pase-digital .texto,
+    #pase-digital .cantidad-personas,
+    #pase-digital .estado-extra { max-width: 100%; overflow-wrap: anywhere; }
     #pase-digital .cabecera-campo { flex-wrap: wrap; justify-content: flex-start; row-gap: 4px; }
     #pase-digital .cabecera-campo > label { white-space: normal; overflow-wrap: anywhere; }
     #pase-digital .opciones-edad { flex-basis: 100%; }
