@@ -1609,9 +1609,7 @@
     }
 
     #pase-digital .opciones-edad {
-      position: absolute;
-      right: -28px;
-      top: 0;
+      position: static;
       display: inline-flex;
       align-items: center;
       gap: 2px;
@@ -1652,12 +1650,23 @@
     .dialogo-extra { border-radius: 22px; }
     #pase-digital .titulo { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; }
     #pase-digital .texto, #resultado-pase { text-align: center; }
-    #pase-digital .opciones-edad { right: -28px; }
+    #pase-digital .opciones-edad { position: static; max-width: 100%; flex-wrap: wrap; height: auto; }
     #ver-album[aria-disabled="true"] { cursor: default; }
 
     #pase-digital .tarjeta { padding-top: 36px; }
     #pase-digital .boton-extra { font-size: .85rem; }
     @media(max-width:360px) { #pase-digital .tarjeta { width: 100%; padding-inline: 14px; } }
+
+    /* Pase Digital: el formulario se adapta al ancho disponible, sin desplazamiento lateral. */
+    #pase-digital { padding-inline: 12px; }
+    #pase-digital .tarjeta { width: min(100%, 680px); min-width: 0; overflow-x: hidden; }
+    #pase-digital .cabecera-campo { flex-wrap: wrap; justify-content: flex-start; row-gap: 4px; }
+    #pase-digital .cabecera-campo > label { white-space: normal; overflow-wrap: anywhere; }
+    #pase-digital .opciones-edad { flex-basis: 100%; }
+    #pase-digital .formulario-pase,
+    #pase-digital #filas-invitados,
+    #pase-digital #resultado-pase { min-width: 0; max-width: 100%; }
+    #pase-digital .boton-extra { min-width: 0; max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
   </style>
   <script>
     if (location.hash === '#album-fotos') {
