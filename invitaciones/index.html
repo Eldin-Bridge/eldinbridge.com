@@ -1973,6 +1973,23 @@
                 padding-top: 0;
             }
         }
+
+        /* Botones superiores con la misma altura que Volver en la vista de categorías. */
+        body:has(#vista-precios:not(.vista-oculta)) #boton-volver,
+        .catalogo-barra #ver-catalogo {
+            padding-block: 9px;
+            font-size: .86rem;
+            line-height: normal;
+            min-height: 38px;
+        }
+        @media (max-width: 580px) {
+            body:has(#vista-precios:not(.vista-oculta)) #boton-volver,
+            .catalogo-barra #ver-catalogo {
+                padding-block: 8px;
+                font-size: .76rem;
+                min-height: 35px;
+            }
+        }
     </style>
 </head>
 
