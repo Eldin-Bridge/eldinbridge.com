@@ -802,18 +802,18 @@
           </div>
         </article>
       </section>
-      <section class="scene" aria-label="Vestimenta">
+      <section class="scene" aria-label="Refrigerio y show">
         <img class="bg" src="assets/fondos/fondo06.webp" alt="" loading="lazy">
         <img class="elemento" src="assets/elementos/elemento06.webp" alt="" loading="lazy">
         <article class="ticket">
           <div class="ticket-line"></div>
           <div class="ticket-content">
-            <div class="ticket-head"><span>Vestimenta</span><b>06 / 07</b></div>
-            <h2>Ven a tu <em>manera</em></h2>
-            <p id="dressCode"></p>
+            <div class="ticket-head"><span>Refrigerio y show</span><b>06 / 07</b></div>
+            <h2>Sabores, risas y <em>diversión</em></h2>
+            <p id="refreshmentsMessage"></p>
             <div class="divider"></div>
-            <p class="large" aria-hidden="true">👗 👕 👖</p>
-            <p class="muted">Rosa y azul quedan a tu elección; el secreto se revelará en la celebración.</p>
+            <p class="large" aria-hidden="true">🍰 🥤 🎭</p>
+            <p class="muted">¡Disfruta del refrigerio y el show mientras llega el momento de revelar la sorpresa!</p>
           </div>
         </article>
       </section>
@@ -869,7 +869,7 @@
       lugar: "Salón Cielo Abierto",
       direccion: "Cadereyta Jiménez, Nuevo León", // texto mostrado en la tarjeta
       notaRegalos: "Agradecemos de corazón cualquier muestra de cariño.",
-      vestimenta: "Elige ropa casual y cómoda: vestido, blusa o jeans. Puedes llevar rosa o azul si quieres jugar con tu predicción.",
+      refrigerioShow: "Tendremos un rico refrigerio y un show para compartir risas y momentos divertidos durante la celebración.",
       confirmarAntes: "15 de mayo de 2027",
       // ENLACES OPCIONALES — Maps y WhatsApp se ven desactivados mientras estén vacíos.
       mapa: "",                       // URL real de Google Maps para activar «Ver ubicación»
@@ -984,7 +984,7 @@
     $("#welcomeMessage").textContent = DATOS.bienvenida;
     $("#message").textContent = DATOS.mensaje;
     $("#farewellMessage").textContent = DATOS.despedida;
-    $("#dressCode").textContent = DATOS.vestimenta;
+    $("#refreshmentsMessage").textContent = DATOS.refrigerioShow;
     $("#venue").textContent = DATOS.lugar;
     $("#address").textContent = DATOS.direccion;
     $("#giftNote").textContent = DATOS.notaRegalos;

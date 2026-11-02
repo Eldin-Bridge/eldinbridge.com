@@ -701,15 +701,15 @@
           </div>
         </article>
       </section>
-      <section class="scene" aria-label="Vestimenta"><img class="bg" src="assets/fondos/fondo06.webp" alt=""
+      <section class="scene" aria-label="Refrigerio y show"><img class="bg" src="assets/fondos/fondo06.webp" alt=""
           loading="lazy"><img class="elemento" src="assets/elementos/elemento06.webp" alt="" loading="lazy">
         <article class="letter">
           <div class="letter-inner">
-            <div class="chapter">Vestimenta · 06</div><span class="script">Siéntete cómoda</span>
-            <h2>Ven como más <em>te guste</em></h2>
-            <p id="dressCode"></p>
+            <div class="chapter">Refrigerio y show · 06</div><span class="script">Una tarde para disfrutar</span>
+            <h2>Sabores, risas y <em>diversión</em></h2>
+            <p id="refreshmentsMessage"></p>
             <div class="flourish">❧ ✿ ❧</div>
-            <p class="large" aria-hidden="true">👗 👚 👖</p>
+            <p class="large" aria-hidden="true">🍰 🥤 🎭</p>
             <p class="muted" id="showNote" hidden></p>
           </div>
         </article>
@@ -759,7 +759,7 @@
       lugar: "Salón Jardín de Rosas",
       direccion: "Cadereyta Jiménez, Nuevo León", // texto mostrado en la tarjeta
       notaRegalos: "Tu compañía es suficiente; cualquier obsequio adicional será recibido con gratitud.",
-      vestimenta: "Ropa casual y cómoda. Puedes elegir un vestido, jeans con blusa o el conjunto con el que más disfrutes la tarde.",
+      refrigerioShow: "Tendremos un rico refrigerio y un show para compartir risas y momentos divertidos durante la celebración.",
       confirmarAntes: "3 de julio de 2027",
       show: "",                       // nota opcional sobre el espectáculo; aparece en tarjeta 06
       // ENLACES OPCIONALES — Maps y WhatsApp visibles e inactivos mientras estén vacíos.
@@ -873,7 +873,7 @@
     $("#welcomeMessage").textContent = DATOS.bienvenida;
     $("#message").textContent = DATOS.mensaje;
     $("#farewellMessage").textContent = DATOS.despedida;
-    $("#dressCode").textContent = DATOS.vestimenta;
+    $("#refreshmentsMessage").textContent = DATOS.refrigerioShow;
     $("#venue").textContent = DATOS.lugar; $("#address").textContent = DATOS.direccion;
     $("#giftNote").textContent = DATOS.notaRegalos; $("#rsvpDate").textContent = DATOS.confirmarAntes;
     if (DATOS.show) { $("#showNote").textContent = DATOS.show; $("#showNote").hidden = false } else $("#showNote").hidden = true;

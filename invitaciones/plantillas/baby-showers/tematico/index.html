@@ -744,16 +744,16 @@
           </div>
         </article>
       </section>
-      <section class="scene" aria-label="Vestimenta"><img class="bg" src="assets/fondos/fondo06.webp" alt=""
+      <section class="scene" aria-label="Refrigerio y show"><img class="bg" src="assets/fondos/fondo06.webp" alt=""
           loading="lazy"><img class="elemento" src="assets/elementos/elemento06.webp" alt="" loading="lazy">
         <article class="log">
           <div class="log-inner">
-            <div class="log-head"><span class="step">06</span><span class="label">Vestimenta</span><span class="trace"></span></div>
-            <h2>Tu atuendo <em>para la ocasión</em></h2>
-            <p id="dressCode"></p>
+            <div class="log-head"><span class="step">06</span><span class="label">Refrigerio y show</span><span class="trace"></span></div>
+            <h2>Sabores, risas y <em>diversión</em></h2>
+            <p id="refreshmentsMessage"></p>
             <div class="rule"></div>
-            <p class="lead" aria-hidden="true">👗 👕 👖</p>
-            <p class="muted">Elige lo que te permita celebrar y jugar con comodidad.</p>
+            <p class="lead" aria-hidden="true">🍰 🥤 🎭</p>
+            <p class="muted">¡Prepárate para una misión llena de sabor y entretenimiento!</p>
           </div>
         </article>
       </section>
@@ -804,7 +804,7 @@
       lugar: "Salón Galaxia",
       direccion: "Cadereyta Jiménez, Nuevo León", // texto visible en la tarjeta
       notaRegalos: "Recibiremos con cariño tu regalo, ya sea uno para jugar, cuidar al bebé o ayudar con sus primeros días.",
-      vestimenta: "Ropa casual: vestido, blusa o jeans. No hace falta traje espacial para unirse a la celebración.",
+      refrigerioShow: "Tendremos un rico refrigerio y un show para compartir risas y momentos divertidos durante la celebración.",
       confirmarAntes: "5 de junio de 2027",
       // ENLACES OPCIONALES — Maps y WhatsApp permanecen visibles, inactivos mientras estén vacíos.
       mapa: "",                       // URL real de Google Maps para activar «Ver ubicación»
@@ -917,7 +917,7 @@
     $("#welcomeMessage").textContent = DATOS.bienvenida;
     $("#message").textContent = DATOS.mensaje;
     $("#farewellMessage").textContent = DATOS.despedida;
-    $("#dressCode").textContent = DATOS.vestimenta;
+    $("#refreshmentsMessage").textContent = DATOS.refrigerioShow;
     $("#venue").textContent = DATOS.lugar; $("#address").textContent = DATOS.direccion; $("#giftNote").textContent = DATOS.notaRegalos; $("#rsvpDate").textContent = DATOS.confirmarAntes;
     document.title = "Baby Shower de " + names + " | Pequeño explorador";
     const date = new Date(DATOS.fecha);
