@@ -3463,7 +3463,7 @@
             const boton = document.getElementById('cotizar-barra-boton');
             const panel = document.querySelector('main > section[id^="catalogo-"].activo .cotizacion-desplegable');
             const abierto = !!panel && !panel.hidden;
-            boton.textContent = abierto ? 'OCULTAR COTIZACIÓN' : 'COTIZAR PRECIOS';
+            boton.textContent = abierto ? 'OCULTAR MENÚ' : 'CONTRATAR SERVICIO';
             boton.setAttribute('aria-expanded', String(abierto));
             if (panel) boton.setAttribute('aria-controls', panel.id);
             else boton.removeAttribute('aria-controls');
