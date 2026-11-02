@@ -2025,6 +2025,16 @@
             }
             .leyenda-lanzamiento .oferta-vigencia { gap: 7px; }
         }
+
+        /* Separación superior del primer bloque de categorías de la tabla móvil. */
+        @media (max-width: 600px) {
+            .precios-movil table:first-of-type { border-top: 2px solid rgba(139, 92, 246, .5); }
+            .precios-movil table:first-of-type thead th {
+                border-top: 2px solid rgba(139, 92, 246, .5);
+                padding-top: 8px;
+                padding-bottom: 6px;
+            }
+        }
     </style>
 </head>
 
